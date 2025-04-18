@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `posts_slug_unique` ON `posts` (`slug`);

@@ -1,0 +1,69 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1743862877928,
+      "tag": "0000_panoramic_george_stacy",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1743862979903,
+      "tag": "0001_organic_pride",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1743878164866,
+      "tag": "0002_thankful_rumiko_fujikawa",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1744222850971,
+      "tag": "0003_thin_roxanne_simpson",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1744223207978,
+      "tag": "0004_mighty_bloodaxe",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1744224557092,
+      "tag": "0005_windy_loa",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1744381730278,
+      "tag": "0006_heavy_mad_thinker",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1744385620559,
+      "tag": "0007_medical_vulture",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1744445984182,
+      "tag": "0008_deep_harry_osborn",
+      "breakpoints": true
+    }
+  ]
+}
