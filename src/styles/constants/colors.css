@@ -7,9 +7,9 @@
     --primary-border: 1px solid var(--primary-borders);
 
     --white-background: rgb(255,255,255);
-    --grey-background-1: rgb(248,248,248);
-    --grey-background-2: rgb(243,243,243);
-    --grey-background-gradient: linearGradient(45deg, var(--grey-background-1), var(--grey-background-2));
+    --grey-background-1: rgb(250,250,250);
+    --grey-background-2: rgb(245,245,245);
+    --grey-background-gradient: linear-gradient(45deg, var(--grey-background-2), var(--grey-background-1));
     --grey-borders: rgb(220,220,220);
     --grey-text-1: rgb(180,180,180);
     --grey-text-2: rgb(112,112,112);

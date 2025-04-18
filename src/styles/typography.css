@@ -11,6 +11,10 @@ h1 {
 	color: var(--grey-text-3);
 }
 
+a {
+	color: var(--primary-base);
+}
+
 /* figtree-regular - latin */
 @font-face {
 	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */

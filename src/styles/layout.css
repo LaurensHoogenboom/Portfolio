@@ -59,6 +59,7 @@ form.modal {
     width: 100%;
     height: calc(100vh - 50px);
     justify-content: center;
+    background: var(--grey-background-gradient);
 
     main {
         width: 100%;
