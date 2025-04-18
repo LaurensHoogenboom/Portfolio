@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
-import { login } from '$lib/server/db/cruds/users';
+import { login } from './helpers/authentication';
 
 export const load = (async () => {
     return {};

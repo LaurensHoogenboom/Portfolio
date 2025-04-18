@@ -1,6 +1,63 @@
 .box {
-    background-color: rgb(255,255,255);
-    padding: 30px;
-    border-radius: 10px;
-    border: 1px solid rgb(220,220,220);
+	border: var(--default-border);
+	background-color: var(--white-background);
+	border-radius: var(--border-radius-m);
+    box-shadow: var(--shadow-float-1);
+    padding: var(--padding-2);
+
+    &.toolbar {
+        padding: var(--padding-4) var(--padding-3);
+
+        &.integrated {
+            border-radius: 0;
+            border-top: none;
+            border-right: none;
+            border-left: none;
+        }
+    }
+}
+
+.inset {
+    background: var(--grey-background-gradient);
+    box-shadow: var(--shadow-inset);
+    padding: var(--padding-5);
+    border-radius: var(--border-radius-s);
+    border: var(--default-border);
+
+    &.primary {
+        box-shadow: none;
+        border-radius: 100%;
+        border: var(--primary-border);
+    }
+}
+
+.outset {
+    background: var(--white-background);
+    border-radius: var(--border-radius-xs);
+    box-shadow: var(--shadow-outset);
+
+    &.primary {
+        background: var(--primary-background-gradient);
+        border: var(--primary-border);
+        box-shadow: none;
+    }
+}
+
+.clickable-input {
+    border-radius: var(--border-radius-s);
+    background-color: var(--grey-background-1);
+    border: var(--default-border);
+    padding: var(--padding-4) var(--padding-3);
+    color: var(--grey-text-2);
+    box-shadow: var(--shadow-float-3);
+
+    &.primary {
+        background: var(--primary-background-gradient);
+        border: var(--primary-border);
+        color: var(--white-text);
+
+        &.primary-parent {
+            border-color: rgba(from var(--text-white) r g b 0.72);
+        }
+    }
 }

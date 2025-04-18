@@ -4,10 +4,17 @@
 	import Notice from '$lib/components/atoms/notice.svelte';
     import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 
     let { data, form }: { data: PageData, form: ActionData } = $props();
-    const urlParameters = new URLSearchParams(window.location.search);
-    const username = urlParameters.get('username');
+
+    let urlParameters: URLSearchParams | undefined = $state();
+    let username: string = $state('');
+
+    onMount(() => {
+        urlParameters = new URLSearchParams(window.location.search);
+        username = urlParameters.get('username') ?? '';
+    });
 
     $effect(() => {
         if (form?.success) {

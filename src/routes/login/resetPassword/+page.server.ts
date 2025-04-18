@@ -1,4 +1,5 @@
-import { getUserByUsername, resetPassword } from '$lib/server/db/cruds/users';
+import { getUserByUsername } from '$lib/server/db/cruds/users';
+import { resetPassword } from '../helpers/authentication';
 import { fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 import { sha256 } from '@oslojs/crypto/sha2';
