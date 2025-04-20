@@ -6,21 +6,25 @@
 </script>
 
 <style>
-    .authentication {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        width: 100vw;
-        background: var(--grey-background-gradient);
+    @layer layouts {
+        .authentication {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            background: var(--grey-background-gradient);
 
-        .authentication-form-wrapper {
-            width: 100%;
-            max-width: 500px;
-            min-height: 300px;
-            overflow-y: auto;
+            .authentication-form-wrapper {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                max-width: 500px;
+                min-height: 300px;
+                overflow-y: auto;
+            }
         }
-    }
+    }  
 </style>
 
 <div class="authentication">

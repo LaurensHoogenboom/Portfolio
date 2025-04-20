@@ -3,6 +3,7 @@
 	import LabelInputGroup from '$lib/components/molecules/labelInputGroup.svelte';
     import type { PageData, ActionData } from './$types';
     import { enhance } from '$app/forms';
+	import Button from '$lib/components/atoms/button.svelte';
 
     let { data, form }: { data: PageData, form: ActionData } = $props();
     let step = $state(1);
@@ -26,20 +27,20 @@
             }
 		};
     }}>
-        <h1>Reset Password</h1>
+        <div>
+            <h1>Reset Password</h1>
 
-        <section>
             {#if form?.error}
                 <Notice message={form.error} type="warning" />
             {/if}
+    
+            <LabelInputGroup name="username" type="text" label="Username" required={true}/>    
+        </div>
 
-            <LabelInputGroup name="username" type="text" label="Username" required={true}/>
-        </section>
-
-        <section>
-            <a href="/login">Back</a>
-            <button type="submit">Next</button>
-        </section>
+        <div class="box nested-box">
+            <Button title="Back" type="goto" style="secondary" url="/login"/>
+            <Button title="Next" type="submit" style="primary"/>
+        </div>
     </form>
 {:else if step == 2}
     <form class="modal" method="post" action="?/resetPassword" use:enhance={() => {
@@ -51,40 +52,38 @@
             }
         }
     }}>
-        <section>
+        <div>
             <h1>Reset Password</h1>
             <p>Answer your secret question and provide a new password.</p>
     
-            <p>{userInformation.securityQuestion}</p>
-        </section>
-
-        <section>
+            <p><strong>{userInformation.securityQuestion}</strong></p>
+    
             <input type="hidden" name="id" value={userInformation.userId}>
-
+    
             {#if form?.error}
                 <Notice message={form.error} type="warning" />
             {/if}
     
             <LabelInputGroup name="securityQuestionAnswer" type="text" label="Answer" required={true}/>
             <LabelInputGroup name="newPassword" type="password" label="New Password" required={true}/>
-        </section>
-        
-        <section>
-            <button type="submit">Reset</button>
-        </section>
+        </div>
+
+        <div class="box nested-box">
+            <Button title="Reset Password" type="submit" style="primary" />
+        </div>
     </form>
 {:else if step == 3}
-    <section>
-        <h1>Succes!</h1>
-    </section>
+    <form>
+        <div>
+            <h1>Succes!</h1>
 
-    <section>
-        <p>Your password is succesfully changed, {userInformation.userName}.</p>
-    </section>
-
-    <section>
-        <a href="/login?username={userInformation.userName}">Login</a>
-    </section>
+            <p>Your password has been succesfully changed, {userInformation.userName}.</p>
+        </div>
+        
+        <div class="box nested-box">
+            <Button title="Login" type="goto" url="/login?username={userInformation.userName}" style="primary"/>
+        </div>
+    </form>    
 {/if}
 
 

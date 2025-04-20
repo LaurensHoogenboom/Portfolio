@@ -1,0 +1,10 @@
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+
+    .box.nested-box:last-child {
+        justify-content: flex-end;
+    }
+}

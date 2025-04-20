@@ -1,9 +1,11 @@
 .box {
+    display: flex;
 	border: var(--default-border);
 	background-color: var(--white-background);
 	border-radius: var(--border-radius-m);
     box-shadow: var(--shadow-float-1);
     padding: var(--padding-2);
+    grid-gap: var(--padding-3);
 
     &.toolbar {
         padding: var(--padding-4) var(--padding-3);
@@ -15,41 +17,70 @@
             border-left: none;
         }
     }
+
+    .nested-box {
+        margin: calc(0px - var(--padding-2));
+        background-color: var(--grey-background-1);
+        box-shadow: none;
+        padding: var(--padding-3) var(--padding-2);
+
+        &:not(:only-child):last-child {
+            margin-top: var(--padding-2);
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+            border-left: none;
+            border-bottom: none;
+            border-right: none;
+        }
+    }
 }
 
 .inset {
-    background: var(--grey-background-gradient);
     box-shadow: var(--shadow-inset);
     padding: var(--padding-5);
     border-radius: var(--border-radius-s);
     border: var(--default-border);
+    background: var(--grey-background-1);
+
+    &.gradient {
+        background: var(--grey-background-gradient);
+    }
 
     &.primary {
         box-shadow: none;
-        border-radius: 100%;
+        border-radius: 20px;
         border: var(--primary-border);
+        background: var(--primary-background);
     }
 }
 
 .outset {
+    display: flex;
+    align-items: center;
     background: var(--white-background);
     border-radius: var(--border-radius-xs);
     box-shadow: var(--shadow-outset);
+    text-decoration: none;
+    height: 100%;
 
     &.primary {
         background: var(--primary-background-gradient);
         border: var(--primary-border);
         box-shadow: none;
+        color: var(--white-text);
     }
 }
 
 .clickable-input {
+    display: inline-block;
     border-radius: var(--border-radius-s);
     background-color: var(--grey-background-1);
     border: var(--default-border);
-    padding: var(--padding-4) var(--padding-3);
+    padding: var(--padding-5) var(--padding-3);
     color: var(--grey-text-2);
     box-shadow: var(--shadow-float-3);
+    cursor: pointer;
+    text-decoration: none;
 
     &.primary {
         background: var(--primary-background-gradient);

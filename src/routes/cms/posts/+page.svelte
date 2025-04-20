@@ -4,7 +4,7 @@
     import { onMount } from 'svelte';
 
     import LabelInputGroup from '$lib/components/molecules/labelInputGroup.svelte';
-    import ListItem from '$lib/components/atoms/listItem.svelte';
+    import ListItem from '$lib/components/molecules/listItem.svelte';
     import Dialog from '$lib/components/organisms/dialog.svelte';
     import Notice from '$lib/components/atoms/notice.svelte';
 
