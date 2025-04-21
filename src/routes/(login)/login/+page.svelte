@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ActionData, PageData } from './$types';
+    import type { PageData, ActionData } from './$types';
     import LabelInputGroup from '$lib/components/molecules/labelInputGroup.svelte';
 	import Notice from '$lib/components/atoms/notice.svelte';
     import Button from '$lib/components/atoms/button.svelte';

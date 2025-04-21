@@ -1,6 +1,6 @@
 import { getUserById } from '$lib/server/db/cruds/users';
 import { redirect } from '@sveltejs/kit';
-import type { LayoutServerLoad } from './$types';
+import type { LayoutServerLoad } from '../cms/$types';
 
 export const load: LayoutServerLoad = (async ({ cookies }) => {
     const userId = cookies.get('userId');
@@ -12,6 +12,6 @@ export const load: LayoutServerLoad = (async ({ cookies }) => {
             return { username: user.username };
         }
     } else {
-        redirect(308, "/");
+        redirect(308, "/login");
     }
 }) satisfies LayoutServerLoad;

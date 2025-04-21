@@ -1,4 +1,4 @@
-import type { PageServerLoad, Actions } from './$types';
+import type { PageServerLoad, Actions } from '../../cms/users/$types';
 import { createUser, deleteUser, getUsers, updateUser } from '$lib/server/db/cruds/users';
 import { fail } from '@sveltejs/kit';
 import { sha256 } from "@oslojs/crypto/sha2";

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { PageData, ActionData } from './$types';
+    import type { PageData, ActionData } from '../../cms/users/$types';
     import { enhance } from '$app/forms';
     import { onMount } from 'svelte';
     

@@ -5,5 +5,9 @@
     let { data, children }: { data: LayoutData, children: Snippet } = $props();
 </script>
 
+<svelte:head>
+    <link rel="stylesheet" href="/src/styles/site.css">
+</svelte:head>
+
 {@render children()}
 

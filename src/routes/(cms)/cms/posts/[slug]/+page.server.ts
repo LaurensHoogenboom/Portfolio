@@ -1,5 +1,5 @@
 import { getPostBySlug, updatePost } from '$lib/server/db/cruds/posts';
-import type { PageServerLoad, Actions } from './$types';
+import type { PageServerLoad, Actions } from '../../../cms/posts/[slug]/$types';
 import { fail } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ params }) => {

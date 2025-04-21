@@ -1,6 +1,6 @@
 import { posts } from '$lib/server/db/schema/posts'
 import { getPosts, createPost, deletePost } from '$lib/server/db/cruds/posts';
-import type { PageServerLoad, Actions } from './$types';
+import type { PageServerLoad, Actions } from '../../cms/posts/$types';
 import { fail } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async () => {

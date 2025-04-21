@@ -36,7 +36,7 @@ export const actions: Actions = {
     },
 
     logout: async ({ cookies }) => {
-        cookies.delete('userid', { path: '/' });
+        cookies.delete('userId', { path: '/' });
         throw redirect(303, '/');
     }
 } satisfies Actions;
