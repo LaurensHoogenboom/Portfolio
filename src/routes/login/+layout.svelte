@@ -27,6 +27,10 @@
     }  
 </style>
 
+<svelte:head>
+    <link rel="stylesheet" href="/src/styles/cms/cms.css">
+</svelte:head>
+
 <div class="authentication">
     <div class="authentication-form-wrapper box">
         {@render children()}
