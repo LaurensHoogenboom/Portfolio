@@ -15,15 +15,16 @@
     .list-item {
         display: flex;
         grid-gap: 10px;
-        filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.16));
-        border-radius: 5px;
-        background-color: white;
-        padding: 10px;
         width: 100%;
-        margin-bottom: 20px;
+        
+        &:not(:last-child) {
+            border-bottom: var(--default-border);
+            padding-bottom: var(--padding-3);
+        }
 
         a, p {
             width: 100%;
+            padding-bottom: 0;
         }
 
         button {

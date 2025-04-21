@@ -16,9 +16,11 @@
     });
 </script>
 
-{#each data.posts as post}
-    <ListItem title={post.title} id={post.id} url="/cms/posts/{post.slug}" deleteAction="/posts?/delete" />
-{/each}
+<div class="box" style="flex-direction: column;">
+    {#each data.posts as post}
+        <ListItem title={post.title} id={post.id} url="/cms/posts/{post.slug}" deleteAction="/posts?/delete" />
+    {/each}
+</div>
 
 <button onclick={() => dialog.showModal()}>
     Add Post

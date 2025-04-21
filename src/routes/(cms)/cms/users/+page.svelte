@@ -29,9 +29,11 @@
     }
 </script>
 
-{#each data.users as user}
-    <ListItem title={user.username} id={user.id} editAction={() => openEditDialog(user.id)} deleteAction="/users?/delete"/>
-{/each}
+<div class="box" style="flex-direction: column;">
+    {#each data.users as user}
+        <ListItem title={user.username} id={user.id} editAction={() => openEditDialog(user.id)} deleteAction="/users?/delete"/>
+    {/each}
+</div>
 
 <button onclick={() => addDialog.showModal()}>Add User</button>
 
