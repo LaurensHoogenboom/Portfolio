@@ -8,6 +8,7 @@
     grid-gap: var(--padding-3);
 
     &.toolbar {
+        width: 100%;
         padding: var(--padding-4) var(--padding-3);
 
         &.integrated {

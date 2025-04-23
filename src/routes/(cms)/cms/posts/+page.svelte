@@ -7,6 +7,8 @@
     import ListItem from '$lib/components/molecules/listItem.svelte';
     import Dialog from '$lib/components/organisms/dialog.svelte';
     import Notice from '$lib/components/atoms/notice.svelte';
+	import PageToolbar from '$lib/components/organisms/pageToolbar.svelte';
+	import Button from '$lib/components/atoms/button.svelte';
 
     let { data, form }: { data: PageData, form: ActionData } = $props();
     let dialog: HTMLDialogElement;
@@ -16,15 +18,17 @@
     });
 </script>
 
-<div class="box" style="flex-direction: column;">
-    {#each data.posts as post}
-        <ListItem title={post.title} id={post.id} url="/cms/posts/{post.slug}" deleteAction="/posts?/delete" />
-    {/each}
-</div>
+<PageToolbar>
+    <Button title="Add Post" type="button" style="secondary" onclick={() => dialog.showModal()} />
+</PageToolbar>
 
-<button onclick={() => dialog.showModal()}>
-    Add Post
-</button>
+<main>
+    <div class="box" style="flex-direction: column;">
+        {#each data.posts as post}
+            <ListItem title={post.title} id={post.id} url="/cms/posts/{post.slug}" deleteAction="/posts?/delete" />
+        {/each}
+    </div>
+</main>
 
 <Dialog id="add-dialog">
     <form method="POST" action="?/create" use:enhance>

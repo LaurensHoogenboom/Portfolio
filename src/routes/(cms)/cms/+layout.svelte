@@ -32,8 +32,6 @@
     </div>
     
     <div class="main-wrapper">
-        <main>
-            {@render children()}
-        </main>
+        {@render children()}
     </div>
 </div>

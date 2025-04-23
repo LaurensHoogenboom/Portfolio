@@ -46,14 +46,20 @@
 
 .main-wrapper {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     overflow-y: auto;
-    padding: var(--padding-1);
     background: var(--grey-background-gradient);
+    padding: var(--padding-1);
 
     main {
         max-width: var(--page-width);
         width: 100%;
-        min-height: 100%;
+    }
+
+    .page-width-container {
+        width: 100%;
+        max-width: var(--page-width);
+        margin: 0 auto;
     }
 }

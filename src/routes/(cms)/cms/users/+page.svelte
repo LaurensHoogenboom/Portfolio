@@ -7,6 +7,8 @@
     import ListItem from '$lib/components/molecules/listItem.svelte';
     import Dialog from '$lib/components/organisms/dialog.svelte';
     import Notice from '$lib/components/atoms/notice.svelte';
+    import PageToolbar from '$lib/components/organisms/pageToolbar.svelte';
+	import Button from '$lib/components/atoms/button.svelte';
 
     let { data, form }: { data: PageData, form: ActionData | undefined } = $props();
     let userToEdit = $state(data.users[0] ? data.users[0] : undefined);
@@ -29,14 +31,18 @@
     }
 </script>
 
-<div class="box" style="flex-direction: column;">
-    {#each data.users as user}
-        <ListItem title={user.username} id={user.id} editAction={() => openEditDialog(user.id)} deleteAction="/users?/delete"/>
-    {/each}
-</div>
+<PageToolbar>
+    <Button title="Add User" type="button" style="secondary" onclick={() => addDialog.showModal()} />
+</PageToolbar>
 
-<button onclick={() => addDialog.showModal()}>Add User</button>
-
+<main>
+    <div class="box" style="flex-direction: column;">
+        {#each data.users as user}
+            <ListItem title={user.username} id={user.id} editAction={() => openEditDialog(user.id)} deleteAction="/users?/delete"/>
+        {/each}
+    </div>
+</main>
+    
 <Dialog id="add-dialog">
     <form method="post" action="?/create" use:enhance>
         {#if form?.error}
@@ -79,8 +85,3 @@
         <button onclick={() => editDialog.close()} type="button">cancel</button>
     </form>
 </Dialog>
-
-
-
-
-
