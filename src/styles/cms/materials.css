@@ -92,4 +92,21 @@
             border-color: rgba(from var(--text-white) r g b 0.72);
         }
     }
+
+    &.transparent {
+        background: none;
+        border-color: transparent;
+        box-shadow: none;
+        padding: var(--padding-5) var(--padding-5);
+    }
+
+    &.has-icon {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        svg {
+            height: 16px;
+        }
+    }
 }

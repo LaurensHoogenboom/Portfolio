@@ -5,6 +5,7 @@
 @import url("./constants/spacing.css") layer(constants);
 @import url("./constants/borderRadius.css") layer(constants);
 @import url("./typography.css") layer(typography);
+@import url("./customIcons/customIcons.css") layer(typography);
 @import url("./materials.css") layer(materials);
 @import url("./layout/page.css") layer(layouts);
 @import url("./layout/form.css") layer(layouts);

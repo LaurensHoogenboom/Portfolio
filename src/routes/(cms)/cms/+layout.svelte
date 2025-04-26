@@ -2,6 +2,9 @@
     import type { Snippet } from 'svelte';
     import type { LayoutData } from '../cms/$types';
     import { page } from '$app/state';
+	import CustomIcon from '$lib/components/atoms/customIcons/customIcon.svelte';
+    import { ChevronDown } from '@lucide/svelte';
+	import UserActions from '$lib/components/organisms/userActions.svelte';
 
     let { data, children }: { data: LayoutData, children: Snippet } = $props();
 </script>
@@ -20,13 +23,7 @@
             </div>
     
             {#if data.username}
-                <div class="user-actions">
-                    <p>{data.username}</p>
-    
-                    <form method="post" action="/login?/logout">
-                        <button type="submit">Logout</button>
-                    </form>
-                </div>
+                <UserActions username={data.username} />
             {/if}
         </nav>
     </div>
