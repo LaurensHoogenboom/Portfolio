@@ -24,7 +24,7 @@
     });
 </script>
 
-<form method="post" action="?/login" class="modal" use:enhance>
+<form method="post" action="?/login" use:enhance>
     <div>
         <h1>Login</h1>
 

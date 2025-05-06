@@ -15,7 +15,7 @@
 </script>
 
 {#if step == 1}
-    <form class="modal" method="post" action="?/getSecurityQuestion" use:enhance={() => {
+    <form method="post" action="?/getSecurityQuestion" use:enhance={() => {
         return async ({ result, update }) => {
             await update();
 
@@ -43,7 +43,7 @@
         </div>
     </form>
 {:else if step == 2}
-    <form class="modal" method="post" action="?/resetPassword" use:enhance={() => {
+    <form method="post" action="?/resetPassword" use:enhance={() => {
         return async ({ update, result}) => {
             await update();
 

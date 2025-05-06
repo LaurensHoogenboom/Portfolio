@@ -98,12 +98,18 @@
         border-color: transparent;
         box-shadow: none;
         padding: var(--padding-5) var(--padding-5);
+
+        &.has-icon {
+            flex-direction: row-reverse;
+        }
     }
 
     &.has-icon {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        grid-gap: var(--padding-5);
+        padding-left: var(--padding-4);
 
         svg {
             height: 16px;

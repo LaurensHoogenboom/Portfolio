@@ -14,18 +14,18 @@
 
 {#if type == "goto" && url}
     <a class="clickable-input {style} {icon ? "has-icon" : ""}" href="{url}">
-        {title}
         {#if icon}
             {@const ButtonIcon = icon}
             <ButtonIcon />
         {/if}
+        {title}
     </a>
 {:else if type == "button" || type == "submit"}
     <button class="clickable-input {style} {icon ? "has-icon" : ""}" type={type} onclick={onclick}>
-        {title}
         {#if icon}
             {@const ButtonIcon = icon}
             <ButtonIcon />
         {/if}
+        {title}
     </button>
 {/if}

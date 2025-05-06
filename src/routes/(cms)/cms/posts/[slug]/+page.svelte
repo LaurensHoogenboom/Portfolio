@@ -6,12 +6,13 @@
     import Notice from '$lib/components/atoms/notice.svelte';
 	import PageToolbar from '$lib/components/organisms/pageToolbar.svelte';
 	import Button from '$lib/components/atoms/button.svelte';
+	import { Save } from '@lucide/svelte';
 
     let { data, form }: { data: PageData, form: ActionData } = $props();
 </script>
 
 <PageToolbar>
-    <Button title="Save Post" type="submit" style="secondary" />
+    <Button title="Save Post" type="submit" style="secondary" icon={Save} />
 </PageToolbar>
 
 <main>

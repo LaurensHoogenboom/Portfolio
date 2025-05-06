@@ -39,8 +39,10 @@
         <LabelInputGroup type="text" name="title" label="Title" max={255} required={true}/>
         <LabelInputGroup type="text" name="slug" label="Slug" max={255} required={true}/>
         <LabelInputGroup type="text" name="tags" label="Tags" max={255} required={true}/>
-    
-        <button type="submit">Add Post</button>
-        <button onclick={() => dialog.close()} type="button">cancel</button>
+
+        <div class="box nested-box">
+            <Button type="button" title="Cancel" style="secondary" onclick={() => dialog.close()} />
+            <Button type="submit" title="Add Post" style="primary" />
+        </div>
     </form>
 </Dialog>

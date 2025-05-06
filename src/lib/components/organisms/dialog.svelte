@@ -12,8 +12,8 @@
         transform: translateY(-50%) translateX(-50%);
         width: 300px;
         height: 600px;
-        padding: 20px;
-        border-radius: 10px;
+        background: none;
+        border: none;
     }
 
     dialog::backdrop {
@@ -22,6 +22,8 @@
 </style>
 
 <dialog {id}>
-    {@render children()}
+    <div class="box">
+        {@render children()}
+    </div>
 </dialog>
 

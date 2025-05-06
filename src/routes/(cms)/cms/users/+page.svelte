@@ -54,8 +54,10 @@
         <LabelInputGroup type="text" name="securityQuestion" label="Security Question" max={250} required={true}/>
         <LabelInputGroup type="text" name="securityQuestionAnswer" label="Security Answer" max={250} required={true}/>
 
-        <button type="submit">Add User</button>
-        <button onclick={() => addDialog.close()} type="button">cancel</button>
+        <div class="box nested-box">
+            <Button type="button" style="secondary" title="Cancel" onclick={() => addDialog.close()} />
+            <Button type="submit" style="primary" title="Add User" />
+        </div>
     </form>
 </Dialog>
 
@@ -81,7 +83,9 @@
         <LabelInputGroup type="text" name="securityQuestion" label="Security Question" max={250} required={true} value={userToEdit?.securityQuestion}/>
         <LabelInputGroup type="text" name="securityQuestionAnswer" label="Security Answer" max={250} required={true} value={userToEdit?.securityQuestionAnswer}/>
 
-        <button type="submit">Save Changes</button>
-        <button onclick={() => editDialog.close()} type="button">cancel</button>
+        <div class="box nested-box">
+            <Button type="button" style="secondary" title="Cancel" onclick={() => editDialog.close()} />
+            <Button type="submit" style="primary" title="Save Channges" />
+        </div>
     </form>
 </Dialog>
