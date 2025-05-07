@@ -6,8 +6,9 @@
     import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { LogIn } from '@lucide/svelte';
+	import { InfoIcon, LogIn } from '@lucide/svelte';
 	import AuthenticationHeader from './components/authenticationHeader.svelte';
+	import Instruction from '$lib/components/atoms/instruction.svelte';
 
     let { data, form }: { data: PageData, form: ActionData } = $props();
 
@@ -47,6 +48,8 @@
     </AuthenticationHeader>
 
     <div>
+        <Instruction message="Please provide your credentials to login."/>
+
         {#if form?.error}
             <Notice message={form.error} type="warning" />
         {/if}

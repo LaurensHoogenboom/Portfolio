@@ -5,6 +5,7 @@
     import { enhance } from '$app/forms';
 	import Button from '$lib/components/atoms/button.svelte';
 	import AuthenticationHeader from '../components/authenticationHeader.svelte';
+	import Instruction from '$lib/components/atoms/instruction.svelte';
 
     let { data, form }: { data: PageData, form: ActionData } = $props();
     let step = $state(1);
@@ -31,6 +32,8 @@
         <AuthenticationHeader title="Reset Password" url="/login"/>
 
         <div>
+            <Instruction message="Please provide your username."/>
+
             {#if form?.error}
                 <Notice message={form.error} type="warning" />
             {/if}
@@ -53,9 +56,9 @@
         <AuthenticationHeader title="Reset Password" url="/login"/>
 
         <div>
-            <p>Answer your secret question and provide a new password.</p>
+            <Instruction message="Answer your secret question and choose a new password."/>
     
-            <p><strong>{userInformation.securityQuestion}</strong></p>
+            <p style="margin-top: 20px;"><strong>{userInformation.securityQuestion}</strong></p>
     
             <input type="hidden" name="id" value={userInformation.userId}>
     
@@ -74,7 +77,7 @@
         <AuthenticationHeader title="Reset Password"/>
 
         <div>
-            <p>Your password has been succesfully changed, {userInformation.userName}.</p>
+            <Instruction message="Your password has been succesfully changed, {userInformation.userName}."/>
         </div>
         
         <Button title="Login" type="goto" url="/login?username={userInformation.userName}" style="primary" alignment="center"/>

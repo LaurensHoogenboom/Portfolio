@@ -2,7 +2,7 @@
     import type { Snippet } from 'svelte';
     import type { LayoutData } from '../cms/$types';
     import { page } from '$app/state';
-	import UserActions from '$lib/components/organisms/userActions.svelte';
+	import UserActions from './components/userActions.svelte';
 
     let { data, children }: { data: LayoutData, children: Snippet } = $props();
 </script>
