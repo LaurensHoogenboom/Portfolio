@@ -6,6 +6,8 @@
     import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { LogIn } from '@lucide/svelte';
+	import AuthenticationHeader from './components/authenticationHeader.svelte';
 
     let { data, form }: { data: PageData, form: ActionData } = $props();
 
@@ -24,22 +26,36 @@
     });
 </script>
 
-<form method="post" action="?/login" use:enhance>
-    <div>
-        <h1>Login</h1>
+<style>
+    .avatar {
+        height: 50px;
+        width: 50px;
+        border-radius: 100%;
 
+        .outset {
+            border-radius: 100%;
+        }
+    }
+</style>
+
+<form method="post" class="authentication" action="?/login" use:enhance>
+    <AuthenticationHeader title="Login" url="/">
+        <div class="inset avatar">
+            <div class="outset">
+            </div>
+        </div>
+    </AuthenticationHeader>
+
+    <div>
         {#if form?.error}
             <Notice message={form.error} type="warning" />
         {/if}
 
         <LabelInputGroup name="username" type="text" label="Username" required={true} value={username}/>
         <LabelInputGroup name="password" type="password" label="Password" required={true}/>
-        <a href="/login/resetPassword/">Forgot password?</a>
+        <a href="/login/resetPassword/" style="float: right">Forgot password?</a>
     </div>
 
-    <div class="box nested-box">
-        <Button type="goto" style="secondary" title="Back" url="/"/>
-        <Button type="submit" style="primary" title="Login"/>
-    </div>
+    <Button type="submit" style="primary" title="Login" alignment="center" icon={LogIn}/>
 </form>
 

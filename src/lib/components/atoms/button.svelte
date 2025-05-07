@@ -1,31 +1,41 @@
 <script lang="ts">
-    import { type Component } from 'svelte';
+    import { type Component, type Snippet } from 'svelte';
     import { Icon } from '@lucide/svelte'; 
 
-    const { title, type, style, url, onclick, icon } : {
-        title: string,
+    const { title, type, style, alignment, url, onclick, icon, children } : {
+        title?: string,
         type: "submit" | "button" | "goto",
         style: "primary" | "secondary" | "transparent",
+        alignment?: "default" | "center",
         url?: string,
         onclick?: () => void,
-        icon?: Component<Icon>
+        icon?: Component<Icon>,
+        children?: Snippet
     } = $props();
 </script>
 
 {#if type == "goto" && url}
-    <a class="clickable-input {style} {icon ? "has-icon" : ""}" href="{url}">
-        {#if icon}
-            {@const ButtonIcon = icon}
-            <ButtonIcon />
+    <a class="clickable-input {alignment}-alignment {style} {icon ? "has-icon" : ""}" href="{url}">
+        {#if children}
+            {@render children()}
+        {:else}
+            {#if icon}
+                {@const ButtonIcon = icon}
+                <ButtonIcon />
+            {/if}
+            {title}
         {/if}
-        {title}
     </a>
 {:else if type == "button" || type == "submit"}
-    <button class="clickable-input {style} {icon ? "has-icon" : ""}" type={type} onclick={onclick}>
-        {#if icon}
-            {@const ButtonIcon = icon}
-            <ButtonIcon />
+    <button class="clickable-input {alignment}-alignment {style} {icon ? "has-icon" : ""}" type={type} onclick={onclick}>
+        {#if children}
+            {@render children()}
+        {:else}
+            {#if icon}
+                {@const ButtonIcon = icon}
+                <ButtonIcon />
+            {/if}
+            {title}
         {/if}
-        {title}
     </button>
 {/if}

@@ -4,7 +4,7 @@
 }
 
 h1 {
-	color: var(--grey-text-3);
+	color: var(--primary-base);
 	padding-bottom: var(--padding-2);
 
 	&:has(+ article), &:has(+ p), &:has(+ a) {
@@ -14,6 +14,7 @@ h1 {
 
 a, p, button, label, input, textarea, select, option, li, td {
 	font-size: 16px;
+	transition: color var(--default-animation-time);
 }
 
 a, p, label {
@@ -22,6 +23,12 @@ a, p, label {
 
 a {
 	color: var(--primary-base);
+
+	@media (hover:hover) {
+		&:hover {
+			color: var(--primary-background);
+		}
+	}
 }
 
 p {

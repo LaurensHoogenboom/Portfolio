@@ -4,6 +4,7 @@
     import type { PageData, ActionData } from './$types';
     import { enhance } from '$app/forms';
 	import Button from '$lib/components/atoms/button.svelte';
+	import AuthenticationHeader from '../components/authenticationHeader.svelte';
 
     let { data, form }: { data: PageData, form: ActionData } = $props();
     let step = $state(1);
@@ -15,7 +16,7 @@
 </script>
 
 {#if step == 1}
-    <form method="post" action="?/getSecurityQuestion" use:enhance={() => {
+    <form method="post" class="authentication" action="?/getSecurityQuestion" use:enhance={() => {
         return async ({ result, update }) => {
             await update();
 
@@ -27,9 +28,9 @@
             }
 		};
     }}>
-        <div>
-            <h1>Reset Password</h1>
+        <AuthenticationHeader title="Reset Password" url="/login"/>
 
+        <div>
             {#if form?.error}
                 <Notice message={form.error} type="warning" />
             {/if}
@@ -37,13 +38,10 @@
             <LabelInputGroup name="username" type="text" label="Username" required={true}/>    
         </div>
 
-        <div class="box nested-box">
-            <Button title="Back" type="goto" style="secondary" url="/login"/>
-            <Button title="Next" type="submit" style="primary"/>
-        </div>
+        <Button title="Next" type="submit" style="primary" alignment="center"/>
     </form>
 {:else if step == 2}
-    <form method="post" action="?/resetPassword" use:enhance={() => {
+    <form method="post" class="authentication" action="?/resetPassword" use:enhance={() => {
         return async ({ update, result}) => {
             await update();
 
@@ -52,8 +50,9 @@
             }
         }
     }}>
+        <AuthenticationHeader title="Reset Password" url="/login"/>
+
         <div>
-            <h1>Reset Password</h1>
             <p>Answer your secret question and provide a new password.</p>
     
             <p><strong>{userInformation.securityQuestion}</strong></p>
@@ -68,21 +67,17 @@
             <LabelInputGroup name="newPassword" type="password" label="New Password" required={true}/>
         </div>
 
-        <div class="box nested-box">
-            <Button title="Reset Password" type="submit" style="primary" />
-        </div>
+        <Button title="Reset Password" type="submit" style="primary" alignment="center"/>
     </form>
 {:else if step == 3}
-    <form>
-        <div>
-            <h1>Succes!</h1>
+    <form class="authentication">
+        <AuthenticationHeader title="Reset Password"/>
 
+        <div>
             <p>Your password has been succesfully changed, {userInformation.userName}.</p>
         </div>
         
-        <div class="box nested-box">
-            <Button title="Login" type="goto" url="/login?username={userInformation.userName}" style="primary"/>
-        </div>
+        <Button title="Login" type="goto" url="/login?username={userInformation.userName}" style="primary" alignment="center"/>
     </form>    
 {/if}
 
