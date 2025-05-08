@@ -19,7 +19,7 @@
     {#if url}
         <Button type="goto" style="transparent" url={url}>
             <ChevronLeft />
-            <h1 style="padding-bottom: 0; padding-left: var(--padding-4);">{title}</h1>
+            <h1 style="padding: 0 var(--padding-4) 0 var(--padding-4);">{title}</h1>
         </Button>
     {:else}
         <h1 style="padding-bottom: 0;">{title}</h1>

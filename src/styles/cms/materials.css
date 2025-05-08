@@ -84,6 +84,23 @@
     cursor: pointer;
     text-decoration: none;
     transition: background-color var(--default-animation-time), border-color var(--default-animation-time);
+    position: relative;
+
+    &:focus {
+        outline: none;
+
+        &:after {
+            position: absolute;
+            content: '';
+            display: block;
+            top: -2px;
+            bottom: -2px;
+            left: -2px;
+            right: -2px;
+            border-radius: var(--border-radius-s);
+            border: 2px solid var(--grey-borders);
+        }
+    }
 
     &.primary {
         background: var(--primary-background-gradient);
@@ -94,8 +111,12 @@
             border-color: rgba(from var(--white-text) r g b 0.72);
         }
 
-        &.has-icon svg * {
+        &.has-icon svg {
             color: var(--white-text);
+        }
+
+        &:focus:after {
+            border-color: var(--primary-borders) !important;
         }
     }
 
@@ -104,7 +125,7 @@
         border-color: transparent;
         box-shadow: none;
         padding: var(--padding-5) var(--padding-5);
-        border: 1px solid var(--white-background);
+        border: 1px solid transparent;
 
         &.has-icon {
             flex-direction: row-reverse;

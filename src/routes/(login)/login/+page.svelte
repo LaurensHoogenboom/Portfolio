@@ -6,7 +6,7 @@
     import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { InfoIcon, LogIn } from '@lucide/svelte';
+	import { CircleUserRoundIcon, LogIn, User, UserRound } from '@lucide/svelte';
 	import AuthenticationHeader from './components/authenticationHeader.svelte';
 	import Instruction from '$lib/components/atoms/instruction.svelte';
 
@@ -34,6 +34,8 @@
         border-radius: 100%;
 
         .outset {
+            align-items: center;
+            justify-content: center;
             border-radius: 100%;
         }
     }
@@ -43,6 +45,7 @@
     <AuthenticationHeader title="Login" url="/">
         <div class="inset avatar">
             <div class="outset">
+                <UserRound size={20}/>
             </div>
         </div>
     </AuthenticationHeader>

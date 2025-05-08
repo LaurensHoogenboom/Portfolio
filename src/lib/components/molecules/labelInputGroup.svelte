@@ -23,7 +23,7 @@
     <label for={name}>{label}</label>
 
     {#if type == "text" || type == "password" }
-        <input class="inset" type={type} name={name} bind:value={value} onchange={callback} max={max} {required}/>
+        <input id={name} class="inset" type={type} name={name} bind:value={value} onchange={callback} max={max} {required}/>
     {:else if type == "textarea"}
         <textarea class="inset" bind:value={value} name={name} onchange={callback} maxlength={max} {required}></textarea>
     {/if}

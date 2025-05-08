@@ -17,7 +17,7 @@ a, p, button, label, input, textarea, select, option, li, td {
 	color: var(--grey-text-2);
 }
 
-a, p, label {
+p, label {
 	padding-bottom: var(--padding-2);
 }
 
@@ -28,6 +28,11 @@ a {
 		&:hover {
 			color: var(--primary-background);
 		}
+	}
+
+	&:focus {
+		outline: none;
+		color: var(--primary-background);
 	}
 }
 
@@ -43,6 +48,14 @@ label {
 	&:has(+ input), &:has(+ textarea) {
 		padding-bottom: var(--padding-4);
 	}
+}
+
+form label {
+	cursor: pointer;
+}
+
+svg {
+	color: var(--grey-text-1);
 }
 
 /* figtree-regular - latin */

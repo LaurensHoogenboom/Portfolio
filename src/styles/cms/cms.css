@@ -10,3 +10,4 @@
 @import url("./materials.css") layer(materials);
 @import url("./layout/page.css") layer(layouts);
 @import url("./layout/form.css") layer(layouts);
+@import url("./components/inputs.css") layer(components);

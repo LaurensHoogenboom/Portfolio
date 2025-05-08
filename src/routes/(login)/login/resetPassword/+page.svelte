@@ -7,7 +7,7 @@
 	import AuthenticationHeader from '../components/authenticationHeader.svelte';
 	import Instruction from '$lib/components/atoms/instruction.svelte';
 
-    let { data, form }: { data: PageData, form: ActionData } = $props();
+    let { form }: { form: ActionData } = $props();
     let step = $state(1);
     let userInformation = $state({
         userId: "",
@@ -58,7 +58,7 @@
         <div>
             <Instruction message="Answer your secret question and choose a new password."/>
     
-            <p style="margin-top: 20px;"><strong>{userInformation.securityQuestion}</strong></p>
+            <p style="margin-top: var(--padding-2);"><strong>{userInformation.securityQuestion}</strong></p>
     
             <input type="hidden" name="id" value={userInformation.userId}>
     
@@ -75,11 +75,7 @@
 {:else if step == 3}
     <form class="authentication">
         <AuthenticationHeader title="Reset Password"/>
-
-        <div>
-            <Instruction message="Your password has been succesfully changed, {userInformation.userName}."/>
-        </div>
-        
+        <Instruction message="Your password has been succesfully changed, {userInformation.userName}."/>
         <Button title="Login" type="goto" url="/login?username={userInformation.userName}" style="primary" alignment="center"/>
     </form>    
 {/if}

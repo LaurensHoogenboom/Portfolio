@@ -3,6 +3,7 @@ form {
     flex-direction: column;
     justify-content: space-between;
     flex-grow: 1;
+    grid-gap: var(--padding-1);
 
     .box.nested-box:last-child {
         justify-content: flex-end;
