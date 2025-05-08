@@ -15,8 +15,7 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        grid-gap: 10px;
-        margin-bottom: 15px;
+        margin-bottom: var(--padding-3);
     }
 </style>
 
@@ -24,9 +23,9 @@
     <label for={name}>{label}</label>
 
     {#if type == "text" || type == "password" }
-        <input type={type} name={name} bind:value={value} onchange={callback} max={max} {required}/>
+        <input id={name} class="inset" type={type} name={name} bind:value={value} onchange={callback} max={max} {required}/>
     {:else if type == "textarea"}
-        <textarea bind:value={value} name={name} onchange={callback} maxlength={max} {required}></textarea>
+        <textarea class="inset" bind:value={value} name={name} onchange={callback} maxlength={max} {required}></textarea>
     {/if}
 </div>
 

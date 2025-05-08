@@ -1,0 +1,168 @@
+.box {
+    display: flex;
+	border: var(--default-border);
+	background-color: var(--white-background);
+	border-radius: var(--border-radius-m);
+    box-shadow: var(--shadow-float-1);
+    padding: var(--padding-2);
+    grid-gap: var(--padding-3);
+
+    &.toolbar {
+        width: 100%;
+        padding: var(--padding-4) var(--padding-3);
+
+        &.integrated {
+            border-radius: 0;
+            border-top: none;
+            border-right: none;
+            border-left: none;
+        }
+    }
+
+    .nested-box {
+        margin: calc(0px - var(--padding-2));
+        background-color: var(--grey-background-1);
+        box-shadow: none;
+        padding: var(--padding-3) var(--padding-2);
+
+        &:not(:only-child):last-child {
+            margin-top: var(--padding-2);
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+            border-left: none;
+            border-bottom: none;
+            border-right: none;
+        }
+    }
+}
+
+.inset {
+    box-shadow: var(--shadow-inset);
+    padding: var(--padding-5);
+    border-radius: var(--border-radius-s);
+    border: var(--default-border);
+    background: var(--grey-background-1);
+
+    &.gradient {
+        background: var(--grey-background-gradient);
+    }
+
+    &.primary {
+        box-shadow: none;
+        border-radius: 20px;
+        border: var(--primary-border);
+        background: var(--primary-background);
+    }
+}
+
+.outset {
+    display: flex;
+    align-items: center;
+    background: var(--white-background);
+    border-radius: var(--border-radius-xs);
+    box-shadow: var(--shadow-outset);
+    text-decoration: none;
+    height: 100%;
+
+    &.primary {
+        background: var(--primary-background-gradient);
+        border: var(--primary-border);
+        box-shadow: none;
+        color: var(--white-text);
+    }
+}
+
+.clickable-input {
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--border-radius-s);
+    background-color: var(--grey-background-1);
+    border: var(--default-border);
+    padding: var(--padding-5) var(--padding-3);
+    color: var(--grey-text-2);
+    box-shadow: var(--shadow-float-3);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color var(--default-animation-time), border-color var(--default-animation-time);
+    position: relative;
+
+    &:after {
+        position: absolute;
+        content: '';
+        display: block;
+        top: -2px;
+        bottom: -2px;
+        left: -2px;
+        right: -2px;
+        border-radius: var(--border-radius-s);
+        border: 2px solid var(--grey-borders);
+        opacity: 0;
+        transition: opacity var(--default-animation-time);
+    }
+
+    &:focus {
+        outline: none;
+
+        &:after {
+            opacity: 1;
+        }
+    }
+
+    &.primary {
+        background: var(--primary-background-gradient);
+        border: var(--primary-border);
+        color: var(--white-text);
+
+        &.primary-parent {
+            border-color: rgba(from var(--white-text) r g b 0.72);
+        }
+
+        &.has-icon svg {
+            color: var(--white-text);
+        }
+
+        &:focus:after {
+            border-color: var(--primary-borders) !important;
+        }
+    }
+
+    &.transparent {
+        background: none;
+        border-color: transparent;
+        box-shadow: none;
+        padding: var(--padding-5) var(--padding-5);
+        border: 1px solid transparent;
+
+        &.has-icon {
+            flex-direction: row-reverse;
+        }
+
+        @media (hover: hover) {
+            &:hover {
+                background-color: var(--grey-background-1);
+                border-color: var(--grey-borders);
+            }
+        }
+    }
+
+    &.has-icon {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        grid-gap: var(--padding-5);
+        padding-left: var(--padding-4);
+
+        svg {
+            height: 16px;
+        }
+    }
+
+    &.center-alignment {
+        justify-content: center;
+        flex-direction: row-reverse;
+        
+        &.has-icon {
+            padding-left: var(--padding-3);
+        }
+    }
+}

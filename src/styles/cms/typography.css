@@ -1,0 +1,96 @@
+* {
+	font-family: "Figtree", sans-serif;
+}
+
+h1 {
+	color: var(--primary-base);
+	padding-bottom: var(--padding-2);
+
+	&:has(+ article), &:has(+ p), &:has(+ a) {
+		padding-bottom: var(--padding-4);
+	}
+}
+
+a, p, button, label, input, textarea, select, option, li, td {
+	font-size: 16px;
+	transition: color var(--default-animation-time);
+	color: var(--grey-text-2);
+}
+
+p, label {
+	padding-bottom: var(--padding-2);
+}
+
+a {
+	color: var(--primary-base);
+
+	@media (hover:hover) {
+		&:hover {
+			color: var(--primary-background);
+		}
+	}
+
+	&:focus {
+		outline: none;
+		color: var(--primary-background);
+	}
+}
+
+p {
+	&:has(+ p) {
+		padding-bottom: var(--padding-5);
+	}
+}
+
+label {
+	color: var(--grey-text-1);
+
+	&:has(+ input), &:has(+ textarea) {
+		padding-bottom: var(--padding-4);
+	}
+
+	&:has(+ :focus) {
+		color: var(--primary-base);
+	}
+}
+
+form label {
+	cursor: pointer;
+}
+
+svg {
+	color: var(--grey-text-1);
+}
+
+/* figtree-regular - latin */
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Figtree';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../../fonts/figtree-v7-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* figtree-italic - latin */
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Figtree';
+	font-style: italic;
+	font-weight: 400;
+	src: url('../../fonts/figtree-v7-latin-italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* figtree-700 - latin */
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Figtree';
+	font-style: normal;
+	font-weight: 700;
+	src: url('../../fonts/figtree-v7-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* figtree-700italic - latin */
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Figtree';
+	font-style: italic;
+	font-weight: 700;
+	src: url('../../fonts/figtree-v7-latin-700italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}

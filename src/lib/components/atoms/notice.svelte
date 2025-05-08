@@ -9,13 +9,17 @@
 
 <style>
     .notice {
-        --color: blue;
+            --color: blue;
         padding: 10px;
         border: 1px solid var(--color);
         border-radius: 5px;
-        color: var(--color);
-        background-color: rgba(var(--color), 0.2);
+        background-color: rgba(from var(--color) r g b / 0.2);
         margin-bottom: 15px;
+
+        p {
+            color: var(--color);
+            padding-bottom: 0;
+        }
 
         &.warning {
             --color: red;
@@ -28,7 +32,7 @@
         &.neutral {
             --color: blue;
         }
-    }
+    }  
 </style>
 
 <div class="notice {type}" in:fly={{ y: 20 }} out:slide>

@@ -1,0 +1,9 @@
+input, textarea {
+    transition: border-color var(--default-animation-time), border-width var(--default-animation-time);
+
+    &:focus {
+        outline: none;
+        border-color: var(--primary-base);
+        box-shadow: var(--shadow-float-3);
+    }
+}
