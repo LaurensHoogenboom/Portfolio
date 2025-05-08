@@ -48,6 +48,10 @@ label {
 	&:has(+ input), &:has(+ textarea) {
 		padding-bottom: var(--padding-4);
 	}
+
+	&:has(+ :focus) {
+		color: var(--primary-base);
+	}
 }
 
 form label {

@@ -86,19 +86,25 @@
     transition: background-color var(--default-animation-time), border-color var(--default-animation-time);
     position: relative;
 
+    &:after {
+        position: absolute;
+        content: '';
+        display: block;
+        top: -2px;
+        bottom: -2px;
+        left: -2px;
+        right: -2px;
+        border-radius: var(--border-radius-s);
+        border: 2px solid var(--grey-borders);
+        opacity: 0;
+        transition: opacity var(--default-animation-time);
+    }
+
     &:focus {
         outline: none;
 
         &:after {
-            position: absolute;
-            content: '';
-            display: block;
-            top: -2px;
-            bottom: -2px;
-            left: -2px;
-            right: -2px;
-            border-radius: var(--border-radius-s);
-            border: 2px solid var(--grey-borders);
+            opacity: 1;
         }
     }
 
