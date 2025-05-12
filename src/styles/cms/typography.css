@@ -18,7 +18,9 @@ a, p, button, label, input, textarea, select, option, li, td {
 }
 
 p, label {
-	padding-bottom: var(--padding-2);
+	&:not(:last-child) {
+		padding-bottom: var(--padding-2);
+	}
 }
 
 a {
@@ -37,7 +39,7 @@ a {
 }
 
 p {
-	&:has(+ p) {
+	&:has(+ p):not(:last-child) {
 		padding-bottom: var(--padding-5);
 	}
 }
@@ -45,12 +47,14 @@ p {
 label {
 	color: var(--grey-text-1);
 
-	&:has(+ input), &:has(+ textarea) {
-		padding-bottom: var(--padding-4);
-	}
-
-	&:has(+ :focus) {
-		color: var(--primary-base);
+	&:not(:last-child) {
+		&:has(+ input), &:has(+ textarea) {
+			padding-bottom: var(--padding-4);
+		}
+	
+		&:has(+ :focus) {
+			color: var(--primary-base);
+		}
 	}
 }
 

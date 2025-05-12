@@ -6,7 +6,7 @@
     import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { CircleUserRoundIcon, LogIn, User, UserRound } from '@lucide/svelte';
+	import { LogIn, UserRound } from '@lucide/svelte';
 	import AuthenticationHeader from './components/authenticationHeader.svelte';
 	import Instruction from '$lib/components/atoms/instruction.svelte';
 
@@ -62,6 +62,6 @@
         <a href="/login/resetPassword/" style="float: right">Forgot password?</a>
     </div>
 
-    <Button type="submit" style="primary" title="Login" alignment="center" icon={LogIn}/>
+    <Button type="submit" style="primary" title="Login" alignment="center" icon={LogIn} loading={false}/>
 </form>
 
