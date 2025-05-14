@@ -28,7 +28,7 @@
 {/if}
 
 {#snippet buttonContent()}
-    <div class="button-content {alignment}-alignment {icon ? "has-icon" : ""} {loading ? "hidden" : ""}">
+    <div class="button-content {alignment}-alignment {icon ? "has-icon" : ""} {!title ? "only-icon" : ""} {loading ? "hidden" : ""}">
         {#if children}
             {@render children()}
         {:else}
@@ -36,14 +36,16 @@
                 {@const ButtonIcon = icon}
                 <ButtonIcon />
             {/if}
-            <span>
-                {title}
-            </span>
+            {#if title}
+                <span>
+                    {title}
+                </span>
+            {/if}
         {/if}
     </div>
 
     {#if loading}
-        <div class="button-content loader {alignment}-alignment {icon ? "has-icon" : ""}" transition:fly={{ y: 20 }}>
+        <div class="button-content loader" transition:fly={{ y: 20 }}>
             <Circle size={20} color="white" />
         </div> 
     {/if}

@@ -1,6 +1,8 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
     import { fly, slide } from 'svelte/transition';
+	import Button from '../atoms/button.svelte';
+	import { Pencil, Trash2 } from '@lucide/svelte';
     
     let { id, title, url, deleteAction, editAction } : {
         id: string,
@@ -16,10 +18,11 @@
         display: flex;
         grid-gap: 10px;
         width: 100%;
+        align-items: center;
         
         &:not(:last-child) {
             border-bottom: var(--default-border);
-            padding-bottom: var(--padding-3);
+            padding-bottom: var(--padding-4);
         }
 
         a, p {
@@ -27,8 +30,9 @@
             padding-bottom: 0;
         }
 
-        button {
-            width: 50px;
+        .actions {
+            display: flex;
+            flex-direction: row;
         }
     }
 </style>
@@ -42,15 +46,19 @@
         <p>{title}</p>
     {/if}
 
-    {#if id && editAction}
-        <button onclick={editAction}>Edit</button>
-    {/if}
+    {#if (id && editAction) || (id && deleteAction)}
+        <div class="actions">
+            {#if id && editAction}
+                <Button type="button" style="transparent" icon={Pencil} onclick={editAction} />
+            {/if}
 
-    {#if id && deleteAction}
-        <form method="post" action={deleteAction} use:enhance>
-            <input type="hidden" name="id" value={id}>
+            {#if id && deleteAction}
+                <form method="post" action={deleteAction} use:enhance>
+                    <input type="hidden" name="id" value={id}>
 
-            <button type="submit">delete</button>
-        </form>
+                    <Button type="submit" style="transparent" icon={Trash2} />
+                </form>
+            {/if}
+        </div>
     {/if}
 </div>

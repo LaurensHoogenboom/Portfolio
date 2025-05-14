@@ -25,7 +25,7 @@
 <main>
     <div class="box" style="flex-direction: column;">
         {#each data.posts as post}
-            <ListItem title={post.title} id={post.id} url="/cms/posts/{post.slug}" deleteAction="/posts?/delete" />
+            <ListItem title={post.title} id={post.id} url="/cms/posts/{post.slug}" deleteAction="/cms/posts?/delete" />
         {/each}
     </div>
 </main>

@@ -22,20 +22,22 @@
     
     &.has-icon {
         grid-gap: var(--padding-5);
-        padding-left: var(--padding-4);
+        padding-right: var(--padding-5);
+
+        &.center-alignment, 
+        &.only-icon {
+            padding-right: 0;
+        }
 
         svg {
             height: 16px;
+            color: var(--grey-text-2);
         }
     }
 
     &.center-alignment {
         justify-content: center;
         flex-direction: row-reverse;
-        
-        &.has-icon {
-            padding-left: 0;
-        }
     }
 }
 
