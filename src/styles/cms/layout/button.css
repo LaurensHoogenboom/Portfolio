@@ -1,0 +1,50 @@
+.button-content {
+    display: inline-flex;
+    align-items: center;
+    min-height: 20px;
+    width: 100%;
+    position: relative;
+    transition: opacity var(--default-animation-time);
+
+    &.loader {
+        position: absolute;
+        justify-content: center;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    &.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    &.has-icon {
+        grid-gap: var(--padding-5);
+        padding-left: var(--padding-4);
+
+        svg {
+            height: 16px;
+        }
+    }
+
+    &.center-alignment {
+        justify-content: center;
+        flex-direction: row-reverse;
+        
+        &.has-icon {
+            padding-left: 0;
+        }
+    }
+}
+
+.clickable-input {
+    &.primary .button-content.has-icon svg {
+        color: var(--white-text);
+    }
+
+    &.transparent {
+        flex-direction: row-reverse;
+    }
+}

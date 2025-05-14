@@ -73,8 +73,6 @@
 }
 
 .clickable-input {
-    display: inline-flex;
-    align-items: center;
     border-radius: var(--border-radius-s);
     background-color: var(--grey-background-1);
     border: var(--default-border);
@@ -139,14 +137,13 @@
     &.primary {
         background: var(--primary-background-gradient);
         border: var(--primary-border);
-        color: var(--white-text);
+
+        span {
+            color: var(--white-text);
+        }
 
         &.primary-parent {
             border-color: rgba(from var(--white-text) r g b 0.72);
-        }
-
-        &.has-icon svg {
-            color: var(--white-text);
         }
 
         &:focus:after {
@@ -166,10 +163,6 @@
         padding: var(--padding-5) var(--padding-5);
         border: 1px solid transparent;
 
-        &.has-icon {
-            flex-direction: row-reverse;
-        }
-
         @media (hover: hover) {
             &:hover {
                 background-color: var(--grey-background-1);
@@ -179,26 +172,5 @@
                 }
             }
         }
-    }
-
-    &.has-icon {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        grid-gap: var(--padding-5);
-        padding-left: var(--padding-4);
-
-        svg {
-            height: 16px;
-        }
-    }
-
-    &.center-alignment {
-        justify-content: center;
-        flex-direction: row-reverse;
-        
-        &.has-icon {
-            padding-left: var(--padding-3);
-        }
-    }
+    }  
 }
