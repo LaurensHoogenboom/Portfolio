@@ -14,7 +14,7 @@ const login = async (username: string, password: string) => {
             username: user.username
         };
     } else {
-        throw new Error("Unknown username or wrong password given.");
+        throw new Error("Wrong username or password provided.");
     }
 }
 
@@ -24,7 +24,7 @@ const resetPassword = async (id: string, newPassword: Uint8Array, securityQuesti
     if (user && user.securityQuestionAnswer == securityQuestionAnswer) {
         await db.update(users).set({password: newPassword});
     } else {
-        throw new Error("Wrong answer to secret question was given.");
+        throw new Error("Wrong answer to secret question provided.");
     }
 }
 

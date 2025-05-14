@@ -47,7 +47,7 @@
             align-items: center;
             height: 100%;
             width: 100%;
-            max-width: 460px;
+            max-width: 480px;
             padding: var(--padding-1);
             grid-gap: var(--padding-1);
             z-index: 1;
@@ -57,7 +57,7 @@
                 flex-direction: column;
                 height: 100%;
                 width: 100%;
-                max-height: 600px;
+                max-height: 650px;
                 overflow-y: auto;
                 border-radius: var(--border-radius-l);
                 padding: var(--padding-4);

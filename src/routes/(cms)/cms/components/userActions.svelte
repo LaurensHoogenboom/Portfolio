@@ -3,6 +3,7 @@
 	import CustomIcon from '../../../../lib/components/atoms/customIcons/customIcon.svelte';
 	import Button from '../../../../lib/components/atoms/button.svelte';
 	import { enhance } from '$app/forms';
+	import Avatar from '$lib/components/molecules/avatar.svelte';
 
 	const { username, userImageUrl }: {
 		username: string;
@@ -25,9 +26,7 @@
 		onclick={() => (userDropDownOpen = !userDropDownOpen)}
 	>
 		<p>{username}</p>
-		<div class="inset avatar">
-			<div class="outset"></div>
-		</div>
+		<Avatar size={40} iconSize={15} />
 		<ChevronDown size={18} class="dropdown-chevron" />
 
 		{#if userDropDownOpen || submitting}
@@ -76,19 +75,10 @@
 			cursor: pointer;
 			position: relative;
 			border: 1px solid transparent;
+			z-index: 2;
 
 			p {
 				padding: 0;
-			}
-
-			.avatar {
-				height: 40px;
-				width: 40px;
-				border-radius: 100%;
-
-				.outset {
-					border-radius: 100%;
-				}
 			}
 
 			&.active {
