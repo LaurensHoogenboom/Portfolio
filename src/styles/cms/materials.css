@@ -23,7 +23,7 @@
         margin: calc(0px - var(--padding-2));
         background-color: var(--grey-background-1);
         box-shadow: none;
-        padding: var(--padding-3) var(--padding-2);
+        padding: var(--padding-4) var(--padding-2);
 
         &:not(:only-child):last-child {
             margin-top: var(--padding-2);
@@ -31,6 +31,15 @@
             border-top-left-radius: 0;
             border-left: none;
             border-bottom: none;
+            border-right: none;
+        }
+
+        &:not(:only-child):first-child {
+            margin-bottom: var(--padding-2);
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-left: none;
+            border-top: none;
             border-right: none;
         }
     }
@@ -173,4 +182,9 @@
             }
         }
     }  
+}
+
+.backdrop {
+    background-color: rgba(0,0,0,0.4);
+    backdrop-filter: blur(30px);
 }

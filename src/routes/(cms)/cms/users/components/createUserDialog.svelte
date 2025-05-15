@@ -2,6 +2,7 @@
 	import { enhance } from "$app/forms";
 	import Button from "$lib/components/atoms/button.svelte";
 	import Notice from "$lib/components/atoms/notice.svelte";
+	import Avatar from "$lib/components/molecules/avatar.svelte";
 	import LabelInputGroup from "$lib/components/molecules/labelInputGroup.svelte";
 	import Dialog from "$lib/components/organisms/dialog.svelte";
 	import PasswordInput from "$lib/components/organisms/passwordInput.svelte";
@@ -9,7 +10,7 @@
     let { closeCallback, errorMessage } : { closeCallback: () => void, errorMessage?: string } = $props();
 </script>
 
-<Dialog>
+<Dialog title="Add User" closeCallback={closeCallback}>
     <form method="post" action="?/create" use:enhance>
         {#if errorMessage}
             <Notice message={errorMessage} type="warning" />
