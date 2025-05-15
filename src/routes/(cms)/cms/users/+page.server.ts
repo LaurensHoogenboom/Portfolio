@@ -82,7 +82,7 @@ export const actions: Actions = {
             await deleteUser(id);
 
             return {
-                success: true
+                succes: true
             };
         } catch (e) {
             const error = e as Error;

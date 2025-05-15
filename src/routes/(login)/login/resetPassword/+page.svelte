@@ -6,6 +6,7 @@
 	import Button from '$lib/components/atoms/button.svelte';
 	import AuthenticationHeader from '../components/authenticationHeader.svelte';
 	import Instruction from '$lib/components/atoms/instruction.svelte';
+	import PasswordInput from '$lib/components/organisms/passwordInput.svelte';
 
     let { form }: { form: ActionData } = $props();
     let step = $state(1);
@@ -14,6 +15,8 @@
         userName: "",
         securityQuestion: ""
     });
+    let newPassword = $state("");
+    let confirmPassword = $state("");
 </script>
 
 {#if step == 1}
@@ -67,7 +70,7 @@
             {/if}
     
             <LabelInputGroup name="securityQuestionAnswer" type="text" label="Answer" required={true}/>
-            <LabelInputGroup name="newPassword" type="password" label="New Password" required={true}/>
+            <PasswordInput />
         </div>
 
         <Button title="Reset Password" type="submit" style="primary" alignment="center"/>
