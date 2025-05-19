@@ -6,7 +6,6 @@
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
     min-width: 400px;
-    min-height: 600px;
     max-height: calc(100vh - (var(--padding-1) * 4));
     max-width: calc(100vw - (var(--padding-1) * 4));
     background: none;
