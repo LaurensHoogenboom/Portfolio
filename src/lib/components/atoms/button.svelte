@@ -1,29 +1,41 @@
 <script lang="ts">
-    import { type Component, type Snippet } from 'svelte';
-    import { Icon } from '@lucide/svelte'; 
+    import { type Snippet } from 'svelte';
+    import { type Icon as IconType } from '@lucide/svelte'; 
     import { Circle } from 'svelte-loading-spinners';
     import { fly } from 'svelte/transition';
 
     const { title, type, style, alignment, url, onclick, icon, children, loading = false } : {
         title?: string,
         type: "submit" | "button" | "goto",
-        style: "primary" | "secondary" | "transparent",
+        style: "primary" | "secondary" | "transparent" | "inset-outset",
         alignment?: "default" | "center",
         url?: string,
         onclick?: () => void,
-        icon?: Component<Icon>,
+        icon?: typeof IconType,
         children?: Snippet,
         loading?: boolean
     } = $props();
 </script>
 
 {#if type == "goto" && url}
-    <a class="clickable-input {style}" href="{url}">
-        {@render buttonContent()}
+    <a class="{style == "inset-outset" ? "inset round" : `clickable-input ${style}`}" href="{url}">
+        {#if style=="inset-outset"}
+            <div class="outset">
+                {@render buttonContent()}
+            </div>
+        {:else}
+            {@render buttonContent()}
+        {/if}
     </a>
 {:else if type == "button" || type == "submit"}
-    <button class="clickable-input {style}" type={type} onclick={onclick}>
-        {@render buttonContent()}
+    <button class="{style == "inset-outset" ? "inset round" : `clickable-input ${style}`}" type={type} onclick={onclick}>
+        {#if style=="inset-outset"}
+            <div class="outset">
+                {@render buttonContent()}
+            </div>
+        {:else}
+            {@render buttonContent()}
+        {/if}
     </button>
 {/if}
 
@@ -32,14 +44,14 @@
         {#if children}
             {@render children()}
         {:else}
-            {#if icon}
-                {@const ButtonIcon = icon}
-                <ButtonIcon />
-            {/if}
             {#if title}
                 <span>
                     {title}
                 </span>
+            {/if}
+            {#if icon}
+                {@const ButtonIcon = icon}
+                <ButtonIcon size={16} />
             {/if}
         {/if}
     </div>

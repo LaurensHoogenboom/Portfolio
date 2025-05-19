@@ -23,7 +23,7 @@
         margin: calc(0px - var(--padding-2));
         background-color: var(--grey-background-1);
         box-shadow: none;
-        padding: var(--padding-3) var(--padding-2);
+        padding: var(--padding-4) var(--padding-2);
 
         &:not(:only-child):last-child {
             margin-top: var(--padding-2);
@@ -31,6 +31,15 @@
             border-top-left-radius: 0;
             border-left: none;
             border-bottom: none;
+            border-right: none;
+        }
+
+        &:not(:only-child):first-child {
+            margin-bottom: var(--padding-2);
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-left: none;
+            border-top: none;
             border-right: none;
         }
     }
@@ -52,6 +61,60 @@
         border-radius: 20px;
         border: var(--primary-border);
         background: var(--primary-background);
+    }
+
+    &[type="button"] {
+        position: relative;
+        padding: 3px;
+
+        .outset {
+            position: relative;
+            transition: background-color var(--default-animation-time);
+            z-index: 1;
+
+            @media (hover:hover) {
+                &:hover {
+                    background-color: var(--grey-background-1);
+                    cursor: pointer;
+                }
+            }
+        }
+
+        /* Focus Outline */
+
+        &:after {
+            position: absolute;
+            content: '';
+            display: block;
+            top: -2px;
+            bottom: -2px;
+            left: -2px;
+            right: -2px;
+            border-radius: var(--border-radius-s);
+            border: 2px solid var(--grey-borders);
+            opacity: 0;
+            transition: opacity var(--default-animation-time);
+        }
+
+        &.round:after {
+            border-radius: 100%;
+        }
+
+        &:focus {
+            outline: none;
+
+            &:after {
+                opacity: 1;
+            }
+        }
+    }
+
+    &.round {
+        border-radius: 100%;
+
+        .outset {
+            border-radius: 100%;
+        }
     }
 }
 
@@ -76,7 +139,6 @@
     border-radius: var(--border-radius-s);
     background-color: var(--grey-background-1);
     border: var(--default-border);
-    padding: var(--padding-5) var(--padding-3);
     color: var(--grey-text-2);
     box-shadow: var(--shadow-float-3);
     cursor: pointer;
@@ -160,7 +222,6 @@
         background: none;
         border-color: transparent;
         box-shadow: none;
-        padding: var(--padding-5) var(--padding-5);
         border: 1px solid transparent;
 
         @media (hover: hover) {
@@ -173,4 +234,9 @@
             }
         }
     }  
+}
+
+.frost-glass {
+    background-color: rgba(0,0,0,0.4);
+    backdrop-filter: blur(30px);
 }

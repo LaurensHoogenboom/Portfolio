@@ -15,8 +15,6 @@
         userName: "",
         securityQuestion: ""
     });
-    let newPassword = $state("");
-    let confirmPassword = $state("");
 </script>
 
 {#if step == 1}

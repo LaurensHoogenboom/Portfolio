@@ -20,7 +20,7 @@
     } = $props();
 </script>
 
-<Dialog>
+<Dialog title={`Edit ${userToEdit.username}`} closeCallback={closeCallback}>
     <form method="post" action="?/update" use:enhance={() => {
         return ({ update }) => update({ reset: false });
     }}>
@@ -30,12 +30,20 @@
 
         <input type="hidden" name="id" value={userToEdit.id}>
 
-        <LabelInputGroup type="text" name="username" label="Username" max={120} required={true} value={userToEdit.username}/>
-        <PasswordInput requireCurrentPassword={true} required={false} />
-        <LabelInputGroup type="text" name="securityQuestion" label="Security Question" max={250} required={true} value={userToEdit.securityQuestion}/>
-        <LabelInputGroup type="text" name="securityQuestionAnswer" label="Security Answer" max={250} required={true} value={userToEdit.securityQuestionAnswer}/>
+        <fieldset>
+            <LabelInputGroup type="text" name="username" label="Username" max={120} required={true} value={userToEdit.username}/>
+        </fieldset>
 
-        <div class="box nested-box">
+        <fieldset>
+            <PasswordInput requireCurrentPassword={true} required={false} />
+        </fieldset>
+        
+        <fieldset>
+            <LabelInputGroup type="text" name="securityQuestion" label="Secret Question" max={250} required={true} value={userToEdit.securityQuestion}/>
+            <LabelInputGroup type="text" name="securityQuestionAnswer" label="Secret Answer" max={250} required={true} value={userToEdit.securityQuestionAnswer}/>
+        </fieldset>
+          
+        <div class="box nested-box form-actions">
             <Button type="button" style="secondary" title="Cancel" onclick={closeCallback} />
             <Button type="submit" style="primary" title="Save Changes" />
         </div>

@@ -9,18 +9,26 @@
     let { closeCallback, errorMessage } : { closeCallback: () => void, errorMessage?: string } = $props();
 </script>
 
-<Dialog>
+<Dialog title="Add User" closeCallback={closeCallback}>
     <form method="post" action="?/create" use:enhance>
         {#if errorMessage}
             <Notice message={errorMessage} type="warning" />
         {/if}
 
-        <LabelInputGroup type="text" name="username" label="Username" max={120} required={true}/>
-        <PasswordInput requireCurrentPassword={false} required={true} />
-        <LabelInputGroup type="text" name="securityQuestion" label="Security Question" max={250} required={true}/>
-        <LabelInputGroup type="text" name="securityQuestionAnswer" label="Security Answer" max={250} required={true}/>
+        <fieldset>
+            <LabelInputGroup type="text" name="username" label="Username" max={120} required={true}/>
+        </fieldset>
 
-        <div class="box nested-box">
+        <fieldset>
+            <PasswordInput requireCurrentPassword={false} required={true} />
+        </fieldset>
+
+        <fieldset>
+            <LabelInputGroup type="text" name="securityQuestion" label="Secret Question" max={250} required={true}/>
+            <LabelInputGroup type="text" name="securityQuestionAnswer" label="Secret Answer" max={250} required={true}/>
+        </fieldset>
+
+        <div class="box nested-box form-actions">
             <Button type="button" style="secondary" title="Cancel" onclick={closeCallback} />
             <Button type="submit" style="primary" title="Add User" />
         </div>

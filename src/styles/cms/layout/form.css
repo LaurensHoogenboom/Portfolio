@@ -12,4 +12,12 @@ form {
         height: 100%;
         grid-gap: var(--padding-1);
     }
+
+    fieldset {
+        border: none;
+        
+        &:not(:last-of-type) {
+            padding-bottom: var(--padding-2);
+        }
+    }
 }

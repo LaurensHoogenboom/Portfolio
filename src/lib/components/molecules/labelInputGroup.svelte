@@ -24,6 +24,10 @@
             margin-bottom: var(--padding-3);
             margin-top: var(--padding-3);
         }
+
+        &:last-child :global(.instruction) {
+            margin-bottom: 0;
+        }
     }
 </style>
 
