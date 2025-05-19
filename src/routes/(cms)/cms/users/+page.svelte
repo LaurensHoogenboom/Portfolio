@@ -6,6 +6,7 @@
 	import EditUserDialog from './components/editUserDialog.svelte';
     import type { IUserToEdit } from './components/editUserDialog.svelte';
 	import CreateUserDialog from './components/createUserDialog.svelte';
+	import { Plus } from '@lucide/svelte';
 
     let { data, form }: { data: PageData, form: ActionData | undefined } = $props();
 
@@ -44,7 +45,7 @@
 </script>
 
 <PageToolbar>
-    <Button title="Add User" type="button" style="secondary" onclick={openCreateForm} />
+    <Button title="Add User" type="button" style="secondary" onclick={openCreateForm} icon={Plus} />
 </PageToolbar>
 
 <main>

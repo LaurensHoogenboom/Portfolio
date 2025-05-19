@@ -4,6 +4,7 @@
 	import PageToolbar from '$lib/components/organisms/pageToolbar.svelte';
 	import Button from '$lib/components/atoms/button.svelte';
 	import CreatePostDialog from './components/createPostDialog.svelte';
+	import { Plus } from '@lucide/svelte';
 
     let { data, form }: { data: PageData, form: ActionData | undefined } = $props();
     let createPostDialogVisible = $state(false);
@@ -15,7 +16,7 @@
 </script>
 
 <PageToolbar>
-    <Button title="Add Post" type="button" style="secondary" onclick={openCreatePostDialog} />
+    <Button title="Add Post" type="button" style="secondary" onclick={openCreatePostDialog} icon={Plus} />
 </PageToolbar>
 
 <main>

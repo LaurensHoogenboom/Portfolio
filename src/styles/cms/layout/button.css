@@ -5,6 +5,7 @@
     width: 100%;
     position: relative;
     transition: opacity var(--default-animation-time);
+    padding: var(--padding-5) var(--padding-3);
 
     &.loader {
         position: absolute;
@@ -21,23 +22,23 @@
     }
     
     &.has-icon {
-        grid-gap: var(--padding-5);
-        padding-right: var(--padding-5);
+        grid-gap: var(--padding-4);
+        justify-content: space-between;
 
-        &.center-alignment, 
         &.only-icon {
-            padding-right: 0;
+            aspect-ratio: 1 / 1;
+            min-height: 30px;
+            justify-content: center;
+            padding: var(--padding-5);
         }
 
         svg {
-            height: 16px;
             color: var(--grey-text-2);
         }
     }
 
     &.center-alignment {
         justify-content: center;
-        flex-direction: row-reverse;
     }
 }
 
@@ -46,7 +47,11 @@
         color: var(--white-text);
     }
 
-    &.transparent {
-        flex-direction: row-reverse;
+    &.transparent .button-content {
+        padding: var(--padding-5);
     }
+}
+
+.inset .outset .button-content.only-icon {
+    min-height: 20px;
 }

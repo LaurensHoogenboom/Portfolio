@@ -8,7 +8,7 @@
     const { closeCallback, errorMessage } : { closeCallback: () => void, errorMessage?: string } = $props();
 </script>
 
-<Dialog>
+<Dialog title="Add Post" closeCallback={closeCallback}>
     <form method="POST" action="?/create" use:enhance>
         {#if errorMessage}
             <Notice message={errorMessage} type="warning" />
@@ -18,7 +18,7 @@
         <LabelInputGroup type="text" name="slug" label="Slug" max={255} required={true}/>
         <LabelInputGroup type="text" name="tags" label="Tags" max={255} required={true}/>
 
-        <div class="box nested-box">
+        <div class="box nested-box form-actions">
             <Button type="button" title="Cancel" style="secondary" onclick={closeCallback} />
             <Button type="submit" title="Add Post" style="primary" />
         </div>
