@@ -36,7 +36,7 @@
 
     .dialog-title {
         display: grid;
-        grid-template-columns: 1fr max-content;
+        grid-template-columns: minmax(0, 1fr) max-content;
         align-items: center;
         min-height: 50px;
         margin-top: 0;
