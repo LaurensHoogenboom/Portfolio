@@ -14,16 +14,16 @@ export const load: PageServerLoad = (async () => {
 export const actions: Actions = {
     create: async ({ request }) => {
         const formData = Object.fromEntries(await request.formData());
-        const { username, password, securityQuestion, securityQuestionAnswer } = formData as {
+        const { username, newPassword, securityQuestion, securityQuestionAnswer } = formData as {
             username: string,
-            password: string,
+            newPassword: string,
             securityQuestion: string,
             securityQuestionAnswer: string
         };
 
         const user = {
             username: username,
-            password: sha256(Buffer.from(password)),
+            password: sha256(Buffer.from(newPassword)),
             securityQuestion: securityQuestion,
             securityQuestionAnswer: securityQuestionAnswer
         }
@@ -42,7 +42,7 @@ export const actions: Actions = {
         }
     },
 
-    update: async ({request}) => {
+    update: async ({ request }) => {
         const formData = Object.fromEntries(await request.formData());
         const { id, username, currentPassword, newPassword, securityQuestion, securityQuestionAnswer } = formData as {
             id: string,
