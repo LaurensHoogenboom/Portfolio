@@ -10,5 +10,6 @@
 @import url("./materials.css") layer(materials);
 @import url("./layout/page.css") layer(layouts);
 @import url("./layout/form.css") layer(layouts);
-@import url("./layout/button.css") layer(layouts);
+@import url("./components/button.css") layer(components);
+@import url("./components/dialog.css") layer(components);
 @import url("./components/inputs.css") layer(components);

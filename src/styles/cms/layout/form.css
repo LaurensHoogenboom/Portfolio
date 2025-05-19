@@ -16,7 +16,7 @@ form {
     fieldset {
         border: none;
         
-        &:not(:last-child) {
+        &:not(:last-of-type) {
             padding-bottom: var(--padding-2);
         }
     }
