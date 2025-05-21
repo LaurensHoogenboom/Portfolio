@@ -1,5 +1,5 @@
 import { posts } from '$lib/server/db/schema/posts'
-import { getPosts, createPost, deletePost } from '$lib/server/db/cruds/posts';
+import { getPosts, createPost, deletePost, getPostById } from '$lib/server/db/cruds/posts';
 import type { PageServerLoad, Actions } from '../../cms/posts/$types';
 import { fail } from '@sveltejs/kit';
 
@@ -33,7 +33,9 @@ export const actions: Actions = {
 
             return {
                 succes: true,
-                bookId: newPost.id
+                postId: newPost.id,
+                postTitle: newPost.title,
+                action: 'create'
             }
         } catch (e) {
             const error = e as Error;
@@ -47,10 +49,13 @@ export const actions: Actions = {
         const id = data.get('id') as string;
 
         try {
+            const postToDelete = await getPostById(id);
             await deletePost(id);
 
             return {
-                succes: true
+                succes: true,
+                postTitle: postToDelete?.title,
+                action: 'delete'
             }
         } catch (e) {
             const error = e as Error;

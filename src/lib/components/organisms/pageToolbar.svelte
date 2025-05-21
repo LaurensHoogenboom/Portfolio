@@ -9,6 +9,8 @@
         --negative-padding: calc(0px - var(--padding-1));
         width: calc(100% + (2 * var(--padding-1)));
         margin: var(--negative-padding) var(--negative-padding) var(--padding-1) var(--negative-padding);
+        padding-left: var(--padding-1);
+        padding-right: var(--padding-1);
 
         .page-width-container {
             display: flex;
