@@ -5,18 +5,32 @@
 	import Button from '$lib/components/atoms/button.svelte';
 	import CreatePostDialog from './components/createPostDialog.svelte';
 	import { Plus } from '@lucide/svelte';
+	import { DispatchSuccesNotification } from '$lib/globalNotifications.svelte';
 
     let { data, form }: { data: PageData, form: ActionData | undefined } = $props();
     let createPostDialogVisible = $state(false);
 
-    const openCreatePostDialog = () => {
-        form = undefined;
-        createPostDialogVisible = true;
-    }
+    $effect(() => {
+        if (form?.succes) {
+            switch (form.action) {
+                case 'create':
+                    createPostDialogVisible = false;
+                    DispatchSuccesNotification(`The post "${form.postTitle}" was succesfully added.`)
+                    break;
+                case 'delete':
+                    DispatchSuccesNotification(`The post "${form.postTitle}" was successfully removed.`);
+                    break;
+                default: 
+                    break;
+            }
+
+            form = undefined;
+        }
+    });
 </script>
 
 <PageToolbar>
-    <Button title="Add Post" type="button" style="secondary" onclick={openCreatePostDialog} icon={Plus} />
+    <Button title="Add Post" type="button" style="secondary" onclick={() => createPostDialogVisible = true} icon={Plus} />
 </PageToolbar>
 
 <main>

@@ -1,5 +1,5 @@
 import type { PageServerLoad, Actions } from '../../cms/users/$types';
-import { createUser, deleteUser, getUsers, updateUser } from '$lib/server/db/cruds/users';
+import { createUser, deleteUser, getUserById, getUsers, updateUser } from '$lib/server/db/cruds/users';
 import { fail } from '@sveltejs/kit';
 import { sha256 } from "@oslojs/crypto/sha2";
 
@@ -33,7 +33,9 @@ export const actions: Actions = {
 
             return {
                 succes: true,
-                userId: newUser.id
+                userId: newUser.id,
+                username: newUser.username,
+                action: 'create'
             };
         } catch (e) {
             const error = e as Error;
@@ -65,7 +67,9 @@ export const actions: Actions = {
 
             return {
                 succes: true,
-                userId: updatedUser.id
+                userId: updatedUser.id,
+                username: updatedUser.username,
+                action: 'update'
             };
         } catch (e) {
             const error = e as Error;
@@ -79,10 +83,13 @@ export const actions: Actions = {
         const id = data.get('id') as string;
 
         try {
+            const userToDelete = await getUserById(id);
             await deleteUser(id);
 
             return {
-                succes: true
+                succes: true,
+                username: userToDelete?.username,
+                action: 'delete'
             };
         } catch (e) {
             const error = e as Error;

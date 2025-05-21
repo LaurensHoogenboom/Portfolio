@@ -7,6 +7,7 @@
     import type { IUserToEdit } from './components/editUserDialog.svelte';
 	import CreateUserDialog from './components/createUserDialog.svelte';
 	import { Plus } from '@lucide/svelte';
+    import { DispatchSuccesNotification } from '$lib/globalNotifications.svelte';
 
     let { data, form }: { data: PageData, form: ActionData | undefined } = $props();
 
@@ -18,8 +19,6 @@
         let user = data.users.find(u => u.id == id);
 
         if (user) {
-            form = undefined;
-
             userToEdit = {
                 id: user.id,
                 username: user.username,
@@ -31,21 +30,31 @@
         }
     }
 
-    const openCreateForm = () => {
-        form = undefined;
-        createFormVisible = true;
-    }
-
     $effect(() => {
         if (form?.succes) {
-            editFormVisible = false;
-            createFormVisible = false;
+            switch (form.action) {
+                case 'create':
+                    createFormVisible = false;
+                    DispatchSuccesNotification(`The user "${form.username}" was succesfully added.`)
+                    break;
+                case 'update':
+                    editFormVisible = false;
+                    DispatchSuccesNotification(`Changes to "${form.username}" were succesfully saved.`);
+                    break;
+                case 'delete':
+                    DispatchSuccesNotification(`The user "${form.username}" was successfully removed.`);
+                    break;
+                default: 
+                    break;
+            }
+
+            form = undefined;
         }
     });
 </script>
 
 <PageToolbar>
-    <Button title="Add User" type="button" style="secondary" onclick={openCreateForm} icon={Plus} />
+    <Button title="Add User" type="button" style="secondary" onclick={() => createFormVisible = true} icon={Plus} />
 </PageToolbar>
 
 <main>

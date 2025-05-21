@@ -4,7 +4,7 @@
     import { Circle } from 'svelte-loading-spinners';
     import { fly } from 'svelte/transition';
 
-    const { title, type, style, alignment, url, onclick, icon, children, loading = false } : {
+    const { title, type, style, alignment, url, onclick, icon, children, loading = false, form } : {
         title?: string,
         type: "submit" | "button" | "goto",
         style: "primary" | "secondary" | "transparent" | "inset-outset",
@@ -13,7 +13,8 @@
         onclick?: () => void,
         icon?: typeof IconType,
         children?: Snippet,
-        loading?: boolean
+        loading?: boolean,
+        form?: string
     } = $props();
 </script>
 
@@ -28,7 +29,7 @@
         {/if}
     </a>
 {:else if type == "button" || type == "submit"}
-    <button class="{style == "inset-outset" ? "inset round" : `clickable-input ${style}`}" type={type} onclick={onclick}>
+    <button class="{style == "inset-outset" ? "inset round" : `clickable-input ${style}`}" type={type} onclick={onclick} form={form}>
         {#if style=="inset-outset"}
             <div class="outset">
                 {@render buttonContent()}

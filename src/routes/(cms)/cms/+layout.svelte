@@ -3,6 +3,7 @@
     import type { LayoutData } from '../cms/$types';
     import { page } from '$app/state';
 	import UserActions from './components/userActions.svelte';
+	import NotificationContainer from './components/notificationContainer.svelte';
 
     let { data, children }: { data: LayoutData, children: Snippet } = $props();
 </script>
@@ -23,9 +24,11 @@
             {#if data.username}
                 <UserActions username={data.username} />
             {/if}
+
+            <NotificationContainer />
         </nav>
     </div>
-    
+
     <div class="main-wrapper">
         {@render children()}
     </div>
