@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from "$lib/components/atoms/button.svelte";
+	import Button from "$lib/components/cms/atoms/button.svelte";
 	import { ChevronLeft } from "@lucide/svelte";
 	import type { Snippet } from "svelte";
 

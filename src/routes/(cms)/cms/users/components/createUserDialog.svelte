@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
-	import Button from "$lib/components/atoms/button.svelte";
-	import Notice from "$lib/components/atoms/notice.svelte";
-	import LabelInputGroup from "$lib/components/molecules/labelInputGroup.svelte";
-	import Dialog from "$lib/components/organisms/dialog.svelte";
-	import PasswordInput from "$lib/components/organisms/passwordInput.svelte";
+	import Button from "$lib/components/cms/atoms/button.svelte";
+	import Notice from "$lib/components/cms/atoms/notice.svelte";
+	import LabelInputGroup from "$lib/components/cms/molecules/labelInputGroup.svelte";
+	import Dialog from "$lib/components/cms/organisms/dialog.svelte";
+	import PasswordInput from "$lib/components/cms/organisms/passwordInput.svelte";
 
     let { closeCallback, errorMessage } : { closeCallback: () => void, errorMessage?: string } = $props();
 </script>

@@ -32,15 +32,15 @@
         }
 
         &.warning {
-            --color: red;
+            --color: var(--red);
         }
 
         &.success {
-            --color: green;
+            --color: var(--green);
         }
 
         &.neutral {
-            --color: blue;
+            --color: var(--blue);
         }
     }  
 </style>

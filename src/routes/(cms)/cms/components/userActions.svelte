@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { ChevronDown, LogOut } from '@lucide/svelte';
-	import CustomIcon from '../../../../lib/components/atoms/customIcons/customIcon.svelte';
-	import Button from '../../../../lib/components/atoms/button.svelte';
+	import CustomIcon from '../../../../lib/components/cms/atoms/customIcons/customIcon.svelte';
+	import Button from '../../../../lib/components/cms/atoms/button.svelte';
 	import { enhance } from '$app/forms';
-	import Avatar from '$lib/components/molecules/avatar.svelte';
+	import Avatar from '$lib/components/cms/molecules/avatar.svelte';
 
 	const { username, userImageUrl }: {
 		username: string;

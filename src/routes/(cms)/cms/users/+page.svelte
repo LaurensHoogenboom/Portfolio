@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { PageData, ActionData } from '../../cms/users/$types';
-    import ListItem from '$lib/components/molecules/listItem.svelte';
-    import PageToolbar from '$lib/components/organisms/pageToolbar.svelte';
-	import Button from '$lib/components/atoms/button.svelte';
+    import ListItem from '$lib/components/cms/molecules/listItem.svelte';
+    import PageToolbar from '$lib/components/cms/organisms/pageToolbar.svelte';
+	import Button from '$lib/components/cms/atoms/button.svelte';
 	import EditUserDialog from './components/editUserDialog.svelte';
     import type { IUserToEdit } from './components/editUserDialog.svelte';
 	import CreateUserDialog from './components/createUserDialog.svelte';
