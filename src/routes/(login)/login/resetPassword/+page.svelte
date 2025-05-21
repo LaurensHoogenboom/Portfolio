@@ -1,12 +1,12 @@
 <script lang="ts">
-	import Notice from '$lib/components/atoms/notice.svelte';
-	import LabelInputGroup from '$lib/components/molecules/labelInputGroup.svelte';
+	import Notice from '$lib/components/cms/atoms/notice.svelte';
+	import LabelInputGroup from '$lib/components/cms/molecules/labelInputGroup.svelte';
     import type { PageData, ActionData } from './$types';
     import { enhance } from '$app/forms';
-	import Button from '$lib/components/atoms/button.svelte';
+	import Button from '$lib/components/cms/atoms/button.svelte';
 	import AuthenticationHeader from '../components/authenticationHeader.svelte';
-	import Instruction from '$lib/components/atoms/instruction.svelte';
-	import PasswordInput from '$lib/components/organisms/passwordInput.svelte';
+	import Instruction from '$lib/components/cms/atoms/instruction.svelte';
+	import PasswordInput from '$lib/components/cms/organisms/passwordInput.svelte';
 
     let { form }: { form: ActionData } = $props();
     let step = $state(1);

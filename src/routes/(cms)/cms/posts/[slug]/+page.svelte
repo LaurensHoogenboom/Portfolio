@@ -1,10 +1,9 @@
 <script lang="ts">
     import type { PageData, ActionData } from './$types';
     import { enhance } from '$app/forms';
-
-    import LabelInputGroup from '$lib/components/molecules/labelInputGroup.svelte';
-	import PageToolbar from '$lib/components/organisms/pageToolbar.svelte';
-	import Button from '$lib/components/atoms/button.svelte';
+    import LabelInputGroup from '$lib/components/cms/molecules/labelInputGroup.svelte';
+	import PageToolbar from '$lib/components/cms/organisms/pageToolbar.svelte';
+	import Button from '$lib/components/cms/atoms/button.svelte';
 	import { Save } from '@lucide/svelte';
 	import { DispatchErrorNotification, DispatchSuccesNotification } from '$lib/globalNotifications.svelte';
 

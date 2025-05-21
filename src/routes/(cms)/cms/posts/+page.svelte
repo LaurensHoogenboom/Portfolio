@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { PageData, ActionData } from '../../cms/posts/$types';
-    import ListItem from '$lib/components/molecules/listItem.svelte';
-	import PageToolbar from '$lib/components/organisms/pageToolbar.svelte';
-	import Button from '$lib/components/atoms/button.svelte';
+    import ListItem from '$lib/components/cms/molecules/listItem.svelte';
+	import PageToolbar from '$lib/components/cms/organisms/pageToolbar.svelte';
+	import Button from '$lib/components/cms/atoms/button.svelte';
 	import CreatePostDialog from './components/createPostDialog.svelte';
 	import { Plus } from '@lucide/svelte';
 	import { DispatchSuccesNotification } from '$lib/globalNotifications.svelte';
