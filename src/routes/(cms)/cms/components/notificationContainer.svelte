@@ -8,7 +8,7 @@
             if (n.visible !== false) {
                 setTimeout(() => {
                     n.visible = false;
-                }, n.duration ?? 5000);
+                }, n.duration ?? 3000);
             }
         });
     });
@@ -17,7 +17,7 @@
 <div class="notification-container">
     {#each GlobalNotifications.notifications as n }
         {#if n.visible !== false}
-            <div class="notification frost-glass white {n.type ? n.type : null}" in:fly|global={{ y: 20, delay: 300 }} out:slide>
+            <div class="notification frost-glass white {n.type ? n.type : null}" in:fly|global={{ y: 20, delay: 300 }} out:slide|global>
                 <div class="icon-container">
                     {#if n.type == "information"}
                         <InfoIcon />
