@@ -5,9 +5,16 @@
 	import Button from '../atoms/button.svelte';
 
     let { children, title, closeCallback }: { children: Snippet, title?: string, closeCallback?: () => void } = $props();
+
+    let transitioning = $state(true);
 </script>
 
-<div class="dialog" in:slide={{ duration: 300 }} out:scale={{ duration: 300 }}>
+<div 
+    class="dialog" 
+    in:slide={{ duration: 300 }} 
+    out:scale={{ duration: 300 }}
+    ontransitionend={() => transitioning = false}
+>
     <div class="box">
         {#if title}
             <div class="box nested-box dialog-title">
@@ -19,7 +26,7 @@
             </div>
         {/if}
 
-        <div class="dialog-content">
+        <div class={["dialog-content", {transitioning}]}>
             {@render children()}
         </div>
     </div>    
