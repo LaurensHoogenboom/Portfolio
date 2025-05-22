@@ -50,6 +50,10 @@
     .dialog-content {
         overflow-y: auto;
         padding: 0 var(--padding-2);
+
+        &.transitioning {
+            overflow: hidden !important;
+        }
     }
 
     .nested-box.form-actions {

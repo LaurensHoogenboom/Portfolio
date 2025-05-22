@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-    <link rel="stylesheet" href="/src/styles/cms/cms.css">
+    <link rel="stylesheet" href="/styles/cms/cms.css">
 </svelte:head>
 
 <div class="authentication">
