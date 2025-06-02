@@ -34,7 +34,7 @@
 
         if (form?.success) {
             goto("/cms/");
-            DispatchSuccesNotification(`Welcome back, ${username}!`);
+            DispatchSuccesNotification(`Welcome back, ${username}!`, 'Logged In.');
         }
     }
 }}>

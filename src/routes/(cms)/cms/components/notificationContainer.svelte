@@ -3,15 +3,15 @@
     import { GlobalNotifications } from "$lib/globalNotifications.svelte";
 	import { fly, slide } from "svelte/transition";
 
-    $effect(() => {
-        GlobalNotifications.notifications.forEach(n => {
-            if (n.visible !== false) {
-                setTimeout(() => {
-                    n.visible = false;
-                }, n.duration ?? 3000);
-            }
-        });
-    });
+    // $effect(() => {
+    //     GlobalNotifications.notifications.forEach(n => {
+    //         if (n.visible !== false) {
+    //             setTimeout(() => {
+    //                 n.visible = false;
+    //             }, n.duration ?? 3000);
+    //         }
+    //     });
+    // });
 
     function getColor(type: 'information' | 'warning' | 'succes' | undefined) {
         switch (type) {
@@ -34,18 +34,18 @@
                 <div class="inset round icon-container {getColor(n.type)}">
                     <div class="outset">
                         {#if n.type == "succes"}
-                            <Check size={16} strokeWidth={3} />
+                            <Check size={16} strokeWidth={4} />
                         {:else if n.type == "warning"}
-                            <TriangleAlert size={16} strokeWidth={3} />
+                            <TriangleAlert size={16} strokeWidth={4} />
                         {:else}
-                            <InfoIcon size={16} strokeWidth={3} />
+                            <InfoIcon size={16} strokeWidth={4} />
                         {/if}
                     </div>
                 </div>
                 {#if n.title}
-                    <p><strong>{n.title}</strong></p>
+                    <p style="{n.type ? `color: var(--${getColor(n.type)}-dark);` : ''}"><strong>{n.title}</strong></p>
                 {/if}
-                <p style="{!n.title ? 'grid-row: 1 / 3;' : ''}">{n.message}</p>
+                <p style="{!n.title ? 'grid-row: 1 / 3;' : ''} {n.type ? `color: var(--${getColor(n.type)}-dark);` : ''}">{n.message}</p>
             </div>
         {/if}
     {/each}
@@ -61,12 +61,12 @@
 
         .notification {
             display: grid;
-            grid-template-columns: 40px minmax(0, 1fr);
-            min-width: 300px;
+            grid-template-columns: 39px minmax(0, 1fr);
+            min-width: 350px;
             border: var(--default-border);
-            padding: var(--padding-4) var(--padding-1) var(--padding-4) var(--padding-4);
+            padding: var(--padding-3) var(--padding-1) var(--padding-3) var(--padding-2);
             border-radius: var(--border-radius-m);
-            grid-column-gap: var(--padding-3);
+            grid-column-gap: var(--padding-2);
             grid-row-gap: 3px;
             align-items: center;
             box-shadow: var(--shadow-float-2);
@@ -75,8 +75,7 @@
             .icon-container {
                 grid-row: 1 / 3;
                 grid-column: 1 / 2;
-                min-height: 40px;
-                height: 100%;
+                height: 39px;
                 padding: var(--padding-6);
             }
 

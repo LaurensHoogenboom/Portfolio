@@ -18,8 +18,11 @@
     --white-text: rgb(255,255,255);
 
     --red: rgb(234,86,61);
+    --red-dark: hsl(from var(--red) h s 53%);
     --blue: rgb(1,186,239);
+    --blue-dark: hsl(from var(--blue) h s 32%);
     --green: rgb(35,206,107);
+    --green-dark: hsl(from var(--green) h s 32%);
     
     --default-border: 1px solid var(--grey-borders);
 
