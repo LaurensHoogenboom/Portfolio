@@ -1,0 +1,31 @@
+:root {
+    --primary-base: rgb(64, 168, 237);
+    --primary-light: hsl(from var(--primary-base) h s 64%);
+    --primary-borders: hsl(from var(--primary-base) h s 48%);
+    --primary-background: hsl(from var(--primary-base) h s 41%);
+    --primary-background-gradient: linear-gradient(135deg, var(--primary-light), var(--primary-base));
+    --primary-border: 1px solid var(--primary-borders);
+
+    --grey-background-1: rgb(250,250,250);
+    --grey-background-2: rgb(245,245,245);
+    --grey-background-gradient: linear-gradient(45deg, var(--grey-background-2), var(--grey-background-1));
+    --grey-borders: rgb(220,220,220);
+    --grey-text-1: rgb(170,170,170);
+    --grey-text-2: rgb(112,112,112);
+    --grey-text-3: rgb(80,80,80);
+
+    --white-background: rgb(255,255,255);
+    --white-text: rgb(255,255,255);
+
+    --red: rgb(234,86,61);
+    --blue: rgb(1,186,239);
+    --green: rgb(35,206,107);
+    
+    --default-border: 1px solid var(--grey-borders);
+
+    --shadow-float-1: 0 10px 20px rgba(0,0,0,0.03);
+    --shadow-float-2: 0 10px 20px rgba(0,0,0,0.16);
+    --shadow-float-3: 0 1px 6px rgba(0,0,0,0.04);
+    --shadow-inset: inset 0px 0px 2px rgba(0,0,0,0.16);
+    --shadow-outset: 0 1px 2px rgba(0,0,0,0.16);
+}

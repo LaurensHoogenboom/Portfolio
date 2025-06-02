@@ -1,5 +1,5 @@
 interface Notification {
-    title: string, 
+    title?: string, 
     message: string, 
     type?: "information" | "warning" | "succes",
     duration?: number,
@@ -10,16 +10,16 @@ const GlobalNotifications = $state({notifications: new Array<Notification>()});
 
 const DispatchSuccesNotification = (message: string, title?: string, duration?: number) => {
     GlobalNotifications.notifications.push({
-        title: title ?? "Succes!",
+        title: title,
         message: message,
         duration: duration ?? 5000,
         type: 'succes'
     })
 }
 
-const DispatchErrorNotification = (message: string, title?: string, duration?: number) => {
+const DispatchWarningNotification = (message: string, title?: string, duration?: number) => {
     GlobalNotifications.notifications.push({
-        title: title ?? "Warning!",
+        title: title,
         message: message,
         duration: duration ?? 5000,
         type: 'warning'
@@ -28,11 +28,11 @@ const DispatchErrorNotification = (message: string, title?: string, duration?: n
 
 const DispatchInformationNotification = (message: string, title?: string, duration?: number) => {
     GlobalNotifications.notifications.push({
-        title: title ?? "Notice!",
+        title: title,
         message: message,
         duration: duration ?? 5000,
         type: 'information'
     })
 }
 
-export { GlobalNotifications, DispatchSuccesNotification, DispatchErrorNotification, DispatchInformationNotification }
+export { GlobalNotifications, DispatchSuccesNotification, DispatchWarningNotification, DispatchInformationNotification }

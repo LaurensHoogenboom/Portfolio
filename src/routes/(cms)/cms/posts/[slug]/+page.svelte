@@ -5,31 +5,49 @@
 	import PageToolbar from '$lib/components/cms/organisms/pageToolbar.svelte';
 	import Button from '$lib/components/cms/atoms/button.svelte';
 	import { Save } from '@lucide/svelte';
-	import { DispatchErrorNotification, DispatchSuccesNotification } from '$lib/globalNotifications.svelte';
+	import { DispatchWarningNotification } from '$lib/globalNotifications.svelte';
 
     let { data, form }: { data: PageData, form: ActionData | undefined } = $props();
 
+    let saving = $state(false);
+    let succes = $state(false);
+
     $effect(() => {
-        if (form?.succes) {
-            DispatchSuccesNotification(`Changes were succesfully saved.`);
+        if (form?.error) {
+            DispatchWarningNotification(form.error);
             form = undefined;
         }
 
-        if (form?.error) {
-            DispatchErrorNotification(form.error);
-            form = undefined;
+        if (succes) {
+            setTimeout(() => {
+                succes = false;
+                form = undefined;
+            }, 2000);
         }
     });
 </script>
 
 <PageToolbar>
-    <Button title="Save Post" type="submit" style="secondary" icon={Save} form="postForm" />
+    <Button title="Save Post" type="submit" style="secondary" icon={Save} form="postForm" loading={saving} succes={succes} />
 </PageToolbar>
 
 <main>
     <div class="box">
         <form id="postForm" method="POST" action="?/update" use:enhance={() => {
-            return ({ update }) => update({ reset: false });
+            succes = false;
+            saving = true;
+
+            return async ({ update }) => {
+                await update({ reset: false })
+
+                setTimeout(() => {
+                    saving = false;
+
+                    if (form?.succes) {
+                        succes = true;
+                    }
+                }, 500);
+            };
         }}>        
             <input type="hidden" name="id" value={data.post ? data.post.id : ""}>
         

@@ -10,6 +10,7 @@
 	import AuthenticationHeader from './components/authenticationHeader.svelte';
 	import Instruction from '$lib/components/cms/atoms/instruction.svelte';
 	import Avatar from '$lib/components/cms/molecules/avatar.svelte';
+	import { DispatchSuccesNotification } from '$lib/globalNotifications.svelte';
 
     let { form }: { form: ActionData } = $props();
 
@@ -27,12 +28,13 @@
     authenticating = true;
 
     return async ({ update }) => {
-        await update();
+        await update({ reset: false });
 
         authenticating = false;
 
         if (form?.success) {
             goto("/cms/");
+            DispatchSuccesNotification(`Welcome back, ${username}!`);
         }
     }
 }}>
@@ -47,7 +49,7 @@
             <Notice message={form.error} type="warning" />
         {/if}
 
-        <LabelInputGroup name="username" type="text" label="Username" required={true} value={username}/>
+        <LabelInputGroup name="username" type="text" label="Username" required={true} bind:value={username}/>
         <LabelInputGroup name="password" type="password" label="Password" required={true}/>
         <a href="/login/resetPassword/" style="float: right">Forgot password?</a>
     </div>

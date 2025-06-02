@@ -1,10 +1,10 @@
 <script lang="ts">
     import { type Snippet } from 'svelte';
-    import { type Icon as IconType } from '@lucide/svelte'; 
+    import { Check, type Icon as IconType } from '@lucide/svelte'; 
     import { Circle } from 'svelte-loading-spinners';
     import { fly } from 'svelte/transition';
 
-    const { title, type, style, alignment, url, onclick, icon, children, loading = false, form } : {
+    const { title, type, style, alignment, url, onclick, icon, children, loading = false, form, succes = false } : {
         title?: string,
         type: "submit" | "button" | "goto",
         style: "primary" | "secondary" | "transparent" | "inset-outset",
@@ -14,7 +14,8 @@
         icon?: typeof IconType,
         children?: Snippet,
         loading?: boolean,
-        form?: string
+        form?: string,
+        succes?: boolean
     } = $props();
 </script>
 
@@ -41,7 +42,12 @@
 {/if}
 
 {#snippet buttonContent()}
-    <div class="button-content {alignment}-alignment {icon ? "has-icon" : ""} {!title ? "only-icon" : ""} {loading ? "hidden" : ""}">
+    <div class="button-content 
+        {alignment}-alignment 
+        {icon ? "has-icon" : ""} 
+        {!title && !children ? "only-icon same-height-as-width" : ""} 
+        {(loading || succes) ? "hidden" : ""}
+    ">
         {#if children}
             {@render children()}
         {:else}
@@ -58,8 +64,14 @@
     </div>
 
     {#if loading}
-        <div class="button-content loader" transition:fly={{ y: 20 }}>
-            <Circle size={20} color="white" />
+        <div class="button-content overlay" transition:fly={{ y: 20 }}>
+            <Circle size={17} color={style=="primary" ? "var(--white-text)" : 'var(--grey-text-2)'}/>
         </div> 
+    {/if}
+
+    {#if succes}
+        <div class="button-content overlay has-icon only-icon" transition:fly={{ y: 20 }}>
+            <Check size={18} />
+        </div>
     {/if}
 {/snippet}
