@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"prebuild": "copy-folder src/styles/ static/styles/",
+		"prebuild": "copy-folder src/styles/ static/styles/ && copy-folder src/fonts/ static/fonts/",
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
