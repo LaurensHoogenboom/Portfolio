@@ -1,34 +1,51 @@
 <script lang="ts">
-	import { CircleCheck, InfoIcon, TriangleAlert } from "@lucide/svelte";
+	import { Check, InfoIcon, TriangleAlert } from "@lucide/svelte";
     import { GlobalNotifications } from "$lib/globalNotifications.svelte";
 	import { fly, slide } from "svelte/transition";
 
-    $effect(() => {
-        GlobalNotifications.notifications.forEach(n => {
-            if (n.visible !== false) {
-                setTimeout(() => {
-                    n.visible = false;
-                }, n.duration ?? 3000);
-            }
-        });
-    });
+    // $effect(() => {
+    //     GlobalNotifications.notifications.forEach(n => {
+    //         if (n.visible !== false) {
+    //             setTimeout(() => {
+    //                 n.visible = false;
+    //             }, n.duration ?? 3000);
+    //         }
+    //     });
+    // });
+
+    function getColor(type: 'information' | 'warning' | 'succes' | undefined) {
+        switch (type) {
+            case 'information':
+                return 'blue';
+            case 'warning':
+                return 'red';
+            case 'succes':
+                return 'green';
+            default:
+                return '';
+        }
+    }
 </script>
 
 <div class="notification-container">
     {#each GlobalNotifications.notifications as n }
         {#if n.visible !== false}
             <div class="notification frost-glass white {n.type ? n.type : null}" in:fly|global={{ y: 20, delay: 300 }} out:slide|global>
-                <div class="icon-container">
-                    {#if n.type == "information"}
-                        <InfoIcon />
-                    {:else if n.type == "warning"}
-                        <TriangleAlert />
-                    {:else}
-                        <CircleCheck />
-                    {/if}
+                <div class="inset round icon-container {getColor(n.type)}">
+                    <div class="outset">
+                        {#if n.type == "succes"}
+                            <Check size={16} strokeWidth={4} />
+                        {:else if n.type == "warning"}
+                            <TriangleAlert size={16} strokeWidth={4} />
+                        {:else}
+                            <InfoIcon size={16} strokeWidth={4} />
+                        {/if}
+                    </div>
                 </div>
-                <p><strong>{n.title}</strong></p>
-                <p>{n.message}</p>
+                {#if n.title}
+                    <p style="{n.type ? `color: var(--${getColor(n.type)}-dark);` : ''}"><strong>{n.title}</strong></p>
+                {/if}
+                <p style="{!n.title ? 'grid-row: 1 / 3;' : ''} {n.type ? `color: var(--${getColor(n.type)}-dark);` : ''}">{n.message}</p>
             </div>
         {/if}
     {/each}
@@ -43,56 +60,33 @@
         padding-top: var(--padding-4);
 
         .notification {
-            --notification-color: var(--blue);
             display: grid;
-            grid-template-columns: 50px minmax(0, 1fr);
-            min-width: 300px;
+            grid-template-columns: 39px minmax(0, 1fr);
+            min-width: 350px;
             border: var(--default-border);
-            border-color: var(--notification-color);
-            padding: var(--padding-5) var(--padding-1) var(--padding-5) var(--padding-5);
+            padding: var(--padding-3) var(--padding-1) var(--padding-3) var(--padding-2);
             border-radius: var(--border-radius-m);
-            grid-column-gap: var(--padding-3);
+            grid-column-gap: var(--padding-2);
             grid-row-gap: 3px;
             align-items: center;
             box-shadow: var(--shadow-float-2);
             margin-bottom: var(--padding-4);
 
-            &.information {
-                --notification-color: var(--blue);
-            }
-
-            &.warning {
-                --notification-color: var(--red);
-            }
-
-            &.succes {
-                --notification-color: var(--green);
-            }
-
             .icon-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
                 grid-row: 1 / 3;
                 grid-column: 1 / 2;
-                min-height: 50px;
-                height: 100%;
-                background-color: var(--notification-color);
-                border-radius: var(--border-radius-s);
-
-                :global(svg) {
-                    color: var(--white-text);
-                }
+                height: 39px;
+                padding: var(--padding-6);
             }
 
             p {
                 padding-bottom: 0;
 
-                &:first-of-type {
+                &:not(:last-of-type):first-of-type {
                     align-self: flex-end;
                 }
 
-                &:last-of-type {
+                &:not(:first-of-type):last-of-type {
                     align-self: flex-start;
                 }
             }

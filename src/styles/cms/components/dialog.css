@@ -1,0 +1,77 @@
+.dialog {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    min-width: 400px;
+    max-height: calc(100vh - (var(--padding-1) * 4));
+    max-width: calc(100vw - (var(--padding-1) * 4));
+    background: none;
+    border: none;
+    z-index: 100;
+
+    > .box {
+        position: relative;
+        flex-direction: column;
+        min-height: 0;
+        padding: 0;
+        --border-size: var(--padding-4);
+
+        &:after {
+            display: block;
+            content: '';
+            z-index: -1;
+            position: absolute;
+            top: calc(0px - var(--border-size));
+            bottom: calc(0px - var(--border-size));
+            left: calc(0px - var(--border-size));
+            right: calc(0px - var(--border-size));
+            background-color: rgba(from var(--white-background) r g b / 0.28);
+            border-radius: var(--border-radius-l);
+        }
+    }
+
+    .dialog-title {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) max-content;
+        align-items: center;
+        min-height: 50px;
+        margin-top: 0;
+        margin-left: 0;
+        margin-right: 0;
+
+        p {
+            padding-bottom: 0;
+        }
+    }
+
+    .dialog-content {
+        overflow-y: auto;
+        padding: 0 var(--padding-2);
+
+        &.transitioning {
+            overflow: hidden !important;
+        }
+    }
+
+    .nested-box.form-actions {
+        position: sticky;
+        bottom: 0;
+        grid-gap: var(--padding-3);
+        margin-bottom: 0;
+    }
+}
+
+.backdrop {
+    display: flex;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 99;
+}

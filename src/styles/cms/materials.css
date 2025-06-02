@@ -81,32 +81,29 @@
     }
 
     &.red {
-        background-color: hsl(from var(--red) h s 53%);
-        border: 1px solid hsl(from var(--red) h s 83%);
+        background-color: var(--red-dark);
 
         .outset svg {
             background-color: var(--grey-background-1);
-            color: hsl(from var(--red) h s 53%);
+            color: var(--red-dark);
         }
     }
 
     &.green {
-        background-color: hsl(from var(--green) h s 42%);
-        border: 1px solid hsl(from var(--green) h s 72%);
+        background-color: var(--green-dark);
 
         .outset svg {
             background-color: var(--grey-background-1);
-            color: hsl(from var(--green) h s 42%);
+            color: var(--green-dark);
         }
     }
 
     &.blue {
-        background-color: hsl(from var(--blue) h s 42%);
-        border: 1px solid hsl(from var(--blue) h s 72%);
+        background-color: var(--blue-dark);
 
         .outset svg {
             background-color: var(--grey-background-1);
-            color: hsl(from var(--blue) h s 42%);
+            color: var(--blue-dark);
         }
     }
 

@@ -2,12 +2,17 @@
     import type { Snippet } from 'svelte';
     import type { LayoutData } from './$types';
 	import CustomIcon from '$lib/components/cms/atoms/customIcons/customIcon.svelte';
+    import { dev } from '$app/environment';
 
     let { data, children }: { data: LayoutData, children: Snippet } = $props();
 </script>
 
 <svelte:head>
-    <link rel="stylesheet" href="/styles/cms/cms.css">
+    {#if dev}
+        <link rel="stylesheet" href="/src/styles/cms/cms.css">
+    {:else}
+        <link rel="stylesheet" href="/styles/cms/cms.css">
+    {/if}
 </svelte:head>
 
 <div class="authentication">

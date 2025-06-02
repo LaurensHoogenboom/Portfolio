@@ -4,12 +4,17 @@
     import { page } from '$app/state';
 	import UserActions from './components/userActions.svelte';
 	import NotificationContainer from './components/notificationContainer.svelte';
+	import { dev } from '$app/environment';
 
     let { data, children }: { data: LayoutData, children: Snippet } = $props();
 </script>
 
 <svelte:head>
-    <link rel="stylesheet" href="/styles/cms/cms.css">
+    {#if dev}
+        <link rel="stylesheet" href="/src/styles/cms/cms.css">
+    {:else}
+        <link rel="stylesheet" href="/styles/cms/cms.css">
+    {/if}
 </svelte:head>
 
 <div class="page">
