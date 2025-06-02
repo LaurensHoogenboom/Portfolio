@@ -3,15 +3,15 @@
     import { GlobalNotifications } from "$lib/globalNotifications.svelte";
 	import { fly, slide } from "svelte/transition";
 
-    // $effect(() => {
-    //     GlobalNotifications.notifications.forEach(n => {
-    //         if (n.visible !== false) {
-    //             setTimeout(() => {
-    //                 n.visible = false;
-    //             }, n.duration ?? 3000);
-    //         }
-    //     });
-    // });
+    $effect(() => {
+        GlobalNotifications.notifications.forEach(n => {
+            if (n.visible !== false) {
+                setTimeout(() => {
+                    n.visible = false;
+                }, n.duration ?? 3000);
+            }
+        });
+    });
 
     function getColor(type: 'information' | 'warning' | 'succes' | undefined) {
         switch (type) {
