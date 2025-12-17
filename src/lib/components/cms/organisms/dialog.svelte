@@ -32,5 +32,5 @@
     </div>    
 </div>
 
-<div class="backdrop frost-glass" transition:fade={{ duration: 300 }}></div>
+<div class="backdrop" transition:fade={{ duration: 300 }}></div>
 

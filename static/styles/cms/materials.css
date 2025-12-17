@@ -118,7 +118,7 @@
     
     &[type="button"] {
         position: relative;
-        padding: var(--padding-6);
+        padding: var(--padding-7);
 
         .outset {
             position: relative;

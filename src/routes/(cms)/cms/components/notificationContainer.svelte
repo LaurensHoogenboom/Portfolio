@@ -76,7 +76,7 @@
                 grid-row: 1 / 3;
                 grid-column: 1 / 2;
                 height: 39px;
-                padding: var(--padding-6);
+                padding: var(--padding-7);
             }
 
             p {
