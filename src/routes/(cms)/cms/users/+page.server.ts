@@ -14,18 +14,20 @@ export const load: PageServerLoad = (async () => {
 export const actions: Actions = {
     create: async ({ request }) => {
         const formData = Object.fromEntries(await request.formData());
-        const { username, newPassword, securityQuestion, securityQuestionAnswer } = formData as {
+        const { username, newPassword, securityQuestion, securityQuestionAnswer, imageFileName } = formData as {
             username: string,
             newPassword: string,
             securityQuestion: string,
-            securityQuestionAnswer: string
+            securityQuestionAnswer: string,
+            imageFileName: string
         };
 
         const user = {
             username: username,
             password: sha256(Buffer.from(newPassword)),
             securityQuestion: securityQuestion,
-            securityQuestionAnswer: securityQuestionAnswer
+            securityQuestionAnswer: securityQuestionAnswer,
+            imageFileName: imageFileName
         }
 
         try {
@@ -46,20 +48,22 @@ export const actions: Actions = {
 
     update: async ({ request }) => {
         const formData = Object.fromEntries(await request.formData());
-        const { id, username, currentPassword, newPassword, securityQuestion, securityQuestionAnswer } = formData as {
+        const { id, username, currentPassword, newPassword, securityQuestion, securityQuestionAnswer, imageFileName } = formData as {
             id: string,
             username: string,
             currentPassword: string,
             newPassword: string,
             securityQuestion: string,
-            securityQuestionAnswer: string
+            securityQuestionAnswer: string,
+            imageFileName: string
         }
 
         const update = {
             username: username,
             password: newPassword.length ? sha256(Buffer.from(newPassword)) : undefined,
             securityQuestion: securityQuestion,
-            securityQuestionAnswer: securityQuestionAnswer
+            securityQuestionAnswer: securityQuestionAnswer,
+            imageFileName: imageFileName
         }
 
         try {

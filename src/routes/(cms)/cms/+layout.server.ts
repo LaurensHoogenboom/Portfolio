@@ -9,7 +9,7 @@ export const load: LayoutServerLoad = (async ({ cookies }) => {
         const user = await getUserById(userId);
 
         if (user) {
-            return { username: user.username };
+            return { username: user.username, imageFileName: user.imageFileName };
         }
     } else {
         redirect(308, "/login");

@@ -12,6 +12,7 @@ const users = sqliteTable("users", {
         .notNull(),
     securityQuestionAnswer: text("securityQuestionAnswer")
         .notNull(),
+    imageFileName: text("imageFileName"),  
     
     ...timestamp
 })
