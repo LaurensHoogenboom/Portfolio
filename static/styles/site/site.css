@@ -1,29 +1,17 @@
 @layer reset, contants, typography, materials, layouts, components;
 
-/* Reset */
 @import url("./reset.css") layer(reset);
-
-/* Contants */
 @import url("./constants/colors.css") layer(constants);
 @import url("./constants/spacing.css") layer(constants);
 @import url("./constants/borderRadius.css") layer(constants);
 @import url("./constants/misc.css") layer(constants);
 
-/* Typography */
-@import url("./typography.css") layer(typography);
+
+/* @import url("./typography.css") layer(typography);
 @import url("./customIcons/customIcons.css") layer(typography);
-
-/* Materials */
-@import url("./materials/box.css") layer(materials);
-@import url("./materials/inset.css") layer(materials);
-@import url("./materials/clickableInput.css") layer(materials);
-@import url("./materials/frostGlass.css") layer(materials);
-
-/* Layout */
+@import url("./materials.css") layer(materials);
 @import url("./layout/page.css") layer(layouts);
 @import url("./layout/form.css") layer(layouts);
-
-/* Components */
 @import url("./components/button.css") layer(components);
 @import url("./components/dialog.css") layer(components);
-@import url("./components/inputs.css") layer(components);
+@import url("./components/inputs.css") layer(components); */

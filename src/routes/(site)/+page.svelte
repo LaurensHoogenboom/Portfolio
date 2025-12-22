@@ -4,6 +4,7 @@
     let { data }: { data: PageData } = $props();
 </script>
 
-<h1>home</h1>
-
-<a href="/login">Login</a>
+<div class="header"></div>
+<div id="about"></div>
+<div id="portfolio"></div>
+<div id="contact"></div>

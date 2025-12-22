@@ -1,0 +1,8 @@
+.frost-glass {
+    background-color: rgba(0,0,0,0.4);
+    backdrop-filter: blur(30px);
+
+    &.white {
+        background-color: rgba(from var(--white-background) r g b / 0.70);
+    }
+}

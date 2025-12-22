@@ -8,11 +8,21 @@
 
 <svelte:head>
     {#if dev}
-        <link rel="stylesheet" type="text/css" media="screen" href="/src/styles/site.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="/src/styles/site/site.css">
     {:else}
-        <link rel="stylesheet" type="text/css" media="screen" href="/styles/site.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="/styles/site/site.css">
     {/if}
 </svelte:head>
 
-{@render children()}
+<div class="content-wrapper">
+    <nav>
+        <a href="#about">About</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contact">Contact</a>
+        <a href="/login/">Login</a>
+    </nav>
 
+    <main>
+        {@render children()}
+    </main>
+</div>
