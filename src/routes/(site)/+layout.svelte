@@ -4,6 +4,7 @@
     import { dev } from '$app/environment';
 
     let { data, children }: { data: LayoutData, children: Snippet } = $props();
+    let currentYear = new Date().getFullYear();
 </script>
 
 <svelte:head>
@@ -14,15 +15,21 @@
     {/if}
 </svelte:head>
 
-<div class="content-wrapper">
-    <nav>
-        <a href="#about">About</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#contact">Contact</a>
-        <a href="/login/">Login</a>
+<div class="site-wrapper">
+    <nav class="content-container-wrapper">
+        <div class="content-container">
+            <a href="#about">About</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contact">Contact</a>
+            <a href="/login/">Login</a> 
+        </div>
     </nav>
 
     <main>
         {@render children()}
     </main>
+
+    <footer>
+        Copyright &copy; Laureato.nl {currentYear}
+    </footer>
 </div>

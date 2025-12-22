@@ -1,7 +1,10 @@
 @layer reset, contants, typography, materials, layouts, components;
 
+/* Reset */
 @import url("./reset.css") layer(reset);
 
+/* Layout */
+@import url("./layout/layout.css") layer(layouts);
 
 /* @import url("./constants/colors.css") layer(constants);
 @import url("./constants/spacing.css") layer(constants);
