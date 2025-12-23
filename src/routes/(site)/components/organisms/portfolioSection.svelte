@@ -35,13 +35,13 @@
 
 	<div>
 		{#if page.state.isPortfolioExpanded}
-			<button onclick={() => pushState('', { isPortfolioExpanded: false, activePortfolioItemId: undefined })}>
+			<button onclick={() => pushState('#portfolio', { isPortfolioExpanded: false, activePortfolioItemId: undefined })}>
                 <X />
             </button>
 		{/if}
 
 		{#if activeItem}
-			<button onclick={() => pushState('', { isPortfolioExpanded: true, activePortfolioItemId: undefined})}>
+			<button onclick={() => pushState('#portfolio?isPortfolioExpanded=true', { isPortfolioExpanded: true, activePortfolioItemId: undefined})}>
                 <ChevronLeft />
             </button>
 		{/if}
@@ -53,7 +53,7 @@
 		{/each}
 
 		{#if !page.state.isPortfolioExpanded && portfolioItems.length > 2}
-			<button onclick={() => pushState('', { isPortfolioExpanded: true })}>more</button>
+			<button onclick={() => pushState('#portfolio?isPortfolioExpanded=true', { isPortfolioExpanded: true })}>more</button>
 		{/if}
 	{:else}
 		<PortfolioItemPreviewBox portfolioItem={activeItem} />

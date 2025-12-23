@@ -5,7 +5,7 @@
     const { portfolioItem } : { portfolioItem: IPortfolioItem } = $props();
 
     const openPortfolioItem = () => {
-        pushState('', {
+        pushState(`#portfolio?isPortfolioExpanded=true&activePortfolioItemId=${portfolioItem.id}`, {
             isPortfolioExpanded: true,
             activePortfolioItemId: portfolioItem.id
         });
