@@ -1,12 +1,15 @@
 <script lang="ts">
     import type { PageData } from './$types';
-    import ContentContainer from './components/atoms/contentContainer.svelte';
+	import About from './components/organisms/about.svelte';
+	import Contact from './components/organisms/contact.svelte';
+	import Header from './components/organisms/header.svelte';
 	import PortfolioSection, { type IPortfolioItem } from './components/organisms/portfolioSection.svelte';
 
     let { data }: { data: PageData } = $props();
 
     const portfolioItems: IPortfolioItem[] = data.posts.map(p => {
             return {
+                id: p.id,
                 title: p.title,
                 type: "project"
             }
@@ -14,16 +17,10 @@
     )
 </script>
 
-<ContentContainer id="header">
-    <h1>Home</h1>
-</ContentContainer>
+<Header portfolioItems = {portfolioItems} />
 
-<ContentContainer id="about">
-    <h1>About</h1>
-</ContentContainer>
+<About />
 
 <PortfolioSection portfolioItems={portfolioItems}/>
 
-<ContentContainer id="contact">
-    <h1>Contact</h1>
-</ContentContainer>
+<Contact />
