@@ -1,58 +1,61 @@
 <script lang="ts">
-    import ContentContainer from "../atoms/contentContainer.svelte";
-    import { X, ChevronLeft } from "@lucide/svelte";
-	import PortfolioItemPreviewBox from "../atoms/portfolioItemPreviewBox.svelte";
-    import { portfolioSectionState as sectionState } from "../../siteState.svelte";
+	import ContentContainer from '../atoms/contentContainer.svelte';
+	import { X, ChevronLeft } from '@lucide/svelte';
+	import PortfolioItemPreviewBox from '../atoms/portfolioItemPreviewBox.svelte';
+	import { page } from '$app/state';
+	import { pushState } from '$app/navigation';
 
-    export interface IPortfolioItem {
-        id: string,
-        type: "drawing" | "project",
-        title: string,
-    }
+	export interface IPortfolioItem {
+		id: string;
+		type: 'drawing' | 'project';
+		title: string;
+	}
 
-    let { portfolioItems } : { portfolioItems: IPortfolioItem[]} = $props();
+	let { portfolioItems }: { portfolioItems: IPortfolioItem[] } = $props();
 
-    let blockScroll = $state(false);
-    let visibleItems = $state(portfolioItems.slice(0, 2));
+	let blockScroll = $state(false);
+	let visibleItems = $state(portfolioItems.slice(0, 2));
+	let activeItem = $state(portfolioItems.find((i) => i.id == page.state.activePortfolioItemId));
 
-    $effect(() => {
-        blockScroll = sectionState.isFullscreen;
-        visibleItems = sectionState.isFullscreen ? portfolioItems : portfolioItems.slice(0, 2);
-    });
-
-    const closePortfolioSection = () => {
-        sectionState.isFullscreen = false;
-        sectionState.activePortfolioItem = undefined;
-    }
+	$effect(() => {
+		blockScroll = page.state.isPortfolioExpanded ?? false;
+		visibleItems = page.state.isPortfolioExpanded ? portfolioItems : portfolioItems.slice(0, 2);
+		activeItem = portfolioItems.find((i) => i.id == page.state.activePortfolioItemId);
+	});
 </script>
 
-<svelte:window on:wheel|nonpassive={e => {
-    if(blockScroll)
-        e.preventDefault()
-}} />
+<svelte:window
+	on:wheel|nonpassive={(e) => {
+		if (blockScroll) e.preventDefault();
+	}}
+/>
 
-<ContentContainer id="portfolio" fullHeight={sectionState.isFullscreen}>
-    <h1>Portfolio</h1>
+<ContentContainer id="portfolio" fullHeight={page.state.isPortfolioExpanded}>
+	<h1>Portfolio</h1>
 
-    <div>
-        {#if sectionState.isFullscreen}
-            <button onclick={closePortfolioSection}><X/></button>
-        {/if}
+	<div>
+		{#if page.state.isPortfolioExpanded}
+			<button onclick={() => pushState('', { isPortfolioExpanded: false, activePortfolioItemId: undefined })}>
+                <X />
+            </button>
+		{/if}
 
-        {#if sectionState.activePortfolioItem}
-            <button onclick={() => sectionState.activePortfolioItem = undefined}><ChevronLeft /></button>
-        {/if}
-    </div>
+		{#if activeItem}
+			<button onclick={() => pushState('', { isPortfolioExpanded: true, activePortfolioItemId: undefined})}>
+                <ChevronLeft />
+            </button>
+		{/if}
+	</div>
 
-    {#if !sectionState.activePortfolioItem}
-        {#each visibleItems as vItem}
-            <PortfolioItemPreviewBox portfolioItem={vItem} />
-        {/each}
+	{#if !activeItem}
+		{#each visibleItems as vItem}
+			<PortfolioItemPreviewBox portfolioItem={vItem} />
+		{/each}
 
-        {#if !sectionState.isFullscreen && portfolioItems.length > 2}
-            <button onclick={() => sectionState.isFullscreen = true}>more</button>
-        {/if}
-    {:else}
-        <PortfolioItemPreviewBox portfolioItem={sectionState.activePortfolioItem} />
-    {/if}    
+		{#if !page.state.isPortfolioExpanded && portfolioItems.length > 2}
+			<button onclick={() => pushState('', { isPortfolioExpanded: true })}>more</button>
+		{/if}
+	{:else}
+		<PortfolioItemPreviewBox portfolioItem={activeItem} />
+	{/if}
 </ContentContainer>

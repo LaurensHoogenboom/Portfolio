@@ -1,12 +1,14 @@
 <script lang="ts">
     import { type IPortfolioItem } from "../organisms/portfolioSection.svelte";
-    import { portfolioSectionState } from "../../siteState.svelte";
+	import { pushState } from "$app/navigation";
 
     const { portfolioItem } : { portfolioItem: IPortfolioItem } = $props();
 
     const openPortfolioItem = () => {
-        portfolioSectionState.isFullscreen = true;
-        portfolioSectionState.activePortfolioItem = portfolioItem;
+        pushState('', {
+            isPortfolioExpanded: true,
+            activePortfolioItemId: portfolioItem.id
+        });
     }
 </script>
 
