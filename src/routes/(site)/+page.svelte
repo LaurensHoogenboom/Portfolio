@@ -5,7 +5,7 @@
 	import Contact from './components/organisms/contact.svelte';
 	import Header from './components/organisms/header.svelte';
 	import PortfolioSection, { type IPortfolioItem } from './components/organisms/portfolioSection.svelte';
-	import { afterNavigate, replaceState } from '$app/navigation';
+	import { replaceState } from '$app/navigation';
 
     let { data }: { data: PageData } = $props();
 
@@ -27,15 +27,13 @@
         const isPortfolioExpanded = searchParams.get('isPortfolioExpanded') == 'true' ? true : false;
         const activePortfolioItemId = searchParams.get('activePortfolioItemId')
 
-        if (isPortfolioExpanded) {
-            // TODO: Better check than this
-
+        if (isPortfolioExpanded && hash == "portfolio") {
             setTimeout(() => {
                 replaceState(`#portfolio?isPortfolioExpanded=${isPortfolioExpanded}&activePortfolioItemId=${activePortfolioItemId}`, {
                     isPortfolioExpanded: isPortfolioExpanded,
                     activePortfolioItemId: activePortfolioItemId ?? undefined
                 });
-            }, 500);
+            });
         }
     });
 </script>
