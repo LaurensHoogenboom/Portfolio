@@ -1,7 +1,7 @@
 <script lang="ts">
     import ContentContainer from "../atoms/contentContainer.svelte";
     import PortfolioItemPreviewBox from "../atoms/portfolioItemPreviewBox.svelte";
-    import { type IPortfolioItem } from "./portfolioSection.svelte";
+    import { type IPortfolioItem } from "./portfolio.svelte";
 
     const { portfolioItems } : { portfolioItems: IPortfolioItem[] } = $props();
 </script>

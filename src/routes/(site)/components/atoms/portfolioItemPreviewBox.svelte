@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type IPortfolioItem } from "../organisms/portfolioSection.svelte";
+    import { type IPortfolioItem } from "../organisms/portfolio.svelte";
 	import { pushState } from "$app/navigation";
 
     const { portfolioItem } : { portfolioItem: IPortfolioItem } = $props();

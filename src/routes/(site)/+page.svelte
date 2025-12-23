@@ -4,7 +4,7 @@
 	import About from './components/organisms/about.svelte';
 	import Contact from './components/organisms/contact.svelte';
 	import Header from './components/organisms/header.svelte';
-	import PortfolioSection, { type IPortfolioItem } from './components/organisms/portfolioSection.svelte';
+	import Portfolio, { type IPortfolioItem } from './components/organisms/portfolio.svelte';
 	import { replaceState } from '$app/navigation';
 
     let { data }: { data: PageData } = $props();
@@ -42,6 +42,6 @@
 
 <About />
 
-<PortfolioSection portfolioItems={portfolioItems}/>
+<Portfolio portfolioItems={portfolioItems}/>
 
 <Contact />
