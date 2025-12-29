@@ -1,71 +1,52 @@
-* {
-	font-family: "Figtree", sans-serif;
+h1, h2 {
+    font-family: "Merriweather", serif;
 }
 
 h1 {
-	color: var(--primary-base);
-	padding-bottom: var(--padding-2);
+    font-size: 80px;
+	color: var(--primary);
 
-	&:has(+ article), &:has(+ p), &:has(+ a) {
-		padding-bottom: var(--padding-4);
-	}
+    &:after {
+        font-family: "Adobe Handwriting", serif;
+        font-size: 250px;
+    }
 }
 
-a, p, button, label, input, textarea, select, option, li, td {
-	font-size: 16px;
-	transition: color var(--default-animation-time);
-	color: var(--grey-text-2);
+h2 {
+    font-size: 30px;
+	color: var(--primary);
 }
 
-p, label {
-	&:not(:last-child) {
-		padding-bottom: var(--padding-2);
-	}
+p, label, button, input, a {
+    font-family: "Figtree", sans-serif;
+    font-size: 20px;
+	color: var(--grey-text);
 }
 
-a {
-	color: var(--primary-base);
-
-	@media (hover:hover) {
-		&:hover {
-			color: var(--primary-background);
-		}
-	}
-
-	&:focus {
-		outline: none;
-		color: var(--primary-background);
-	}
+/* Adobe Handwriting Ernie */
+@font-face {
+    font-display: swap;
+	font-family: 'Adobe Handwriting';
+	font-weight: normal;
+	font-style: normal; 
+    src: url('../../fonts/adobe_handwriting/AdobeHandwriting-Ernie.woff2') format('woff2');
 }
-
-p {
-	&:has(+ p):not(:last-child) {
-		padding-bottom: var(--padding-5);
-	}
+/* merriweather-regular - latin */
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Merriweather';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../../fonts/merriweather/merriweather-v33-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
-
-label {
-	color: var(--grey-text-1);
-
-	&:not(:last-child) {
-		&:has(+ input), &:has(+ textarea) {
-			padding-bottom: var(--padding-4);
-		}
-	
-		&:has(+ :focus) {
-			color: var(--primary-base);
-		}
-	}
+/* merriweather-700 - latin */
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Merriweather';
+	font-style: normal;
+	font-weight: 700;
+	src: url('../../fonts/merriweather/merriweather-v33-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
-
-form label {
-	cursor: pointer;
-}
-
-svg {
-	color: var(--grey-text-1);
-}
-
 /* figtree-regular - latin */
 @font-face {
 	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */

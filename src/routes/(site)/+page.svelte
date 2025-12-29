@@ -21,7 +21,12 @@
     let searchParams = $state(new URLSearchParams());
 
     onMount(() => {
-        const [hash, query] = window.location.href.split('#')[1].split('?');
+        const [hash, query] = window.location.href.split('#')[1]
+            ? window.location.href.split('#')[1].split('?')
+            : [undefined, undefined];
+
+        if (!query) return;
+
         searchParams = new URLSearchParams(query);
 
         const isPortfolioExpanded = searchParams.get('isPortfolioExpanded') == 'true' ? true : false;
