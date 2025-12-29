@@ -59,3 +59,20 @@
 		<PortfolioItemPreviewBox portfolioItem={activeItem} />
 	{/if}
 </ContentContainer>
+
+<style>
+	:global(#portfolio) {
+		--la: calc(50% - 270px);
+		--lb: calc(50% - 230px);
+
+		@media (max-width: 1400px) {
+			--la: 420px;
+			--lb: 460px;
+		}
+
+		position: relative;
+		z-index: 2;
+		border-radius: var(--border-radius-3);
+		clip-path: polygon(0 0, var(--la) 0, var(--lb) 50px, 100% 50px, 100% 100%, 0 100%);
+	}
+</style>

@@ -2,7 +2,7 @@
     --primary-base: rgb(84,108,118);
     --primary-borders: hsl(from var(--primary-base) h s 67%);
     --primary-background-solid: hsl(from var(--primary-base) h s 47%);
-    --primary-background-gradient: linear-gradient(45deg, var(var(--primary-base), hsl(from var(--primary-background-solid) h s l)));
+    --primary-background-gradient: linear-gradient(135deg, var(--primary-background-solid), var(--primary-base));
 
     --white: rgb(255,255,255);
     --grey-text: rgb(112,112,112);
@@ -10,4 +10,5 @@
     --grey-ornament: rgb(227,227,227);
     --grey-inset-background: rgb(240,240,240);
     --grey-inset-background-light: rgb(248,248,248);
+    --white-background-gradient: linear-gradient(135deg, white, var(--grey-inset-background-light));
 }

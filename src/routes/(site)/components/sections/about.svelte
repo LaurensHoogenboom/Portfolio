@@ -2,6 +2,6 @@
     import ContentContainer from "../atoms/contentContainer.svelte";
 </script>
 
-<ContentContainer id="contact">
-    <h1>Contact</h1>
+<ContentContainer id="about">
+    <h1>About</h1>
 </ContentContainer>
