@@ -9,7 +9,7 @@
 <style>
     :global(#contact) {
         margin-top: calc(0px - var(--border-radius-3));
-        padding-top: calc(var(--spacing-8) + var(--border-radius-3));
+        padding-top: calc(var(--spacing-7) + var(--border-radius-3));
         background: var(--primary-background-gradient);
         border-bottom-left-radius: var(--border-radius-3);
         border-bottom-right-radius: var(--border-radius-3);

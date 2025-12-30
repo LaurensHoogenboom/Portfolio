@@ -1,10 +1,16 @@
+*:not(h1, h2) {
+	font-family: "Figtree", sans-serif;
+    font-size: 20px;
+}
+
 h1, h2 {
     font-family: "Merriweather", serif;
+	padding-bottom: var(--spacing-2);
 }
 
 h1 {
     font-size: 80px;
-	color: var(--primary);
+	color: var(--primary-base);
 
     &:after {
         font-family: "Adobe Handwriting", serif;
@@ -14,13 +20,20 @@ h1 {
 
 h2 {
     font-size: 30px;
-	color: var(--primary);
+	color: var(--primary-base);
 }
 
-p, label, button, input, a {
+p, label, button, input, a, textarea, select, option {
     font-family: "Figtree", sans-serif;
-    font-size: 20px;
 	color: var(--grey-text);
+}
+
+p {
+	padding-bottom: var(--spacing-4);
+	
+	&:has(+ p) {
+		padding-bottom: var(--spacing-2);
+	}
 }
 
 /* Adobe Handwriting Ernie */

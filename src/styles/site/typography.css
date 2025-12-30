@@ -11,10 +11,19 @@ h1, h2 {
 h1 {
     font-size: 80px;
 	color: var(--primary-base);
+	position: relative;
 
     &:after {
         font-family: "Adobe Handwriting", serif;
         font-size: 250px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		transform: translate(-50%);
+		line-height: 250px;
+		user-select: none;
+		z-index: -1;
+		color: var(--grey-ornament);
     }
 }
 

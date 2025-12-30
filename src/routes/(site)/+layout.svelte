@@ -2,8 +2,8 @@
     import type { Snippet } from 'svelte';
     import type { LayoutData } from './$types';
     import { dev } from '$app/environment';
-	import Nav from './components/organisms/nav.svelte';
-    import Footer from './components/organisms/footer.svelte';
+	import Nav from './components/sections/nav.svelte';
+    import Footer from './components/sections/footer.svelte';
 
     let { data, children }: { data: LayoutData, children: Snippet } = $props();
 </script>

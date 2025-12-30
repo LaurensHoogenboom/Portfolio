@@ -8,7 +8,7 @@
     .vertical-seperator {
         position: relative;
         width: 100%;
-        height: calc(var(--spacing-8) + (2 * var(--border-radius-3)));
+        height: calc(var(--spacing-7) + (2 * var(--border-radius-3)));
         margin-top: calc(0px - var(--border-radius-3));
         margin-bottom: calc(0px - var(--border-radius-3));
     }

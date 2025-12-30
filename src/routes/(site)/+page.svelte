@@ -58,7 +58,7 @@
     :global(.about-portfolio-seperator) {
         border-top-left-radius: var(--border-radius-3);
         border-top-right-radius: var(--border-radius-3);
-        height: calc(var(--spacing-8) + (2 * var(--border-radius-3)) + 50px) !important;
+        height: calc(var(--spacing-7) + (2 * var(--border-radius-3)) + 50px) !important;
         margin-bottom: calc(0px - var(--border-radius-3) - 50px) !important;
     }
 </style>

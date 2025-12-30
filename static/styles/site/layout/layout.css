@@ -6,7 +6,6 @@
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	border-bottom: 1px solid black;
 
 	&.fullHeight {
 		height: 100vh;
@@ -17,12 +16,11 @@
 	width: min(100%, 1400px);
 }
 
-nav {
-	height: 50px;
-	width: 100%;
+nav .content-container {
+	padding-left: var(--spacing-6);
+	padding-right: var(--spacing-6);
 }
 
 main .content-container {
-	padding: 50px;
-	min-height: 400px;
+	padding: var(--spacing-7) var(--spacing-6);
 }
