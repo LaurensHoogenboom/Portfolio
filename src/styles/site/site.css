@@ -7,9 +7,7 @@
 @import url("./constants/colors.css") layer(constants);
 @import url("./constants/spacing.css") layer(constants);
 @import url("./constants/borderRadius.css") layer(constants);
-
-/* Layout */
-@import url("./layout/layout.css") layer(layouts);
+@import url("./constants/misc.css") layer(constants);
 
 /* Typography */
 @import url("./typography.css") layer(typography);
@@ -17,13 +15,8 @@
 /* Materials */
 @import url("./materials/sections.css") layer(materials);
 
+/* Layout */
+@import url("./layout/layout.css") layer(layouts);
 
-
-/* 
-@import url("./constants/misc.css") layer(constants);
-@import url("./materials.css") layer(materials);
-@import url("./layout/page.css") layer(layouts);
-@import url("./layout/form.css") layer(layouts);
-@import url("./components/button.css") layer(components);
-@import url("./components/dialog.css") layer(components);
-@import url("./components/inputs.css") layer(components); */
+/* Components */
+@import url("./components/misc.css") layer(components);

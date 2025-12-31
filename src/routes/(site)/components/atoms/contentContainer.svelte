@@ -7,7 +7,8 @@
 		fullHeight = false,
 		theme = 'light',
 		CSSHeight = '',
-        CSSClass=""
+        CSSClass="",
+		width = "contained"
 	}: {
 		children?: Snippet;
 		id?: string;
@@ -15,6 +16,7 @@
 		theme?: 'dark' | 'dark-gradient' | 'transparent' | 'light';
 		CSSHeight?: string;
         CSSClass?: string;
+		width?: "contained" | "wide";
 	} = $props();
 
 	let contentContainer: HTMLDivElement;
@@ -39,7 +41,7 @@
 	class="content-container-wrapper {fullHeight ? 'fullHeight' : ''} {themeClass} {CSSClass}"
     style="{CSSHeight ? `height: ${CSSHeight}` : ''};"
 >
-	<div class="content-container">
+	<div class="content-container {width}">
 		{#if children}
 			{@render children()}
 		{/if}

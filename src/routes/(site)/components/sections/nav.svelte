@@ -42,10 +42,6 @@
                 line-height: 60px;
             }
 
-            hr {
-                border-top: 1px solid var(--primary-borders);
-            }
-
             .toolbar {
                 display: grid;
                 grid-gap: 30px;

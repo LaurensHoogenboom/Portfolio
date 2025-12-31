@@ -5,89 +5,137 @@
 		title,
 		icon,
 		type,
-		style = "primary",
+		style = 'primary',
 		href,
-		onclick
+		onclick,
+		CSSClass
 	}: {
 		title?: string;
 		icon?: typeof IconType;
-		type: 'goto' | 'submit';
+		type: 'goto' | 'goto-external' | 'submit';
 		style?: 'primary' | 'secondary' | 'transparent' | 'inline';
 		href?: string;
 		onclick?: () => void;
+		CSSClass?: string
 	} = $props();
+
+	const classString = `button ${style} ${title ?? 'round'} ${CSSClass}`;
 </script>
 
 {#if type == 'submit'}
-    <button onclick={onclick} class="button {style}">
-        {@render buttonContent()}
-    </button>
+	<button {onclick} class={classString}>
+		{@render buttonContent()}
+	</button>
 {/if}
 
-{#if type == 'goto'}
-	<a href={href} class="button {style}"> 
-        {@render buttonContent()}
-    </a>
+{#if type == 'goto' || type == 'goto-external'}
+	<a {href} class={classString} target={type == 'goto-external' ? '_blank' : '_self'}>
+		{@render buttonContent()}
+	</a>
 {/if}
 
 {#snippet buttonContent()}
-    {#if icon}
-        {@const ButtonIcon = icon}
-        <ButtonIcon size={22} />
-    {/if}
-    {#if title}
-        <span>
-            {title}
-        </span>
-    {/if}
+	{#if icon}
+		{@const ButtonIcon = icon}
+		<ButtonIcon size={22} />
+	{/if}
+	{#if title}
+		<span>
+			{title}
+		</span>
+	{/if}
 {/snippet}
 
 <style>
-    .button {
-        text-decoration: none;
-        display: inline-flex;
-        grid-gap: 15px;
-        align-items: center;
+	.button {
+		text-decoration: none;
+		display: inline-flex;
+		grid-gap: 15px;
+		align-items: center;
+		border: 1px solid var(--primary-base);
+		transition:
+			background-color var(--default-animation-duration),
+			opacity var(--default-animation-duration);
+		--hover-background-color: var(--primary-background-solid);
 
-        &:not(.inline) {
-            padding: 0 var(--spacing-4);
-            border-radius: var(--border-radius-1);
-            height: 45px;
+		&:not(.inline) {
+			padding: 0 var(--spacing-4);
+			border-radius: var(--border-radius-1);
+			height: 45px;
 
-            &:not(:last-of-type) {
-                margin-right: var(--spacing-4);
-            }
-        }
+			&:not(:last-of-type) {
+				margin-right: var(--spacing-3);
+			}
+		}
 
-        &.primary {
-            background-color: var(--primary-base);
-            color: var(--white);
-        }
+		&:not(.inline, .transparent) {
+			box-shadow: var(--primary-shadow-1);
+		}
 
-        &.secondary {
-            border: 1px solid var(--primary-base);
-            color: var(--primary-base);
-        }
+		&.round {
+			aspect-ratio: 1 / 1;
+			padding: 0;
+			justify-content: center;
+			border-radius: 100%;
+		}
 
-        &.inline {
-            height: auto;
+		&.primary {
+			background-color: var(--primary-base);
+			color: var(--white);
+		}
 
-            &:hover {
-                opacity: 0.8;
-            }
-        }
-    }
+		&.secondary {
+			border: 1px solid var(--primary-base);
+			color: var(--primary-base);
+			background-color: var(--white);
+		}
 
-    :global(.section-dark) .button {
-        &.primary {
-            background-color: var(--white);
-            color: var(--primary-base);
-        }
+		&.transparent {
+			border: 1px solid var(--grey-borders);
+			background: none;
+		}
 
-        &.secondary {
-            background-color: var(--primary-background-solid);
-            border-color: var(--primary-borders);
-            color: var(--white);
-        }
-    }
+		&.inline {
+			height: auto;
+
+			&:hover {
+				opacity: 0.6;
+			}
+		}
+
+		@media (hover: hover) {
+			&:hover:not(.inline) {
+				background-color: var(--hover-background-color);
+				color: var(--white);
+				cursor: pointer;
+			}
+		}
+	}
+
+	:global(.section-dark) .button {
+		&.primary {
+			background-color: var(--white);
+			color: var(--primary-base);
+			--hover-background-color: var(--grey-inset-background);
+		}
+
+		&.secondary {
+			background-color: var(--primary-background-solid);
+			border-color: var(--primary-borders);
+			color: var(--white);
+			--hover-background-color: var(--primary-base);
+		}
+
+		&.transparent {
+			border-color: var(--primary-borders);
+			--hover-background-color: var(--primary-background-solid);
+		}
+
+		@media (hover: hover) {
+			&:hover:not(.inline) {
+				background-color: var(--hover-background-color);
+				cursor: pointer;
+			}
+		}
+	}
 </style>
