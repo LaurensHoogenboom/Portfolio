@@ -47,6 +47,12 @@ p {
 	&:has(+ p) {
 		padding-bottom: var(--spacing-2);
 	}
+
+	@media (hover: hover) {
+		a:hover {
+			color: var(--primary-background-solid);
+		}
+	}	
 }
 
 /* Adobe Handwriting Ernie */
