@@ -11,6 +11,20 @@
     h1, h2, p, label, button, input, a, textarea, select, option {
         color: white;
     }
+
+    .tab-bar {
+        background-color: var(--primary-base) !important;
+        border-color: var(--primary-borders) !important;
+
+        .tab-item button {
+            color: var(--white) !important;
+        }
+
+        &:after {
+            background-color: var(--primary-background-solid) !important;
+            border: 1px solid var(--primary-borders) !important;
+        }
+    }
 }
 
 .section-light {

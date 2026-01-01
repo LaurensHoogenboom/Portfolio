@@ -1,4 +1,4 @@
-*:not(h1, h2) {
+*:not(h1, h2, h1 span, h2 span) {
 	font-family: "Figtree", sans-serif;
     font-size: 20px;
 }
@@ -12,6 +12,7 @@ h1 {
     font-size: 80px;
 	color: var(--primary-base);
 	position: relative;
+	z-index: 1;
 
     &:after {
         font-family: "Adobe Handwriting", serif;
@@ -35,10 +36,13 @@ h2 {
 p, label, button, input, a, textarea, select, option {
     font-family: "Figtree", sans-serif;
 	color: var(--grey-text);
+	position: relative;
+	z-index: 1;
 }
 
 p {
 	padding-bottom: var(--spacing-4);
+	max-width: 565px;
 	
 	&:has(+ p) {
 		padding-bottom: var(--spacing-2);

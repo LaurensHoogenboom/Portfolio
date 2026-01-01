@@ -16,7 +16,7 @@
 	width: min(100%, 1400px);
 
 	&.wide {
-		width: 100%;
+		width: min(100%, 1700px);
 	}
 }
 
