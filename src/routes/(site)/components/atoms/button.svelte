@@ -22,6 +22,19 @@
 	} = $props();
 
 	const classString = `button ${style} ${title ?? 'round'} ${CSSClass}`;
+
+	const gotoOnClick = (e: MouseEvent) => {
+		if (type == 'goto-external') return;
+
+		if (href?.startsWith('#')) {
+			const hash = href.split('#')[1];
+
+			if (!hash) return;
+
+			e.preventDefault();
+			document.getElementById(hash)?.scrollIntoView({behavior: 'smooth'});
+		}
+	}
 </script>
 
 {#if type == 'submit'}
@@ -31,7 +44,7 @@
 {/if}
 
 {#if type == 'goto' || type == 'goto-external'}
-	<a {href} class={classString} target={type == 'goto-external' ? '_blank' : '_self'} id={id}>
+	<a {href} class={classString} target={type == 'goto-external' ? '_blank' : '_self'} id={id} onclick={gotoOnClick}>
 		{@render buttonContent()}
 	</a>
 {/if}

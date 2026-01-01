@@ -61,10 +61,11 @@
             padding-left: calc(var(--spacing-6) + var(--extra-space) / 2);
             padding-right: calc(var(--spacing-6) + var(--extra-space) / 2);
             box-shadow: var(--grey-shadow-2);
+
             &:before {
                 content: '';
                 background-color: var(--grey-inset-background-light);
-                height: 40px;
+                height: 60px;
                 position: absolute;
                 top: -40px;
                 left: calc(var(--spacing-5) * 2);
@@ -73,6 +74,13 @@
                 border-top-left-radius: var(--border-radius-3);
                 border-top-right-radius: var(--border-radius-3);
                 z-index: -1;
+                transition: top var(--default-animation-duration);
+            }
+
+            @media (hover:hover) {
+                :global(&:has(form button:hover):before) {
+                    top: -50px;
+                }
             }
 
             h1:after {
