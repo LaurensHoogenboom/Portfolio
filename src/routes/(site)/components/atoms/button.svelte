@@ -8,7 +8,8 @@
 		style = 'primary',
 		href,
 		onclick,
-		CSSClass
+		CSSClass,
+		id
 	}: {
 		title?: string;
 		icon?: typeof IconType;
@@ -16,20 +17,21 @@
 		style?: 'primary' | 'secondary' | 'transparent' | 'inline';
 		href?: string;
 		onclick?: () => void;
-		CSSClass?: string
+		CSSClass?: string;
+		id?: string;
 	} = $props();
 
 	const classString = `button ${style} ${title ?? 'round'} ${CSSClass}`;
 </script>
 
 {#if type == 'submit'}
-	<button {onclick} class={classString}>
+	<button {onclick} class={classString} id={id}>
 		{@render buttonContent()}
 	</button>
 {/if}
 
 {#if type == 'goto' || type == 'goto-external'}
-	<a {href} class={classString} target={type == 'goto-external' ? '_blank' : '_self'}>
+	<a {href} class={classString} target={type == 'goto-external' ? '_blank' : '_self'} id={id}>
 		{@render buttonContent()}
 	</a>
 {/if}

@@ -32,7 +32,7 @@
 					type="goto-external"
 					icon={Linkedin}
 					style="secondary"
-					href="www.linkedin.com/in/laurens-hoogenboom-3aa78515a"
+					href="https://www.linkedin.com/in/laurens-hoogenboom-3aa78515a/"
 				/>
 			</div>
 		</div>
