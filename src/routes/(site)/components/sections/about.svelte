@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { Instagram, Linkedin } from '@lucide/svelte';
+	import { BookDashed, Code, Instagram, Linkedin, PencilRuler } from '@lucide/svelte';
 	import Button from '../atoms/button.svelte';
 	import ContentContainer from '../atoms/contentContainer.svelte';
 	import profilePicture from '$lib/media/site/about/profile.jpg';
 	import curiculumVitae from '$lib/media/site/about/Curiculum Vitae.pdf';
+	import IconSquare from '../atoms/about/iconSquare.svelte';
+	import IdCard from '../atoms/about/idCard.svelte';
 </script>
 
 <ContentContainer id="about" width="wide">
@@ -36,13 +38,23 @@
 				/>
 			</div>
 		</div>
+		<div class="ornaments">
+			<IconSquare icon={PencilRuler} CSSClass="design-icon" />
+			<IconSquare icon={BookDashed} CSSClass="research-icon" />
+			<IconSquare icon={Code} CSSClass="code-icon" />
+			<IdCard CSSClass="id-card"/>
+		</div>
 	</div>
 </ContentContainer>
 
 <style>
+	:global(#about) {
+		overflow: hidden;
+	}
+
 	.about-content {
 		display: grid;
-		grid-template-columns: 400px 1fr 200px;
+		grid-template-columns: 450px 1fr 400px;
 		grid-gap: var(--spacing-6);
 		align-items: center;
 
@@ -60,6 +72,44 @@
 
 		.main-content {
 			padding-top: var(--spacing-4);
+			padding-right: var(--spacing-3);
+
+			p {
+				max-width: initial;
+			}
+		}
+
+		.ornaments {
+			position: relative;
+			width: 100%;
+			height: 400px;
+
+			:global(.icon-square) {
+				position: absolute;
+				z-index: 2;
+			}
+
+			:global(.design-icon) {
+				top: 0;
+				left: 0;
+			}
+
+			:global(.research-icon) {
+				top: 65px;
+				left: 215px;
+			}
+
+			:global(.code-icon) {
+				top: 215px;
+				left: 65px;
+			}
+
+			:global(.id-card) {
+				position: absolute;
+				z-index: 1;
+				bottom: -40px;
+				left: 130px;
+			}
 		}
 	}
 

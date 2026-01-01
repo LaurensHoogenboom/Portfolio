@@ -84,7 +84,7 @@
 		}
 
 		&:not(.inline, .transparent) {
-			box-shadow: var(--primary-shadow-1);
+			box-shadow: var(--primary-shadow);
 		}
 
 		&.round {

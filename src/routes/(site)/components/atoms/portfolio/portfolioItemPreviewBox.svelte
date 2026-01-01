@@ -32,7 +32,7 @@
 		border: 1px solid var(--primary-borders);
 		background-size: cover;
 		background-position: center;
-		box-shadow: var(--primary-shadow-1);
+		box-shadow: var(--primary-shadow);
 		bottom: 0;
 		transition: bottom var(--default-animation-duration);
 
