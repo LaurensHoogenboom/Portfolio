@@ -4,7 +4,7 @@
 	import About from './components/sections/about.svelte';
 	import Contact from './components/sections/contact.svelte';
 	import Header from './components/sections/header.svelte';
-	import Portfolio, { type IPortfolioItem, type PortfolioItemType } from './components/sections/portfolio.svelte';
+	import Portfolio, { type IPortfolioItem, type PortfolioItemThumbnail, type PortfolioItemType } from './components/sections/portfolio.svelte';
 	import { replaceState } from '$app/navigation';
 	import VerticalSeperator from './components/atoms/verticalSeperator.svelte';
 
@@ -12,7 +12,7 @@
 
 	const baseURL = '/uploads/portfolio/images/temp/';
 
-	const images = [
+	const dummyImages: PortfolioItemThumbnail[] = [
 		{ url: baseURL + 'doggy.png', aspectRatio: '4/3' },
 		{ url: baseURL + 'lady.jpg', aspectRatio: '3/4' },
 		{ url: baseURL + 'odyssey.png', aspectRatio: '4/3' },
@@ -34,7 +34,7 @@
 			id: p.id,
 			title: p.title,
 			type: dummyTypes[i],
-			thumbnail: images[i],
+			thumbnail: dummyImages[i],
             description: dummyDescription
 		};
 	});

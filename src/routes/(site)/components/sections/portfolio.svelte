@@ -8,16 +8,17 @@
 	import { pushState } from '$app/navigation';
 
 	export type PortfolioItemType = 'research' | 'art' | 'project';
+	export interface PortfolioItemThumbnail {
+		url: string,
+		aspectRatio: '3/4' | '4/3';
+	}
 
 	export interface IPortfolioItem {
 		id: string;
 		type: PortfolioItemType;
 		title: string;
 		description?: string;
-		thumbnail: {
-			url: string;
-			aspectRatio: string;
-		};
+		thumbnail: PortfolioItemThumbnail;
 	}
 
 	let { portfolioItems }: { portfolioItems: IPortfolioItem[] } = $props();
@@ -53,7 +54,7 @@
 				<div class="items-wrapper {selectedPortfolioItemType == 'art' ? 'art-wrapper' : ''}">
 					{#if selectedPortfolioItemType == 'art'}
 						{#each visibleItems as vItem}
-							<PortfolioItemPreviewBox portfolioItem={vItem} />
+							<PortfolioItemPreviewBox portfolioItem={vItem} showTitleBelow={true} />
 						{/each}
 					{:else}
 						{#each visibleItems as vItem}
