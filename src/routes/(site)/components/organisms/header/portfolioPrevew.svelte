@@ -1,43 +1,21 @@
 <script lang="ts">
 	import { type IPortfolioItem, type PortfolioItemType } from '../../sections/portfolio.svelte';
 	import PortfolioItemPreviewBox from '../../atoms/portfolio/portfolioItemPreviewBox.svelte';
-	import TabBar from '../../atoms/tabbar.svelte';
-	import Button from '../../atoms/button.svelte';
-	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
-	import { type ITabItem } from '../../atoms/tabbar.svelte';
+	import TopBar from '../../molecules/header/portfolioPreview/topBar.svelte';
+	import BottomBar from '../../molecules/header/portfolioPreview/bottomBar.svelte';
 
 	const { previewItems }: { previewItems: IPortfolioItem[] } = $props();
 
-	interface headerPortfolioTabItem extends ITabItem {
-		type: PortfolioItemType | undefined;
-	}
-
-	const tabItems: headerPortfolioTabItem[] = [
-		{ title: 'Alles', type: undefined },
-		{ title: 'Research through Design', type: 'research' },
-		{ title: 'Tekeningen', type: 'art' }
-	];
-
 	let selectedPortfolioItemType: PortfolioItemType | undefined = $state();
 	let visibleItems = $derived(
-		selectedPortfolioItemType != undefined ? previewItems.filter((pI) => pI.type == selectedPortfolioItemType) : previewItems
+		selectedPortfolioItemType != undefined
+			? previewItems.filter((pI) => pI.type == selectedPortfolioItemType).slice(0, 3)
+			: previewItems.slice(0, 3)
 	);
 
 	let selectedIndex = $state(0);
-    let portfolioItemInFocusId = $derived(visibleItems[selectedIndex].id);
+	let portfolioItemInFocusId = $derived(visibleItems[selectedIndex].id);
 	let boxContainer: HTMLUListElement;
-
-	const nextItem = () => {
-		if (selectedIndex < visibleItems.length - 1) {
-			selectedIndex++;
-		}
-	};
-
-	const previousItem = () => {
-		if (selectedIndex > 0) {
-			selectedIndex--;
-		}
-	};
 
 	$effect(() => {
 		const element = document.getElementById(portfolioItemInFocusId);
@@ -47,33 +25,29 @@
 
 		boxContainer.scrollTo({ left: Math.abs(boxContainer.offsetLeft - element.offsetLeft), top: 0, behavior: 'smooth' });
 	});
-
-	const setPortfolioItemType = (index: number) => {
-		selectedPortfolioItemType = tabItems[index].type;
-        selectedIndex = 0;
-	};
 </script>
 
 <div class="portfolio-preview">
-	<div class="top-bar">
-		<TabBar {tabItems} onSelectionChange={setPortfolioItemType} />
-		<hr />
-	</div>
+	<TopBar
+		setPortfolioItemType={(type: PortfolioItemType | undefined) => {
+			selectedPortfolioItemType = type;
+			selectedIndex = 0;
+		}}
+	/>
 
 	<ul class="box-list" bind:this={boxContainer}>
-		{#each visibleItems.slice(0, 3) as pItem}
+		{#each visibleItems as pItem}
 			<PortfolioItemPreviewBox portfolioItem={pItem} />
 		{/each}
 	</ul>
 
-	<div class="bottom-bar">
-		<hr />
-
-		<div class="button-group">
-			<Button type="submit" icon={ChevronLeft} style="transparent" onclick={previousItem} />
-			<Button type="submit" icon={ChevronRight} style="transparent" onclick={nextItem} />
-		</div>
-	</div>
+	{#key [selectedIndex, visibleItems]}
+		<BottomBar
+			setSelectedIndex={(index: number) => (selectedIndex = index)}
+			maxIndex={visibleItems.length - 1}
+			currentIndex={selectedIndex}
+		/>
+	{/key}
 </div>
 
 <style>
@@ -101,32 +75,5 @@
 		padding-right: 100vw;
 		list-style: none;
 		overflow: hidden;
-	}
-
-	.top-bar,
-	.bottom-bar {
-		display: grid;
-		align-items: center;
-		grid-column-gap: var(--spacing-4);
-	}
-
-	.top-bar {
-		grid-template-columns: max-content 1fr;
-	}
-
-	.bottom-bar {
-		grid-template-columns: max-content;
-		padding-right: var(--extra-width);
-		justify-content: end;
-
-		:global(.button-group button:not(:last-of-type)) {
-			margin-right: var(--spacing-3);
-		}
-
-		hr {
-			position: absolute;
-			width: 100vw;
-			right: calc(var(--extra-width) + 90px + var(--spacing-3) + var(--spacing-4));
-		}
 	}
 </style>

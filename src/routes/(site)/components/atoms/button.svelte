@@ -9,7 +9,8 @@
 		href,
 		onclick,
 		CSSClass,
-		id
+		id,
+		disabled
 	}: {
 		title?: string;
 		icon?: typeof IconType;
@@ -19,9 +20,10 @@
 		onclick?: () => void;
 		CSSClass?: string;
 		id?: string;
+		disabled?: boolean
 	} = $props();
 
-	const classString = `button ${style} ${title ?? 'round'} ${CSSClass}`;
+	const classString = `button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''}`;
 
 	const gotoOnClick = (e: MouseEvent) => {
 		if (type == 'goto-external') return;
@@ -113,13 +115,20 @@
 		&.inline {
 			height: auto;
 
-			&:hover {
-				opacity: 0.6;
+			@media (hover:hover) {
+				&:hover:not(.disabled) {
+					opacity: 0.6;
+				}
 			}
 		}
 
+		&.disabled {
+			cursor: default;
+			opacity: 0.5;
+		}
+
 		@media (hover: hover) {
-			&:hover:not(.inline) {
+			&:hover:not(.inline, .disabled) {
 				background-color: var(--hover-background-color);
 				color: var(--white);
 				cursor: pointer;
@@ -147,7 +156,7 @@
 		}
 
 		@media (hover: hover) {
-			&:hover:not(.inline) {
+			&:hover:not(.inline, .disabled) {
 				background-color: var(--hover-background-color);
 				cursor: pointer;
 			}
