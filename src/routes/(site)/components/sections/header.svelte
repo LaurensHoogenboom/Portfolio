@@ -2,7 +2,7 @@
 	import AnimatedMouseWheel from '../atoms/header/animatedMouseWheel.svelte';
 	import Button from '../atoms/button.svelte';
 	import ContentContainer from '../atoms/contentContainer.svelte';
-	import PortfolioPrevew from '../organisms/portfolioPrevew.svelte';
+	import PortfolioPrevew from '../organisms/header/portfolioPrevew.svelte';
 	import { type IPortfolioItem } from './portfolio.svelte';
 	import { typewriter } from '$lib/utils/transitions/typewriter';
 	import Title from '../atoms/header/title.svelte';

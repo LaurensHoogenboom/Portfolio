@@ -7,9 +7,11 @@
 	import Button from '../atoms/button.svelte';
 	import { pushState } from '$app/navigation';
 
+	export type PortfolioItemType = 'research' | 'art' | 'project';
+
 	export interface IPortfolioItem {
 		id: string;
-		type: 'drawing' | 'project';
+		type: PortfolioItemType;
 		title: string;
 		description?: string;
 		thumbnail: {
@@ -20,15 +22,16 @@
 
 	let { portfolioItems }: { portfolioItems: IPortfolioItem[] } = $props();
 
-	let blockScroll = $state(false);
-	let visibleItems = $state(portfolioItems.slice(0, 2));
-	let activeItem = $state(portfolioItems.find((i) => i.id == page.state.activePortfolioItemId));
+	let selectedPortfolioItemType: PortfolioItemType = $state('research');
 
-	$effect(() => {
-		blockScroll = page.state.isPortfolioExpanded ?? false;
-		visibleItems = page.state.isPortfolioExpanded ? portfolioItems : portfolioItems.slice(0, 2);
-		activeItem = portfolioItems.find((i) => i.id == page.state.activePortfolioItemId);
-	});
+	let blockScroll = $derived(page.state.isPortfolioExpanded ?? false);
+	let filteredItems = $derived(portfolioItems.filter(i => i.type == selectedPortfolioItemType));
+	let visibleItems = $derived(page.state.isPortfolioExpanded ? filteredItems : filteredItems.slice(0, 2));
+	let activeItem = $derived(portfolioItems.find((i) => i.id == page.state.activePortfolioItemId));
+
+	const setPortfolioItemType = (type: PortfolioItemType) => {
+		selectedPortfolioItemType = type;
+	}
 </script>
 
 <svelte:window
@@ -44,13 +47,19 @@
 
 	<div class="shadow-container">
 		<ContentContainer id="portfolio" fullHeight={page.state.isPortfolioExpanded}>
-			<Toolbar hasActiveItem={activeItem ? true : false} />
+			<Toolbar hasActiveItem={activeItem ? true : false} changeTypeCallback={setPortfolioItemType} />
 
 			{#if !activeItem}
-				<div class="items-wrapper">
-					{#each visibleItems as vItem}
-						<PortfolioPreviewBanner portfolioItem={vItem} />
-					{/each}
+				<div class="items-wrapper {selectedPortfolioItemType == 'art' ? 'art-wrapper' : ''}">
+					{#if selectedPortfolioItemType == 'art'}
+						{#each visibleItems as vItem}
+							<PortfolioItemPreviewBox portfolioItem={vItem} />
+						{/each}
+					{:else}
+						{#each visibleItems as vItem}
+							<PortfolioPreviewBanner portfolioItem={vItem} />
+						{/each}
+					{/if}
 				</div>
 			{:else}
 				<PortfolioItemPreviewBox portfolioItem={activeItem} />
@@ -60,7 +69,7 @@
 				<Button
 					type="submit"
 					style="secondary"
-					title="Meer Projecten"
+					title="Meer weergeven"
 					CSSClass="more-projects-button"
 					onclick={() => pushState('#portfolio?isPortfolioExpanded=true', { isPortfolioExpanded: true })}
 				/>
@@ -122,6 +131,12 @@
 				flex-direction: column;
 				grid-gap: var(--spacing-7);
 				padding-top: var(--spacing-6);
+
+				&.art-wrapper {
+					flex-direction: row;
+					list-style: none;
+					flex-wrap: wrap;
+				}
 			}
 
 			:global(.more-projects-button) {

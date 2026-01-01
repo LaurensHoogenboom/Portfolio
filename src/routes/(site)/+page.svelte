@@ -4,7 +4,7 @@
 	import About from './components/sections/about.svelte';
 	import Contact from './components/sections/contact.svelte';
 	import Header from './components/sections/header.svelte';
-	import Portfolio, { type IPortfolioItem } from './components/sections/portfolio.svelte';
+	import Portfolio, { type IPortfolioItem, type PortfolioItemType } from './components/sections/portfolio.svelte';
 	import { replaceState } from '$app/navigation';
 	import VerticalSeperator from './components/atoms/verticalSeperator.svelte';
 
@@ -22,11 +22,18 @@
 	const dummyDescription =
 		'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel ullamcorper quam, laoreet eleifend lorem. Duis finibus sem ante, et iaculis eros blandit vitae. Nunc eleifend sed nibh at posuere. Vivamus non rhoncus lorem. ';
 
+	const dummyTypes: PortfolioItemType[] = [
+		"research",
+		"art",
+		"research",
+		"project"
+	]
+	
 	const portfolioItems: IPortfolioItem[] = data.posts.map((p, i) => {
 		return {
 			id: p.id,
 			title: p.title,
-			type: 'project',
+			type: dummyTypes[i],
 			thumbnail: images[i],
             description: dummyDescription
 		};
