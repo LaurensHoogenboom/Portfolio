@@ -1,4 +1,4 @@
-input, textarea {
+input, textarea, select {
     transition: border-color var(--default-animation-time), border-width var(--default-animation-time);
 
     &:focus {
@@ -6,4 +6,12 @@ input, textarea {
         border-color: var(--primary-base);
         box-shadow: var(--shadow-float-3);
     }
+}
+
+textarea {
+    resize: vertical;
+}
+
+select {
+    padding: var(--padding-5);
 }

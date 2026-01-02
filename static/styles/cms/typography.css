@@ -18,7 +18,7 @@ a, p, button, label, input, textarea, select, option, li, td {
 }
 
 p, label {
-	&:not(:last-child) {
+	&:not(:last-child, .clickable-input) {
 		padding-bottom: var(--padding-2);
 	}
 }
@@ -48,7 +48,7 @@ label {
 	color: var(--grey-text-1);
 
 	&:not(:last-child) {
-		&:has(+ input), &:has(+ textarea) {
+		&:has(+ input), &:has(+ textarea), &:has(+ select), &:has(+ .file-input) {
 			padding-bottom: var(--padding-4);
 		}
 	
