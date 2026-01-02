@@ -6,6 +6,7 @@
 	import CreatePostDialog from './components/createPostDialog.svelte';
 	import { Plus } from '@lucide/svelte';
 	import { DispatchSuccesNotification } from '$lib/globalNotifications.svelte';
+	import DataList from '$lib/components/cms/organisms/dataList.svelte';
 
     let { data, form }: { data: PageData, form: ActionData | undefined } = $props();
     let createPostDialogVisible = $state(false);
@@ -34,11 +35,11 @@
 </PageToolbar>
 
 <main>
-    <div class="box" style="flex-direction: column;">
+    <DataList itemNamePlural="Posts" itemCount={data.posts.length}>
         {#each data.posts as post}
             <ListItem title={post.title} id={post.id} url="/cms/posts/{post.slug}" deleteAction="/cms/posts?/delete" />
         {/each}
-    </div>
+    </DataList>
 </main>
 
 {#if createPostDialogVisible}

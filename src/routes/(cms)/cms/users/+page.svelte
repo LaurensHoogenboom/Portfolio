@@ -8,6 +8,7 @@
 	import CreateUserDialog from './components/createUserDialog.svelte';
 	import { Plus } from '@lucide/svelte';
     import { DispatchSuccesNotification } from '$lib/globalNotifications.svelte';
+	import DataList from '$lib/components/cms/organisms/dataList.svelte';
 
     let { data, form }: { data: PageData, form: ActionData | undefined } = $props();
 
@@ -58,11 +59,11 @@
 </PageToolbar>
 
 <main>
-    <div class="box" style="flex-direction: column;">
+    <DataList itemNamePlural="Users" itemCount={data.users.length}>
         {#each data.users as user}
             <ListItem title={user.username} id={user.id} editAction={() => openEditDialog(user.id)} deleteAction="/cms/users?/delete"/>
         {/each}
-    </div>
+    </DataList>
 </main>
 
 {#if editFormVisible && userToEdit }

@@ -4,7 +4,8 @@
 	import About from './components/sections/about.svelte';
 	import Contact from './components/sections/contact.svelte';
 	import Header from './components/sections/header.svelte';
-	import Portfolio, { type IPortfolioItem, type PortfolioItemThumbnail, type PortfolioItemType } from './components/sections/portfolio.svelte';
+	import type { IPortfolioItem, PortfolioItemType, PortfolioItemThumbnail} from '$lib/server/db/types/portfolio'
+	import Portfolio from './components/sections/portfolio.svelte';
 	import { replaceState } from '$app/navigation';
 	import VerticalSeperator from './components/atoms/verticalSeperator.svelte';
 

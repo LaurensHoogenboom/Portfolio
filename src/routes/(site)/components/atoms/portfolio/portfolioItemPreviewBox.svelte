@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type IPortfolioItem } from '../../sections/portfolio.svelte';
+	import type { IPortfolioItem } from '$lib/server/db/types/portfolio';
 	import { pushState } from '$app/navigation';
 
 	const { portfolioItem, showTitleBelow = false }: { portfolioItem: IPortfolioItem, showTitleBelow?: boolean } = $props();

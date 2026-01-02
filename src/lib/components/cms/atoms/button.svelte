@@ -4,9 +4,9 @@
     import { Circle } from 'svelte-loading-spinners';
     import { fly } from 'svelte/transition';
 
-    const { title, type, style, alignment, url, onclick, icon, children, loading = false, form, succes = false } : {
+    const { title, type, style, alignment, url, onclick, icon, children, loading = false, form, succes = false, labelFor } : {
         title?: string,
-        type: "submit" | "button" | "goto",
+        type: "submit" | "button" | "goto" | "label",
         style: "primary" | "secondary" | "transparent" | "inset-outset",
         alignment?: "default" | "center",
         url?: string,
@@ -15,31 +15,36 @@
         children?: Snippet,
         loading?: boolean,
         form?: string,
-        succes?: boolean
+        succes?: boolean,
+        labelFor?: string
     } = $props();
+
+    const classString = `${style == "inset-outset" ? "inset round" : `clickable-input ${style}`}`;
 </script>
 
 {#if type == "goto" && url}
-    <a class="{style == "inset-outset" ? "inset round" : `clickable-input ${style}`}" href="{url}">
-        {#if style=="inset-outset"}
-            <div class="outset">
-                {@render buttonContent()}
-            </div>
-        {:else}
-            {@render buttonContent()}
-        {/if}
+    <a class={classString} href="{url}">
+        {@render buttonContentWrapper()}
     </a>
 {:else if type == "button" || type == "submit"}
-    <button class="{style == "inset-outset" ? "inset round" : `clickable-input ${style}`}" type={type} onclick={onclick} form={form}>
-        {#if style=="inset-outset"}
-            <div class="outset">
-                {@render buttonContent()}
-            </div>
-        {:else}
-            {@render buttonContent()}
-        {/if}
+    <button class={classString} type={type} onclick={onclick} form={form}>
+        {@render buttonContentWrapper()}
     </button>
+{:else if type == "label"}
+    <label style="display: inline-block;" class={classString} for={labelFor} >
+        {@render buttonContentWrapper()}
+    </label>
 {/if}
+
+{#snippet buttonContentWrapper()}
+    {#if style=="inset-outset"}
+        <div class="outset">
+            {@render buttonContent()}
+        </div>
+    {:else}
+        {@render buttonContent()}
+    {/if}
+{/snippet}
 
 {#snippet buttonContent()}
     <div class="button-content 

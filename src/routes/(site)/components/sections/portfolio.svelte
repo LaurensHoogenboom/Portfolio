@@ -6,20 +6,7 @@
 	import PortfolioPreviewBanner from '../atoms/portfolio/portfolioPreviewBanner.svelte';
 	import Button from '../atoms/button.svelte';
 	import { pushState } from '$app/navigation';
-
-	export type PortfolioItemType = 'research' | 'art' | 'project';
-	export interface PortfolioItemThumbnail {
-		url: string,
-		aspectRatio: '3/4' | '4/3';
-	}
-
-	export interface IPortfolioItem {
-		id: string;
-		type: PortfolioItemType;
-		title: string;
-		description?: string;
-		thumbnail: PortfolioItemThumbnail;
-	}
+	import type { IPortfolioItem, PortfolioItemType } from '$lib/server/db/types/portfolio';
 
 	let { portfolioItems }: { portfolioItems: IPortfolioItem[] } = $props();
 
