@@ -17,7 +17,7 @@
     <div class="body">
         <div class="thumbnail-wrapper">
             <div class="dummy"></div>
-            <div class="real" style="background-image: url('{portfolioItem.thumbnail.url}');"></div>
+            <div class="real" style="background-image: url({JSON.stringify(portfolioItem.image?.thumbnail.url)});"></div>
         </div>
         <div class="content">
             <article>

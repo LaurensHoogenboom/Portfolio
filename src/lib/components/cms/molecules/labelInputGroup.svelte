@@ -46,8 +46,6 @@
     
     let showImage = $state(acceptFile == "image/*");
     let imagePreviewSrc = $state(typeof value == "string" ? value : '');
-
-    $inspect(fileName);
 </script>
 
 <div class="label-input-group">
@@ -59,9 +57,11 @@
         <textarea rows="5" class="inset" bind:value={value} name={name} onchange={callback} maxlength={max} {required}></textarea>
     {:else if type == "select"}
         <select class="clickable-input" id={name} name={name} onchange={callback} {required} bind:value={value}>
-            {#each selectOptions as option}
-                <option value={option.value}>{option.title}</option>
-            {/each}
+            {#if selectOptions}
+                {#each selectOptions as option}
+                    <option value={option.value}>{option.title}</option>
+                {/each}
+            {/if}            
         </select>
     {:else if type = "file"}
         <div class="file-input">

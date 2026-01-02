@@ -1,8 +1,8 @@
-import { getPosts } from '$lib/server/db/cruds/posts';
+import { getPortfolioItems } from '$lib/server/db/cruds/portfolioItems';
 import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
-    const posts = await getPosts()
+    const portfolioItems = await getPortfolioItems()
 
-    return {posts: posts};
+    return { portfolioItems: portfolioItems };
 }) satisfies PageServerLoad;
