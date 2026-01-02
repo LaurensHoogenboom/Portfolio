@@ -14,6 +14,8 @@
     {:else}
         <link rel="stylesheet" type="text/css" media="screen" href="/styles/site/site.css">
     {/if}
+
+    <title>Laurens Hoogenboom</title>
 </svelte:head>
 
 <div class="site-wrapper">
