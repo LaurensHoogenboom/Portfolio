@@ -7,7 +7,7 @@ interface ISelectPortfolioType extends ISelectOption {
 }
 
 export const portfolioSelectOptions: ISelectPortfolioType[] = [
-    { value: 'art', title: 'Tekening' },
+    { value: 'art', title: 'Drawing' },
     { value: 'project', title: 'Project' },
     { value: 'research', title: 'Research Through Design' }
 ];

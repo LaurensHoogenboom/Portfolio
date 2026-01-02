@@ -7,6 +7,7 @@
 	import DataList from '$lib/components/cms/organisms/dataList.svelte';
 	import EditPortfolioItemDialog, { type IPortfolioItemToEdit } from './components/editPortfolioItemDialog.svelte';
 	import CreatePortfolioItemDialog from './components/createPortfolioItemDialog.svelte';
+	import { DispatchSuccesNotification } from '$lib/globalNotifications.svelte';
 
     let { data, form }: { data: PageData, form: ActionData | undefined } = $props();
 
@@ -27,6 +28,28 @@
             }
         }
     }
+
+    $effect(() => {
+        if (form?.succes) {
+            switch(form.action) {
+                case 'create':
+                    createFormVisible = false;
+                    DispatchSuccesNotification(`"${form.portfolioItemTitle}" was succesfully added.`);
+                    break;
+                case 'update':
+                    portfolioItemToEdit = undefined;
+                    DispatchSuccesNotification(`Changes to "${form.portfolioItemTitle}"" were succesfully saved.`);
+                    break;
+                case 'delete':
+                    DispatchSuccesNotification(`"${form.portfolioItemTitle}" was succesfully removed.`);
+                    break;
+                default: 
+                    break;
+            }
+
+            form = undefined;
+        }
+    });
 </script>
 
 <PageToolbar>

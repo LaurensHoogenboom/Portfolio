@@ -71,6 +71,13 @@
       "when": 1767343405707,
       "tag": "0009_confused_spitfire",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1767361664005,
+      "tag": "0010_optimal_iron_fist",
+      "breakpoints": true
     }
   ]
 }

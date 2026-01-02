@@ -28,12 +28,11 @@
             fileName = files[0].name;
 
             if (acceptFile == 'image/*') {
-                showImage = true;
                 const reader = new FileReader();
 
                 reader.addEventListener('load', () => {
-                    if (typeof reader.result == "string" && imagePreview) {
-                        imagePreview.setAttribute("src", reader.result);
+                    if (typeof reader.result == "string") {
+                        imagePreviewSrc = reader.result;
                     }
                 });
 
@@ -43,9 +42,12 @@
     });
 
     let files: FileList | undefined = $state();
-    let fileName: string | undefined = $state();
-    let showImage = $state(false);
-    let imagePreview: HTMLImageElement | undefined = $state();
+    let fileName: string | undefined = $state(typeof value == "string" ? value.split('/').pop() : '');
+    
+    let showImage = $state(acceptFile == "image/*");
+    let imagePreviewSrc = $state(typeof value == "string" ? value : '');
+
+    $inspect(fileName);
 </script>
 
 <div class="label-input-group">
@@ -68,7 +70,7 @@
 
             {#if fileName}
                 {#if showImage}
-                    <img class="outset" bind:this={imagePreview} alt={fileName}/>
+                    <img class="outset" alt={fileName} src={imagePreviewSrc}/>
                 {:else}
                     <p>{fileName}</p>
                 {/if}
