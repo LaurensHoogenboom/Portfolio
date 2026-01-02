@@ -124,6 +124,7 @@
 					flex-direction: row;
 					list-style: none;
 					flex-wrap: wrap;
+					grid-gap: var(--spacing-6);
 				}
 			}
 

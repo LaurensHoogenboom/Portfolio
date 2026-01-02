@@ -2,7 +2,7 @@
 	import type { IPortfolioItem } from '$lib/server/db/types/portfolio';
 	import { pushState } from '$app/navigation';
 
-	const { portfolioItem, showTitleBelow = false }: { portfolioItem: IPortfolioItem, showTitleBelow?: boolean } = $props();
+	const { portfolioItem, showTitleBelow = false }: { portfolioItem: IPortfolioItem; showTitleBelow?: boolean } = $props();
 
 	const openPortfolioItem = () => {
 		pushState(`#portfolio?isPortfolioExpanded=true&activePortfolioItemId=${portfolioItem.id}`, {
@@ -10,13 +10,15 @@
 			activePortfolioItemId: portfolioItem.id
 		});
 	};
+
+	const aspectRatio = portfolioItem.image?.thumbnail.aspectRatio ? (portfolioItem.image.thumbnail.aspectRatio > 4 / 3 ? '4/3' : '3/4') : '';
 </script>
 
 <li id={portfolioItem.id} class="portfolio-preview-box">
 	<button onclick={openPortfolioItem}>
 		<div
 			class="image-card"
-			style="background-image: url('{portfolioItem.thumbnail.url}'); aspect-ratio: {portfolioItem.thumbnail.aspectRatio}"
+			style="background-image: url({JSON.stringify(portfolioItem.image?.thumbnail.url)}); aspect-ratio: {aspectRatio}"
 		></div>
 
 		{#if showTitleBelow}
@@ -40,7 +42,6 @@
 			color: var(--primary-base);
 			padding-left: var(--spacing-4);
 			padding-bottom: 0;
-			
 		}
 	}
 

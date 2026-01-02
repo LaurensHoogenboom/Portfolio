@@ -38,7 +38,7 @@
                     break;
                 case 'update':
                     portfolioItemToEdit = undefined;
-                    DispatchSuccesNotification(`Changes to "${form.portfolioItemTitle}"" were succesfully saved.`);
+                    DispatchSuccesNotification(`Changes to "${form.portfolioItemTitle}" were succesfully saved.`);
                     break;
                 case 'delete':
                     DispatchSuccesNotification(`"${form.portfolioItemTitle}" was succesfully removed.`);
@@ -65,9 +65,9 @@
 </main>
 
 {#if editFormVisible && portfolioItemToEdit}
-    <EditPortfolioItemDialog portfolioItemToEdit={portfolioItemToEdit} closeCallback={() => portfolioItemToEdit = undefined} errorMessage={form?.error} />
+    <EditPortfolioItemDialog portfolioItemToEdit={portfolioItemToEdit} closeCallback={() => portfolioItemToEdit = undefined} errorMessage={form?.error} editSuccess={form?.succes}  />
 {/if}
 
 {#if createFormVisible}
-    <CreatePortfolioItemDialog closeCallback={() => createFormVisible = false} errorMessage={form?.error}/>
+    <CreatePortfolioItemDialog closeCallback={() => createFormVisible = false} errorMessage={form?.error} createSuccess={form?.succes} />
 {/if}

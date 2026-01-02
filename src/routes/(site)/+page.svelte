@@ -11,33 +11,14 @@
 
 	let { data }: { data: PageData } = $props();
 
-	const baseURL = '/uploads/portfolio/images/temp/';
-
-	const dummyImages: PortfolioItemThumbnail[] = [
-		{ url: baseURL + 'doggy.png', aspectRatio: '4/3' },
-		{ url: baseURL + 'lady.jpg', aspectRatio: '3/4' },
-		{ url: baseURL + 'odyssey.png', aspectRatio: '4/3' },
-		{ url: baseURL + 'peanutpanic.png', aspectRatio: '4/3' }
-	];
-
-	const dummyDescription =
-		'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel ullamcorper quam, laoreet eleifend lorem. Duis finibus sem ante, et iaculis eros blandit vitae. Nunc eleifend sed nibh at posuere. Vivamus non rhoncus lorem. ';
-
-	const dummyTypes: PortfolioItemType[] = [
-		"research",
-		"art",
-		"research",
-		"project"
-	]
-	
-	const portfolioItems: IPortfolioItem[] = data.posts.map((p, i) => {
+	const portfolioItems: IPortfolioItem[] = data.portfolioItems.map((pItem, i) => {
 		return {
-			id: p.id,
-			title: p.title,
-			type: dummyTypes[i],
-			thumbnail: dummyImages[i],
-            description: dummyDescription
-		};
+			id: pItem.id,
+			title: pItem.title,
+			type: pItem.type,
+			description: pItem.description,
+			image: pItem.image
+		}
 	});
 
 	let searchParams = $state(new URLSearchParams());

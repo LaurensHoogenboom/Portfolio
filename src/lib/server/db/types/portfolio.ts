@@ -2,7 +2,7 @@ type PortfolioItemType = 'research' | 'art' | 'project';
 
 interface PortfolioItemThumbnail {
     url: string,
-    aspectRatio: '3/4' | '4/3';
+    aspectRatio: number;
 }
 
 interface PortfolioItemImage {
@@ -14,8 +14,8 @@ interface IPortfolioItem {
     id: string;
     type: PortfolioItemType;
     title: string;
-    description?: string;
-    thumbnail: PortfolioItemThumbnail;
+    description: string | null;
+    image: PortfolioItemImage | null;
 }
 
 export type { PortfolioItemType, PortfolioItemThumbnail, PortfolioItemImage, IPortfolioItem };

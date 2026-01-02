@@ -62,13 +62,20 @@ export const actions: Actions = {
             type: string
         };
 
-        const imageFile = formData.get('image') as File;
         let imageObject = undefined;
-
+        const imageFile = formData.get('image') as File;
+        
         if (imageFile.name && imageFile.size) {
-            imageObject = await uploadImage(imageFile as File, title);
-        }
+            const portfolioItemToUpdate = await getPortfolioItemById(id);
 
+            if (portfolioItemToUpdate?.image) {
+                await checkAndRemove(getWriteAndDevSafeUrl(portfolioItemToUpdate.image.url));
+                await checkAndRemove(getWriteAndDevSafeUrl(portfolioItemToUpdate.image.thumbnail.url));
+            }
+
+            imageObject = await uploadImage(imageFile, title);
+        };
+        
         try {
             const updatedPortfolioItem = await updatePortfolioItem(id, {
                 title: title,
@@ -117,14 +124,15 @@ export const actions: Actions = {
     }
 }
 
-const uploadImage = async (image: File, title: string): Promise<PortfolioItemImage> => {
-    const imageBuffer = await image.arrayBuffer();
+const uploadImage = async (image: File | Buffer, title: string): Promise<PortfolioItemImage> => {
+    const imageBuffer = image instanceof File ? await image.arrayBuffer() : image;
+    const metaData = await sharp(imageBuffer).metadata();
 
     const fullImage = await sharp(imageBuffer).webp().toBuffer();
     const thumbnail = await sharp(imageBuffer).webp().resize(500, undefined).toBuffer();
 
-    const fullImageName = `${title}.webp`;
-    const thumgnailImageName = `${title}-thumnail.webp`;
+    const fullImageName = `${title.replace(/\s/g,'')}.webp`;
+    const thumgnailImageName = `${title.replace(/\s/g,'')}-thumnail.webp`;
 
     const fullImageUrl = path.join(getWriteAndDevSafeUrl(baseUrl), fullImageName);
     const thumbnailImageUrl = path.join(getWriteAndDevSafeUrl(baseUrl), thumgnailImageName);
@@ -136,7 +144,7 @@ const uploadImage = async (image: File, title: string): Promise<PortfolioItemIma
         url: path.join(baseUrl, fullImageName),
         thumbnail: {
             url: path.join(baseUrl, thumgnailImageName),
-            aspectRatio: '4/3'
+            aspectRatio: metaData.width / metaData.height
         }
     }
 }
@@ -155,7 +163,7 @@ const checkAndRemove = async (url: string) => {
         await fs.unlink(url, e => {
             if (e) {
                 const error = e as Error;
-                console.log(e);
+                console.log(error);
                 return fail(422, { error: error.message});
             }
         });
