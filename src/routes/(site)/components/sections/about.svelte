@@ -1,0 +1,119 @@
+<script lang="ts">
+	import { BookDashed, Code, Instagram, Linkedin, PencilRuler } from '@lucide/svelte';
+	import Button from '../atoms/button.svelte';
+	import ContentContainer from '../atoms/contentContainer.svelte';
+	import profilePicture from '$lib/media/site/about/profile.jpg';
+	import curiculumVitae from '$lib/media/site/about/Curiculum Vitae.pdf';
+	import IconSquare from '../atoms/about/iconSquare.svelte';
+	import IdCard from '../atoms/about/idCard.svelte';
+</script>
+
+<ContentContainer id="about" width="wide">
+	<div class="about-content">
+		<div class="profile-picture" style="background-image: url('{profilePicture}');"></div>
+		<div class="main-content">
+			<article>
+				<h1>Over Mij</h1>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel ullamcorper quam, laoreet eleifend lorem. Duis finibus sem ante,
+					et iaculis eros blandit vitae. Nunc eleifend sed nibh at posuere. Vivamus non rhoncus lorem.
+				</p>
+				<p>
+					Nunc eleifend sed nibh at posuere. Vivamus non rhoncus lorem unc eleifend sed nibh at posuere. Vivamus non rhoncus lorem. Vivamus
+					non rhoncus lorem.
+				</p>
+			</article>
+			<div style="padding-bottom: var(--spacing-4);">
+				<Button type="goto" style="primary" title="Portfolio" href="#portfolio" />
+				<Button type="goto-external" style="secondary" title="Curiculum Vitae" href={curiculumVitae} />
+				<Button type="goto" style="secondary" title="Contact" href="#contact" />
+			</div>
+			<div>
+				<Button type="goto-external" icon={Instagram} style="secondary" href="https://www.instagram.com/laureato_/" />
+				<Button
+					type="goto-external"
+					icon={Linkedin}
+					style="secondary"
+					href="https://www.linkedin.com/in/laurens-hoogenboom-3aa78515a/"
+				/>
+			</div>
+		</div>
+		<div class="ornaments">
+			<IconSquare icon={PencilRuler} CSSClass="design-icon" />
+			<IconSquare icon={BookDashed} CSSClass="research-icon" />
+			<IconSquare icon={Code} CSSClass="code-icon" />
+			<IdCard CSSClass="id-card"/>
+		</div>
+	</div>
+</ContentContainer>
+
+<style>
+	:global(#about) {
+		overflow: hidden;
+	}
+
+	.about-content {
+		display: grid;
+		grid-template-columns: 450px 1fr 400px;
+		grid-gap: var(--spacing-6);
+		align-items: center;
+
+		.profile-picture {
+			position: relative;
+			aspect-ratio: 1 / 1;
+			border-radius: 100%;
+			box-shadow: var(--grey-shadow-1);
+			border: 10px solid var(--white);
+			max-height: 450px;
+			z-index: 2;
+			background-size: cover;
+			background-position: center;
+		}
+
+		.main-content {
+			padding-top: var(--spacing-4);
+			padding-right: var(--spacing-3);
+
+			p {
+				max-width: initial;
+			}
+		}
+
+		.ornaments {
+			position: relative;
+			width: 100%;
+			height: 400px;
+
+			:global(.icon-square) {
+				position: absolute;
+				z-index: 2;
+			}
+
+			:global(.design-icon) {
+				top: 0;
+				left: 0;
+			}
+
+			:global(.research-icon) {
+				top: 65px;
+				left: 215px;
+			}
+
+			:global(.code-icon) {
+				top: 215px;
+				left: 65px;
+			}
+
+			:global(.id-card) {
+				position: absolute;
+				z-index: 1;
+				bottom: -40px;
+				left: 130px;
+			}
+		}
+	}
+
+	h1:after {
+		content: 'O';
+	}
+</style>

@@ -1,0 +1,31 @@
+.site-wrapper {
+	min-height: 100vh;
+}
+
+.content-container-wrapper {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+
+	&.fullHeight {
+		height: 100vh;
+	}
+}
+
+.content-container {
+	width: min(100%, 1400px);
+
+	&.wide {
+		width: min(100%, 1700px);
+	}
+}
+
+nav .content-container {
+	padding-left: var(--spacing-6);
+	padding-right: var(--spacing-6);
+}
+
+main .content-container {
+	padding: var(--spacing-7) var(--spacing-6);
+}
+
