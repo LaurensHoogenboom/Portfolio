@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type IPortfolioItem, type PortfolioItemType } from '../../sections/portfolio.svelte';
+	import type { IPortfolioItem, PortfolioItemType } from '$lib/server/db/types/portfolio';
 	import PortfolioItemPreviewBox from '../../atoms/portfolio/portfolioItemPreviewBox.svelte';
 	import TopBar from '../../molecules/header/portfolioPreview/topBar.svelte';
 	import BottomBar from '../../molecules/header/portfolioPreview/bottomBar.svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { pushState } from "$app/navigation";
-	import type { IPortfolioItem } from "../../sections/portfolio.svelte";
+    import type { IPortfolioItem } from "$lib/server/db/types/portfolio";
 	import Button from "../button.svelte";
 
     const { portfolioItem } : { portfolioItem: IPortfolioItem } = $props();

@@ -4,7 +4,7 @@
 	import Tabbar, { type ITabItem } from '../../atoms/tabbar.svelte';
 	import { page } from '$app/state';
 	import { pushState } from '$app/navigation';
-	import type { PortfolioItemType } from '../../sections/portfolio.svelte';
+	import type { PortfolioItemType } from '$lib/server/db/types/portfolio';
 
     const { hasActiveItem = false, changeTypeCallback }: { hasActiveItem: boolean; changeTypeCallback: (type: PortfolioItemType) => void } =
 		$props();

@@ -1,17 +1,85 @@
 <script lang="ts">
+	import type { ChangeEventHandler } from "svelte/elements";
+	import Button from "../atoms/button.svelte";
 	import Instruction from "../atoms/instruction.svelte";
+	import { slide } from "svelte/transition";
 
-    let { name, type, value = $bindable(), label, max, callback, required = false, instruction }:{ 
+    export interface ISelectOption {
+        title: string,
+        value: string
+    }
+
+    let { name, type, value = $bindable(), label, max, callback, required = false, instruction, selectOptions, acceptFile }:{ 
         name: string, 
-        type: "text" | "textarea" | "password",
-        value?: string | null,
+        type: "text" | "textarea" | "password" | "select" | "file",
+        value?: string | File | null,
         label: string,
         max?: number,
         callback?: () => void,
         required?: boolean,
-        instruction?: string
+        instruction?: string,
+        selectOptions?: ISelectOption[],
+        acceptFile?: string
     } = $props();
+
+    $effect(() => {
+        if (files instanceof FileList && files.length > 0) {
+            value = files[0];
+            fileName = files[0].name;
+
+            if (acceptFile == 'image/*') {
+                showImage = true;
+                const reader = new FileReader();
+
+                reader.addEventListener('load', () => {
+                    if (typeof reader.result == "string" && imagePreview) {
+                        imagePreview.setAttribute("src", reader.result);
+                    }
+                });
+
+                reader.readAsDataURL(value);
+            }
+        }
+    });
+
+    let files: FileList | undefined = $state();
+    let fileName: string | undefined = $state();
+    let showImage = $state(false);
+    let imagePreview: HTMLImageElement | undefined = $state();
 </script>
+
+<div class="label-input-group">
+    <label for={name}>{label}</label>
+
+    {#if type == "text" || type == "password" }
+        <input id={name} class="inset" type={type} name={name} bind:value={value} onchange={callback} max={max} {required}/>
+    {:else if type == "textarea"}
+        <textarea rows="5" class="inset" bind:value={value} name={name} onchange={callback} maxlength={max} {required}></textarea>
+    {:else if type == "select"}
+        <select class="clickable-input" id={name} name={name} onchange={callback} {required} bind:value={value}>
+            {#each selectOptions as option}
+                <option value={option.value}>{option.title}</option>
+            {/each}
+        </select>
+    {:else if type = "file"}
+        <div class="file-input">
+            <input id={name} type="file" name={name} bind:files={files} {required} accept={acceptFile}>
+            <Button type="label" labelFor={name} style="secondary" title={value ? 'Change File' : 'Select File'} alignment="center" />
+
+            {#if fileName}
+                {#if showImage}
+                    <img class="outset" bind:this={imagePreview} alt={fileName}/>
+                {:else}
+                    <p>{fileName}</p>
+                {/if}
+            {/if}
+        </div>
+    {/if}
+
+    {#if instruction && !value}
+        <Instruction message={instruction} />
+    {/if}
+</div>
 
 <style>
     .label-input-group {
@@ -29,20 +97,26 @@
             margin-bottom: 0;
         }
     }
+
+    .file-input {
+        display: flex;
+        flex-direction: column;
+        grid-row-gap: var(--padding-3);
+
+        input[type="file"] {
+            opacity: 0;
+            width: 0.1px;
+            height: 0.1px;
+            position: absolute;
+        }
+
+        img {
+            width: 100%;
+            max-width: 370px;
+            border-radius: var(--border-radius-s);
+            object-fit: cover;
+        }
+    }
 </style>
-
-<div class="label-input-group">
-    <label for={name}>{label}</label>
-
-    {#if type == "text" || type == "password" }
-        <input id={name} class="inset" type={type} name={name} bind:value={value} onchange={callback} max={max} {required}/>
-    {:else if type == "textarea"}
-        <textarea class="inset" bind:value={value} name={name} onchange={callback} maxlength={max} {required}></textarea>
-    {/if}
-
-    {#if instruction && !value}
-        <Instruction message={instruction} />
-    {/if}
-</div>
 
 

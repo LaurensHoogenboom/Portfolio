@@ -1,0 +1,96 @@
+import { createPortfolioItem, deletePortfolioItem, getPortfolioItemById, getPortfolioItems, updatePortfolioItem } from '$lib/server/db/cruds/portfolioItems';
+import type { portfolioItems } from '$lib/server/db/schema/portfolioItems';
+import type { PortfolioItemType } from '$lib/server/db/types/portfolio';
+import { fail } from '@sveltejs/kit';
+import type { Actions, PageServerLoad } from './$types';
+
+export const load = (async () => {
+    const portfolioItems = await getPortfolioItems();
+
+    return {
+        portfolioItems: portfolioItems
+    }
+}) satisfies PageServerLoad;
+
+export const actions: Actions = {
+    create: async ({ request }) => {
+        const formData = Object.fromEntries(await request.formData());
+        const { title, description, type, image } = formData as {
+            title: string,
+            description: string,
+            type: string,
+            image: string
+        }; 
+
+        const portfolioItem: typeof portfolioItems.$inferInsert = {
+            title: title,
+            description: description,
+            type: type as PortfolioItemType,
+            image: undefined
+        }
+
+        try {
+            const newPortfolioItem = await createPortfolioItem(portfolioItem);
+
+            return {
+                succes: true,
+                portfolioItemId: newPortfolioItem.id,
+                portfolioItemTitle: newPortfolioItem.title,
+                action: 'create'
+            }
+        } catch (e) {
+            const error = e as Error;
+            console.log(error);
+            return fail(422, {error: error.message});
+        }
+    },
+    update: async ({ request }) => {
+        const formData = Object.fromEntries(await request.formData());
+        const { id, title, description, type, image } = formData as {
+            id: string
+            title: string,
+            description: string,
+            type: string,
+            image: string
+        }; 
+
+        try {
+            const updatedPortfolioItem = await updatePortfolioItem(id, {
+                title: title,
+                description: description,
+                type: type as PortfolioItemType,
+                image: undefined
+            });
+
+            return {
+                succes: true,
+                portfolioItemId: updatedPortfolioItem.id,
+                portfolioItemTitle: updatedPortfolioItem.title,
+                action: 'update'
+            }
+        } catch (e) {
+            const error = e as Error;
+            console.log(error);
+            return fail(422, { error: error.message });
+        }
+    },
+    delete: async ({ request }) => {
+        const data = await request.formData();
+        const id = data.get('id') as string;
+
+        try {
+            const portfolioItemToDelete = await getPortfolioItemById(id);
+            await deletePortfolioItem(id);
+
+            return {
+                succes: true,
+                title: portfolioItemToDelete?.title
+            }
+        } catch (e) {
+            const error = e as Error;
+            console.log(error);
+            return fail(422, { error: error.message });
+        }
+    }
+}
+
