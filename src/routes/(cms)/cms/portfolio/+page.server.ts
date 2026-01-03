@@ -6,8 +6,8 @@ import type { Actions, PageServerLoad } from './$types';
 import { writeFile } from 'fs/promises';
 import path from 'path';
 import fs from 'fs';
-import { dev } from '$app/environment';
 import sharp from 'sharp';
+import { getUploadsFolder } from '$lib/server/db/utils/getUploadsFolder';
 
 export const load = (async () => {
     const portfolioItems = await getPortfolioItems();
@@ -69,8 +69,8 @@ export const actions: Actions = {
             const portfolioItemToUpdate = await getPortfolioItemById(id);
 
             if (portfolioItemToUpdate?.image) {
-                await checkAndRemove(getWriteAndDevSafeUrl(portfolioItemToUpdate.image.url));
-                await checkAndRemove(getWriteAndDevSafeUrl(portfolioItemToUpdate.image.thumbnail.url));
+                await checkAndRemove(portfolioItemToUpdate.image.url);
+                await checkAndRemove(portfolioItemToUpdate.image.thumbnail.url);
             }
 
             imageObject = await uploadImage(imageFile, title);
@@ -103,12 +103,13 @@ export const actions: Actions = {
         try {
             const portfolioItemToDelete = await getPortfolioItemById(id);
 
-            const thumbnailImageUrl = portfolioItemToDelete?.image?.thumbnail.url;
-            const fullImageUrl = portfolioItemToDelete?.image?.url;
+            if (portfolioItemToDelete && portfolioItemToDelete.image) {
+                console.log(portfolioItemToDelete);
 
-            if (thumbnailImageUrl) await checkAndRemove(getWriteAndDevSafeUrl(thumbnailImageUrl));
-            if (fullImageUrl) await checkAndRemove(getWriteAndDevSafeUrl(fullImageUrl));
-            
+                await checkAndRemove(portfolioItemToDelete.image.thumbnail.url);
+                await checkAndRemove(portfolioItemToDelete.image.url)
+            }
+
             await deletePortfolioItem(id);
 
             return {
@@ -132,35 +133,37 @@ const uploadImage = async (image: File | Buffer, title: string): Promise<Portfol
     const thumbnail = await sharp(imageBuffer).webp().resize(500, undefined).toBuffer();
 
     const fullImageName = `${title.replace(/\s/g,'')}.webp`;
-    const thumgnailImageName = `${title.replace(/\s/g,'')}-thumnail.webp`;
+    const thumbnailImageName = `${title.replace(/\s/g,'')}-thumnail.webp`;
 
-    const fullImageUrl = path.join(getWriteAndDevSafeUrl(baseUrl), fullImageName);
-    const thumbnailImageUrl = path.join(getWriteAndDevSafeUrl(baseUrl), thumgnailImageName);
+    const fullImageUrl = getWriteAndDevSafeUrl(fullImageName);
+    const thumbnailImageUrl = getWriteAndDevSafeUrl(thumbnailImageName);
 
     await writeFile(fullImageUrl, Buffer.from(fullImage));
     await writeFile(thumbnailImageUrl, Buffer.from(thumbnail));
 
+    const accessURL = '/uploads/images/';
+
     return {
-        url: path.join(baseUrl, fullImageName),
+        url: path.join(accessURL, fullImageName),
         thumbnail: {
-            url: path.join(baseUrl, thumgnailImageName),
+            url: path.join(accessURL, thumbnailImageName),
             aspectRatio: metaData.width / metaData.height
         }
     }
 }
 
-const baseUrl = '/uploads/portfolio/images/';
-
-const getWriteAndDevSafeUrl = (url: string) => {
-    const devSaveUrl = dev ? path.join('static', url) : url;
-    const writeUrl = path.join(process.cwd(), devSaveUrl);
-
-    return writeUrl;
+const getWriteAndDevSafeUrl = (filename: string) => {
+    return path.join(getUploadsFolder('portfolio'), 'images', filename);
 }
 
 const checkAndRemove = async (url: string) => {
-    if (fs.existsSync(url)) {
-        await fs.unlink(url, e => {
+    const filename = url.split('\\').pop();
+    if (!filename) return;
+
+    const path = getWriteAndDevSafeUrl(filename);
+
+    if (fs.existsSync(path)) {
+        await fs.unlink(path, e => {
             if (e) {
                 const error = e as Error;
                 console.log(error);
