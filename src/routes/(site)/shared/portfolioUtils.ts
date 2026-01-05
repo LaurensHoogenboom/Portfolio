@@ -1,0 +1,30 @@
+import { page } from '$app/state';
+import { isPortfolioItemType, type PortfolioItemType } from '$lib/types/portfolio';
+
+interface IPortfolioState {
+    showAllPortfolioItems: boolean,
+    activePortfolioItemId?: string
+    selectedPortfolioCategory?: PortfolioItemType
+}
+
+export const getPortfolioUrlWithParams = ({ showAllPortfolioItems, activePortfolioItemId, selectedPortfolioCategory }: IPortfolioState): string => {
+    return `#portfolio?showAllPortfolioItems=${showAllPortfolioItems}&activePortfolioItemId=${activePortfolioItemId}&selectedPortfolioCategory=${selectedPortfolioCategory}`;
+}
+
+export const getPortfolioSearchParams = (searchParams: URLSearchParams): IPortfolioState => {
+    return {
+        showAllPortfolioItems: searchParams.get('showAllPortfolioItems') == 'true' ? true : false,
+        activePortfolioItemId: searchParams.get('activePortfolioItemId') ?? undefined,
+        selectedPortfolioCategory: isPortfolioItemType(searchParams.get('selectedPortfolioCategory') as string)
+            ? searchParams.get('selectedPortfolioCategory') as PortfolioItemType
+            : 'research'
+    }
+}
+
+export const getPortfolioState = (): IPortfolioState => {
+    return {
+        showAllPortfolioItems: page.state.showAllPortfolioItems ?? false,
+        activePortfolioItemId: page.state.activePortfolioItemId,
+        selectedPortfolioCategory: page.state.selectedPortfolioCategory
+    }
+}

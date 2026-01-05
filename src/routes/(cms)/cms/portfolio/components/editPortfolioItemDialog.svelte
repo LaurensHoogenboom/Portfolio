@@ -4,7 +4,7 @@
 	import Notice from '$lib/components/cms/atoms/notice.svelte';
 	import LabelInputGroup, { type ISelectOption } from '$lib/components/cms/molecules/labelInputGroup.svelte';
 	import Dialog from '$lib/components/cms/organisms/dialog.svelte';
-	import type { PortfolioItemImage, PortfolioItemType } from '$lib/server/db/types/portfolio';
+	import type { PortfolioItemImage, PortfolioItemType } from '$lib/types/portfolio';
 	import { portfolioSelectOptions } from '../shared/portfolioSelectOptions';
 
 	const {

@@ -1,76 +1,88 @@
 <script lang="ts">
-	import { ChevronLeft, Maximize2, Minimize2 } from '@lucide/svelte';
+	import { ChevronLeft } from '@lucide/svelte';
 	import Button from '../../atoms/button.svelte';
 	import Tabbar, { type ITabItem } from '../../atoms/tabbar.svelte';
-	import { page } from '$app/state';
 	import { pushState } from '$app/navigation';
-	import type { PortfolioItemType } from '$lib/server/db/types/portfolio';
+	import type { PortfolioItemType } from '$lib/types/portfolio';
+	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../shared/portfolioUtils';
 
-    const { hasActiveItem = false, changeTypeCallback }: { hasActiveItem: boolean; changeTypeCallback: (type: PortfolioItemType) => void } =
-		$props();
+	const { hasActiveItem = false }: { hasActiveItem: boolean } = $props();
 
-    interface IPortfolioTabItem extends ITabItem {
-        type: PortfolioItemType
-    }
+	interface IPortfolioTabItem extends ITabItem {
+		type: PortfolioItemType;
+	}
 
-    const tabItems: IPortfolioTabItem[] = [
-        { title: 'Research through Design', type: 'research' },
-        { title: 'Tekeningen', type: 'art' },
-        { title: 'Designs', type: 'project' }
-    ]
-
-	let isExpanded = $derived(page.state.isPortfolioExpanded);
-
-	const togglePortfolioState = () => {
-		if (isExpanded) {
-			pushState('#portfolio', { isPortfolioExpanded: false, activePortfolioItemId: undefined });
-		} else {
-			pushState('#portfolio?isPortfolioExpanded=true', { isPortfolioExpanded: true });
-		}
-	};
+	const tabItems: IPortfolioTabItem[] = [
+		{ title: 'Research through Design', type: 'research' },
+		{ title: 'Tekeningen', type: 'art' },
+		{ title: 'Designs', type: 'project' }
+	];
 
 	const closeCurrentItem = () => {
-		pushState('#portfolio?isPortfolioExpanded=true', { isPortfolioExpanded: true, activePortfolioItemId: undefined });
+		const state = getPortfolioState();
+		state.activePortfolioItemId = undefined;
+		pushState(getPortfolioUrlWithParams(state), state);
 	};
 
-    const changePortfolioItemType = (i: number) => {
-        changeTypeCallback(tabItems[i].type);
-    }
+	const changePortfolioItemType = (i: number) => {
+		const state = getPortfolioState();
+		state.selectedPortfolioCategory = tabItems[i].type;
+		pushState(getPortfolioUrlWithParams(state), state);
+		selectedIndex = i;
+	};
+
+	let selectedIndex = $state(0);
+	let toolbar: HTMLDivElement;
+
+	$effect(() => {
+		if (toolbar) {
+			const toolbarIntersectionObserver = new IntersectionObserver(
+				([e]) => {
+					e.target.classList.toggle('sticky', e.intersectionRatio < 1);
+				},
+				{ threshold: [1] }
+			);
+
+			toolbarIntersectionObserver.observe(toolbar);
+		}
+	});
 </script>
 
-<div class="toolbar">
-	<h1>Portfolio</h1>
-	<hr />
-	<div class="actions">
+<div class="toolbar" bind:this={toolbar}>
+	<div class="toolbar-content">
 		{#if !hasActiveItem}
-			<Tabbar {tabItems} CSSClass="portfolio-tabs" onSelectionChange={changePortfolioItemType} />
+			<Tabbar {tabItems} style="tabs" CSSClass="portfolio-tabs" onSelectionChange={changePortfolioItemType} {selectedIndex} />
 		{:else}
 			<Button type="submit" icon={ChevronLeft} onclick={closeCurrentItem} style="secondary" />
 		{/if}
-
-		<Button type="submit" icon={isExpanded ? Minimize2 : Maximize2} style="secondary" onclick={togglePortfolioState} />
 	</div>
 </div>
 
 <style>
 	.toolbar {
 		display: grid;
-		grid-template-columns: max-content 1fr max-content;
+		grid-auto-flow: column;
 		align-items: center;
-		grid-gap: var(--spacing-4);
+		position: relative;
+		z-index: 10;
+		position: sticky;
+		top: -1px;
+		bottom: 45px;
+		justify-items: center;
+		margin-bottom: -45px;
 
-		h1::after {
-			content: 'P';
+		.toolbar-content {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+			width: min(100%, var(--page-width));
+			padding: 0 var(--spacing-6);
 		}
 
-		.actions {
-			display: grid;
-			grid-auto-flow: column;
-			align-items: center;
-
-			:global(.portfolio-tabs) {
-				margin-right: var(--spacing-4);
-			}
+		:global(&.sticky) {
+			background-color: var(--white);
+			border-bottom: 1px solid var(--grey-borders);
+			box-shadow: var(--grey-shadow-2);
 		}
 	}
 </style>

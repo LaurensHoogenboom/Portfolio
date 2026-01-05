@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { IPortfolioItem, PortfolioItemType } from '$lib/server/db/types/portfolio';
+	import type { IPortfolioItem, PortfolioItemType } from '$lib/types/portfolio';
 	import PortfolioItemPreviewBox from '../../atoms/portfolio/portfolioItemPreviewBox.svelte';
 	import TopBar from '../../molecules/header/portfolioPreview/topBar.svelte';
 	import BottomBar from '../../molecules/header/portfolioPreview/bottomBar.svelte';
@@ -52,9 +52,9 @@
 
 <style>
 	.portfolio-preview {
-		--extra-width: calc((100vw - 1400px) / 2);
+		--extra-width: calc((100vw - var(--page-width)) / 2);
 
-		@media (max-width: 1400px) {
+		@media (max-width: 1500px) {
 			--extra-width: 0px;
 		}
 

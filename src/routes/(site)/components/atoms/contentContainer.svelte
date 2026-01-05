@@ -38,7 +38,7 @@
 <div
     {id}
 	bind:this={contentContainer}
-	class="content-container-wrapper {fullHeight ? 'fullHeight' : ''} {themeClass} {CSSClass}"
+	class="content-container-wrapper {themeClass} {CSSClass}"
     style="{CSSHeight ? `height: ${CSSHeight}` : ''};"
 >
 	<div class="content-container {width}">

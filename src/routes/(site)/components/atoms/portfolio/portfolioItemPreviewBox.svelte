@@ -1,14 +1,14 @@
 <script lang="ts">
-	import type { IPortfolioItem } from '$lib/server/db/types/portfolio';
+	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import { pushState } from '$app/navigation';
+	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../shared/portfolioUtils';
 
 	const { portfolioItem, showTitleBelow = false }: { portfolioItem: IPortfolioItem; showTitleBelow?: boolean } = $props();
 
 	const openPortfolioItem = () => {
-		pushState(`#portfolio?isPortfolioExpanded=true&activePortfolioItemId=${portfolioItem.id}`, {
-			isPortfolioExpanded: true,
-			activePortfolioItemId: portfolioItem.id
-		});
+		const state = getPortfolioState();
+        state.activePortfolioItemId = portfolioItem.id;
+        pushState(getPortfolioUrlWithParams(state), state);
 	};
 </script>
 

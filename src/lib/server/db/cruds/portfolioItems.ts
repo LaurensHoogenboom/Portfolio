@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "../client"
 import { portfolioItems } from "../schema/portfolioItems";
-import type { PortfolioItemType } from "../types/portfolio";
+import type { PortfolioItemType } from "../../../types/portfolio";
 
 const getPortfolioItems = async (number: number = 10, offset: number = 0) => {
     return await db.select().from(portfolioItems).limit(number).offset(offset);

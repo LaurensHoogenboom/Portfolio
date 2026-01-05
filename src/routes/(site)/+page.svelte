@@ -4,10 +4,11 @@
 	import About from './components/sections/about.svelte';
 	import Contact from './components/sections/contact.svelte';
 	import Header from './components/sections/header.svelte';
-	import type { IPortfolioItem, PortfolioItemType, PortfolioItemThumbnail} from '$lib/server/db/types/portfolio'
+	import type { IPortfolioItem } from '$lib/types/portfolio'
 	import Portfolio from './components/sections/portfolio.svelte';
 	import { replaceState } from '$app/navigation';
 	import VerticalSeperator from './components/atoms/verticalSeperator.svelte';
+	import { getPortfolioSearchParams, getPortfolioUrlWithParams } from './shared/portfolioUtils';
 
 	let { data }: { data: PageData } = $props();
 
@@ -21,26 +22,16 @@
 		}
 	});
 
-	let searchParams = $state(new URLSearchParams());
-
 	onMount(() => {
 		const [hash, query] = window.location.href.split('#')[1] ? window.location.href.split('#')[1].split('?') : [undefined, undefined];
 
-		if (!query) return;
+		if (!query || hash != 'portfolio') return;
 
-		searchParams = new URLSearchParams(query);
+		const siteStateFromParams = getPortfolioSearchParams(new URLSearchParams(query));
 
-		const isPortfolioExpanded = searchParams.get('isPortfolioExpanded') == 'true' ? true : false;
-		const activePortfolioItemId = searchParams.get('activePortfolioItemId');
-
-		if (isPortfolioExpanded && hash == 'portfolio') {
-			setTimeout(() => {
-				replaceState(`#portfolio?isPortfolioExpanded=${isPortfolioExpanded}&activePortfolioItemId=${activePortfolioItemId}`, {
-					isPortfolioExpanded: isPortfolioExpanded,
-					activePortfolioItemId: activePortfolioItemId ?? undefined
-				});
-			});
-		}
+		setTimeout(() => {
+			replaceState(getPortfolioUrlWithParams(siteStateFromParams), siteStateFromParams);
+		});
 	});
 </script>
 
