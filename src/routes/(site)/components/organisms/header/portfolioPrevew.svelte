@@ -9,8 +9,8 @@
 	let selectedPortfolioItemType: PortfolioItemType | undefined = $state();
 	let visibleItems = $derived(
 		selectedPortfolioItemType != undefined
-			? previewItems.filter((pI) => pI.type == selectedPortfolioItemType).slice(0, 3)
-			: previewItems.slice(0, 3)
+			? previewItems.filter((pI) => pI.type == selectedPortfolioItemType).slice(0, 5)
+			: previewItems.slice(0, 5)
 	);
 
 	let selectedIndex = $state(0);

@@ -10,15 +10,18 @@
 			activePortfolioItemId: portfolioItem.id
 		});
 	};
-
-	const aspectRatio = portfolioItem.image?.thumbnail.aspectRatio ? (portfolioItem.image.thumbnail.aspectRatio > 4 / 3 ? '4/3' : '3/4') : '';
 </script>
 
 <li id={portfolioItem.id} class="portfolio-preview-box">
 	<button onclick={openPortfolioItem}>
 		<div
 			class="image-card"
-			style="background-image: url({JSON.stringify(portfolioItem.image?.thumbnail.url)}); aspect-ratio: {aspectRatio}"
+			style="background-image: url({JSON.stringify(portfolioItem.image?.thumbnail.url)}); aspect-ratio: {portfolioItem.image?.thumbnail
+				.aspectRatio
+				? portfolioItem.image.thumbnail.aspectRatio > 4 / 3
+					? '4/3'
+					: '3/4'
+				: ''}"
 		></div>
 
 		{#if showTitleBelow}

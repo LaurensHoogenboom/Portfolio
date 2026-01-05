@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import type { RequestHandler } from './$types';
-import { dev } from '$app/environment';
 import * as dotenv from "dotenv";
 import { error } from '@sveltejs/kit';
 import { readFileSync } from "node:fs";
