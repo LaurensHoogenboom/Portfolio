@@ -2,6 +2,7 @@
 	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import { pushState } from '$app/navigation';
 	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../shared/portfolioUtils';
+	import { fly } from 'svelte/transition';
 
 	const { portfolioItem, showTitleBelow = false }: { portfolioItem: IPortfolioItem; showTitleBelow?: boolean } = $props();
 

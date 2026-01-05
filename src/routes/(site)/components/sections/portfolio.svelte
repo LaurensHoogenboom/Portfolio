@@ -79,8 +79,8 @@
 			z-index: 1;
 			clip-path: polygon(var(--la) 0, 100% 0, 100% 55px, var(--lb) 100%);
 			border-top-right-radius: var(--border-radius-2);
-			border-top: 1px solid var(--grey-borders);
-			border-right: 1px solid var(--grey-borders);
+			border-top: 1px solid var(--primary-borders);
+			border-right: 1px solid var(--primary-borders);
 			padding-top: 13px;
 			padding-right: 13px;
 
@@ -89,8 +89,6 @@
 				width: 100%;
 				background-color: var(--primary-borders);
 				border-top-right-radius: var(--border-radius-2);
-				border-top: 1px solid var(--grey-borders);
-				border-right: 1px solid var(--grey-borders);
 			}
 		}
 

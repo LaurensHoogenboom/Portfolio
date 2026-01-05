@@ -5,6 +5,7 @@
 	import { pushState } from '$app/navigation';
 	import type { PortfolioItemType } from '$lib/types/portfolio';
 	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../shared/portfolioUtils';
+	import { onMount } from 'svelte';
 
 	const { hasActiveItem = false }: { hasActiveItem: boolean } = $props();
 
@@ -28,23 +29,29 @@
 		const state = getPortfolioState();
 		state.selectedPortfolioCategory = tabItems[i].type;
 		pushState(getPortfolioUrlWithParams(state), state);
+
 		selectedIndex = i;
+
+		const portfolioTop = document.getElementById('portfolio')?.getBoundingClientRect().top ?? 0;
+		const scrollTop = document.documentElement.scrollTop + portfolioTop - 10;
+
+		window.scrollTo({top: scrollTop, left: 0, behavior: 'smooth'});
 	};
 
 	let selectedIndex = $state(0);
 	let toolbar: HTMLDivElement;
 
-	$effect(() => {
-		if (toolbar) {
-			const toolbarIntersectionObserver = new IntersectionObserver(
-				([e]) => {
-					e.target.classList.toggle('sticky', e.intersectionRatio < 1);
-				},
-				{ threshold: [1] }
-			);
+	onMount(() => {
+		if (!toolbar) return;
 
-			toolbarIntersectionObserver.observe(toolbar);
-		}
+		const toolbarIntersectionObserver = new IntersectionObserver(
+			([e]) => {
+				e.target.classList.toggle('sticky', e.intersectionRatio < 1);
+			},
+			{ threshold: [1] }
+		);
+
+		toolbarIntersectionObserver.observe(toolbar);
 	});
 </script>
 
@@ -79,10 +86,29 @@
 			padding: 0 var(--spacing-6);
 		}
 
-		:global(&.sticky) {
+		&:after {
+			content: '';
+			position: absolute;
 			background-color: var(--white);
+			display: block;
+			left: 0;
+			top: 0;
+			bottom: -1px;
+			right: 0;
 			border-bottom: 1px solid var(--grey-borders);
 			box-shadow: var(--grey-shadow-2);
+			opacity: 0;
+			transition: opacity var(--default-animation-duration);
+		}
+
+		:global(&.sticky) {
+			&:after {
+				opacity: 1;				
+			}
+
+			:global(.tab-bar button) {
+				box-shadow: none;
+			}
 		}
 	}
 </style>
