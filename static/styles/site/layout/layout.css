@@ -2,6 +2,14 @@
 	--page-width: 1500px;
 }
 
+html {
+	scrollbar-gutter: stable;
+}
+
+body:has(.portfolio-item-detail) {
+    overflow: hidden;
+}
+
 .site-wrapper {
 	min-height: 100vh;
 }
