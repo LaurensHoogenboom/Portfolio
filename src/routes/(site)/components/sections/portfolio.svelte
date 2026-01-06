@@ -2,7 +2,7 @@
 	import ContentContainer from '../atoms/contentContainer.svelte';
 	import PortfolioItemPreviewBox from '../atoms/portfolio/portfolioItemPreviewBox.svelte';
 	import { page } from '$app/state';
-	import Toolbar from '../organisms/portfolio/toolbar.svelte';
+	import Toolbar from '../molecules/portfolio/toolbar.svelte';
 	import PortfolioPreviewBanner from '../atoms/portfolio/portfolioPreviewBanner.svelte';
 	import Button from '../atoms/button.svelte';
 	import { pushState } from '$app/navigation';
@@ -14,13 +14,17 @@
 
 	let selectedPortfolioItemType = $derived(page.state.selectedPortfolioCategory ?? 'research');
 	let filteredItems = $derived(portfolioItems.filter((i) => i.type == selectedPortfolioItemType));
-	let visibleItems = $derived(page.state.showAllPortfolioItems ? filteredItems : filteredItems.slice(0, 2));
+	let visibleItems = $derived(page.state.showAllPortfolioItems 
+		? filteredItems 
+		: selectedPortfolioItemType == 'art' 
+			? filteredItems.slice(0, 4)
+			: filteredItems.slice(0, 2));
 	let activeItem = $derived(portfolioItems.find((i) => i.id == page.state.activePortfolioItemId));
 
 	const showAllItems = () => {
 		const state = getPortfolioState();
 		state.showAllPortfolioItems = true;
-		pushState(getPortfolioUrlWithParams(state), { showAllPortfolioItems: true });
+		pushState(getPortfolioUrlWithParams(state), state);
 	};
 </script>
 
@@ -51,7 +55,7 @@
 				<PortfolioItemPreviewBox portfolioItem={activeItem} />
 			{/if}
 
-			{#if !page.state.showAllPortfolioItems}
+			{#if !page.state.showAllPortfolioItems && visibleItems.length < filteredItems.length}
 				<Button type="submit" style="secondary" title="Meer weergeven" CSSClass="more-projects-button" onclick={showAllItems} />
 			{/if}
 		</ContentContainer>

@@ -27,10 +27,15 @@
 
 		if (!query || hash != 'portfolio') return;
 
-		const siteStateFromParams = getPortfolioSearchParams(new URLSearchParams(query));
+		const state = getPortfolioSearchParams(new URLSearchParams(query));
 
 		setTimeout(() => {
-			replaceState(getPortfolioUrlWithParams(siteStateFromParams), siteStateFromParams);
+			replaceState(getPortfolioUrlWithParams(state), state);
+
+			if (state.selectedPortfolioCategory) {
+				const portfolio = document.getElementById('portfolio');
+				portfolio?.scrollIntoView({behavior: 'smooth'});
+			}
 		});
 	});
 </script>

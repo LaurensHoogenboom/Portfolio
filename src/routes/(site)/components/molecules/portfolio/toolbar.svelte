@@ -6,6 +6,7 @@
 	import type { PortfolioItemType } from '$lib/types/portfolio';
 	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../shared/portfolioUtils';
 	import { onMount } from 'svelte';
+	import { page } from '$app/state';
 
 	const { hasActiveItem = false }: { hasActiveItem: boolean } = $props();
 
@@ -29,13 +30,11 @@
 		const state = getPortfolioState();
 		state.selectedPortfolioCategory = tabItems[i].type;
 		pushState(getPortfolioUrlWithParams(state), state);
-
-		selectedIndex = i;
-
+		
 		const portfolioTop = document.getElementById('portfolio')?.getBoundingClientRect().top ?? 0;
 		const scrollTop = document.documentElement.scrollTop + portfolioTop - 10;
 
-		window.scrollTo({top: scrollTop, left: 0, behavior: 'smooth'});
+		window.scrollTo({ top: scrollTop, left: 0, behavior: 'smooth' });
 	};
 
 	let selectedIndex = $state(0);
@@ -52,6 +51,12 @@
 		);
 
 		toolbarIntersectionObserver.observe(toolbar);
+	});
+
+	$effect(() => {
+		selectedIndex = page.state.selectedPortfolioCategory 
+			? tabItems.findIndex(t => t.type == page.state.selectedPortfolioCategory)
+			: 0;
 	});
 </script>
 
@@ -74,7 +79,7 @@
 		z-index: 10;
 		position: sticky;
 		top: -1px;
-		bottom: 45px;
+		bottom: 0px;
 		justify-items: center;
 		margin-bottom: -45px;
 
@@ -99,15 +104,22 @@
 			box-shadow: var(--grey-shadow-2);
 			opacity: 0;
 			transition: opacity var(--default-animation-duration);
+			border-bottom-left-radius: var(--border-radius-3);
+			border-bottom-right-radius: var(--border-radius-3);
 		}
 
 		:global(&.sticky) {
 			&:after {
-				opacity: 1;				
+				opacity: 1;
+			}
+
+			:global(.tab-bar) {
+				grid-gap: 0;
 			}
 
 			:global(.tab-bar button) {
 				box-shadow: none;
+				padding: 0 var(--spacing-2);
 			}
 		}
 	}

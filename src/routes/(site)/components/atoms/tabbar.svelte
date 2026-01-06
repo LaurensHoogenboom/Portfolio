@@ -64,6 +64,7 @@
 
 		&.tabs {
 			grid-gap: 10px;
+			transition: grid-gap var(--default-animation-duration);
 
 			.tab-item {
 				button {
@@ -72,10 +73,12 @@
 					box-shadow: var(--grey-shadow-1);
 					padding: 0 var(--spacing-4);
 					color: var(--primary-base);
+					transition: padding var(--default-animation-duration);
 				}
 
 				:global(&.selected) button {
 					font-weight: bold;
+					animation: click 0.2s;
 				}
 			}
 		}
@@ -108,5 +111,11 @@
 					width var(--default-animation-duration);
 			}
 		}
+	}
+
+	@keyframes click {
+		0% { transform: scale(1.0) }
+		50% { transform: scale(0.9) }
+		100% { transform: scale(1.0) }
 	}
 </style>
