@@ -4,7 +4,7 @@
 	import Button from "../atoms/button.svelte";
 	import { getPortfolioState, getPortfolioUrlWithParams } from "../../shared/portfolioUtils";
 	import { pushState } from "$app/navigation";
-	import { fly, slide } from "svelte/transition";
+	import { slide } from "svelte/transition";
 
     const { portfolioItem } : { portfolioItem: IPortfolioItem} = $props(); 
 
@@ -20,8 +20,9 @@
         state.selectedPortfolioCategory = portfolioItem.type;
         pushState(getPortfolioUrlWithParams(state), state);
 
-        const portfolio = document.getElementById('portfolio');
-		portfolio?.scrollIntoView({behavior: 'smooth'});
+        const portfolioTop = document.getElementById('portfolio')?.getBoundingClientRect().top ?? 0;
+		const scrollTop = document.documentElement.scrollTop + portfolioTop - 10;
+		window.scrollTo({ top: scrollTop, left: 0, behavior: 'smooth' });
 
         closePortfolioItem();
     }

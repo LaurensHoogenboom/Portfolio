@@ -19,7 +19,7 @@ export const getPortfolioSearchParams = (searchParams: URLSearchParams): IPortfo
         activePortfolioItemId: searchParams.get('activePortfolioItemId') ?? undefined,
         selectedPortfolioCategory: isPortfolioItemType(searchParams.get('selectedPortfolioCategory') as string)
             ? searchParams.get('selectedPortfolioCategory') as PortfolioItemType
-            : 'research'
+            : undefined
     }
 }
 
