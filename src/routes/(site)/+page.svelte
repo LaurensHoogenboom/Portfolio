@@ -9,6 +9,8 @@
 	import { replaceState } from '$app/navigation';
 	import VerticalSeperator from './components/atoms/verticalSeperator.svelte';
 	import { getPortfolioSearchParams, getPortfolioUrlWithParams } from './shared/portfolioUtils';
+	import PortfolioItemDetail from './components/organisms/portfolioItemDetail.svelte';
+	import { page } from '$app/state';
 
 	let { data }: { data: PageData } = $props();
 
@@ -22,19 +24,25 @@
 		}
 	});
 
-	onMount(() => {
+	onMount(async () => {
 		const [hash, query] = window.location.href.split('#')[1] ? window.location.href.split('#')[1].split('?') : [undefined, undefined];
 
 		if (!query || hash != 'portfolio') return;
 
 		const state = getPortfolioSearchParams(new URLSearchParams(query));
 
+		if (state.activePortfolioItemId && !state.activePortfolioItem) {
+			const response = await fetch(`portfolioItem/${state.activePortfolioItemId}`);
+			state.activePortfolioItem = (await response.json()) as IPortfolioItem;
+		}
+
 		setTimeout(() => {
 			replaceState(getPortfolioUrlWithParams(state), state);
 
 			if (state.selectedPortfolioCategory) {
-				const portfolio = document.getElementById('portfolio');
-				portfolio?.scrollIntoView({behavior: 'smooth'});
+				const portfolioTop = document.getElementById('portfolio')?.getBoundingClientRect().top ?? 0;
+				const scrollTop = document.documentElement.scrollTop + portfolioTop - 10;
+				window.scrollTo({ top: scrollTop, left: 0, behavior: 'smooth' });
 			}
 		});
 	});
@@ -47,6 +55,10 @@
 <VerticalSeperator zIndex={1} CSSClass="about-portfolio-seperator" />
 
 <Portfolio {portfolioItems} />
+
+{#if page.state.activePortfolioItem}
+	<PortfolioItemDetail portfolioItem={page.state.activePortfolioItem}/>
+{/if}
 
 <Contact />
 

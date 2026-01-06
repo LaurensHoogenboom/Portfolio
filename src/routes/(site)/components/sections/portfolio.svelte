@@ -6,7 +6,7 @@
 	import PortfolioPreviewBanner from '../atoms/portfolio/portfolioPreviewBanner.svelte';
 	import Button from '../atoms/button.svelte';
 	import { pushState } from '$app/navigation';
-	import type { IPortfolioItem, PortfolioItemType } from '$lib/types/portfolio';
+	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import { getPortfolioState, getPortfolioUrlWithParams } from '../../shared/portfolioUtils';
 	import Title from '../atoms/portfolio/title.svelte';
 
@@ -19,7 +19,6 @@
 		: selectedPortfolioItemType == 'art' 
 			? filteredItems.slice(0, 4)
 			: filteredItems.slice(0, 2));
-	let activeItem = $derived(portfolioItems.find((i) => i.id == page.state.activePortfolioItemId));
 
 	const showAllItems = () => {
 		const state = getPortfolioState();
@@ -29,7 +28,7 @@
 </script>
 
 <div class="portfolio-wrapper">
-	<Toolbar hasActiveItem={activeItem ? true : false} />
+	<Toolbar />
 
 	<div class="files-dummy">
 		<div class="file"></div>
@@ -39,21 +38,17 @@
 		<ContentContainer id="portfolio">
 			<Title />
 
-			{#if !activeItem}
-				<div class="items-wrapper {selectedPortfolioItemType == 'art' ? 'art-wrapper' : ''}">
-					{#if selectedPortfolioItemType == 'art'}
-						{#each visibleItems as vItem}
-							<PortfolioItemPreviewBox portfolioItem={vItem} showTitleBelow={true} />
-						{/each}
-					{:else}
-						{#each visibleItems as vItem}
-							<PortfolioPreviewBanner portfolioItem={vItem} />
-						{/each}
-					{/if}
-				</div>
-			{:else}
-				<PortfolioItemPreviewBox portfolioItem={activeItem} />
-			{/if}
+			<div class="items-wrapper {selectedPortfolioItemType == 'art' ? 'art-wrapper' : ''}">
+				{#if selectedPortfolioItemType == 'art'}
+					{#each visibleItems as vItem}
+						<PortfolioItemPreviewBox portfolioItem={vItem} showTitleBelow={true} />
+					{/each}
+				{:else}
+					{#each visibleItems as vItem}
+						<PortfolioPreviewBanner portfolioItem={vItem} />
+					{/each}
+				{/if}
+			</div>
 
 			{#if !page.state.showAllPortfolioItems && visibleItems.length < filteredItems.length}
 				<Button type="submit" style="secondary" title="Meer weergeven" CSSClass="more-projects-button" onclick={showAllItems} />

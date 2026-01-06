@@ -1,9 +1,11 @@
+import { pushState } from '$app/navigation';
 import { page } from '$app/state';
-import { isPortfolioItemType, type PortfolioItemType } from '$lib/types/portfolio';
+import { isPortfolioItemType, type IPortfolioItem, type PortfolioItemType } from '$lib/types/portfolio';
 
 interface IPortfolioState {
     showAllPortfolioItems: boolean,
-    activePortfolioItemId?: string
+    activePortfolioItemId?: string,
+    activePortfolioItem?: IPortfolioItem,
     selectedPortfolioCategory?: PortfolioItemType
 }
 
@@ -27,4 +29,11 @@ export const getPortfolioState = (): IPortfolioState => {
         activePortfolioItemId: page.state.activePortfolioItemId,
         selectedPortfolioCategory: page.state.selectedPortfolioCategory
     }
+}
+
+export const openPortfolioItem = (portfolioItem: IPortfolioItem) => {
+    const state = getPortfolioState();
+    state.activePortfolioItemId = portfolioItem.id;
+    state.activePortfolioItem = portfolioItem;
+    pushState(getPortfolioUrlWithParams(state), state);
 }

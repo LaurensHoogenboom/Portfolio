@@ -1,20 +1,12 @@
 <script lang="ts">
 	import type { IPortfolioItem } from '$lib/types/portfolio';
-	import { pushState } from '$app/navigation';
-	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../shared/portfolioUtils';
-	import { fly } from 'svelte/transition';
+	import { openPortfolioItem } from '../../../shared/portfolioUtils';
 
 	const { portfolioItem, showTitleBelow = false }: { portfolioItem: IPortfolioItem; showTitleBelow?: boolean } = $props();
-
-	const openPortfolioItem = () => {
-		const state = getPortfolioState();
-        state.activePortfolioItemId = portfolioItem.id;
-        pushState(getPortfolioUrlWithParams(state), state);
-	};
 </script>
 
 <li id={portfolioItem.id} class="portfolio-preview-box">
-	<button onclick={openPortfolioItem}>
+	<button onclick={() => openPortfolioItem(portfolioItem)}>
 		<div
 			class="image-card"
 			style="background-image: url({JSON.stringify(portfolioItem.image?.thumbnail.url)}); aspect-ratio: {portfolioItem.image?.thumbnail

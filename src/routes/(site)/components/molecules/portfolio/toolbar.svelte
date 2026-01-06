@@ -1,14 +1,10 @@
 <script lang="ts">
-	import { ChevronLeft } from '@lucide/svelte';
-	import Button from '../../atoms/button.svelte';
 	import Tabbar, { type ITabItem } from '../../atoms/tabbar.svelte';
 	import { pushState } from '$app/navigation';
 	import type { PortfolioItemType } from '$lib/types/portfolio';
 	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../shared/portfolioUtils';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
-
-	const { hasActiveItem = false }: { hasActiveItem: boolean } = $props();
 
 	interface IPortfolioTabItem extends ITabItem {
 		type: PortfolioItemType;
@@ -20,12 +16,6 @@
 		{ title: 'Designs', type: 'project' }
 	];
 
-	const closeCurrentItem = () => {
-		const state = getPortfolioState();
-		state.activePortfolioItemId = undefined;
-		pushState(getPortfolioUrlWithParams(state), state);
-	};
-
 	const changePortfolioItemType = (i: number) => {
 		const state = getPortfolioState();
 		state.selectedPortfolioCategory = tabItems[i].type;
@@ -33,7 +23,6 @@
 		
 		const portfolioTop = document.getElementById('portfolio')?.getBoundingClientRect().top ?? 0;
 		const scrollTop = document.documentElement.scrollTop + portfolioTop - 10;
-
 		window.scrollTo({ top: scrollTop, left: 0, behavior: 'smooth' });
 	};
 
@@ -62,11 +51,7 @@
 
 <div class="toolbar" bind:this={toolbar}>
 	<div class="toolbar-content">
-		{#if !hasActiveItem}
-			<Tabbar {tabItems} style="tabs" CSSClass="portfolio-tabs" onSelectionChange={changePortfolioItemType} {selectedIndex} />
-		{:else}
-			<Button type="submit" icon={ChevronLeft} onclick={closeCurrentItem} style="secondary" />
-		{/if}
+		<Tabbar {tabItems} style="tabs" CSSClass="portfolio-tabs" onSelectionChange={changePortfolioItemType} {selectedIndex} />
 	</div>
 </div>
 
