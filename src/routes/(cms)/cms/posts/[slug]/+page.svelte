@@ -5,7 +5,7 @@
 	import PageToolbar from '$cmsComponents/organisms/pageToolbar.svelte';
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import { Save } from '@lucide/svelte';
-	import { DispatchWarningNotification } from '../../shared/globalNotifications.svelte';
+	import { dispatchWarningNotification } from '../../shared/globalNotifications.svelte';
 
     let { data, form }: { data: PageData, form: ActionData | undefined } = $props();
 
@@ -14,7 +14,7 @@
 
     $effect(() => {
         if (form?.error) {
-            DispatchWarningNotification(form.error);
+            dispatchWarningNotification(form.error);
             form = undefined;
         }
 

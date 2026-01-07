@@ -2,14 +2,15 @@
     import { enhance } from '$app/forms';
     import { fly, slide } from 'svelte/transition';
 	import Button from '$cmsComponents/atoms/button.svelte';
-	import { Pencil, Trash2 } from '@lucide/svelte';
+	import { Pencil, TextCursor, Trash2 } from '@lucide/svelte';
     
-    let { id, title, url, deleteAction, editAction } : {
+    let { id, title, url, deleteAction, editAction, writeAction } : {
         id: string,
         title: string,
         url?: string,
         deleteAction?: string,
-        editAction?: () => void
+        editAction?: () => void,
+        writeAction?: () => void
     } = $props();
 </script>
 
@@ -48,6 +49,10 @@
 
     {#if (id && editAction) || (id && deleteAction)}
         <div class="actions">
+            {#if id && writeAction}
+                <Button type="button" style="transparent" icon={TextCursor} />
+            {/if}
+
             {#if id && editAction}
                 <Button type="button" style="transparent" icon={Pencil} onclick={editAction} />
             {/if}

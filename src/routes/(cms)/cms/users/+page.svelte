@@ -7,8 +7,8 @@
     import type { IUserToEdit } from './components/editUserDialog.svelte';
 	import CreateUserDialog from './components/createUserDialog.svelte';
 	import { Plus } from '@lucide/svelte';
-    import { DispatchSuccesNotification } from '../shared/globalNotifications.svelte';
 	import DataList from '$cmsComponents/organisms/dataList.svelte';
+	import { isFormActionType, notifyFormActionSuccess } from '../shared/globalNotifications.svelte';
 
     let { data, form }: { data: PageData, form: ActionData | undefined } = $props();
 
@@ -32,23 +32,9 @@
     }
 
     $effect(() => {
-        if (form?.succes) {
-            switch (form.action) {
-                case 'create':
-                    createFormVisible = false;
-                    DispatchSuccesNotification(`The user "${form.username}" was succesfully added.`)
-                    break;
-                case 'update':
-                    editFormVisible = false;
-                    DispatchSuccesNotification(`Changes to "${form.username}" were succesfully saved.`);
-                    break;
-                case 'delete':
-                    DispatchSuccesNotification(`The user "${form.username}" was successfully removed.`);
-                    break;
-                default: 
-                    break;
-            }
-
+        if (form?.succes && isFormActionType(form.action) && form.username) {
+            notifyFormActionSuccess(form.action, form.username)
+            createFormVisible = false;
             form = undefined;
         }
     });

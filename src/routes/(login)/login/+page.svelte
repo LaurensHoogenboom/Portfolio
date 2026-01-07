@@ -10,7 +10,7 @@
 	import AuthenticationHeader from './components/authenticationHeader.svelte';
 	import Instruction from '$cmsComponents/atoms/instruction.svelte';
 	import Avatar from '$cmsComponents/molecules/avatar.svelte';
-	import { DispatchSuccesNotification } from '../../(cms)/cms/shared/globalNotifications.svelte';
+	import { dispatchSuccesNotification } from '../../(cms)/cms/shared/globalNotifications.svelte';
 
     let { form }: { form: ActionData } = $props();
 
@@ -34,7 +34,7 @@
 
         if (form?.success) {
             goto("/cms/");
-            DispatchSuccesNotification(`Welcome back, ${username}!`, 'Logged In.');
+            dispatchSuccesNotification(`Welcome back, ${username}!`, 'Logged In.');
         }
     }
 }}>

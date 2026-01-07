@@ -1,15 +1,40 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 interface Notification {
-    title?: string, 
-    message: string, 
+    title?: string,
+    message: string,
     type?: "information" | "warning" | "succes",
     duration?: number,
     visible?: boolean
 }
 
-const GlobalNotifications = $state({notifications: new Array<Notification>()});
+const globalNotifications = $state({ notifications: new Array<Notification>() });
 
-const DispatchSuccesNotification = (message: string, title?: string, duration?: number) => {
-    GlobalNotifications.notifications.push({
+const formActionTypeStringMap = { create: 'create', update: 'update', delete: 'delete' };
+type FormActionType = keyof typeof formActionTypeStringMap;
+
+const isFormActionType = (value: string): value is FormActionType => {
+    return value in formActionTypeStringMap
+}
+
+const notifyFormActionSuccess = (action: FormActionType, itemName: string) => {
+    switch (action) {
+        case 'create':
+            dispatchSuccesNotification(`"${itemName}" was succesfully added.`);
+            break;
+        case 'update':
+            dispatchSuccesNotification(`Changes to "${itemName}" were succesfully saved.`);
+            break;
+        case 'delete':
+            dispatchSuccesNotification(`"${itemName}" was succesfully removed.`);
+            break;
+        default:
+            break;
+    }
+}
+
+const dispatchSuccesNotification = (message: string, title?: string, duration?: number) => {
+    globalNotifications.notifications.push({
         title: title,
         message: message,
         duration: duration ?? 5000,
@@ -17,8 +42,8 @@ const DispatchSuccesNotification = (message: string, title?: string, duration?: 
     })
 }
 
-const DispatchWarningNotification = (message: string, title?: string, duration?: number) => {
-    GlobalNotifications.notifications.push({
+const dispatchWarningNotification = (message: string, title?: string, duration?: number) => {
+    globalNotifications.notifications.push({
         title: title,
         message: message,
         duration: duration ?? 5000,
@@ -26,8 +51,8 @@ const DispatchWarningNotification = (message: string, title?: string, duration?:
     })
 }
 
-const DispatchInformationNotification = (message: string, title?: string, duration?: number) => {
-    GlobalNotifications.notifications.push({
+const dispatchInformationNotification = (message: string, title?: string, duration?: number) => {
+    globalNotifications.notifications.push({
         title: title,
         message: message,
         duration: duration ?? 5000,
@@ -35,4 +60,4 @@ const DispatchInformationNotification = (message: string, title?: string, durati
     })
 }
 
-export { GlobalNotifications, DispatchSuccesNotification, DispatchWarningNotification, DispatchInformationNotification }
+export { globalNotifications, dispatchSuccesNotification, dispatchWarningNotification, dispatchInformationNotification, notifyFormActionSuccess, isFormActionType }
