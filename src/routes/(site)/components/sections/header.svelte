@@ -3,7 +3,7 @@
 	import Button from '../atoms/button.svelte';
 	import ContentContainer from '../atoms/contentContainer.svelte';
 	import PortfolioPrevew from '../organisms/header/portfolioPrevew.svelte';
-	import type { IPortfolioItem } from '$lib/server/db/types/portfolio';
+	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import Title from '../atoms/header/title.svelte';
 
 	const { portfolioItems }: { portfolioItems: IPortfolioItem[] } = $props();

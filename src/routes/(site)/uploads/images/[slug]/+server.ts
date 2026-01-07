@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import type { RequestHandler } from './$types';
-import { dev } from '$app/environment';
 import * as dotenv from "dotenv";
 import { error } from '@sveltejs/kit';
 import { readFileSync } from "node:fs";
@@ -17,6 +16,7 @@ export const GET: RequestHandler = async ({ params }) => {
         const file = readFileSync(path + filename);
         return new Response(new Uint8Array(file));
     } catch (e) {
+        console.log(e);
         throw error(404, 'file not found')
     }
 };

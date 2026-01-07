@@ -4,10 +4,13 @@
 	import About from './components/sections/about.svelte';
 	import Contact from './components/sections/contact.svelte';
 	import Header from './components/sections/header.svelte';
-	import type { IPortfolioItem, PortfolioItemType, PortfolioItemThumbnail} from '$lib/server/db/types/portfolio'
+	import type { IPortfolioItem } from '$lib/types/portfolio'
 	import Portfolio from './components/sections/portfolio.svelte';
 	import { replaceState } from '$app/navigation';
 	import VerticalSeperator from './components/atoms/verticalSeperator.svelte';
+	import { getPortfolioSearchParams, getPortfolioUrlWithParams } from './shared/portfolioUtils';
+	import PortfolioItemDetail from './components/organisms/portfolioItemDetail.svelte';
+	import { page } from '$app/state';
 
 	let { data }: { data: PageData } = $props();
 
@@ -21,26 +24,27 @@
 		}
 	});
 
-	let searchParams = $state(new URLSearchParams());
-
-	onMount(() => {
+	onMount(async () => {
 		const [hash, query] = window.location.href.split('#')[1] ? window.location.href.split('#')[1].split('?') : [undefined, undefined];
 
-		if (!query) return;
+		if (!query || hash != 'portfolio') return;
 
-		searchParams = new URLSearchParams(query);
+		const state = getPortfolioSearchParams(new URLSearchParams(query));
 
-		const isPortfolioExpanded = searchParams.get('isPortfolioExpanded') == 'true' ? true : false;
-		const activePortfolioItemId = searchParams.get('activePortfolioItemId');
-
-		if (isPortfolioExpanded && hash == 'portfolio') {
-			setTimeout(() => {
-				replaceState(`#portfolio?isPortfolioExpanded=${isPortfolioExpanded}&activePortfolioItemId=${activePortfolioItemId}`, {
-					isPortfolioExpanded: isPortfolioExpanded,
-					activePortfolioItemId: activePortfolioItemId ?? undefined
-				});
-			});
+		if (state.activePortfolioItemId && !state.activePortfolioItem) {
+			const response = await fetch(`portfolioItem/${state.activePortfolioItemId}`);
+			state.activePortfolioItem = (await response.json()) as IPortfolioItem;
 		}
+
+		setTimeout(() => {
+			replaceState(getPortfolioUrlWithParams(state), state);
+
+			if (state.selectedPortfolioCategory) {
+				const portfolioTop = document.getElementById('portfolio')?.getBoundingClientRect().top ?? 0;
+				const scrollTop = document.documentElement.scrollTop + portfolioTop - 10;
+				window.scrollTo({ top: scrollTop, left: 0, behavior: 'smooth' });
+			}
+		});
 	});
 </script>
 
@@ -51,6 +55,10 @@
 <VerticalSeperator zIndex={1} CSSClass="about-portfolio-seperator" />
 
 <Portfolio {portfolioItems} />
+
+{#if page.state.activePortfolioItem}
+	<PortfolioItemDetail portfolioItem={page.state.activePortfolioItem}/>
+{/if}
 
 <Contact />
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ITabItem } from "../../../atoms/tabbar.svelte";
 	import TabBar from "../../../atoms/tabbar.svelte";
-	import type { PortfolioItemType } from "$lib/server/db/types/portfolio";
+	import type { PortfolioItemType } from "$lib/types/portfolio";
 
 	
     interface headerPortfolioTabItem extends ITabItem {

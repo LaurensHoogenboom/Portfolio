@@ -34,7 +34,9 @@
 			if (!hash) return;
 
 			e.preventDefault();
-			document.getElementById(hash)?.scrollIntoView({behavior: 'smooth'});
+			const portfolioTop = document.getElementById(hash)?.getBoundingClientRect().top ?? 0;
+			const scrollTop = document.documentElement.scrollTop + portfolioTop - 10;
+			window.scrollTo({ top: scrollTop, left: 0, behavior: 'smooth' });
 		}
 	}
 </script>

@@ -1,6 +1,6 @@
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { generateId, timestamp } from "../utils/utils";
-import { type PortfolioItemImage, type PortfolioItemType } from '../types/portfolio';
+import { type PortfolioItemImage, type PortfolioItemType } from '../../../types/portfolio';
 
 const portfolioItems = sqliteTable("portfolioItems", {
     id: text("id")

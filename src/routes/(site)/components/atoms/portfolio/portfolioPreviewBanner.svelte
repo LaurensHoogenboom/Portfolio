@@ -1,16 +1,9 @@
 <script lang="ts">
-	import { pushState } from "$app/navigation";
-    import type { IPortfolioItem } from "$lib/server/db/types/portfolio";
+    import type { IPortfolioItem } from "$lib/types/portfolio";
+	import { openPortfolioItem } from "../../../shared/portfolioUtils";
 	import Button from "../button.svelte";
 
     const { portfolioItem } : { portfolioItem: IPortfolioItem } = $props();
-
-    const openPortfolioItem = () => {
-		pushState(`#portfolio?isPortfolioExpanded=true&activePortfolioItemId=${portfolioItem.id}`, {
-			isPortfolioExpanded: true,
-			activePortfolioItemId: portfolioItem.id
-		});
-	};
 </script>
 
 <div class="portfolio-preview-banner">
@@ -24,7 +17,7 @@
                 <h2>{portfolioItem.title}</h2>
                 <p>{portfolioItem.description}</p>
             </article>
-            <Button type="submit" title="Meer Lezen" onclick={openPortfolioItem} />
+            <Button type="submit" title="Meer Lezen" onclick={() => openPortfolioItem(portfolioItem)} />
         </div>
     </div>
     

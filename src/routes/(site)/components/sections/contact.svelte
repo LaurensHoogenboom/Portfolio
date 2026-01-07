@@ -42,7 +42,7 @@
         background: var(--primary-background-gradient);
         border-bottom-left-radius: var(--border-radius-3);
         border-bottom-right-radius: var(--border-radius-3);
-        --extra-space: calc((100vw - 1400px) / 2);
+        --extra-space: calc((100vw - var(--page-width)) / 2);
         position: relative;
         z-index: 0;
 
@@ -57,7 +57,7 @@
             margin-bottom: calc(0px - var(--border-radius-3) * 2);
             margin-left: calc(0px - var(--extra-space));
             margin-right: calc(0px - var(--extra-space));
-            width: min(100%, (1400px + var(--extra-space)));
+            width: min(100%, (var(--page-width) + var(--extra-space)));
             padding-left: calc(var(--spacing-6) + var(--extra-space) / 2);
             padding-right: calc(var(--spacing-6) + var(--extra-space) / 2);
             box-shadow: var(--grey-shadow-2);

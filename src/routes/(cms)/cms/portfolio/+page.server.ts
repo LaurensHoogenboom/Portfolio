@@ -1,6 +1,6 @@
 import { createPortfolioItem, deletePortfolioItem, getPortfolioItemById, getPortfolioItems, updatePortfolioItem } from '$lib/server/db/cruds/portfolioItems';
 import type { portfolioItems } from '$lib/server/db/schema/portfolioItems';
-import type { PortfolioItemImage, PortfolioItemType } from '$lib/server/db/types/portfolio';
+import type { PortfolioItemImage, PortfolioItemType } from '$lib/types/portfolio';
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { writeFile } from 'fs/promises';
