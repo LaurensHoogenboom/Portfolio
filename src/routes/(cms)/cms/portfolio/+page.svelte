@@ -8,6 +8,7 @@
 	import EditPortfolioItemDialog, { type IPortfolioItemToEdit } from './components/editPortfolioItemDialog.svelte';
 	import CreatePortfolioItemDialog from './components/createPortfolioItemDialog.svelte';
 	import { isFormActionType, notifyFormActionSuccess } from '../shared/globalNotifications.svelte';
+	import { goto } from '$app/navigation';
 
 	let { data, form }: { data: PageData; form: ActionData | undefined } = $props();
 
@@ -29,8 +30,6 @@
 		}
 	};
 
-	const openEditArticleMode = (id: string) => {};
-
 	$effect(() => {
         if (form?.succes && isFormActionType(form.action) && form.portfolioItemTitle) {
             notifyFormActionSuccess(form.action, form.portfolioItemTitle);
@@ -48,7 +47,7 @@
 <main>
 	<DataList itemNamePlural="Portfolio Items" itemCount={data.portfolioItems.length}>
 		{#each data.portfolioItems as pItem}
-			{@const writeAction = pItem.type != 'art' ? () => openEditArticleMode(pItem.id) : undefined}
+			{@const writeAction = pItem.type != 'art' ? () => goto(`/editPortfolioItemArticle/${pItem.id}`) : undefined}
 			<ListItem
 				title={pItem.title}
 				id={pItem.id}

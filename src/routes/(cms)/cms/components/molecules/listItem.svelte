@@ -50,7 +50,7 @@
     {#if (id && editAction) || (id && deleteAction)}
         <div class="actions">
             {#if id && writeAction}
-                <Button type="button" style="transparent" icon={TextCursor} />
+                <Button type="button" style="transparent" icon={TextCursor} onclick={writeAction}/>
             {/if}
 
             {#if id && editAction}

@@ -9,7 +9,7 @@
 	import { replaceState } from '$app/navigation';
 	import VerticalSeperator from '$siteComponents/atoms/verticalSeperator.svelte';
 	import { getPortfolioSearchParams, getPortfolioUrlWithParams } from './shared/portfolioUtils';
-	import PortfolioItemDetail from '$siteComponents/organisms/portfolioItemDetail.svelte';
+	import PortfolioItemDetail from '$siteComponents/organisms/portfolio/portfolioItemDetail.svelte';
 	import { page } from '$app/state';
 
 	let { data }: { data: PageData } = $props();
