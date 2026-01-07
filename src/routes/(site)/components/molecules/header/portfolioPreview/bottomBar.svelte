@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
-	import Button from '../../../atoms/button.svelte';
+	import Button from '$siteComponents/atoms/button.svelte';
 
 	const {
 		setSelectedIndex,

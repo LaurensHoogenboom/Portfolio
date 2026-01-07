@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import Button from '$lib/components/cms/atoms/button.svelte';
-	import Notice from '$lib/components/cms/atoms/notice.svelte';
-	import LabelInputGroup, { type ISelectOption } from '$lib/components/cms/molecules/labelInputGroup.svelte';
-	import Dialog from '$lib/components/cms/organisms/dialog.svelte';
+	import Button from '$cmsComponents/atoms/button.svelte';
+	import Notice from '$cmsComponents/atoms/notice.svelte';
+	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
+	import Dialog from '$cmsComponents/organisms/dialog.svelte';
 	import type { PortfolioItemImage, PortfolioItemType } from '$lib/types/portfolio';
 	import { portfolioSelectOptions } from '../shared/portfolioSelectOptions';
 

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Mail, Phone } from "@lucide/svelte";
-    import Button from "../atoms/button.svelte";
-    import ContentContainer from "../atoms/contentContainer.svelte";
-	import LabelInputGroup from "../molecules/labelInputGroup.svelte";
-	import ButtonLinkGroup from "../molecules/buttonLinkGroup.svelte";
+    import Button from "$siteComponents/atoms/button.svelte";
+    import ContentContainer from "$siteComponents/atoms/contentContainer.svelte";
+	import LabelInputGroup from "$siteComponents/molecules/labelInputGroup.svelte";
+	import ButtonLinkGroup from "$siteComponents/molecules/buttonLinkGroup.svelte";
 </script>
 
 <ContentContainer id="contact" theme="transparent">

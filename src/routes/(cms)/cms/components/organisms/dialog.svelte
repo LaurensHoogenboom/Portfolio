@@ -2,7 +2,7 @@
 	import { X } from '@lucide/svelte';
     import type { Snippet } from 'svelte';
 	import { fade, scale, slide } from 'svelte/transition';
-	import Button from '../atoms/button.svelte';
+	import Button from '$cmsComponents/atoms/button.svelte';
 
     let { children, title, closeCallback }: { children: Snippet, title?: string, closeCallback?: () => void } = $props();
 

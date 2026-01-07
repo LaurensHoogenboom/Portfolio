@@ -1,7 +1,7 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
     import { fly, slide } from 'svelte/transition';
-	import Button from '../atoms/button.svelte';
+	import Button from '$cmsComponents/atoms/button.svelte';
 	import { Pencil, Trash2 } from '@lucide/svelte';
     
     let { id, title, url, deleteAction, editAction } : {

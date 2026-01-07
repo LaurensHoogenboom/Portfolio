@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Folder, IdCard, Mail } from "@lucide/svelte";
-    import Button from "../atoms/button.svelte";
+    import Button from "$siteComponents/atoms/button.svelte";
 </script>
 
 <nav class="content-container-wrapper section-dark">

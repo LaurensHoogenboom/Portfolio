@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Tabbar, { type ITabItem } from '../../atoms/tabbar.svelte';
+	import Tabbar, { type ITabItem } from '$siteComponents/atoms/tabbar.svelte';
 	import { pushState } from '$app/navigation';
 	import type { PortfolioItemType } from '$lib/types/portfolio';
 	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../shared/portfolioUtils';

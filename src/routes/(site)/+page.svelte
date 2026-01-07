@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
-	import About from './components/sections/about.svelte';
-	import Contact from './components/sections/contact.svelte';
-	import Header from './components/sections/header.svelte';
+	import About from '$siteComponents/sections/about.svelte';
+	import Contact from '$siteComponents/sections/contact.svelte';
+	import Header from '$siteComponents/sections/header.svelte';
 	import type { IPortfolioItem } from '$lib/types/portfolio'
-	import Portfolio from './components/sections/portfolio.svelte';
+	import Portfolio from '$siteComponents/sections/portfolio.svelte';
 	import { replaceState } from '$app/navigation';
-	import VerticalSeperator from './components/atoms/verticalSeperator.svelte';
+	import VerticalSeperator from '$siteComponents/atoms/verticalSeperator.svelte';
 	import { getPortfolioSearchParams, getPortfolioUrlWithParams } from './shared/portfolioUtils';
-	import PortfolioItemDetail from './components/organisms/portfolioItemDetail.svelte';
+	import PortfolioItemDetail from '$siteComponents/organisms/portfolioItemDetail.svelte';
 	import { page } from '$app/state';
 
 	let { data }: { data: PageData } = $props();

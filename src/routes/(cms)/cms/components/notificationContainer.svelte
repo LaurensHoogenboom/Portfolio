@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Check, InfoIcon, TriangleAlert } from "@lucide/svelte";
-    import { GlobalNotifications } from "$lib/globalNotifications.svelte";
+    import { GlobalNotifications } from "../shared/globalNotifications.svelte";
 	import { fly, slide } from "svelte/transition";
 
     $effect(() => {

@@ -1,8 +1,6 @@
 <script lang="ts">
-	import type { ChangeEventHandler } from "svelte/elements";
-	import Button from "../atoms/button.svelte";
-	import Instruction from "../atoms/instruction.svelte";
-	import { slide } from "svelte/transition";
+	import Button from "$cmsComponents/atoms/button.svelte";
+	import Instruction from "$cmsComponents/atoms/instruction.svelte";
 
     export interface ISelectOption {
         title: string,

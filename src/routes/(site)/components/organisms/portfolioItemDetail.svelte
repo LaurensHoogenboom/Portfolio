@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { IPortfolioItem } from "$lib/types/portfolio";
 	import { X } from "@lucide/svelte";
-	import Button from "../atoms/button.svelte";
+	import Button from "$siteComponents/atoms/button.svelte";
 	import { getPortfolioState, getPortfolioUrlWithParams } from "../../shared/portfolioUtils";
 	import { pushState } from "$app/navigation";
 	import { slide } from "svelte/transition";

@@ -11,6 +11,7 @@ const portfolioItems = sqliteTable("portfolioItems", {
     description: text("description"),
     type: text("type").$type<PortfolioItemType>().notNull(),
     image: text("image", {mode: "json"}).$type<PortfolioItemImage>(),
+    articleContent: text("articleContent", {mode: "json"}),
     ...timestamp
 });
 

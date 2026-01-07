@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { IPortfolioItem, PortfolioItemType } from '$lib/types/portfolio';
-	import PortfolioItemPreviewBox from '../../atoms/portfolio/portfolioItemPreviewBox.svelte';
-	import TopBar from '../../molecules/header/portfolioPreview/topBar.svelte';
-	import BottomBar from '../../molecules/header/portfolioPreview/bottomBar.svelte';
+	import PortfolioItemPreviewBox from '$siteComponents/atoms/portfolio/portfolioItemPreviewBox.svelte';
+	import TopBar from '$siteComponents/molecules/header/portfolioPreview/topBar.svelte';
+	import BottomBar from '$siteComponents/molecules/header/portfolioPreview/bottomBar.svelte';
 
 	const { previewItems }: { previewItems: IPortfolioItem[] } = $props();
 

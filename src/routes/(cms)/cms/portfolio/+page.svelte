@@ -1,13 +1,13 @@
 <script lang="ts">
-	import Button from '$lib/components/cms/atoms/button.svelte';
-	import PageToolbar from '$lib/components/cms/organisms/pageToolbar.svelte';
+	import Button from '$cmsComponents/atoms/button.svelte';
+	import PageToolbar from '$cmsComponents/organisms/pageToolbar.svelte';
 	import { Plus } from '@lucide/svelte';
     import type { ActionData, PageData } from './$types';
-	import ListItem from '$lib/components/cms/molecules/listItem.svelte';
-	import DataList from '$lib/components/cms/organisms/dataList.svelte';
+	import ListItem from '$cmsComponents/molecules/listItem.svelte';
+	import DataList from '$cmsComponents/organisms/dataList.svelte';
 	import EditPortfolioItemDialog, { type IPortfolioItemToEdit } from './components/editPortfolioItemDialog.svelte';
 	import CreatePortfolioItemDialog from './components/createPortfolioItemDialog.svelte';
-	import { DispatchSuccesNotification } from '$lib/globalNotifications.svelte';
+	import { DispatchSuccesNotification } from '../shared/globalNotifications.svelte';
 
     let { data, form }: { data: PageData, form: ActionData | undefined } = $props();
 

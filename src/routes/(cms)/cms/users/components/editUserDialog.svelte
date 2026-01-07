@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
-	import Button from "$lib/components/cms/atoms/button.svelte";
-	import Notice from "$lib/components/cms/atoms/notice.svelte";
-	import LabelInputGroup from "$lib/components/cms/molecules/labelInputGroup.svelte";
-	import Dialog from "$lib/components/cms/organisms/dialog.svelte";
-	import PasswordInput from "$lib/components/cms/organisms/passwordInput.svelte";
+	import Button from "$cmsComponents/atoms/button.svelte";
+	import Notice from "$cmsComponents/atoms/notice.svelte";
+	import LabelInputGroup from "$cmsComponents/molecules/labelInputGroup.svelte";
+	import Dialog from "$cmsComponents/organisms/dialog.svelte";
+	import PasswordInput from "$cmsComponents/organisms/passwordInput.svelte";
 
     export interface IUserToEdit {
         id: string,

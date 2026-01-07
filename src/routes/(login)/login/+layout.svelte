@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
     import type { LayoutData } from './$types';
-	import CustomIcon from '$lib/components/cms/atoms/customIcons/customIcon.svelte';
+	import CustomIcon from '$cmsComponents/atoms/customIcons/customIcon.svelte';
     import { dev } from '$app/environment';
 
     let { data, children }: { data: LayoutData, children: Snippet } = $props();
@@ -13,6 +13,8 @@
     {:else}
         <link rel="stylesheet" href="/styles/cms/cms.css">
     {/if}
+
+    <title>CMS: Laurens Hoogenboom</title>
 </svelte:head>
 
 <div class="authentication">

@@ -1,14 +1,14 @@
 <script lang="ts">
     import type { PageData, ActionData } from '../../cms/users/$types';
-    import ListItem from '$lib/components/cms/molecules/listItem.svelte';
-    import PageToolbar from '$lib/components/cms/organisms/pageToolbar.svelte';
-	import Button from '$lib/components/cms/atoms/button.svelte';
+    import ListItem from '$cmsComponents/molecules/listItem.svelte';
+    import PageToolbar from '$cmsComponents/organisms/pageToolbar.svelte';
+	import Button from '$cmsComponents/atoms/button.svelte';
 	import EditUserDialog from './components/editUserDialog.svelte';
     import type { IUserToEdit } from './components/editUserDialog.svelte';
 	import CreateUserDialog from './components/createUserDialog.svelte';
 	import { Plus } from '@lucide/svelte';
-    import { DispatchSuccesNotification } from '$lib/globalNotifications.svelte';
-	import DataList from '$lib/components/cms/organisms/dataList.svelte';
+    import { DispatchSuccesNotification } from '../shared/globalNotifications.svelte';
+	import DataList from '$cmsComponents/organisms/dataList.svelte';
 
     let { data, form }: { data: PageData, form: ActionData | undefined } = $props();
 

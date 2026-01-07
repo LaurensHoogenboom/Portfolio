@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import LabelInputGroup from "../molecules/labelInputGroup.svelte";
+	import LabelInputGroup from "$cmsComponents/molecules/labelInputGroup.svelte";
 	import { getRandomId } from "$lib/utils/generateRandomId";
 
     let newPassword = $state("");
