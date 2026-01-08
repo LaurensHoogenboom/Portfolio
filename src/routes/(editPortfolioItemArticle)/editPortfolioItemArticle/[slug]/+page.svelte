@@ -3,11 +3,11 @@
 	import PortfolioArticleHeader from '$siteComponents/molecules/portfolio/portfolioArticleHeader.svelte';
 	import PortfolioItemDetailWrapper from '$siteComponents/organisms/portfolio/portfolioItemDetailWrapper.svelte';
 	import PortfolioItemEdit from '../components/portfolioItemEdit.svelte';
-	import type { ActionData, PageData } from './$types';
+	import type { PageData } from './$types';
 	import type { ButtonActionStatus } from '$siteComponents/atoms/button.svelte';
 	import EditorJS, { type OutputData } from '@editorjs/editorjs';
 
-	let { data, form }: { data: PageData; form: ActionData | undefined } = $props();
+	let { data }: { data: PageData } = $props();
 	let savingStatus: ButtonActionStatus | undefined = $state();
 	let editor: EditorJS | undefined = $state();
 
