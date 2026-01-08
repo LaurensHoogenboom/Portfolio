@@ -46,6 +46,8 @@
 		"vitest": "^3.0.0"
 	},
 	"dependencies": {
+		"@editorjs/editorjs": "^2.31.0",
+		"@editorjs/header": "^2.8.8",
 		"@lucide/svelte": "^0.503.0",
 		"@oslojs/crypto": "^1.0.1",
 		"@sveltejs/adapter-auto": "^7.0.0",

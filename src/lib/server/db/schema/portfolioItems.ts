@@ -1,6 +1,7 @@
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { generateId, timestamp } from "../utils/utils";
 import { type PortfolioItemImage, type PortfolioItemType } from '../../../types/portfolio';
+import type { OutputData } from "@editorjs/editorjs";
 
 const portfolioItems = sqliteTable("portfolioItems", {
     id: text("id")
@@ -11,7 +12,7 @@ const portfolioItems = sqliteTable("portfolioItems", {
     description: text("description"),
     type: text("type").$type<PortfolioItemType>().notNull(),
     image: text("image", {mode: "json"}).$type<PortfolioItemImage>(),
-    articleContent: text("articleContent", {mode: "json"}),
+    articleContent: text("articleContent", {mode: "json"}).$type<OutputData>(),
     ...timestamp
 });
 

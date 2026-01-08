@@ -17,6 +17,6 @@ export const GET: RequestHandler = async ({ params }) => {
         return new Response(new Uint8Array(file));
     } catch (e) {
         console.log(e);
-        throw error(404, 'file not found')
+        throw error(404, 'file not found.');
     }
 };

@@ -20,7 +20,8 @@
 			title: pItem.title,
 			type: pItem.type,
 			description: pItem.description,
-			image: pItem.image
+			image: pItem.image,
+			articleContent: pItem.articleContent
 		}
 	});
 

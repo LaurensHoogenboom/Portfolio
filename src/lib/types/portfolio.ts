@@ -1,3 +1,5 @@
+import type { OutputData } from "@editorjs/editorjs";
+
 const portfolioTypeStringMap = {
     project: 'project',
     art: 'art',
@@ -22,6 +24,7 @@ interface IPortfolioItem {
     title: string;
     description: string | null;
     image: PortfolioItemImage | null;
+    articleContent: OutputData | null;
 }
 
 const isPortfolioItemType = (value: string): value is PortfolioItemType => {

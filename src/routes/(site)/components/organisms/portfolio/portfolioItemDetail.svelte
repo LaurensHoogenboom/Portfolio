@@ -4,6 +4,7 @@
 	import { getPortfolioState, getPortfolioUrlWithParams } from "../../../shared/portfolioUtils";
 	import { pushState } from "$app/navigation";
 	import PortfolioItemDetailWrapper from "./portfolioItemDetailWrapper.svelte";
+	import PortfolioArticleHeader from "$siteComponents/molecules/portfolio/portfolioArticleHeader.svelte";
 
     const { portfolioItem } : { portfolioItem: IPortfolioItem} = $props(); 
 
@@ -27,7 +28,7 @@
     }
 </script>
 
-<PortfolioItemDetailWrapper closeCallback={closePortfolioItem}>
+<PortfolioItemDetailWrapper closeCallback={closePortfolioItem} hasOverflow={portfolioItem.type != 'art'}>
     {#if portfolioItem.type == 'art'}
         <div class="image-content-container">
             <img src={portfolioItem.image?.url} alt={portfolioItem.title}/>
@@ -37,6 +38,10 @@
                 <Button type="submit" title="Meer zoals dit" style="secondary" onclick={openSimilarItems}/>
             </div>
         </div>
+    {/if}
+
+    {#if portfolioItem.type == "project" || portfolioItem.type == "research"}
+        <PortfolioArticleHeader portfolioItem={portfolioItem} />
     {/if}
 </PortfolioItemDetailWrapper>
 
