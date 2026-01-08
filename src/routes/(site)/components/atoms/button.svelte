@@ -1,5 +1,9 @@
 <script lang="ts">
-	import { type Icon as IconType } from '@lucide/svelte';
+	import { Check, Triangle, type Icon as IconType } from '@lucide/svelte';
+	import { Circle } from 'svelte-loading-spinners';
+	import { fly } from 'svelte/transition';
+
+	export type ButtonActionStatus = 'processing' | 'success' | 'fail'
 
 	const {
 		title,
@@ -10,7 +14,8 @@
 		onclick,
 		CSSClass,
 		id,
-		disabled
+		disabled,
+		actionStatus
 	}: {
 		title?: string;
 		icon?: typeof IconType;
@@ -20,7 +25,8 @@
 		onclick?: () => void;
 		CSSClass?: string;
 		id?: string;
-		disabled?: boolean
+		disabled?: boolean,
+		actionStatus?: ButtonActionStatus
 	} = $props();
 
 	const classString = `button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''}`;
@@ -63,105 +69,20 @@
 			{title}
 		</span>
 	{/if}
+
+	{#if actionStatus}
+		{#if actionStatus == 'processing'}
+			<div class="button-overlay" transition:fly|global={{ y: 20 }}>
+				<Circle size={22} color="var(--primary-base)" />
+			</div>
+		{:else if actionStatus == 'success'}
+			<div class="button-overlay" transition:fly|global={{ y: 20 }}>
+				<Check />
+			</div>
+		{:else if actionStatus == 'fail'}
+			<div class="button-overlay" transition:fly|global={{ y: 20 }}>
+				<Triangle />
+			</div>
+		{/if}
+	{/if}
 {/snippet}
-
-<style>
-	.button {
-		text-decoration: none;
-		display: inline-flex;
-		grid-gap: 15px;
-		align-items: center;
-		border: 1px solid var(--primary-base);
-		transition:
-			background-color var(--default-animation-duration),
-			opacity var(--default-animation-duration);
-		--hover-background-color: var(--primary-background-solid);
-
-		&:not(.inline) {
-			padding: 0 var(--spacing-4);
-			border-radius: var(--border-radius-1);
-			height: 45px;
-
-			&:not(:last-of-type) {
-				margin-right: var(--spacing-3);
-			}
-		}
-
-		&:not(.inline, .transparent) {
-			box-shadow: var(--primary-shadow);
-		}
-
-		&.round {
-			aspect-ratio: 1 / 1;
-			padding: 0;
-			justify-content: center;
-			border-radius: 100%;
-		}
-
-		&.primary {
-			background-color: var(--primary-base);
-			color: var(--white);
-		}
-
-		&.secondary {
-			border: 1px solid var(--primary-base);
-			color: var(--primary-base);
-			background-color: var(--white);
-		}
-
-		&.transparent {
-			border: 1px solid var(--grey-borders);
-			background: none;
-		}
-
-		&.inline {
-			height: auto;
-
-			@media (hover:hover) {
-				&:hover:not(.disabled) {
-					opacity: 0.6;
-				}
-			}
-		}
-
-		&.disabled {
-			cursor: default;
-			opacity: 0.5;
-		}
-
-		@media (hover: hover) {
-			&:hover:not(.inline, .disabled) {
-				background-color: var(--hover-background-color);
-				color: var(--white);
-				cursor: pointer;
-			}
-		}
-	}
-
-	:global(.section-dark) .button {
-		&.primary {
-			background-color: var(--white);
-			color: var(--primary-base);
-			--hover-background-color: var(--grey-inset-background);
-		}
-
-		&.secondary {
-			background-color: var(--primary-background-solid);
-			border-color: var(--primary-borders);
-			color: var(--white);
-			--hover-background-color: var(--primary-base);
-		}
-
-		&.transparent {
-			border-color: var(--primary-borders);
-			--hover-background-color: var(--primary-background-solid);
-		}
-
-		@media (hover: hover) {
-			&:hover:not(.inline, .disabled) {
-				background-color: var(--hover-background-color);
-				cursor: pointer;
-			}
-		}
-	}
-</style>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Save, X } from '@lucide/svelte';
-	import Button from '$siteComponents/atoms/button.svelte';
+	import Button, { type ButtonActionStatus } from '$siteComponents/atoms/button.svelte';
 	import { slide } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
 
@@ -8,25 +8,33 @@
 		closeCallback,
 		children,
 		saveCallback,
-		hasOverflow = false
-	}: { closeCallback: () => void; children: Snippet; saveCallback?: () => void; hasOverflow?: boolean } = $props();
+		savingStatus,
+		hasOverflow = false,
+	}: {
+		closeCallback: () => void;
+		children: Snippet;
+		saveCallback?: () => void;
+		hasOverflow?: boolean;
+		saving?: boolean;
+		savingStatus?: ButtonActionStatus
+	} = $props();
 </script>
 
 <div class="portfolio-item-detail" transition:slide>
 	<div class="content-wrapper">
-        {#if hasOverflow}
-            <div class="overflow-container">
-                {@render children()}
-            </div>
-        {:else}
-            {@render children()}
-        {/if}
+		{#if hasOverflow}
+			<div class="overflow-container">
+				{@render children()}
+			</div>
+		{:else}
+			{@render children()}
+		{/if}
 
 		<div class="toolbar">
 			<Button type="submit" style="secondary" icon={X} onclick={closeCallback} />
 
 			{#if saveCallback}
-				<Button type="submit" style="secondary" icon={Save} onclick={saveCallback} />
+				<Button type="submit" style="secondary" icon={Save} onclick={saveCallback} actionStatus={savingStatus} />
 			{/if}
 		</div>
 	</div>
@@ -47,19 +55,19 @@
 			padding: var(--spacing-7);
 			height: 100vh;
 			width: 100%;
-            
-            &:has(.overflow-container) {
-                padding-bottom: 0;
-                padding-top: 0;
-            }
 
-            .overflow-container {
-                overflow-y: auto;
-                height: 100%;
-                padding-bottom: var(--spacing-7);
-                padding-top: var(--spacing-7);
-                padding-right: var(--spacing-6);
-            }
+			&:has(.overflow-container) {
+				padding-bottom: 0;
+				padding-top: 0;
+			}
+
+			.overflow-container {
+				overflow-y: auto;
+				height: 100%;
+				padding-bottom: var(--spacing-7);
+				padding-top: var(--spacing-7);
+				padding-right: var(--spacing-6);
+			}
 
 			.toolbar {
 				position: absolute;
