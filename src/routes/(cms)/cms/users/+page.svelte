@@ -35,6 +35,7 @@
         if (form?.succes && isFormActionType(form.action) && form.username) {
             notifyFormActionSuccess(form.action, form.username)
             createFormVisible = false;
+			editFormVisible = false;
             form = undefined;
         }
     });

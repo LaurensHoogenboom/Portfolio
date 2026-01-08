@@ -5,6 +5,7 @@
 	import { pushState } from "$app/navigation";
 	import PortfolioItemDetailWrapper from "./portfolioItemDetailWrapper.svelte";
 	import PortfolioArticleHeader from "$siteComponents/molecules/portfolio/portfolioArticleHeader.svelte";
+	import PortfolioArticleBody from "$siteComponents/molecules/portfolio/portfolioArticleBody.svelte";
 
     const { portfolioItem } : { portfolioItem: IPortfolioItem} = $props(); 
 
@@ -42,6 +43,7 @@
 
     {#if portfolioItem.type == "project" || portfolioItem.type == "research"}
         <PortfolioArticleHeader portfolioItem={portfolioItem} />
+        <PortfolioArticleBody portfolioItem={portfolioItem} />
     {/if}
 </PortfolioItemDetailWrapper>
 

@@ -1,0 +1,125 @@
+.button {
+    --color: var(--white);
+
+	text-decoration: none;
+	display: inline-flex;
+	grid-gap: 15px;
+	align-items: center;
+	border: 1px solid var(--primary-base);
+	transition:
+		background-color var(--default-animation-duration),
+		opacity var(--default-animation-duration);
+	position: relative;
+	overflow: hidden;
+	background-color: var(--background-color);
+	color: var(--color);
+
+	&:not(.inline) {
+		padding: 0 var(--spacing-4);
+		border-radius: var(--border-radius-1);
+		height: 45px;
+		--hover-background-color: var(--primary-background-solid);
+		--background-color: var(--primary-base);
+
+		&:not(:last-of-type) {
+			margin-right: var(--spacing-3);
+		}
+	}
+
+	&:not(.inline, .transparent) {
+		box-shadow: var(--primary-shadow);
+	}
+
+	&.round {
+		aspect-ratio: 1 / 1;
+		padding: 0;
+		justify-content: center;
+		border-radius: 100%;
+	}
+
+	&.primary {
+		--background-color: var(--primary-base);
+		--color: var(--white);
+	}
+
+	&.secondary {
+		border: 1px solid var(--primary-base);
+		--color: var(--primary-base);
+		--background-color: var(--white);
+	}
+
+	&.transparent {
+		border: 1px solid var(--grey-borders);
+		background: none;
+		--color: var(--primary-base);
+	}
+
+	&.inline {
+		height: auto;
+		--color: var(--primary-base);
+
+		@media (hover: hover) {
+			&:hover:not(.disabled) {
+				opacity: 0.6;
+			}
+		}
+	}
+
+	&.disabled {
+		cursor: default;
+		opacity: 0.5;
+	}
+
+	.button-overlay {
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: var(--background-color);
+		color: var(--color);
+	}
+
+	@media (hover: hover) {
+		&:hover:not(.inline, .disabled) {
+			background-color: var(--hover-background-color);
+			color: var(--white);
+			cursor: pointer;
+		}
+	}
+}
+
+.section-dark .button {
+	&.primary {
+		--background-color: var(--white);
+		--color: var(--primary-base);
+		--hover-background-color: var(--grey-inset-background);
+	}
+
+	&.secondary {
+		--background-color: var(--primary-background-solid);
+		border-color: var(--primary-borders);
+		--color: var(--white);
+		--hover-background-color: var(--primary-base);
+	}
+
+	&.transparent {
+		border-color: var(--primary-borders);
+		--hover-background-color: var(--primary-background-solid);
+		--color: var(--white);
+	}
+
+	&.inline {
+		--color: var(--white);
+	}
+
+	@media (hover: hover) {
+		&:hover:not(.inline, .disabled) {
+			--background-color: var(--hover-background-color);
+			cursor: pointer;
+		}
+	}
+}

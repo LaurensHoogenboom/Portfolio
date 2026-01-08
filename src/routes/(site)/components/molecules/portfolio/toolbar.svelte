@@ -19,6 +19,7 @@
 	const changePortfolioItemType = (i: number) => {
 		const state = getPortfolioState();
 		state.selectedPortfolioCategory = tabItems[i].type;
+		state.showAllPortfolioItems = false;
 		pushState(getPortfolioUrlWithParams(state), state);
 		
 		const portfolioTop = document.getElementById('portfolio')?.getBoundingClientRect().top ?? 0;

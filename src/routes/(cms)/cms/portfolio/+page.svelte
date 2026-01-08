@@ -33,8 +33,8 @@
 	$effect(() => {
         if (form?.succes && isFormActionType(form.action) && form.portfolioItemTitle) {
             notifyFormActionSuccess(form.action, form.portfolioItemTitle);
-
             createFormVisible = false;
+			editFormVisible = false;
             form = undefined;
         }
 	});

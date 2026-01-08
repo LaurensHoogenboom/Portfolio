@@ -28,6 +28,7 @@
             background-size: cover;
             background-position: center;
             border-radius: var(--border-radius-2);
+            min-height: 400px;
         }
 
         article {

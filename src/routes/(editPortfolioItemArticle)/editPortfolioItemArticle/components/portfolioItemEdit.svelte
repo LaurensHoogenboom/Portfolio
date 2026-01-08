@@ -1,49 +1,57 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import EditorJS from '@editorjs/editorjs';
+	import EditorJS, { type BlockToolConstructable, type EditorConfig, type ToolSettings } from '@editorjs/editorjs';
 	import Header from '@editorjs/header';
 	import Paragraph from '@editorjs/paragraph';
 	import Button from '@ikbenbas/editorjs-button';
 	import EditorjsColumns from '@calumk/editorjs-columns';
-    import Accordion from 'editorjs-collapsible-block';
+	import Accordion from 'editorjs-collapsible-block';
 	import type { IPortfolioItem } from '$lib/types/portfolio';
 
-    let { portfolioItem, editor = $bindable() } : { portfolioItem: IPortfolioItem, editor?: EditorJS } = $props();
+	let { portfolioItem, editor = $bindable() }: { portfolioItem: IPortfolioItem; editor?: EditorJS } = $props();
 
-    onMount(() => {
+	const sanitize = {
+		b: true,
+		i: true,
+		strong: true,
+		a: true
+	}
+
+	const editorTools = {
+		header: Header,
+		paragraph: {
+			class: Paragraph as BlockToolConstructable,
+			config: {
+				preserveBlank: true
+			},
+			sanitize: sanitize
+		},
+		button: {
+			class: Button,
+			config: {
+				classes: ['button']
+			}
+		},
+		accordion: {
+			class: Accordion,
+			sanitize: sanitize
+		}
+	};
+
+	const columns = {
+		columns: {
+			class: EditorjsColumns,
+			config: {
+				EditorJsLibrary: EditorJS,
+				tools: editorTools
+			}
+		}		
+	};
+
+	onMount(() => {
 		editor = new EditorJS({
 			holder: 'editor',
-			tools: {
-				header: Header,
-				paragraph: Paragraph,
-				button: {
-                    class: Button,
-                    config: {
-                        classes: ["button"]
-                    }
-                },
-                accordion: {
-                    class: Accordion,
-                    config: {
-                        defaultExpanded: false,
-                        overrrides: {
-                            classes: {
-                                title: 'accordion-title'
-                            }
-                        }
-                    }
-                },
-				columns: {
-					class: EditorjsColumns,
-					config: {
-						EditorJsLibrary: EditorJS,
-						tools: {
-							paragraph: Paragraph,
-							button: Button
-						}
-					}
-				}
-			},
+			tools: {...editorTools, ...columns},
 			defaultBlock: 'paragraph',
 			data: portfolioItem.articleContent ?? undefined
 		});
@@ -63,19 +71,19 @@
 			max-width: 850px;
 		}
 
-        :global(.accordion-wrapper) {
-            color: var(--grey-text);
-            background-color: var(--grey-inset-background);
-            border-radius: 15px 15px 0 0;
-        }
+		:global(.accordion-wrapper) {
+			color: var(--grey-text);
+			background-color: var(--grey-inset-background);
+			border-radius: 15px 15px 0 0;
+		}
 
-        :global(.ce-block:not([data-readonly]):has(.accordion-wrapper) + .ce-block:not([data-accordion-wrapper]) .ce-block__content) {
-            width: 100%;
-            background-color: var(--grey-inset-background-light);
-        }
+		:global(.ce-block:not([data-readonly]):has(.accordion-wrapper) + .ce-block:not([data-accordion-wrapper]) .ce-block__content) {
+			width: 100%;
+			background-color: var(--grey-inset-background-light);
+		}
 
-        :global([data-accordion-wrapper]:not([data-readonly])) {
-            margin-top: var(--spacing-4);
-        }
+		:global([data-accordion-wrapper]:not([data-readonly])) {
+			margin-top: var(--spacing-4);
+		}
 	}
 </style>

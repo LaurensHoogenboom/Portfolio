@@ -17,7 +17,7 @@
 
 	const save = () => {
 		if (!editor) return;
-
+		
         savingStatus = 'processing';
 
 		editor

@@ -104,8 +104,6 @@ export const actions: Actions = {
             const portfolioItemToDelete = await getPortfolioItemById(id);
 
             if (portfolioItemToDelete && portfolioItemToDelete.image) {
-                console.log(portfolioItemToDelete);
-
                 await checkAndRemove(portfolioItemToDelete.image.thumbnail.url);
                 await checkAndRemove(portfolioItemToDelete.image.url)
             }
@@ -132,8 +130,8 @@ const uploadImage = async (image: File | Buffer, title: string): Promise<Portfol
     const fullImage = await sharp(imageBuffer).webp().toBuffer();
     const thumbnail = await sharp(imageBuffer).webp().resize(500, undefined).toBuffer();
 
-    const fullImageName = `${title.replace(/\s/g,'')}.webp`;
-    const thumbnailImageName = `${title.replace(/\s/g,'')}-thumnail.webp`;
+    const fullImageName = `${title.replace(/[^a-zA-Z0-9]/g, "")}.webp`;
+    const thumbnailImageName = `${title.replace(/[^a-zA-Z0-9]/g, "")}-thumnail.webp`;
 
     const fullImageUrl = getWriteAndDevSafeUrl(fullImageName);
     const thumbnailImageUrl = getWriteAndDevSafeUrl(thumbnailImageName);
