@@ -12,11 +12,12 @@
 		style = 'primary',
 		href,
 		onclick,
-		CSSClass,
+		CSSClass = '',
 		id,
 		disabled,
 		actionStatus,
-		size = 'normal'
+		size = 'normal',
+		stretched
 	}: {
 		title?: string;
 		icon?: typeof IconType;
@@ -28,10 +29,11 @@
 		id?: string;
 		disabled?: boolean,
 		actionStatus?: ButtonActionStatus,
-		size?: 'normal' | 'small'
+		size?: 'normal' | 'small',
+		stretched?: boolean
 	} = $props();
 
-	const classString = `button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''} ${size}`;
+	const classString = `button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''} ${size} ${stretched ? 'stretched' : ''}`;
 	const iconSize = size == 'normal' ? 22 : 17;
 
 	const gotoOnClick = (e: MouseEvent) => {

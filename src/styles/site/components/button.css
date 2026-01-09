@@ -30,17 +30,6 @@
 		box-shadow: var(--primary-shadow);
 	}
 
-	&.round {
-		aspect-ratio: 1 / 1;
-		padding: 0;
-		justify-content: center;
-		border-radius: 100%;
-	}
-
-	&.small {
-		height: 30px;
-	}
-
 	&.primary {
 		--background-color: var(--primary-base);
 		--color: var(--white);
@@ -72,6 +61,22 @@
 	&.disabled {
 		cursor: default;
 		opacity: 0.5;
+	}
+
+	&.round {
+		aspect-ratio: 1 / 1;
+		padding: 0;
+		justify-content: center;
+		border-radius: 100%;
+	}
+
+	&.small {
+		height: 30px;
+	}
+
+	&.stretched {
+		width: 100%;
+		justify-content: center;
 	}
 
 	.button-overlay {

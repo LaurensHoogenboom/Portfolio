@@ -3,20 +3,24 @@
 	import Button from '$siteComponents/atoms/button.svelte';
 	import { type OutputBlockData } from '@editorjs/editorjs';
 	import Accordion from '../accordion.svelte';
+	import { Download } from '@lucide/svelte';
 
 	const { portfolioItem }: { portfolioItem: IPortfolioItem } = $props();
 
 	const blockIsAccordionChild = (index: number) => {
 		if (!portfolioItem.articleContent) return false;
-		const closestAccordion = portfolioItem.articleContent.blocks.slice(0, index).filter(b => b.type == 'accordion').pop();
+		const closestAccordion = portfolioItem.articleContent.blocks
+			.slice(0, index)
+			.filter((b) => b.type == 'accordion')
+			.pop();
 
 		if (!closestAccordion) return false;
-		const closestAccordionIndex = portfolioItem.articleContent.blocks.findIndex(b => b.id == closestAccordion.id);
+		const closestAccordionIndex = portfolioItem.articleContent.blocks.findIndex((b) => b.id == closestAccordion.id);
 
 		if (index > closestAccordionIndex && index <= closestAccordionIndex + closestAccordion.data.settings.blockCount) {
 			return true;
 		} else return false;
-	}
+	};
 </script>
 
 <div class="body">
@@ -48,41 +52,55 @@
 						{/each}
 					</Accordion>
 				{/if}
-			{/if}			
+			{/if}
 		{/each}
 	{/if}
 </div>
 
-{#snippet contentBlock(b:OutputBlockData<string, any>)}
+{#snippet contentBlock(b: OutputBlockData<string, any>)}
 	{#if b.type == 'header'}
 		<h2>{b.data.text}</h2>
 	{/if}
 
-    {#if b.type == 'paragraph'}
-        <p>{@html b.data.text}</p>
-    {/if}
+	{#if b.type == 'paragraph'}
+		<p>{@html b.data.text}</p>
+	{/if}
 
-    {#if b.type == 'button'}
-        <Button type="goto" href={b.data.url} title={b.data.label} />
-    {/if}
+	{#if b.type == 'button'}
+		{@const inlineSettings: string[] = b.data.label.split('@')}
+		{@const title: string = inlineSettings[0]}
+
+		<Button
+			type={b.data.target == '_blank' ? 'goto-external' : 'goto'}
+			href={b.data.url}
+			{title}
+			style={inlineSettings.includes('secondary') ? 'secondary' : undefined}
+			icon={inlineSettings.includes('download') ? Download : undefined}
+			stretched={b.data.stretched}
+		/>
+	{/if}
 {/snippet}
 
 <style>
-    .body {
-        margin-top: var(--spacing-6);
+	.body {
+		margin-top: var(--spacing-6);
 
-        h2 {
-            margin-top: var(--spacing-4);
-        }
+		h2 {
+			margin-top: var(--spacing-4);
+		}
 
 		p {
 			max-width: 850px;
 		}
-    }
+	}
 
 	.columns {
 		display: grid;
 		grid-auto-flow: column;
 		grid-gap: var(--spacing-5);
+	}
+
+	:global(.body > .button) {
+		margin-bottom: var(--spacing-4);
 	}
 </style>
