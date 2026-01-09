@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import PortfolioArticleHeader from '$siteComponents/molecules/portfolio/portfolioArticleHeader.svelte';
 	import PortfolioItemDetailWrapper from '$siteComponents/organisms/portfolio/portfolioItemDetailWrapper.svelte';
-	import PortfolioItemEdit from '../components/portfolioItemEdit.svelte';
+	import PortfolioItemEdit from './components/portfolioItemEdit.svelte';
 	import type { PageData } from './$types';
 	import type { ButtonActionStatus } from '$siteComponents/atoms/button.svelte';
 	import EditorJS, { type OutputData } from '@editorjs/editorjs';
