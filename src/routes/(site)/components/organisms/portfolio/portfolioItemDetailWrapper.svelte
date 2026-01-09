@@ -50,6 +50,7 @@
 		right: 0;
 		z-index: 10;
 		display: flex;
+
 		.content-wrapper {
 			position: relative;
 			padding: var(--spacing-7);
@@ -59,6 +60,7 @@
 			&:has(.overflow-container) {
 				padding-bottom: 0;
 				padding-top: 0;
+				padding-left: var(--spacing-6);
 			}
 
 			.overflow-container {
@@ -67,6 +69,7 @@
 				padding-bottom: var(--spacing-7);
 				padding-top: var(--spacing-7);
 				padding-right: var(--spacing-6);
+				padding-left: var(--spacing-6);
 			}
 
 			.toolbar {

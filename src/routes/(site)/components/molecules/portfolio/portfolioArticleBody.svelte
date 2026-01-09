@@ -2,6 +2,7 @@
 	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import Button from '$siteComponents/atoms/button.svelte';
 	import { type OutputBlockData } from '@editorjs/editorjs';
+	import Accordion from '../accordion.svelte';
 
 	const { portfolioItem }: { portfolioItem: IPortfolioItem } = $props();
 
@@ -41,13 +42,11 @@
 				{/if}
 
 				{#if b.type == 'accordion'}
-					<details>
-						<summary>{@html b.data.title}</summary>
-
+					<Accordion title={b.data.title} isOpenedByDefault={b.data.settings.defaultExpanded ?? false}>
 						{#each portfolioItem.articleContent.blocks.slice(i, i + b.data.settings.blockCount + 1) as c}
 							{@render contentBlock(c)}
 						{/each}
-					</details>
+					</Accordion>
 				{/if}
 			{/if}			
 		{/each}
@@ -75,6 +74,10 @@
         h2 {
             margin-top: var(--spacing-4);
         }
+
+		p {
+			max-width: 850px;
+		}
     }
 
 	.columns {

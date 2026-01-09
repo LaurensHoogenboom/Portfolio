@@ -15,7 +15,8 @@
 		CSSClass,
 		id,
 		disabled,
-		actionStatus
+		actionStatus,
+		size = 'normal'
 	}: {
 		title?: string;
 		icon?: typeof IconType;
@@ -26,10 +27,12 @@
 		CSSClass?: string;
 		id?: string;
 		disabled?: boolean,
-		actionStatus?: ButtonActionStatus
+		actionStatus?: ButtonActionStatus,
+		size?: 'normal' | 'small'
 	} = $props();
 
-	const classString = `button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''}`;
+	const classString = `button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''} ${size}`;
+	const iconSize = size == 'normal' ? 22 : 17;
 
 	const gotoOnClick = (e: MouseEvent) => {
 		if (type == 'goto-external') return;
@@ -62,7 +65,7 @@
 {#snippet buttonContent()}
 	{#if icon}
 		{@const ButtonIcon = icon}
-		<ButtonIcon size={22} />
+		<ButtonIcon size={iconSize} />
 	{/if}
 	{#if title}
 		<span>
@@ -73,15 +76,15 @@
 	{#if actionStatus}
 		{#if actionStatus == 'processing'}
 			<div class="button-overlay" transition:fly|global={{ y: 20 }}>
-				<Circle size={22} color="var(--primary-base)" />
+				<Circle size={iconSize} color="var(--primary-base)" />
 			</div>
 		{:else if actionStatus == 'success'}
 			<div class="button-overlay" transition:fly|global={{ y: 20 }}>
-				<Check />
+				<Check size={iconSize} />
 			</div>
 		{:else if actionStatus == 'fail'}
 			<div class="button-overlay" transition:fly|global={{ y: 20 }}>
-				<Triangle />
+				<Triangle size={iconSize} />
 			</div>
 		{/if}
 	{/if}
