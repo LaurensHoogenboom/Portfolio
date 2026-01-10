@@ -13,6 +13,21 @@
 	let { portfolioItem, editor = $bindable() }: { portfolioItem: IPortfolioItem; editor?: EditorJS } = $props();
 	let addedImages: Upload[] = $state([]);
 
+	const uploadImage = async (file: File) => {
+		const formData = new FormData();
+		formData.append('image', file);
+
+		const response = await fetch('/uploadImage', {
+			method: 'POST',
+			body: formData
+		});
+
+		const json = await response.json();
+		addedImages.push(json.upload as Upload);
+
+		return json;
+	}
+
 	const sanitize = {
 		b: true,
 		i: true,
@@ -43,20 +58,7 @@
 			class: ImageTool,
 			config: {
 				uploader: {
-					uploadByFile: async (file: File) => {
-						const formData = new FormData();
-						formData.append('image', file);
-
-						const response = await fetch('/uploadImage', {
-							method: 'POST',
-							body: formData
-						});
-
-						const json = await response.json();
-						addedImages.push(json.upload as Upload);
-
-						return json;
-					}
+					uploadByFile: uploadImage
 				}
 			}
 		}
