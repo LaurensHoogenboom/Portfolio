@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import type { RequestHandler } from './$types';
 import * as dotenv from "dotenv";
 import { error } from '@sveltejs/kit';

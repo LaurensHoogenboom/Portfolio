@@ -49,6 +49,7 @@
 		"@calumk/editorjs-columns": "^0.3.2",
 		"@editorjs/editorjs": "^2.31.0",
 		"@editorjs/header": "^2.8.8",
+		"@editorjs/image": "^2.10.3",
 		"@editorjs/paragraph": "^2.11.7",
 		"@ikbenbas/editorjs-button": "^1.0.0",
 		"@lucide/svelte": "^0.503.0",

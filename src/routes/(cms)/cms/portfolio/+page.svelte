@@ -25,7 +25,7 @@
 				title: portfolioItem.title,
 				description: portfolioItem.description,
 				type: portfolioItem.type,
-				image: portfolioItem.image
+				image: portfolioItem.upload?.image ?? null
 			};
 		}
 	};

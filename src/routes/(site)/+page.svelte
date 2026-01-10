@@ -14,17 +14,6 @@
 
 	let { data }: { data: PageData } = $props();
 
-	const portfolioItems: IPortfolioItem[] = data.portfolioItems.map((pItem, i) => {
-		return {
-			id: pItem.id,
-			title: pItem.title,
-			type: pItem.type,
-			description: pItem.description,
-			image: pItem.image,
-			articleContent: pItem.articleContent
-		}
-	});
-
 	onMount(async () => {
 		const [hash, query] = window.location.href.split('#')[1] ? window.location.href.split('#')[1].split('?') : [undefined, undefined];
 
@@ -49,13 +38,13 @@
 	});
 </script>
 
-<Header {portfolioItems} />
+<Header portfolioItems={data.portfolioItems} />
 
 <About />
 
 <VerticalSeperator zIndex={1} CSSClass="about-portfolio-seperator" />
 
-<Portfolio {portfolioItems} />
+<Portfolio portfolioItems={data.portfolioItems} />
 
 {#if page.state.activePortfolioItem}
 	<PortfolioItemDetail portfolioItem={page.state.activePortfolioItem}/>

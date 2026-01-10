@@ -6,6 +6,7 @@
 	import Button from '@ikbenbas/editorjs-button';
 	import EditorjsColumns from '@calumk/editorjs-columns';
 	import Accordion from 'editorjs-collapsible-block';
+	import ImageTool from '@editorjs/image';
 	import type { IPortfolioItem } from '$lib/types/portfolio';
 
 	let { portfolioItem, editor = $bindable() }: { portfolioItem: IPortfolioItem; editor?: EditorJS } = $props();
@@ -17,7 +18,7 @@
 		a: true
 	}
 
-	const editorTools = {
+	const contentTools = {
 		header: Header,
 		paragraph: {
 			class: Paragraph as BlockToolConstructable,
@@ -35,15 +36,18 @@
 		accordion: {
 			class: Accordion,
 			sanitize: sanitize
+		},
+		image: {
+			class: ImageTool
 		}
 	};
 
-	const columns = {
+	const layoutTools = {
 		columns: {
 			class: EditorjsColumns,
 			config: {
 				EditorJsLibrary: EditorJS,
-				tools: editorTools
+				tools: contentTools
 			}
 		}		
 	};
@@ -51,7 +55,7 @@
 	onMount(() => {
 		editor = new EditorJS({
 			holder: 'editor',
-			tools: {...editorTools, ...columns},
+			tools: {...contentTools, ...layoutTools},
 			defaultBlock: 'paragraph',
 			data: portfolioItem.articleContent ?? undefined
 		});
