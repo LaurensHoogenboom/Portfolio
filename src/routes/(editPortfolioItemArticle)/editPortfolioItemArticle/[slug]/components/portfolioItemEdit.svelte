@@ -8,8 +8,10 @@
 	import Accordion from 'editorjs-collapsible-block';
 	import ImageTool from '@editorjs/image';
 	import type { IPortfolioItem } from '$lib/types/portfolio';
+	import type { Upload } from '$lib/types/uploads';
 
 	let { portfolioItem, editor = $bindable() }: { portfolioItem: IPortfolioItem; editor?: EditorJS } = $props();
+	let addedImages: Upload[] = $state([]);
 
 	const sanitize = {
 		b: true,
@@ -38,7 +40,25 @@
 			sanitize: sanitize
 		},
 		image: {
-			class: ImageTool
+			class: ImageTool,
+			config: {
+				uploader: {
+					uploadByFile: async (file: File) => {
+						const formData = new FormData();
+						formData.append('image', file);
+
+						const response = await fetch('/uploadImage', {
+							method: 'POST',
+							body: formData
+						});
+
+						const json = await response.json();
+						addedImages.push(json.upload as Upload);
+
+						return json;
+					}
+				}
+			}
 		}
 	};
 
