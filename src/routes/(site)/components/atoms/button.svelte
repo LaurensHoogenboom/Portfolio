@@ -3,7 +3,7 @@
 	import { Circle } from 'svelte-loading-spinners';
 	import { fly } from 'svelte/transition';
 
-	export type ButtonActionStatus = 'processing' | 'success' | 'fail'
+	export type ButtonActionStatus = 'processing' | 'success' | 'fail';
 
 	const {
 		title,
@@ -17,7 +17,8 @@
 		disabled,
 		actionStatus,
 		size = 'normal',
-		stretched
+		stretched,
+		scrollContainer
 	}: {
 		title?: string;
 		icon?: typeof IconType;
@@ -27,10 +28,11 @@
 		onclick?: () => void;
 		CSSClass?: string;
 		id?: string;
-		disabled?: boolean,
-		actionStatus?: ButtonActionStatus,
-		size?: 'normal' | 'small',
-		stretched?: boolean
+		disabled?: boolean;
+		actionStatus?: ButtonActionStatus;
+		size?: 'normal' | 'small';
+		stretched?: boolean;
+		scrollContainer?: HTMLElement;
 	} = $props();
 
 	const classString = `button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''} ${size} ${stretched ? 'stretched' : ''}`;
@@ -41,25 +43,27 @@
 
 		if (href?.startsWith('#')) {
 			const hash = href.split('#')[1];
-
 			if (!hash) return;
 
 			e.preventDefault();
-			const portfolioTop = document.getElementById(hash)?.getBoundingClientRect().top ?? 0;
-			const scrollTop = document.documentElement.scrollTop + portfolioTop - 10;
-			window.scrollTo({ top: scrollTop, left: 0, behavior: 'smooth' });
+
+			const boundContainer = scrollContainer ? scrollContainer : window;
+			const targetTop = document.getElementById(hash)?.getBoundingClientRect().top ?? 0;
+			const scrollContainerTop = scrollContainer ? scrollContainer.scrollTop : document.documentElement.scrollTop;
+			const scrollTop = scrollContainerTop + targetTop - 10;
+			boundContainer.scrollTo({ top: scrollTop, left: 0, behavior: 'smooth' });
 		}
-	}
+	};
 </script>
 
 {#if type == 'submit'}
-	<button {onclick} class={classString} id={id}>
+	<button {onclick} class={classString} {id}>
 		{@render buttonContent()}
 	</button>
 {/if}
 
 {#if type == 'goto' || type == 'goto-external'}
-	<a {href} class={classString} target={type == 'goto-external' ? '_blank' : '_self'} id={id} onclick={gotoOnClick}>
+	<a {href} class={classString} target={type == 'goto-external' ? '_blank' : '_self'} {id} onclick={gotoOnClick}>
 		{@render buttonContent()}
 	</a>
 {/if}

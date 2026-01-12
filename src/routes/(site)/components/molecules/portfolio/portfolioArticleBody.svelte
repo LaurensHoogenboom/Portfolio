@@ -85,7 +85,7 @@
 
 {#snippet contentBlock(b: OutputBlockData<string, any>)}
 	{#if b.type == 'header'}
-		<h2>{b.data.text}</h2>
+		<h2 id={b.id}>{b.data.text}</h2>
 	{/if}
 
 	{#if b.type == 'paragraph'}
