@@ -2,7 +2,7 @@
 	import Tabbar, { type ITabItem } from '$siteComponents/atoms/tabbar.svelte';
 	import { pushState } from '$app/navigation';
 	import type { PortfolioItemType } from '$lib/types/portfolio';
-	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../shared/portfolioUtils';
+	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../utils/portfolioUtils';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 

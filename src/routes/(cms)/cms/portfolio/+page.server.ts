@@ -4,7 +4,8 @@ import type { PortfolioItemType } from '$lib/types/portfolio';
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import type { Upload } from '$lib/types/uploads';
-import { deleteImageUpload, uploadImage } from '$lib/utils/uploads/uploadImage';
+import { uploadImage } from '$lib/utils/uploads/image/uploadImage';
+import { deleteFileAndUpload } from '$lib/utils/uploads/delete';
 
 export const load = (async () => {
     const portfolioItems = await getPortfolioItems();
@@ -63,7 +64,7 @@ export const actions: Actions = {
             const portfolioItem = await getPortfolioItemById(id);
 
             if (portfolioItem && portfolioItem.upload) {
-                await deleteImageUpload(portfolioItem.upload);
+                await deleteFileAndUpload(portfolioItem.upload);
             };
 
             imageUpload = await uploadImage(imageFile, title);
@@ -97,7 +98,7 @@ export const actions: Actions = {
             const portfolioItem = await getPortfolioItemById(id);
 
             if (portfolioItem && portfolioItem.upload) {
-                await deleteImageUpload(portfolioItem.upload);
+                await deleteFileAndUpload(portfolioItem.upload);
             };
 
             await deletePortfolioItem(id);

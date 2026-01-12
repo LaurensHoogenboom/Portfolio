@@ -7,7 +7,7 @@ const uploads = sqliteTable("uploads", {
         .primaryKey()
         .notNull()
         .$defaultFn(() => generateId()),
-    title: text("title", { length: 120 }).notNull(),
+    title: text("title", { length: 120 }).notNull().unique(),
     description: text("description"),
     fileType: text("uploadFileType").$type<UploadFileType>().notNull(),
     document: text("document", { mode: "json" }).$type<IUploadedDocument>(),

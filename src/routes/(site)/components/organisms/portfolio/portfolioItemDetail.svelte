@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { IPortfolioItem } from "$lib/types/portfolio";
 	import Button from "$siteComponents/atoms/button.svelte";
-	import { getPortfolioState, getPortfolioUrlWithParams } from "../../../shared/portfolioUtils";
+	import { getPortfolioState, getPortfolioUrlWithParams } from "../../../utils/portfolioUtils";
 	import { pushState } from "$app/navigation";
 	import PortfolioItemDetailWrapper from "./portfolioItemDetailWrapper.svelte";
 	import PortfolioArticleHeader from "$siteComponents/molecules/portfolio/portfolioArticleHeader.svelte";

@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `uploads_title_unique` ON `uploads` (`title`);

@@ -8,15 +8,16 @@
 		closeCallback,
 		children,
 		saveCallback,
-		savingStatus,
 		hasOverflow = false,
+		savingStatus,
+		closingStatus
 	}: {
 		closeCallback: () => void;
 		children: Snippet;
 		saveCallback?: () => void;
 		hasOverflow?: boolean;
-		saving?: boolean;
-		savingStatus?: ButtonActionStatus
+		savingStatus?: ButtonActionStatus,
+		closingStatus?: ButtonActionStatus
 	} = $props();
 </script>
 
@@ -31,7 +32,7 @@
 		{/if}
 
 		<div class="toolbar">
-			<Button type="submit" style="secondary" icon={X} onclick={closeCallback} />
+			<Button type="submit" style="secondary" icon={X} onclick={closeCallback} actionStatus={closingStatus} />
 
 			{#if saveCallback}
 				<Button type="submit" style="secondary" icon={Save} onclick={saveCallback} actionStatus={savingStatus} />

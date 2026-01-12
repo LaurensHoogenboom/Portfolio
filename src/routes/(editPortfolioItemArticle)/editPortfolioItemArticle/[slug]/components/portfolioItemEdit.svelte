@@ -1,17 +1,20 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import EditorJS, { type BlockToolConstructable, type EditorConfig, type ToolSettings } from '@editorjs/editorjs';
+	import EditorJS, { type BlockToolConstructable } from '@editorjs/editorjs';
 	import Header from '@editorjs/header';
 	import Paragraph from '@editorjs/paragraph';
 	import Button from '@ikbenbas/editorjs-button';
 	import EditorjsColumns from '@calumk/editorjs-columns';
 	import Accordion from 'editorjs-collapsible-block';
-	import ImageTool from '@editorjs/image';
 	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import type { Upload } from '$lib/types/uploads';
+	import { CustomImage } from './customImageTool';
 
-	let { portfolioItem, editor = $bindable() }: { portfolioItem: IPortfolioItem; editor?: EditorJS } = $props();
-	let addedImages: Upload[] = $state([]);
+	let {
+		portfolioItem,
+		editor = $bindable(),
+		unSavedUploadedImages = $bindable()
+	}: { portfolioItem: IPortfolioItem; editor?: EditorJS; unSavedUploadedImages: Upload[] } = $props();
 
 	const uploadImage = async (file: File) => {
 		const formData = new FormData();
@@ -23,17 +26,20 @@
 		});
 
 		const json = await response.json();
-		addedImages.push(json.upload as Upload);
+
+		if (json.upload) {
+			unSavedUploadedImages.push(json.upload as Upload);
+		} 
 
 		return json;
-	}
+	};
 
 	const sanitize = {
 		b: true,
 		i: true,
 		strong: true,
 		a: true
-	}
+	};
 
 	const contentTools = {
 		header: Header,
@@ -55,7 +61,7 @@
 			sanitize: sanitize
 		},
 		image: {
-			class: ImageTool,
+			class: CustomImage as any,
 			config: {
 				uploader: {
 					uploadByFile: uploadImage
@@ -71,13 +77,13 @@
 				EditorJsLibrary: EditorJS,
 				tools: contentTools
 			}
-		}		
+		}
 	};
 
 	onMount(() => {
 		editor = new EditorJS({
 			holder: 'editor',
-			tools: {...contentTools, ...layoutTools},
+			tools: { ...contentTools, ...layoutTools },
 			defaultBlock: 'paragraph',
 			data: portfolioItem.articleContent ?? undefined
 		});

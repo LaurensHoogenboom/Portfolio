@@ -95,7 +95,7 @@
 	@media (hover: hover) {
 		&:hover:not(.inline, .disabled) {
 			background-color: var(--hover-background-color);
-			color: var(--white);
+			--color: var(--white);
 			cursor: pointer;
 		}
 	}
@@ -129,6 +129,10 @@
 		&:hover:not(.inline, .disabled) {
 			--background-color: var(--hover-background-color);
 			cursor: pointer;
+
+			&.primary {
+				--color: var(--primary-base);
+			}
 		}
 	}
 }

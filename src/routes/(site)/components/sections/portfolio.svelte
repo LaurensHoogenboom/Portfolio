@@ -7,7 +7,7 @@
 	import Button from '$siteComponents/atoms/button.svelte';
 	import { pushState } from '$app/navigation';
 	import type { IPortfolioItem } from '$lib/types/portfolio';
-	import { getPortfolioState, getPortfolioUrlWithParams } from '../../shared/portfolioUtils';
+	import { getPortfolioState, getPortfolioUrlWithParams } from '../../utils/portfolioUtils';
 	import Title from '$siteComponents/atoms/portfolio/title.svelte';
 
 	let { portfolioItems }: { portfolioItems: IPortfolioItem[] } = $props();

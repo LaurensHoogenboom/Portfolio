@@ -1,8 +1,8 @@
 import type { OutputData } from '@editorjs/editorjs';
-import type { RequestHandler } from './$types';
 import { updatePortfolioItem } from '$lib/server/db/cruds/portfolioItems';
 import { error } from 'node:console';
 import { json } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ request, params }) => {
     const portfolioItemId = params.slug;

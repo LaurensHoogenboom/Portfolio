@@ -6,24 +6,37 @@
 	import type { PageData } from './$types';
 	import type { ButtonActionStatus } from '$siteComponents/atoms/button.svelte';
 	import EditorJS, { type OutputData } from '@editorjs/editorjs';
+	import type { Upload } from '$lib/types/uploads';
 
 	let { data }: { data: PageData } = $props();
 	let savingStatus: ButtonActionStatus | undefined = $state();
+	let closingStatus: ButtonActionStatus | undefined = $state();
 	let editor: EditorJS | undefined = $state();
+	let unSavedUploadedImages: Upload[] = $state([]);
 
-	const close = () => {
+	const close = async () => {
+		closingStatus = 'processing';
+
+		if (unSavedUploadedImages.length) {
+			for (const upload of unSavedUploadedImages) {
+				await fetch(`/deleteUpload/${upload.title}`, {
+					method: 'POST'
+				});
+			}
+		}
+
 		goto('/cms/portfolio');
 	};
 
 	const save = () => {
 		if (!editor) return;
-		
-        savingStatus = 'processing';
+
+		savingStatus = 'processing';
 
 		editor
 			.save()
 			.then(async (articleContent: OutputData) => {
-				await fetch(`/editPortfolioItemArticle/${data.portfolioItem.id}`, {
+				await fetch(`/updatePortfolioItemArticle/${data.portfolioItem.id}`, {
 					method: 'POST',
 					body: JSON.stringify({ articleContent: articleContent }),
 					headers: {
@@ -31,26 +44,25 @@
 					}
 				});
 
+				unSavedUploadedImages = [];
 				savingStatus = 'success';
 			})
 			.catch((error) => {
-                savingStatus = 'fail';
+				savingStatus = 'fail';
 				console.log(error);
 			});
 	};
 
-    $effect(() => {
-        if (savingStatus == 'fail' || savingStatus == 'success') {
-            setTimeout(() => {
-                savingStatus = undefined;
-            }, 2000);
-        }
-    });
+	$effect(() => {
+		if (savingStatus == 'fail' || savingStatus == 'success') {
+			setTimeout(() => {
+				savingStatus = undefined;
+			}, 2000);
+		}
+	});
 </script>
 
-<PortfolioItemDetailWrapper closeCallback={close} saveCallback={save} {savingStatus} hasOverflow={true}>
+<PortfolioItemDetailWrapper closeCallback={close} saveCallback={save} {savingStatus} {closingStatus} hasOverflow={true}>
 	<PortfolioArticleHeader portfolioItem={data.portfolioItem} />
-	<PortfolioItemEdit portfolioItem={data.portfolioItem} bind:editor={editor} />
+	<PortfolioItemEdit portfolioItem={data.portfolioItem} bind:editor bind:unSavedUploadedImages />
 </PortfolioItemDetailWrapper>
-
-

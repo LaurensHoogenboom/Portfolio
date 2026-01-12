@@ -92,6 +92,13 @@
       "when": 1768059677185,
       "tag": "0012_panoramic_nick_fury",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "6",
+      "when": 1768209198469,
+      "tag": "0013_military_proudstar",
+      "breakpoints": true
     }
   ]
 }

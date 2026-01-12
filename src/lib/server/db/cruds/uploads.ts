@@ -11,6 +11,10 @@ const getUploadsByFileType = async (fileType: UploadFileType) => {
     return await db.select().from(uploads).where(eq(uploads.fileType, fileType));
 }
 
+const getUploadByTitle = async (title: string) => {
+    return await db.select().from(uploads).where(eq(uploads.title, title)).get();
+}
+
 const getUploadById = async (id: string) => {
     return await db.select().from(uploads).where(eq(uploads.id, id)).get();
 }
@@ -31,4 +35,4 @@ const deleteUpload = async (id: string) => {
     await db.delete(uploads).where(eq(uploads.id, id));
 }
 
-export { getUploads, getUploadsByFileType, getUploadById, createUpload, updateUpload, deleteUpload };
+export { getUploads, getUploadsByFileType, getUploadById, getUploadByTitle, createUpload, updateUpload, deleteUpload };

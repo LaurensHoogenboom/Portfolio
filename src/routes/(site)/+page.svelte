@@ -8,7 +8,7 @@
 	import Portfolio from '$siteComponents/sections/portfolio.svelte';
 	import { replaceState } from '$app/navigation';
 	import VerticalSeperator from '$siteComponents/atoms/verticalSeperator.svelte';
-	import { getPortfolioSearchParams, getPortfolioUrlWithParams } from './shared/portfolioUtils';
+	import { getPortfolioSearchParams, getPortfolioUrlWithParams } from './utils/portfolioUtils';
 	import PortfolioItemDetail from '$siteComponents/organisms/portfolio/portfolioItemDetail.svelte';
 	import { page } from '$app/state';
 
