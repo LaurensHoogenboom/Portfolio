@@ -1,8 +1,6 @@
 <script lang="ts">
 	import Button from '$siteComponents/atoms/button.svelte';
 	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
-	import { slide } from 'svelte/transition';
-
 	const { slides }: { slides: ISlide[] } = $props();
 
 	export interface ISlide {
@@ -42,13 +40,19 @@
 		{#each slides as s}
 			<li class="slide image-wrapper" id={s.id}>
 				<img src={s.imgUrl} alt={s.caption} />
-				<p>{s.caption}</p>
 			</li>
 		{/each}
 	</ul>
-	<div class="controls">
+	<div class="bottom">
         {#key currentIndex}
             <Button type="submit" icon={ChevronLeft} style="secondary" onclick={previous} disabled={currentIndex == 0} />
+        {/key}
+
+        <div>
+            <p>{@html slides[currentIndex].caption}</p>
+        </div>
+
+        {#key currentIndex}
 		    <Button type="submit" icon={ChevronRight} style="secondary" onclick={next} disabled={currentIndex == slides.length - 1} />
         {/key}
 	</div>
@@ -74,8 +78,23 @@
 			}
 		}
 
-		.controls {
+		.bottom {
+            display: grid;
+            grid-template-columns: max-content 1fr max-content;
 			justify-self: center;
+            align-items: center;
+            grid-column-gap: var(--spacing-6);
+            margin-top: var(--spacing-6);
+            width: min(100%, 768px);
+
+            p {
+                padding-bottom: 0;
+                text-align: center;
+            }
+
+            :global(button) {
+                margin-right: 0;
+            }
 		}
 
 		.image-wrapper {
@@ -90,7 +109,7 @@
 			}
 
 			img {
-				max-height: 60dvh;
+				max-height: 70dvh;
 				min-height: 200px;
 				max-width: 100%;
 				object-fit: cover;
