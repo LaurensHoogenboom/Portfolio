@@ -15,12 +15,14 @@
     let { form }: { form: ActionData } = $props();
 
     let urlParameters: URLSearchParams | undefined = $state();
-    let username: string = $state('');
+    let username: string | undefined = $state();
+    let redirectUrl: string | undefined = $state();
     let authenticating: boolean = $state(false);
 
     onMount(() => {
         urlParameters = new URLSearchParams(window.location.search);
-        username = urlParameters.get('username') ?? '';
+        username = urlParameters.get('username') ?? undefined;
+        redirectUrl = urlParameters.get('redirectUrl') ?? undefined;
     });
 </script>
 
@@ -33,7 +35,7 @@
         authenticating = false;
 
         if (form?.success) {
-            goto("/cms/");
+            goto(redirectUrl ?? '/cms');
             dispatchSuccesNotification(`Welcome back, ${username}!`, 'Logged In.');
         }
     }
