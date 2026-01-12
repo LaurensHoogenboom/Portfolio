@@ -4,6 +4,7 @@
 	import { type OutputBlockData } from '@editorjs/editorjs';
 	import Accordion from '../accordion.svelte';
 	import { Download } from '@lucide/svelte';
+	import Slider, { type ISlide } from '../slider.svelte';
 
 	const { portfolioItem }: { portfolioItem: IPortfolioItem } = $props();
 
@@ -21,6 +22,31 @@
 			return true;
 		} else return false;
 	};
+
+	const getSlides = (sliderName: string): ISlide[] => {
+		if (!portfolioItem.articleContent) return [];
+
+		let slides: ISlide[] = [];
+
+		portfolioItem.articleContent.blocks.forEach(b => {
+			if (b.type == 'image') {
+				const inlineSettings = b.data.caption.split('@');
+				const url = b.data.file.url;
+				const caption = inlineSettings[0];
+				const sName = inlineSettings[1];
+
+				if (sName == sliderName && url && caption && b.id) {
+					slides.push({
+						id: b.id,
+						imgUrl: url,
+						caption: caption
+					});
+				}
+			}
+		});
+
+		return slides;
+	}
 </script>
 
 <div class="body">
@@ -81,10 +107,23 @@
 	{/if}
 
 	{#if b.type == 'image'}
-		<div class="image-wrapper">
-			<img src={b.data.file.url} alt={b.data.caption}/>
-			<p>{@html b.data.caption}</p>
-		</div>
+		{@const inlineSettings: string[] = b.data.caption.split('@')}
+		{@const title: string = inlineSettings[0]}
+		{@const isSlider = inlineSettings[1].startsWith('slider')}
+		{@const isFirstSlide = isSlider && inlineSettings[2] == '1'}
+
+		{console.log(b)}
+
+		{#if isSlider && isFirstSlide}
+			<Slider slides={getSlides(inlineSettings[1])} />
+		{/if}
+
+		{#if !isSlider}
+			<div class="image-wrapper">
+				<img src={b.data.file.url} alt={title}/>
+				<p>{@html title}</p>
+			</div>
+		{/if}		
 	{/if}
 {/snippet}
 
