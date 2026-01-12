@@ -97,6 +97,10 @@
 			background-color: var(--hover-background-color);
 			--color: var(--white);
 			cursor: pointer;
+
+			.button-overlay {
+				color: var(--primary-base);
+			}
 		}
 	}
 }
