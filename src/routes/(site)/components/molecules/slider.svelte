@@ -104,10 +104,6 @@
 			grid-row-gap: var(--spacing-3);
 			margin-top: var(--spacing-4);
 
-			p {
-				font-style: italic;
-			}
-
 			img {
 				max-height: 70dvh;
 				min-height: 200px;
