@@ -79,6 +79,13 @@
 			stretched={b.data.stretched}
 		/>
 	{/if}
+
+	{#if b.type == 'image'}
+		<div class="image-wrapper">
+			<img src={b.data.file.url} alt={b.data.caption}/>
+			<p>{@html b.data.caption}</p>
+		</div>
+	{/if}
 {/snippet}
 
 <style>
@@ -91,6 +98,27 @@
 
 		p {
 			max-width: 850px;
+		}
+
+		.image-wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			grid-row-gap: var(--spacing-3);
+			margin-top: var(--spacing-4);
+
+			p {
+				font-style: italic;
+			}
+
+			img {
+				max-height: 60dvh;
+				min-height: 200px;
+				max-width: 100%;
+				object-fit: cover;
+				border-radius: var(--border-radius-2);
+				filter: drop-shadow(var(--grey-shadow-1));
+			}
 		}
 	}
 

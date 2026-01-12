@@ -17,20 +17,22 @@ const checkIfUrlStartsWith = (string: string, options: string[]) => {
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
-    const userId = event.cookies.get('userId');
-    const user = userId ? await getUserById(userId) : undefined;
-
     const isProtectedPage = checkIfUrlStartsWith(event.url.pathname, protectedPageRoutes);
     const isProtectedApi = checkIfUrlStartsWith(event.url.pathname, protectedApiRoutes);
 
-    event.locals.username = user ? user.username : '';
+    if (isProtectedPage || isProtectedApi) {
+        const userId = event.cookies.get('userId');
+        const user = userId ? await getUserById(userId) : undefined;
 
-    if (isProtectedPage && !user) {
-        throw redirect(303, `/login?redirectUrl=${event.url.pathname}`);
-    }
+        event.locals.username = user ? user.username : '';
 
-    if (isProtectedApi && !user) {
-        throw error(401, 'Unauthorized Request');
+        if (isProtectedPage && !user) {
+            throw redirect(303, `/login?redirectUrl=${event.url.pathname}`);
+        }
+
+        if (isProtectedApi && !user) {
+            throw error(401, 'Unauthorized Request');
+        }
     }
 
     const response = await resolve(event);

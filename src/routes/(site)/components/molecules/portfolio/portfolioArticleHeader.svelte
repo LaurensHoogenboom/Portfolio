@@ -29,6 +29,7 @@
             background-position: center;
             border-radius: var(--border-radius-2);
             min-height: 400px;
+            filter: drop-shadow(var(--grey-shadow-1));
         }
 
         article {

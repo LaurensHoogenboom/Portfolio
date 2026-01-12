@@ -9,7 +9,7 @@ const uploadImage = async (image: File | Buffer, title: string): Promise<Upload>
     const imageBuffer = image instanceof File ? await image.arrayBuffer() : image;
     const metaData = await sharp(imageBuffer).metadata();
 
-    const fullImage = await sharp(imageBuffer).webp().toBuffer();
+    const fullImage = await sharp(imageBuffer).webp().resize(1920, undefined).toBuffer();
     const thumbnail = await sharp(imageBuffer).webp().resize(500, undefined).toBuffer();
 
     const fullImageName = `${title.replace(/[^a-zA-Z0-9]/g, "")}.webp`;

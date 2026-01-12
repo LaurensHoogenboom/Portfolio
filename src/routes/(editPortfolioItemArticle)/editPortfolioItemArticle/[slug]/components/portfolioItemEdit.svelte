@@ -29,7 +29,7 @@
 
 		if (json.upload) {
 			unSavedUploadedImages.push(json.upload as Upload);
-		} 
+		}
 
 		return json;
 	};
@@ -116,6 +116,17 @@
 
 		:global([data-accordion-wrapper]:not([data-readonly])) {
 			margin-top: var(--spacing-4);
+		}
+
+		:global(img) {
+			max-height: 80dvh;
+			min-height: 200px;
+			max-width: 100%;
+			object-fit: cover;
+			border-radius: var(--border-radius-2);
+			filter: drop-shadow(var(--grey-shadow-1));
+			margin: 0 auto;
+			margin-bottom: var(--spacing-4);
 		}
 	}
 </style>

@@ -12,7 +12,7 @@
     const closePortfolioItem = () => {
         const state = getPortfolioState();
         state.activePortfolioItem = undefined;
-        state.activePortfolioItemId = undefined;
+        state.activePortfolioItemId = '';
         pushState(getPortfolioUrlWithParams(state), state);
     }
     
