@@ -3,6 +3,9 @@
 	import Button, { type ButtonActionStatus } from '$siteComponents/atoms/button.svelte';
 	import { slide } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
+	import ScrollToTopButton from '$siteComponents/atoms/scrollToTopButton.svelte';
+
+	let overflowContainer: HTMLElement | undefined = $state();
 
 	const {
 		closeCallback,
@@ -24,8 +27,12 @@
 <div class="portfolio-item-detail" transition:slide>
 	<div class="content-wrapper">
 		{#if hasOverflow}
-			<div class="overflow-container">
+			<div class="overflow-container" bind:this={overflowContainer}>
 				{@render children()}
+
+				{#key overflowContainer}
+					<ScrollToTopButton scrollContainer={overflowContainer} />
+				{/key}
 			</div>
 		{:else}
 			{@render children()}

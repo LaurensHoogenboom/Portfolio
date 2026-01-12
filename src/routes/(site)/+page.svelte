@@ -11,6 +11,7 @@
 	import { getPortfolioSearchParams, getPortfolioUrlWithParams } from './utils/portfolioUtils';
 	import PortfolioItemDetail from '$siteComponents/organisms/portfolio/portfolioItemDetail.svelte';
 	import { page } from '$app/state';
+	import ScrollToTopButton from '$siteComponents/atoms/scrollToTopButton.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -51,6 +52,8 @@
 {/if}
 
 <Contact />
+
+<ScrollToTopButton />
 
 <style>
 	:global(.about-portfolio-seperator) {
