@@ -74,6 +74,12 @@
 					padding: 0 var(--spacing-4);
 					color: var(--primary-base);
 					transition: padding var(--default-animation-duration);
+
+					@media (hover:hover) {
+						&:hover {
+							background-color: var(--grey-inset-background-light);
+						}
+					}
 				}
 
 				:global(&.selected) button {

@@ -1,20 +1,15 @@
 import { createPortfolioItem, deletePortfolioItem, getPortfolioItemById, getPortfolioItems, updatePortfolioItem } from '$lib/server/db/cruds/portfolioItems';
 import type { portfolioItems } from '$lib/server/db/schema/portfolioItems';
-import type { PortfolioItemImage, PortfolioItemType } from '$lib/types/portfolio';
+import type { PortfolioItemType } from '$lib/types/portfolio';
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { writeFile } from 'fs/promises';
-import path from 'path';
-import fs from 'fs';
-import sharp from 'sharp';
-import { getUploadsFolder } from '$lib/server/db/utils/getUploadsFolder';
+import type { Upload } from '$lib/types/uploads';
+import { uploadImage } from '$lib/utils/uploads/image/uploadImage';
+import { deleteFileAndUpload } from '$lib/utils/uploads/delete';
 
 export const load = (async () => {
     const portfolioItems = await getPortfolioItems();
-
-    return {
-        portfolioItems: portfolioItems
-    }
+    return { portfolioItems: portfolioItems };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
@@ -28,13 +23,13 @@ export const actions: Actions = {
         };
 
         const imageFile = formData.get('image') as File;
-        const imageObject = await uploadImage(imageFile, title);
+        const image: Upload = await uploadImage(imageFile, title);
 
         const portfolioItem: typeof portfolioItems.$inferInsert = {
             title: title,
             description: description,
             type: type as PortfolioItemType,
-            image: imageObject
+            imageUploadId: image.id
         }
 
         try {
@@ -42,8 +37,8 @@ export const actions: Actions = {
 
             return {
                 succes: true,
-                portfolioItemId: newPortfolioItem.id,
-                portfolioItemTitle: newPortfolioItem.title,
+                portfolioItemId: newPortfolioItem?.id,
+                portfolioItemTitle: newPortfolioItem?.title,
                 action: 'create'
             }
         } catch (e) {
@@ -62,32 +57,31 @@ export const actions: Actions = {
             type: string
         };
 
-        let imageObject = undefined;
+        let imageUpload: Upload | undefined = undefined;
         const imageFile = formData.get('image') as File;
-        
+
         if (imageFile.name && imageFile.size) {
-            const portfolioItemToUpdate = await getPortfolioItemById(id);
+            const portfolioItem = await getPortfolioItemById(id);
 
-            if (portfolioItemToUpdate?.image) {
-                await checkAndRemove(portfolioItemToUpdate.image.url);
-                await checkAndRemove(portfolioItemToUpdate.image.thumbnail.url);
-            }
+            if (portfolioItem && portfolioItem.upload) {
+                await deleteFileAndUpload(portfolioItem.upload);
+            };
 
-            imageObject = await uploadImage(imageFile, title);
+            imageUpload = await uploadImage(imageFile, title);
         };
-        
+
         try {
             const updatedPortfolioItem = await updatePortfolioItem(id, {
                 title: title,
                 description: description,
                 type: type as PortfolioItemType,
-                image: imageObject
+                imageUploadId: imageUpload ? imageUpload.id : undefined
             });
 
             return {
                 succes: true,
-                portfolioItemId: updatedPortfolioItem.id,
-                portfolioItemTitle: updatedPortfolioItem.title,
+                portfolioItemId: updatedPortfolioItem?.id,
+                portfolioItemTitle: updatedPortfolioItem?.title,
                 action: 'update'
             }
         } catch (e) {
@@ -101,20 +95,17 @@ export const actions: Actions = {
         const id = data.get('id') as string;
 
         try {
-            const portfolioItemToDelete = await getPortfolioItemById(id);
+            const portfolioItem = await getPortfolioItemById(id);
 
-            if (portfolioItemToDelete && portfolioItemToDelete.image) {
-                console.log(portfolioItemToDelete);
-
-                await checkAndRemove(portfolioItemToDelete.image.thumbnail.url);
-                await checkAndRemove(portfolioItemToDelete.image.url)
-            }
+            if (portfolioItem && portfolioItem.upload) {
+                await deleteFileAndUpload(portfolioItem.upload);
+            };
 
             await deletePortfolioItem(id);
 
             return {
                 succes: true,
-                portfolioItemTitle: portfolioItemToDelete?.title,
+                portfolioItemTitle: portfolioItem?.title,
                 action: 'delete'
             }
         } catch (e) {
@@ -122,53 +113,5 @@ export const actions: Actions = {
             console.log(error);
             return fail(422, { error: error.message });
         }
-    }
-}
-
-const uploadImage = async (image: File | Buffer, title: string): Promise<PortfolioItemImage> => {
-    const imageBuffer = image instanceof File ? await image.arrayBuffer() : image;
-    const metaData = await sharp(imageBuffer).metadata();
-
-    const fullImage = await sharp(imageBuffer).webp().toBuffer();
-    const thumbnail = await sharp(imageBuffer).webp().resize(500, undefined).toBuffer();
-
-    const fullImageName = `${title.replace(/\s/g,'')}.webp`;
-    const thumbnailImageName = `${title.replace(/\s/g,'')}-thumnail.webp`;
-
-    const fullImageUrl = getWriteAndDevSafeUrl(fullImageName);
-    const thumbnailImageUrl = getWriteAndDevSafeUrl(thumbnailImageName);
-
-    await writeFile(fullImageUrl, Buffer.from(fullImage));
-    await writeFile(thumbnailImageUrl, Buffer.from(thumbnail));
-
-    const accessURL = '/uploads/images/';
-
-    return {
-        url: path.join(accessURL, fullImageName),
-        thumbnail: {
-            url: path.join(accessURL, thumbnailImageName),
-            aspectRatio: metaData.width / metaData.height
-        }
-    }
-}
-
-const getWriteAndDevSafeUrl = (filename: string) => {
-    return path.join(getUploadsFolder('portfolio'), 'images', filename);
-}
-
-const checkAndRemove = async (url: string) => {
-    const filename = url.split('\\').pop();
-    if (!filename) return;
-
-    const path = getWriteAndDevSafeUrl(filename);
-
-    if (fs.existsSync(path)) {
-        await fs.unlink(path, e => {
-            if (e) {
-                const error = e as Error;
-                console.log(error);
-                return fail(422, { error: error.message});
-            }
-        });
     }
 }

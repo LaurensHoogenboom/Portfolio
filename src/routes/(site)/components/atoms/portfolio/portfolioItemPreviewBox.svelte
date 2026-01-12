@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { IPortfolioItem } from '$lib/types/portfolio';
-	import { openPortfolioItem } from '../../../shared/portfolioUtils';
+	import { openPortfolioItem } from '../../../utils/portfolioUtils';
 
 	const { portfolioItem, showTitleBelow = false }: { portfolioItem: IPortfolioItem; showTitleBelow?: boolean } = $props();
 </script>

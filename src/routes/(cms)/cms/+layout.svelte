@@ -15,6 +15,8 @@
     {:else}
         <link rel="stylesheet" href="/styles/cms/cms.css">
     {/if}
+
+    <title>CMS: Laurens Hoogenboom</title>
 </svelte:head>
 
 <div class="page">

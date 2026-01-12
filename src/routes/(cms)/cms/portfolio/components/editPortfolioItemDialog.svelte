@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import Button from '$lib/components/cms/atoms/button.svelte';
-	import Notice from '$lib/components/cms/atoms/notice.svelte';
-	import LabelInputGroup, { type ISelectOption } from '$lib/components/cms/molecules/labelInputGroup.svelte';
-	import Dialog from '$lib/components/cms/organisms/dialog.svelte';
-	import type { PortfolioItemImage, PortfolioItemType } from '$lib/types/portfolio';
+	import Button from '$cmsComponents/atoms/button.svelte';
+	import Notice from '$cmsComponents/atoms/notice.svelte';
+	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
+	import Dialog from '$cmsComponents/organisms/dialog.svelte';
+	import type { PortfolioItemType } from '$lib/types/portfolio';
+	import type { IUploadedImage } from '$lib/types/uploads';
 	import { portfolioSelectOptions } from '../shared/portfolioSelectOptions';
 
 	const {
@@ -19,7 +20,7 @@
 		title: string;
 		description: string | null;
 		type: PortfolioItemType;
-		image: PortfolioItemImage | null;
+		image: IUploadedImage | null;
 	}
 
 	let saving = $state(false);

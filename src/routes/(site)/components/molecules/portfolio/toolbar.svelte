@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Tabbar, { type ITabItem } from '../../atoms/tabbar.svelte';
+	import Tabbar, { type ITabItem } from '$siteComponents/atoms/tabbar.svelte';
 	import { pushState } from '$app/navigation';
 	import type { PortfolioItemType } from '$lib/types/portfolio';
-	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../shared/portfolioUtils';
+	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../utils/portfolioUtils';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 
@@ -19,6 +19,7 @@
 	const changePortfolioItemType = (i: number) => {
 		const state = getPortfolioState();
 		state.selectedPortfolioCategory = tabItems[i].type;
+		state.showAllPortfolioItems = false;
 		pushState(getPortfolioUrlWithParams(state), state);
 		
 		const portfolioTop = document.getElementById('portfolio')?.getBoundingClientRect().top ?? 0;

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import AnimatedMouseWheel from '../atoms/header/animatedMouseWheel.svelte';
-	import Button from '../atoms/button.svelte';
-	import ContentContainer from '../atoms/contentContainer.svelte';
-	import PortfolioPrevew from '../organisms/header/portfolioPrevew.svelte';
+	import AnimatedMouseWheel from '$siteComponents/atoms/header/animatedMouseWheel.svelte';
+	import Button from '$siteComponents/atoms/button.svelte';
+	import ContentContainer from '$siteComponents/atoms/contentContainer.svelte';
+	import PortfolioPrevew from '$siteComponents/organisms/header/portfolioPrevew.svelte';
 	import type { IPortfolioItem } from '$lib/types/portfolio';
-	import Title from '../atoms/header/title.svelte';
+	import Title from '$siteComponents/atoms/header/title.svelte';
 
 	const { portfolioItems }: { portfolioItems: IPortfolioItem[] } = $props();
 </script>

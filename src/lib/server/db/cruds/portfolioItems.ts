@@ -4,19 +4,40 @@ import { portfolioItems } from "../schema/portfolioItems";
 import type { PortfolioItemType } from "../../../types/portfolio";
 
 const getPortfolioItems = async (number: number = 10, offset: number = 0) => {
-    return await db.select().from(portfolioItems).limit(number).offset(offset);
+    return await db.query.portfolioItems.findMany({
+        limit: number,
+        offset: offset,
+        with: {
+            upload: true
+        }
+    });
 }
 
 const getPortfolioItemsByType = async (type: PortfolioItemType) => {
-    return await db.select().from(portfolioItems).where(eq(portfolioItems.type, type));
+    return await db.query.portfolioItems.findMany({
+        where: (portfolioItems, {eq}) => eq(portfolioItems.type, type),
+        with: {
+            upload: true
+        }
+    });
 }
 
 const getPortfolioItemById = async (id: string) => {
-    return await db.select().from(portfolioItems).where(eq(portfolioItems.id, id)).get();
+    return await db.query.portfolioItems.findFirst({
+        where: (portfolioItems, {eq}) => eq(portfolioItems.id, id),
+        with: {
+            upload: true
+        }
+    });
 }
 
 const getPortfolioItemByTitle = async (title: string) => {
-    const item = await db.select().from(portfolioItems).where(eq(portfolioItems.title, title)).get();
+    const item = await db.query.portfolioItems.findFirst({
+        where: (portfolioItems, {eq}) => eq(portfolioItems.title, title),
+        with: {
+            upload: true
+        }
+    });
 
     if (item) {
         return item;
@@ -30,18 +51,24 @@ const createPortfolioItem = async (data: typeof portfolioItems.$inferInsert) => 
         throw new Error("A portfolio item must have a title and a type.");
     }
 
-    const titleExists = await db.select().from(portfolioItems).where(eq(portfolioItems.title, data.title)).get();
+    const titleExists = await getPortfolioItemByTitle(data.title);
 
     if (titleExists) {
         throw new Error("A portfolio item must have a unique title.");
     }
 
-    return await db.insert(portfolioItems).values(data).returning().get();
+    const createdItem = await db
+        .insert(portfolioItems)
+        .values(data)
+        .returning()
+        .get();
+
+    return await getPortfolioItemById(createdItem.id);
 }
 
 const updatePortfolioItem = async (id: string, data: Partial<typeof portfolioItems.$inferInsert>) => {
-    const portfolioItem = db.select().from(portfolioItems).where(eq(portfolioItems.id, id)).get();
-    
+    const portfolioItem = await getPortfolioItemById(id);
+
     if (data.title && data.title != portfolioItem?.title) {
         const titleExists = await db.select().from(portfolioItems).where(eq(portfolioItems.title, data.title)).get();
 
@@ -49,12 +76,19 @@ const updatePortfolioItem = async (id: string, data: Partial<typeof portfolioIte
             throw new Error("A portfolio item must have a unique title.");
         }
     }
-    
-    return await db.update(portfolioItems).set(data).where(eq(portfolioItems.id, id)).returning().get();
+
+    const updatedItem = await db.update(portfolioItems)
+        .set(data)
+        .where(eq(portfolioItems.id, id))
+        .returning()
+        .get();
+
+    return await getPortfolioItemById(updatedItem.id);
 }
 
 const deletePortfolioItem = async (id: string) => {
-    await db.delete(portfolioItems).where(eq(portfolioItems.id, id));
+    await db.delete(portfolioItems)
+        .where(eq(portfolioItems.id, id));
 }
 
 export { getPortfolioItems, getPortfolioItemsByType, getPortfolioItemByTitle, getPortfolioItemById, createPortfolioItem, updatePortfolioItem, deletePortfolioItem }

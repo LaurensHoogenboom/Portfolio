@@ -1,26 +1,28 @@
 <script lang="ts">
     import type { ActionData } from './$types';
-    import LabelInputGroup from '$lib/components/cms/molecules/labelInputGroup.svelte';
-	import Notice from '$lib/components/cms/atoms/notice.svelte';
-    import Button from '$lib/components/cms/atoms/button.svelte';
+    import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
+	import Notice from '$cmsComponents/atoms/notice.svelte';
+    import Button from '$cmsComponents/atoms/button.svelte';
     import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { LogIn } from '@lucide/svelte';
 	import AuthenticationHeader from './components/authenticationHeader.svelte';
-	import Instruction from '$lib/components/cms/atoms/instruction.svelte';
-	import Avatar from '$lib/components/cms/molecules/avatar.svelte';
-	import { DispatchSuccesNotification } from '$lib/globalNotifications.svelte';
+	import Instruction from '$cmsComponents/atoms/instruction.svelte';
+	import Avatar from '$cmsComponents/molecules/avatar.svelte';
+	import { dispatchSuccesNotification } from '../../(cms)/cms/shared/globalNotifications.svelte';
 
     let { form }: { form: ActionData } = $props();
 
     let urlParameters: URLSearchParams | undefined = $state();
-    let username: string = $state('');
+    let username: string | undefined = $state();
+    let redirectUrl: string | undefined = $state();
     let authenticating: boolean = $state(false);
 
     onMount(() => {
         urlParameters = new URLSearchParams(window.location.search);
-        username = urlParameters.get('username') ?? '';
+        username = urlParameters.get('username') ?? undefined;
+        redirectUrl = urlParameters.get('redirectUrl') ?? undefined;
     });
 </script>
 
@@ -33,8 +35,8 @@
         authenticating = false;
 
         if (form?.success) {
-            goto("/cms/");
-            DispatchSuccesNotification(`Welcome back, ${username}!`, 'Logged In.');
+            goto(redirectUrl ?? '/cms');
+            dispatchSuccesNotification(`Welcome back, ${username}!`, 'Logged In.');
         }
     }
 }}>

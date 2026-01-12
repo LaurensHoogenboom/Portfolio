@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { Check, InfoIcon, TriangleAlert } from "@lucide/svelte";
-    import { GlobalNotifications } from "$lib/globalNotifications.svelte";
+    import { globalNotifications } from "../shared/globalNotifications.svelte";
 	import { fly, slide } from "svelte/transition";
 
     $effect(() => {
-        GlobalNotifications.notifications.forEach(n => {
+        globalNotifications.notifications.forEach(n => {
             if (n.visible !== false) {
                 setTimeout(() => {
                     n.visible = false;
@@ -28,7 +28,7 @@
 </script>
 
 <div class="notification-container">
-    {#each GlobalNotifications.notifications as n }
+    {#each globalNotifications.notifications as n }
         {#if n.visible !== false}
             <div class="notification frost-glass white {n.type ? n.type : null}" in:fly|global={{ y: 20, delay: 300 }} out:slide|global>
                 <div class="inset round icon-container {getColor(n.type)}">

@@ -1,28 +1,19 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
-	import About from './components/sections/about.svelte';
-	import Contact from './components/sections/contact.svelte';
-	import Header from './components/sections/header.svelte';
+	import About from '$siteComponents/sections/about.svelte';
+	import Contact from '$siteComponents/sections/contact.svelte';
+	import Header from '$siteComponents/sections/header.svelte';
 	import type { IPortfolioItem } from '$lib/types/portfolio'
-	import Portfolio from './components/sections/portfolio.svelte';
+	import Portfolio from '$siteComponents/sections/portfolio.svelte';
 	import { replaceState } from '$app/navigation';
-	import VerticalSeperator from './components/atoms/verticalSeperator.svelte';
-	import { getPortfolioSearchParams, getPortfolioUrlWithParams } from './shared/portfolioUtils';
-	import PortfolioItemDetail from './components/organisms/portfolioItemDetail.svelte';
+	import VerticalSeperator from '$siteComponents/atoms/verticalSeperator.svelte';
+	import { getPortfolioSearchParams, getPortfolioUrlWithParams } from './utils/portfolioUtils';
+	import PortfolioItemDetail from '$siteComponents/organisms/portfolio/portfolioItemDetail.svelte';
 	import { page } from '$app/state';
+	import ScrollToTopButton from '$siteComponents/atoms/scrollToTopButton.svelte';
 
 	let { data }: { data: PageData } = $props();
-
-	const portfolioItems: IPortfolioItem[] = data.portfolioItems.map((pItem, i) => {
-		return {
-			id: pItem.id,
-			title: pItem.title,
-			type: pItem.type,
-			description: pItem.description,
-			image: pItem.image
-		}
-	});
 
 	onMount(async () => {
 		const [hash, query] = window.location.href.split('#')[1] ? window.location.href.split('#')[1].split('?') : [undefined, undefined];
@@ -48,19 +39,21 @@
 	});
 </script>
 
-<Header {portfolioItems} />
+<Header portfolioItems={data.portfolioItems} />
 
 <About />
 
 <VerticalSeperator zIndex={1} CSSClass="about-portfolio-seperator" />
 
-<Portfolio {portfolioItems} />
+<Portfolio portfolioItems={data.portfolioItems} />
 
 {#if page.state.activePortfolioItem}
 	<PortfolioItemDetail portfolioItem={page.state.activePortfolioItem}/>
 {/if}
 
 <Contact />
+
+<ScrollToTopButton />
 
 <style>
 	:global(.about-portfolio-seperator) {

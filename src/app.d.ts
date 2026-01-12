@@ -6,7 +6,11 @@ import type { IPortfolioItem, PortfolioItemType } from "$lib/types/portfolio";
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		
+		interface Locals {
+			username?: string
+		}
+
 		// interface PageData {}
 		
 		interface PageState {

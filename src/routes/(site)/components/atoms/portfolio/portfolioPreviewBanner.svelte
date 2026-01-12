@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { IPortfolioItem } from "$lib/types/portfolio";
-	import { openPortfolioItem } from "../../../shared/portfolioUtils";
-	import Button from "../button.svelte";
+	import { openPortfolioItem } from "../../../utils/portfolioUtils";
+	import Button from "$siteComponents/atoms/button.svelte";
 
     const { portfolioItem } : { portfolioItem: IPortfolioItem } = $props();
 </script>

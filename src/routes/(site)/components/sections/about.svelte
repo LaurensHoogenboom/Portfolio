@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { BookDashed, Code, Instagram, Linkedin, PencilRuler } from '@lucide/svelte';
-	import Button from '../atoms/button.svelte';
-	import ContentContainer from '../atoms/contentContainer.svelte';
+	import Button from '$siteComponents/atoms/button.svelte';
+	import ContentContainer from '$siteComponents/atoms/contentContainer.svelte';
 	import profilePicture from '$lib/media/site/about/profile.jpg';
 	import curiculumVitae from '$lib/media/site/about/Curiculum Vitae.pdf';
-	import IconSquare from '../atoms/about/iconSquare.svelte';
-	import IdCard from '../atoms/about/idCard.svelte';
+	import IconSquare from '$siteComponents/atoms/about/iconSquare.svelte';
+	import IdCard from '$siteComponents/atoms/about/idCard.svelte';
 </script>
 
 <ContentContainer id="about" width="wide">

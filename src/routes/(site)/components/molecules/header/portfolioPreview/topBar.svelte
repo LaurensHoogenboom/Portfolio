@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { ITabItem } from "../../../atoms/tabbar.svelte";
-	import TabBar from "../../../atoms/tabbar.svelte";
+	import type { ITabItem } from "$siteComponents/atoms/tabbar.svelte";
+	import TabBar from "$siteComponents/atoms/tabbar.svelte";
 	import type { PortfolioItemType } from "$lib/types/portfolio";
 
 	

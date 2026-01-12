@@ -1,14 +1,14 @@
 <script lang="ts">
-	import ContentContainer from '../atoms/contentContainer.svelte';
-	import PortfolioItemPreviewBox from '../atoms/portfolio/portfolioItemPreviewBox.svelte';
+	import ContentContainer from '$siteComponents/atoms/contentContainer.svelte';
+	import PortfolioItemPreviewBox from '$siteComponents/atoms/portfolio/portfolioItemPreviewBox.svelte';
 	import { page } from '$app/state';
-	import Toolbar from '../molecules/portfolio/toolbar.svelte';
-	import PortfolioPreviewBanner from '../atoms/portfolio/portfolioPreviewBanner.svelte';
-	import Button from '../atoms/button.svelte';
+	import Toolbar from '$siteComponents/molecules/portfolio/toolbar.svelte';
+	import PortfolioPreviewBanner from '$siteComponents/atoms/portfolio/portfolioPreviewBanner.svelte';
+	import Button from '$siteComponents/atoms/button.svelte';
 	import { pushState } from '$app/navigation';
 	import type { IPortfolioItem } from '$lib/types/portfolio';
-	import { getPortfolioState, getPortfolioUrlWithParams } from '../../shared/portfolioUtils';
-	import Title from '../atoms/portfolio/title.svelte';
+	import { getPortfolioState, getPortfolioUrlWithParams } from '../../utils/portfolioUtils';
+	import Title from '$siteComponents/atoms/portfolio/title.svelte';
 
 	let { portfolioItems }: { portfolioItems: IPortfolioItem[] } = $props();
 

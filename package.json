@@ -46,6 +46,12 @@
 		"vitest": "^3.0.0"
 	},
 	"dependencies": {
+		"@calumk/editorjs-columns": "^0.3.2",
+		"@editorjs/editorjs": "^2.31.0",
+		"@editorjs/header": "^2.8.8",
+		"@editorjs/image": "^2.10.3",
+		"@editorjs/paragraph": "^2.11.7",
+		"@ikbenbas/editorjs-button": "^1.0.0",
 		"@lucide/svelte": "^0.503.0",
 		"@oslojs/crypto": "^1.0.1",
 		"@sveltejs/adapter-auto": "^7.0.0",
@@ -53,6 +59,7 @@
 		"copy-folder-util": "^1.2.0",
 		"dotenv": "^16.4.7",
 		"drizzle-orm": "^0.40.0",
+		"editorjs-collapsible-block": "^1.0.1",
 		"sharp": "^0.34.5"
 	}
 }

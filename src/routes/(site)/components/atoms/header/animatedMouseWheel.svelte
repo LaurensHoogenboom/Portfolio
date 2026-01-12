@@ -1,27 +1,28 @@
 <script lang="ts">
-    const { style } : { style?: string } = $props();
+    const { style, color = 'white' } : { style?: string, color?: 'white' | 'grey' } = $props();
 </script>
 
-<div class="outer" style={style}>
+<div class="outer" style="{style} --color: var(--{color == 'white' ? 'white' : 'grey-text'});">
     <div class="inner"></div>
 </div>
 
 <style>
     .outer {
+        --color: var(--white);
         position: absolute;
         height: 52px;
         width: 23px;
-        border: 1px solid var(--white);
+        border: 1px solid var(--color);
         border-radius: 12px;
-        padding: 6px
-    }
+        padding: 6px;
 
-    .inner {
-        height: 18px;
-        width: 10px;
-        background-color: var(--white);
-        border-radius: 5px;
-        animation: slide-down 3s infinite ease-in-out;
+        .inner {
+            height: 18px;
+            width: 10px;
+            background-color: var(--color);
+            border-radius: 5px;
+            animation: slide-down 3s infinite ease-in-out;
+        }
     }
 
     @keyframes slide-down {

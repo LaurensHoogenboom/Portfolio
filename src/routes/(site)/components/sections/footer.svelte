@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Instagram, Linkedin } from '@lucide/svelte';
-	import Button from '../atoms/button.svelte';
-	import ContentContainer from '../atoms/contentContainer.svelte';
+	import Button from '$siteComponents/atoms/button.svelte';
+	import ContentContainer from '$siteComponents/atoms/contentContainer.svelte';
 
 	let currentYear = new Date().getFullYear();
 </script>
