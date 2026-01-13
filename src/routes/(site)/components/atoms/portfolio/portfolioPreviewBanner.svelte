@@ -71,7 +71,6 @@
 
             .real {
                 transform: rotate(-1deg) translateY(-105%) translateX(30px);
-                background-color: red;
                 border-radius: var(--border-radius-2);
                 background-size: cover;
                 background-position: center;

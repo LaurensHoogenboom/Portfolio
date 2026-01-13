@@ -16,10 +16,11 @@ export const actions: Actions = {
     create: async ({ request }) => {
         const formData = await request.formData();
         const formDataObject = Object.fromEntries(formData);
-        const { title, description, type } = formDataObject as {
+        const { title, description, type, visiblePriority } = formDataObject as {
             title: string,
             description: string,
-            type: string
+            type: string,
+            visiblePriority: string
         };
 
         const imageFile = formData.get('image') as File;
@@ -29,7 +30,8 @@ export const actions: Actions = {
             title: title,
             description: description,
             type: type as PortfolioItemType,
-            imageUploadId: image.id
+            imageUploadId: image.id,
+            visiblePriority: parseInt(visiblePriority)
         }
 
         try {
@@ -50,11 +52,12 @@ export const actions: Actions = {
     update: async ({ request }) => {
         const formData = await request.formData();
         const formDataObject = Object.fromEntries(formData);
-        const { id, title, description, type } = formDataObject as {
+        const { id, title, description, type, visiblePriority } = formDataObject as {
             id: string
             title: string,
             description: string,
-            type: string
+            type: string,
+            visiblePriority: string
         };
 
         let imageUpload: Upload | undefined = undefined;
@@ -75,7 +78,8 @@ export const actions: Actions = {
                 title: title,
                 description: description,
                 type: type as PortfolioItemType,
-                imageUploadId: imageUpload ? imageUpload.id : undefined
+                imageUploadId: imageUpload ? imageUpload.id : undefined,
+                visiblePriority: parseInt(visiblePriority)
             });
 
             return {

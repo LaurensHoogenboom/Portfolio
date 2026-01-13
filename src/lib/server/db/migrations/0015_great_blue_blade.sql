@@ -1,0 +1,1 @@
+ALTER TABLE `portfolioItems` RENAME COLUMN "priority" TO "visiblePriority";
