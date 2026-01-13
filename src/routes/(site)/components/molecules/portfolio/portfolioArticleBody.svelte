@@ -110,7 +110,7 @@
 		{@const inlineSettings: string[] = b.data.caption.split('@')}
 		{@const title: string = inlineSettings[0]}
 		{@const isSlider = inlineSettings[1] && inlineSettings[1].startsWith('slider')}
-		{@const isFirstSlide = isSlider && inlineSettings[2] == '1'}
+		{@const isFirstSlide = isSlider && parseInt(inlineSettings[2]) == 1}
 
 		{#if isSlider && isFirstSlide}
 			<Slider slides={getSlides(inlineSettings[1])} />
