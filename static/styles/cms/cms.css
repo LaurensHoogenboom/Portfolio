@@ -22,6 +22,7 @@
 /* Layout */
 @import url("./layout/page.css") layer(layouts);
 @import url("./layout/form.css") layer(layouts);
+@import url("./layout/grid.css") layer(layouts);
 
 /* Components */
 @import url("./components/button.css") layer(components);
