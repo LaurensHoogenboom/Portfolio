@@ -71,7 +71,7 @@
 		width: 100%;
 		grid-column-gap: var(--spacing-6);
 		padding-top: var(--spacing-2);
-		padding-bottom: var(spacing-2);
+		padding-bottom: var(--spacing-2);
 		padding-right: 100vw;
 		list-style: none;
 		overflow: hidden;

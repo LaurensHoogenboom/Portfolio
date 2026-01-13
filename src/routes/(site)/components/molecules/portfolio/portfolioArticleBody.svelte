@@ -123,6 +123,22 @@
 			</div>
 		{/if}		
 	{/if}
+
+	{#if b.type == 'list' && b.data.style == 'unordered'}
+		<ul>
+			{#each b.data.items as i}
+				<li>{@html i.content}</li>
+			{/each}
+		</ul>
+	{/if}
+
+	{#if b.type == 'list' && b.data.style == 'ordered'}
+		<ol>
+			{#each b.data.items as i}
+				<li>{@html i.content}</li>
+			{/each}
+		</ol>
+	{/if}
 {/snippet}
 
 <style>

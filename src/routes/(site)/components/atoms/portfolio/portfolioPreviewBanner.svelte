@@ -15,7 +15,7 @@
         <div class="content">
             <article>
                 <h2>{portfolioItem.title}</h2>
-                <p>{portfolioItem.description}</p>
+                <p>{@html portfolioItem.description}</p>
             </article>
             <Button type="submit" title="Meer Lezen" onclick={() => openPortfolioItem(portfolioItem)} />
         </div>

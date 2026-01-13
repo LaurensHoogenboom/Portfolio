@@ -6,6 +6,7 @@
 	import Button from '@ikbenbas/editorjs-button';
 	import EditorjsColumns from '@calumk/editorjs-columns';
 	import Accordion from 'editorjs-collapsible-block';
+	import EditorjsList from '@editorjs/list';
 	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import type { Upload } from '$lib/types/uploads';
 	import { CustomImage } from './customImageTool';
@@ -67,6 +68,15 @@
 					uploadByFile: uploadImage
 				}
 			}
+		},
+		list: {
+			class: EditorjsList,
+			inlineToolbar: true,
+			config: {
+				defaultStyle: 'unordered'
+			},
+			sanitize: sanitize,
+			maxLevel: 1
 		}
 	};
 
@@ -98,7 +108,7 @@
 		margin: 0 auto;
 		margin-top: var(--spacing-6);
 
-		:global(.ce-paragraph) {
+		:global(.ce-paragraph, .cdx-list__item-content) {
 			color: var(--grey-text);
 			max-width: 850px;
 		}

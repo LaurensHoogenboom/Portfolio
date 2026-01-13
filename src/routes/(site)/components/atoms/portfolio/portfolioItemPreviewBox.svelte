@@ -25,6 +25,8 @@
 
 <style>
 	.portfolio-preview-box {
+		padding-bottom: 0;
+
 		button {
 			display: flex;
 			flex-direction: column;
