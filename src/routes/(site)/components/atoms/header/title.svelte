@@ -2,6 +2,7 @@
     import { typewriter } from "$lib/utils/transitions/typewriter";
 
     let i = $state(0);
+
 	const messages = [
 		"Onderzoek",
 		"Vormgeving",
@@ -12,7 +13,7 @@
 		const interval = setInterval(() => {
 			i += 1;
 			i %= messages.length;
-		}, 4000);
+		}, 3000);
 
 		return () => {
 			clearInterval(interval);
