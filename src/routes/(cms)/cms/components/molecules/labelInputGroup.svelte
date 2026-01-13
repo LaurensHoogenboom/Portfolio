@@ -33,6 +33,12 @@
 		acceptFile?: string;
 	} = $props();
 
+	let files: FileList | undefined = $state();
+	let fileName: string | undefined = $state(typeof value == 'string' ? value.split('/').pop() : '');
+
+	let showImage = $state(acceptFile == 'image/*');
+	let imagePreviewSrc = $state(typeof value == 'string' ? value : '');
+
 	$effect(() => {
 		if (files instanceof FileList && files.length > 0) {
 			value = files[0];
@@ -51,12 +57,6 @@
 			}
 		}
 	});
-
-	let files: FileList | undefined = $state();
-	let fileName: string | undefined = $state(typeof value == 'string' ? value.split('/').pop() : '');
-
-	let showImage = $state(acceptFile == 'image/*');
-	let imagePreviewSrc = $state(typeof value == 'string' ? value : '');
 </script>
 
 <div class="label-input-group">
