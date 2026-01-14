@@ -12,6 +12,7 @@ RUN apk add --no-cache python3 make g++
 RUN cd /app && npm install && \
     echo "DB_URL=/app/database/sqlite.db" > /app/.env && \
     echo "UPLOADS_FOLDER=/app/uploads/" >> /app/.env && \
+    echo "ORIGIN=https://www.laurenshoogenboom.nl/" >> /app/.env && \
     npm run build
 
 # build actual image

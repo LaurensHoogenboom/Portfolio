@@ -17,6 +17,11 @@ const checkIfUrlStartsWith = (string: string, options: string[]) => {
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
+    const host = event.url.hostname;
+    if (host === 'laurenshoogenboom.nl') {
+        throw redirect(301, 'https://www.laurenshoogenboom.nl' + event.url.pathname + event.url.hash + event.url.search);
+    }
+
     const isProtectedPage = checkIfUrlStartsWith(event.url.pathname, protectedPageRoutes);
     const isProtectedApi = checkIfUrlStartsWith(event.url.pathname, protectedApiRoutes);
 
