@@ -4,6 +4,7 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
+		"start": "node build",
 		"dev": "vite dev",
 		"prebuild": "copy-folder src/styles/ static/styles/ && copy-folder src/fonts/ static/fonts/",
 		"build": "vite build",
