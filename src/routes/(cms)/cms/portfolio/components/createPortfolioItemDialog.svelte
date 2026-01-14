@@ -1,44 +1,74 @@
 <script lang="ts">
-	import { enhance } from "$app/forms";
-	import Button from "$cmsComponents/atoms/button.svelte";
-	import Notice from "$cmsComponents/atoms/notice.svelte";
-	import LabelInputGroup from "$cmsComponents/molecules/labelInputGroup.svelte";
-	import Dialog from "$cmsComponents/organisms/dialog.svelte";
-	import { portfolioSelectOptions } from "../shared/portfolioSelectOptions";
+	import { enhance } from '$app/forms';
+	import Button from '$cmsComponents/atoms/button.svelte';
+	import Notice from '$cmsComponents/atoms/notice.svelte';
+	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
+	import Dialog from '$cmsComponents/organisms/dialog.svelte';
+	import type { PortfolioItemType } from '$lib/types/portfolio';
+	import { portfolioSelectOptions } from '../shared/portfolioSelectOptions';
 
-    const { closeCallback, errorMessage, createSuccess = false } : { closeCallback: () => void, errorMessage?: string, createSuccess?: boolean } = $props();
+	const {
+		closeCallback,
+		errorMessage,
+		createSuccess = false
+	}: { closeCallback: () => void; errorMessage?: string; createSuccess?: boolean } = $props();
 
-    let saving = $state(false);
+	let saving = $state(false);
+	let portfolioItemCategory:PortfolioItemType = $state("research");
 </script>
 
-<Dialog title="Add Portfolio Item" closeCallback={closeCallback}>
-    <form method="post" action="?/create" enctype="multipart/form-data" use:enhance={() => {
-        saving = true;
+<Dialog title="Add Portfolio Item" {closeCallback}>
+	<form
+		method="post"
+		action="?/create"
+		enctype="multipart/form-data"
+		use:enhance={() => {
+			saving = true;
 
-        return async ({ update }) => {
-            await update({ reset: false });
-            saving = false;
-        };
-    }}>
-        {#if errorMessage}
-            <Notice message={errorMessage} type="warning" />
-        {/if}
+			return async ({ update }) => {
+				await update({ reset: false });
+				saving = false;
+			};
+		}}
+	>
+		{#if errorMessage}
+			<Notice message={errorMessage} type="warning" />
+		{/if}
 
-        <fieldset>
-            <LabelInputGroup type="text" name="title" label="Title" max={120} required={true}/>
+        <div class="grid-container columns-2">
+            <div>
+                <fieldset>
+                    <LabelInputGroup type="text" name="title" label="Title" max={120} required={true} />
 
-            <LabelInputGroup type="select" name="type" label="Type" required={true} selectOptions={portfolioSelectOptions}/>
+                    <LabelInputGroup type="select" name="type" label="Type" required={true} selectOptions={portfolioSelectOptions} bind:value={portfolioItemCategory} />
 
-            <LabelInputGroup type="textarea" name="description" label="Description" />
-        </fieldset>
+					{#if portfolioItemCategory != 'art'}
+						<LabelInputGroup type="textarea" name="description" label="Header Description" />
+					{/if}
+                </fieldset>
 
-        <fieldset>
-            <LabelInputGroup type="file" name="image" label="Image" acceptFile="image/*"/>
-        </fieldset>
-
-        <div class="box nested-box form-actions">
-            <Button type="button" style="secondary" title="Cancel" onclick={closeCallback} />
-            <Button type="submit" style="primary" title="Add" loading={saving} succes={createSuccess} />
+                <fieldset>
+                    <LabelInputGroup
+                        type="number"
+                        name="visiblePriority"
+                        label="Visibility Priority"
+                        min={0}
+                        value={0}
+                        instruction="Items with a higher visible priority are shown first."
+                        required
+                    />
+                </fieldset>
+            </div>
+            <div>
+                <fieldset>
+                    <LabelInputGroup type="file" name="image" label="Header Image" acceptFile="image/*" />
+                </fieldset>
+            </div>
         </div>
-    </form>
+
+		<div class="box nested-box form-actions">
+			<Button type="button" style="secondary" title="Cancel" onclick={closeCallback} />
+			<Button type="submit" style="primary" title="Add" loading={saving} succes={createSuccess} />
+		</div>
+	</form>
 </Dialog>

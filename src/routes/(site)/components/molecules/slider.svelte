@@ -69,12 +69,14 @@
 			flex-direction: row;
 			width: 100%;
 			overflow: hidden;
+			padding-bottom: 0;
 
 			.slide {
 				width: 100%;
 				flex-grow: 1;
 				flex-shrink: 0;
 				list-style: none;
+				padding-bottom: 0;
 			}
 		}
 
@@ -82,7 +84,6 @@
             display: grid;
             grid-template-columns: max-content 1fr max-content;
 			justify-self: center;
-            align-items: center;
             grid-column-gap: var(--spacing-6);
             margin-top: var(--spacing-6);
             width: min(100%, 768px);
@@ -94,6 +95,7 @@
 
             :global(button) {
                 margin-right: 0;
+				margin-top: var(--spacing-2);
             }
 		}
 

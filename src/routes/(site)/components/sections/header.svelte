@@ -15,17 +15,17 @@
 			<Title />
 
 			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel ullamcorper quam, laoreet eleifend lorem. Duis finibus sem ante, et
-				iaculis eros blandit vitae. Nunc eleifend sed nibh at posuere. Vivamus non rhoncus lorem.
+				Experimenterend onderzoeken, ontwerpend overbruggen en verbeeldend tot leven wekken. Van begrijpen naar verbinden, en van verbinden
+				naar beleven. En alles door elkaar, <i>natuurlijk.</i>
 			</p>
-            <Button type="goto" href="#portfolio" title="Portfolio"/>
-            <Button type="goto" href="#contact" title="Contact" style="secondary"/>
+			<Button type="goto" href="#portfolio" title="Portfolio" />
+			<Button type="goto" href="#contact" title="Contact" style="secondary" />
 		</article>
 
 		<PortfolioPrevew previewItems={portfolioItems} />
 	</div>
 
-	<AnimatedMouseWheel style="left: 50%; transform: translateX: (-50%);"/>
+	<AnimatedMouseWheel style="left: 50%; transform: translateX: (-50%);" />
 </ContentContainer>
 
 <style>

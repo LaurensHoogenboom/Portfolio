@@ -15,7 +15,7 @@
         <div class="content">
             <article>
                 <h2>{portfolioItem.title}</h2>
-                <p>{portfolioItem.description}</p>
+                <p>{@html portfolioItem.description}</p>
             </article>
             <Button type="submit" title="Meer Lezen" onclick={() => openPortfolioItem(portfolioItem)} />
         </div>
@@ -36,8 +36,8 @@
             border-top-right-radius: var(--border-radius-3);
             border: 1px solid var(--grey-borders);
             border-bottom: none;
-            clip-path: polygon(-30px -30px, calc(100% + 30px) -30px, calc(100% + 30px) 100%, -30px 100%);
-            box-shadow: var(--grey-shadow-1-top);
+            clip-path: polygon(-40px -40px, calc(100% + 40px) -40px, calc(100% + 40px) 100%, -40px 100%);
+            box-shadow: var(--grey-shadow-2);
 
             @media (hover:hover) {
                 :global(&:has(.content button:hover)) {
@@ -70,8 +70,7 @@
             }
 
             .real {
-                transform: rotate(-1deg) translateY(-105%) translateX(20px);
-                background-color: red;
+                transform: rotate(-1deg) translateY(-105%) translateX(30px);
                 border-radius: var(--border-radius-2);
                 background-size: cover;
                 background-position: center;

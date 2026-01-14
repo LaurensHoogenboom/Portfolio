@@ -1,4 +1,4 @@
-import { sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { generateId, timestamp } from "../utils/utils";
 import type { PortfolioItemType } from '../../../types/portfolio';
 import type { OutputData } from "@editorjs/editorjs";
@@ -16,6 +16,7 @@ const portfolioItems = sqliteTable("portfolioItems", {
         onDelete: 'set null',
         onUpdate: 'cascade'
     }),
+    visiblePriority: integer({mode: "number"}).default(0).notNull(),
     articleContent: text("articleContent", {mode: "json"}).$type<OutputData>(),
     ...timestamp
 });

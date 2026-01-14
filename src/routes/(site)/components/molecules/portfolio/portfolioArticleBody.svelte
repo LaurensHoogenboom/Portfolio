@@ -110,7 +110,7 @@
 		{@const inlineSettings: string[] = b.data.caption.split('@')}
 		{@const title: string = inlineSettings[0]}
 		{@const isSlider = inlineSettings[1] && inlineSettings[1].startsWith('slider')}
-		{@const isFirstSlide = isSlider && inlineSettings[2] == '1'}
+		{@const isFirstSlide = isSlider && parseInt(inlineSettings[2]) == 1}
 
 		{#if isSlider && isFirstSlide}
 			<Slider slides={getSlides(inlineSettings[1])} />
@@ -122,6 +122,22 @@
 				<p>{@html title}</p>
 			</div>
 		{/if}		
+	{/if}
+
+	{#if b.type == 'list' && b.data.style == 'unordered'}
+		<ul>
+			{#each b.data.items as i}
+				<li>{@html i.content}</li>
+			{/each}
+		</ul>
+	{/if}
+
+	{#if b.type == 'list' && b.data.style == 'ordered'}
+		<ol>
+			{#each b.data.items as i}
+				<li>{@html i.content}</li>
+			{/each}
+		</ol>
 	{/if}
 {/snippet}
 

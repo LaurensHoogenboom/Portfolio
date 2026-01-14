@@ -3,7 +3,10 @@ import type { IPortfolioItem } from '$lib/types/portfolio';
 import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
-    const data = await getPortfolioItems();
+    const data = (await getPortfolioItems()).sort((a, b ) => {
+        return b.visiblePriority - a.visiblePriority;
+    });
+
     const portfolioItems = data.map(pItem => {
         return {
             id: pItem.id,

@@ -1,0 +1,1 @@
+ALTER TABLE `portfolioItems` ADD `priority` integer DEFAULT 0 NOT NULL;

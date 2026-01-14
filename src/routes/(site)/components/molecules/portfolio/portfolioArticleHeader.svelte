@@ -9,7 +9,7 @@
     <div class="header-image" style="background-image: url({JSON.stringify(portfolioItem.image?.url)});"></div>
     <article>
         <h1>{portfolioItem.title}</h1>
-        <p>{portfolioItem.description}</p>
+        <p>{@html portfolioItem.description}</p>
     </article>
     <AnimatedMouseWheel style="position: relative; justify-self: center;" color="grey" />
 </div>

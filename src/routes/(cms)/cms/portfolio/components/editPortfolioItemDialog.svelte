@@ -21,48 +21,76 @@
 		description: string | null;
 		type: PortfolioItemType;
 		image: IUploadedImage | null;
+		visiblePriority: number;
 	}
 
 	let saving = $state(false);
+	let portfolioItemType = $state(portfolioItemToEdit.type);
 </script>
 
 <Dialog title={`Edit ${portfolioItemToEdit.title}`} {closeCallback}>
-	<form method="post" action="?/update" enctype="multipart/form-data" use:enhance={() => {
-		saving = true;
+	<form
+		method="post"
+		action="?/update"
+		enctype="multipart/form-data"
+		use:enhance={() => {
+			saving = true;
 
-		return async ({ update }) => {
-			await update({ reset: false });
-			saving = false;
-		};
-	}}>
+			return async ({ update }) => {
+				await update({ reset: false });
+				saving = false;
+			};
+		}}
+	>
 		{#if errorMessage}
 			<Notice message={errorMessage} type="warning" />
 		{/if}
 
 		<input type="hidden" name="id" value={portfolioItemToEdit.id} />
 
-		<fieldset>
-			<LabelInputGroup type="text" name="title" label="Title" max={120} required={true} value={portfolioItemToEdit.title} />
-			<LabelInputGroup
-				type="select"
-				name="type"
-				label="Type"
-				required={true}
-				selectOptions={portfolioSelectOptions}
-				value={portfolioItemToEdit.type}
-			/>
-			<LabelInputGroup type="textarea" name="description" label="Description" value={portfolioItemToEdit.description} />
-		</fieldset>
+		<div class="grid-container columns-2">
+			<div>
+				<fieldset>
+					<LabelInputGroup type="text" name="title" label="Title" max={120} required={true} value={portfolioItemToEdit.title} />
+					<LabelInputGroup
+						type="select"
+						name="type"
+						label="Type"
+						required={true}
+						selectOptions={portfolioSelectOptions}
+						bind:value={portfolioItemType}
+					/>
 
-		<fieldset>
-			<LabelInputGroup
-				type="file"
-				name="image"
-				label="Image"
-				acceptFile="image/*"
-				value={portfolioItemToEdit.image ? portfolioItemToEdit.image.thumbnail.url : undefined}
-			/>
-		</fieldset>
+					{#if portfolioItemType != 'art'}
+						<LabelInputGroup type="textarea" name="description" label="Header Description" value={portfolioItemToEdit.description} />
+					{/if}
+				</fieldset>
+
+				<fieldset>
+					<LabelInputGroup
+						type="number"
+						name="visiblePriority"
+						label="Visibility Priority"
+						min={0}
+						value={portfolioItemToEdit.visiblePriority}
+						instruction="Items with a higher visible priority are shown first."
+						required
+					/>
+				</fieldset>
+			</div>
+
+			<div>
+				<fieldset>
+					<LabelInputGroup
+						type="file"
+						name="image"
+						label="Header Image"
+						acceptFile="image/*"
+						value={portfolioItemToEdit.image ? portfolioItemToEdit.image.thumbnail.url : undefined}
+					/>
+				</fieldset>
+			</div>
+		</div>
 
 		<div class="box nested-box form-actions">
 			<Button type="button" style="secondary" title="Cancel" onclick={closeCallback} />

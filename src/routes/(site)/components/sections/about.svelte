@@ -14,13 +14,15 @@
 		<div class="main-content">
 			<article>
 				<h1>Over Mij</h1>
+				<p>De kern van het verhaal: ik ben een maker (professionele knustelaar 😉) op het spanningsveld tussen systeem en beleving.</p>
 				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel ullamcorper quam, laoreet eleifend lorem. Duis finibus sem ante,
-					et iaculis eros blandit vitae. Nunc eleifend sed nibh at posuere. Vivamus non rhoncus lorem.
+					<b>Als analist,</b> breng ik de behoeften, waarden en routines van mens en systeem in kaart. <b>Als ontwerper,</b> maak ik
+					toepassingen die mogelijke spanningsvelden hiertussen inzichtelijk maken en/of overbruggen. <b>Als vormgever c.q. artiest,</b> maak
+					ik het voorgaande tastbaar.
 				</p>
 				<p>
-					Nunc eleifend sed nibh at posuere. Vivamus non rhoncus lorem unc eleifend sed nibh at posuere. Vivamus non rhoncus lorem. Vivamus
-					non rhoncus lorem.
+					Bij dit alles combineer ik ervaring als ontwikkelaar, interactie ontwerper en artiest om snel tot inzichten, prototypes en
+					resultaten te komen
 				</p>
 			</article>
 			<div style="padding-bottom: var(--spacing-4);">
@@ -30,19 +32,14 @@
 			</div>
 			<div>
 				<Button type="goto-external" icon={Instagram} style="secondary" href="https://www.instagram.com/laureato_/" />
-				<Button
-					type="goto-external"
-					icon={Linkedin}
-					style="secondary"
-					href="https://www.linkedin.com/in/laurens-hoogenboom-3aa78515a/"
-				/>
+				<Button type="goto-external" icon={Linkedin} style="secondary" href="https://www.linkedin.com/in/laurens-hoogenboom-3aa78515a/" />
 			</div>
 		</div>
 		<div class="ornaments">
 			<IconSquare icon={PencilRuler} CSSClass="design-icon" />
 			<IconSquare icon={BookDashed} CSSClass="research-icon" />
 			<IconSquare icon={Code} CSSClass="code-icon" />
-			<IdCard CSSClass="id-card"/>
+			<IdCard CSSClass="id-card" />
 		</div>
 	</div>
 </ContentContainer>
@@ -72,7 +69,6 @@
 
 		.main-content {
 			padding-top: var(--spacing-4);
-			padding-right: var(--spacing-3);
 
 			p {
 				max-width: initial;

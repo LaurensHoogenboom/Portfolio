@@ -33,11 +33,20 @@ h2 {
 	color: var(--primary-base);
 }
 
-p, label, button, input, a, textarea, select, option {
+p, label, button, input, a, textarea, select, option, li {
     font-family: "Figtree", sans-serif;
 	color: var(--grey-text);
 	position: relative;
 	z-index: 1;
+}
+
+ul, ol {
+	padding-bottom: var(--spacing-4);
+	list-style-position: inside;
+
+	li {
+		padding-bottom: var(--spacing-1);
+	}
 }
 
 p {

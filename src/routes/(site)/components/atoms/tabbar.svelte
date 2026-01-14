@@ -11,7 +11,13 @@
 		onSelectionChange,
 		CSSClass,
 		style = 'pil'
-	}: { tabItems: ITabItem[]; selectedIndex?: number; onSelectionChange?: (index: number) => void; CSSClass?: string; style?: 'pil' | 'tabs' } = $props();
+	}: {
+		tabItems: ITabItem[];
+		selectedIndex?: number;
+		onSelectionChange?: (index: number) => void;
+		CSSClass?: string;
+		style?: 'pil' | 'tabs';
+	} = $props();
 
 	let selectedLeft = $state(7);
 	let selectedWidth = $state(0);
@@ -30,7 +36,7 @@
 
 		selectedLeft = selectedListItem.offsetLeft;
 		selectedWidth = selectedListItem.offsetWidth;
-	}
+	};
 
 	onMount(() => setAfterElement(selectedIndex));
 </script>
@@ -51,15 +57,20 @@
 		grid-auto-flow: column;
 		list-style: none;
 		position: relative;
+		padding-bottom: 0;
 
-		.tab-item button {
-			white-space: nowrap;
-			color: var(--grey-text);
-			background: none;
-			border: none;
-			position: relative;
-			z-index: 1;
-			cursor: pointer;
+		.tab-item {
+			padding-bottom: 0;
+
+			button {
+				white-space: nowrap;
+				color: var(--grey-text);
+				background: none;
+				border: none;
+				position: relative;
+				z-index: 1;
+				cursor: pointer;
+			}
 		}
 
 		&.tabs {
@@ -75,7 +86,7 @@
 					color: var(--primary-base);
 					transition: padding var(--default-animation-duration);
 
-					@media (hover:hover) {
+					@media (hover: hover) {
 						&:hover {
 							background-color: var(--grey-inset-background-light);
 						}
@@ -88,7 +99,7 @@
 				}
 			}
 		}
-		
+
 		&.pil {
 			background-color: var(--grey-inset-background);
 			padding: var(--spacing-1);
@@ -120,8 +131,14 @@
 	}
 
 	@keyframes click {
-		0% { transform: scale(1.0) }
-		50% { transform: scale(0.9) }
-		100% { transform: scale(1.0) }
+		0% {
+			transform: scale(1);
+		}
+		50% {
+			transform: scale(0.9);
+		}
+		100% {
+			transform: scale(1);
+		}
 	}
 </style>
