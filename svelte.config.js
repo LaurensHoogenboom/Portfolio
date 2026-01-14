@@ -8,6 +8,9 @@ const config = {
 		alias: {
 			$cmsComponents: 'src/routes/(cms)/cms/components',
 			$siteComponents: 'src/routes/(site)/components/'
+		},
+		csrf: {
+			checkOrigin: false
 		}
 	}
 };
