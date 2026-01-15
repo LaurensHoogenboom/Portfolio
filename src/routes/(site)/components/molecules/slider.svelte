@@ -95,7 +95,6 @@
 
             :global(button) {
                 margin-right: 0;
-				margin-top: var(--spacing-2);
             }
 		}
 

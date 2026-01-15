@@ -119,9 +119,13 @@
 			border-radius: 15px 15px 0 0;
 		}
 
-		:global(.ce-block:not([data-readonly]):has(.accordion-wrapper) + .ce-block:not([data-accordion-wrapper]) .ce-block__content) {
+		:global(.ce-block:not([data-accordion-wrapper]) .ce-block__content) {
 			width: 100%;
-			background-color: var(--grey-inset-background-light);
+		}
+
+		:global(.image-tool) {
+			max-width: 850px;
+			margin: 0 auto;
 		}
 
 		:global([data-accordion-wrapper]:not([data-readonly])) {
