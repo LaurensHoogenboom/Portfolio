@@ -42,7 +42,8 @@ p, label, button, input, a, textarea, select, option, li {
 
 ul, ol {
 	padding-bottom: var(--spacing-4);
-	list-style-position: inside;
+	list-style-position: outside;
+	padding-left: var(--spacing-2);
 
 	li {
 		padding-bottom: var(--spacing-1);
