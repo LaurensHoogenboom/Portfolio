@@ -34,4 +34,4 @@ RUN cd /app && \
 
 WORKDIR /app
 
-CMD ["node", "--env-file=.env", "build/index.js"]
+CMD ["node", "--env-file=/app/.env", "build/index.js"]
