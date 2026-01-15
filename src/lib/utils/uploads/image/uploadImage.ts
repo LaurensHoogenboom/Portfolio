@@ -3,7 +3,7 @@ import { writeFile } from 'fs/promises';
 import { createUpload } from "$lib/server/db/cruds/uploads";
 import path from "path";
 import type { Upload } from "$lib/types/uploads";
-import { getWriteAndDevSafeUrl } from "../utils";
+import { getWriteUrl } from "../utils";
 
 const uploadImage = async (image: File | Buffer, title: string): Promise<Upload> => {
     const imageBuffer = image instanceof File ? await image.arrayBuffer() : image;
@@ -15,8 +15,8 @@ const uploadImage = async (image: File | Buffer, title: string): Promise<Upload>
     const fullImageName = `${title.replace(/[^a-zA-Z0-9]/g, "")}.webp`;
     const thumbnailImageName = `${title.replace(/[^a-zA-Z0-9]/g, "")}-thumnail.webp`;
 
-    const fullImageUrl = getWriteAndDevSafeUrl(fullImageName, 'image');
-    const thumbnailImageUrl = getWriteAndDevSafeUrl(thumbnailImageName, 'image');
+    const fullImageUrl = getWriteUrl(fullImageName, 'image');
+    const thumbnailImageUrl = getWriteUrl(thumbnailImageName, 'image');
 
     await writeFile(fullImageUrl, Buffer.from(fullImage));
     await writeFile(thumbnailImageUrl, Buffer.from(thumbnail));

@@ -1,8 +1,13 @@
-import { getUploadsFolder } from "$lib/server/db/utils/getUploadsFolder";
 import type { UploadFileType } from "$lib/types/uploads";
 import path from "path";
+import * as dotenv from "dotenv";
 
-const getWriteAndDevSafeUrl = (filename: string, fileType: UploadFileType) => {
+const getUploadsFolder = (type: 'cms' | 'portfolio') => {
+    dotenv.config();
+    return process.env.UPLOADS_FOLDER + `/${type}/`;
+}
+
+const getWriteUrl = (filename: string, fileType: UploadFileType) => {
     if (fileType == 'image') {
         return path.join(getUploadsFolder('portfolio'), 'images', filename);
     } else {
@@ -10,4 +15,4 @@ const getWriteAndDevSafeUrl = (filename: string, fileType: UploadFileType) => {
     }
 }
 
-export { getWriteAndDevSafeUrl };
+export { getWriteUrl, getUploadsFolder };

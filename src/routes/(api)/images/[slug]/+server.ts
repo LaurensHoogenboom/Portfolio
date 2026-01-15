@@ -1,12 +1,9 @@
 import type { RequestHandler } from './$types';
-import * as dotenv from "dotenv";
 import { error } from '@sveltejs/kit';
 import { readFileSync } from "node:fs";
-import { getUploadsFolder } from '$lib/server/db/utils/getUploadsFolder';
+import { getUploadsFolder } from '$lib/utils/uploads/utils';
 
 export const GET: RequestHandler = async ({ params }) => {
-    dotenv.config();
-
     const filename = params.slug;
     const path = getUploadsFolder('portfolio') + '/images/';
 
