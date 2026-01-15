@@ -34,4 +34,6 @@ RUN cd /app && \
 
 WORKDIR /app
 
-CMD ["node", "--env-file=/app/.env", "build/index.js"]
+ENV BODY_SIZE_LIMIT=20M
+
+CMD ["node", "build/index.js"]
