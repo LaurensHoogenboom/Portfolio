@@ -1,9 +1,9 @@
-*:not(h1, h2, h1 span, h2 span) {
+*:not(h1, h2, h1 span, h2 span, blockquote) {
 	font-family: "Figtree", sans-serif;
     font-size: 20px;
 }
 
-h1, h2 {
+h1, h2, blockquote {
     font-family: "Merriweather", serif;
 	padding-bottom: var(--spacing-2);
 }
@@ -50,7 +50,7 @@ ul, ol {
 	}
 }
 
-p {
+p, li, blockquote {
 	padding-bottom: var(--spacing-4);
 	max-width: 565px;
 	
@@ -63,6 +63,15 @@ p {
 			color: var(--primary-background-solid);
 		}
 	}	
+}
+
+blockquote {
+	text-align: center;
+	font-style: italic;
+	margin: 0 auto;
+	color: var(--grey-text);
+	margin-top: var(--spacing-3);
+	margin-bottom: var(--spacing-3);
 }
 
 /* Adobe Handwriting Ernie */

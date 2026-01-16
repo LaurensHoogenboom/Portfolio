@@ -61,6 +61,7 @@
 
 		.tab-item {
 			padding-bottom: 0;
+			max-width: initial;
 
 			button {
 				white-space: nowrap;

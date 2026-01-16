@@ -76,6 +76,7 @@
 				flex-shrink: 0;
 				list-style: none;
 				padding-bottom: var(--spacing-2);
+				max-width: initial;
 			}
 		}
 

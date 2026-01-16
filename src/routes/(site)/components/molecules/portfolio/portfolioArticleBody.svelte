@@ -85,7 +85,7 @@
 
 {#snippet contentBlock(b: OutputBlockData<string, any>)}
 	{#if b.type == 'header'}
-		<h2 id={b.id}>{b.data.text}</h2>
+		<h2 id={b.id}>{@html b.data.text}</h2>
 	{/if}
 
 	{#if b.type == 'paragraph'}
@@ -139,6 +139,10 @@
 			{/each}
 		</ol>
 	{/if}
+
+	{#if b.type == 'quote'}
+		<blockquote class="quote">{b.data.text}</blockquote>
+	{/if}
 {/snippet}
 
 <style>
@@ -149,7 +153,7 @@
 			margin-top: var(--spacing-4);
 		}
 
-		p {
+		p, li, blockquote {
 			max-width: 850px;
 		}
 

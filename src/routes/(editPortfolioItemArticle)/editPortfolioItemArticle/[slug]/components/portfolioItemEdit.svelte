@@ -10,6 +10,7 @@
 	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import type { Upload } from '$lib/types/uploads';
 	import { CustomImage } from './customImageTool';
+	import Quote from '@editorjs/quote';
 
 	let {
 		portfolioItem,
@@ -77,7 +78,8 @@
 			},
 			sanitize: sanitize,
 			maxLevel: 1
-		}
+		},
+		quote: Quote
 	};
 
 	const layoutTools = {
@@ -141,6 +143,15 @@
 			filter: drop-shadow(var(--grey-shadow-1));
 			margin: 0 auto;
 			margin-bottom: var(--spacing-4);
+		}
+
+		:global(.cdx-quote) {
+			margin: 0 auto;
+			max-width: 850px;
+
+			:global(.cdx-input) {
+				font-family: 'Merriweather', serif;
+			}
 		}
 	}
 </style>
