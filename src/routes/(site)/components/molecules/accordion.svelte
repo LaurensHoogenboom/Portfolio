@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from "$siteComponents/atoms/button.svelte";
 	import { ChevronDown } from "@lucide/svelte";
-	import type { Snippet } from "svelte";
+	import { onMount, type Snippet } from "svelte";
 
     const { title, children, isOpenedByDefault = false } : { title: string, children: Snippet, isOpenedByDefault?: boolean   } = $props();
 
@@ -16,6 +16,11 @@
             details.setAttribute('open', '');
         }
     }
+
+    onMount(() => {
+        if (!details) return;
+        if (isOpenedByDefault) details.setAttribute('open', '');
+    });
 </script>
 
 <details bind:this={details}>

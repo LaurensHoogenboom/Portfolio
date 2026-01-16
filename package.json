@@ -52,6 +52,7 @@
 		"@editorjs/image": "^2.10.3",
 		"@editorjs/list": "^2.0.9",
 		"@editorjs/paragraph": "^2.11.7",
+		"@editorjs/quote": "^2.7.6",
 		"@ikbenbas/editorjs-button": "^1.0.0",
 		"@lucide/svelte": "^0.503.0",
 		"@oslojs/crypto": "^1.0.1",

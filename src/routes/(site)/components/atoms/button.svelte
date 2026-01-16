@@ -75,7 +75,7 @@
 	{/if}
 	{#if title}
 		<span>
-			{title}
+			{@html title}
 		</span>
 	{/if}
 

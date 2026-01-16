@@ -26,6 +26,7 @@
 <style>
 	.portfolio-preview-box {
 		padding-bottom: 0;
+		max-width: initial;
 
 		button {
 			display: flex;
