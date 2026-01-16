@@ -48,9 +48,7 @@
             <Button type="submit" icon={ChevronLeft} style="secondary" onclick={previous} disabled={currentIndex == 0} />
         {/key}
 
-        <div>
-            <p>{@html slides[currentIndex].caption}</p>
-        </div>
+        <p>{@html slides[currentIndex].caption}</p>
 
         {#key currentIndex}
 		    <Button type="submit" icon={ChevronRight} style="secondary" onclick={next} disabled={currentIndex == slides.length - 1} />
@@ -63,6 +61,7 @@
 		display: grid;
 		grid-template-rows: 1fr max-content;
 		width: 100%;
+		padding-bottom: var(--spacing-3);
 
 		.slide-container {
 			display: flex;
@@ -76,7 +75,7 @@
 				flex-grow: 1;
 				flex-shrink: 0;
 				list-style: none;
-				padding-bottom: 0;
+				padding-bottom: var(--spacing-2);
 			}
 		}
 
@@ -85,12 +84,13 @@
             grid-template-columns: max-content 1fr max-content;
 			justify-self: center;
             grid-column-gap: var(--spacing-6);
-            margin-top: var(--spacing-6);
+            margin-top: var(--spacing-5);
             width: min(100%, 768px);
 
             p {
                 padding-bottom: 0;
                 text-align: center;
+				align-self: center;
             }
 
             :global(button) {
