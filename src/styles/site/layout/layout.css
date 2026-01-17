@@ -28,12 +28,19 @@ body:has(.portfolio-item-detail) {
 	}
 }
 
-nav .content-container {
-	padding-left: var(--spacing-6);
-	padding-right: var(--spacing-6);
-}
+nav .content-container, 
+footer .content-container {
+	padding: 0 var(--spacing-6);
 
+	@media (max-width: 1500px) {
+		padding: 0 var(--spacing-7);
+	}
+}
+ 
 main .content-container {
 	padding: var(--spacing-7) var(--spacing-6);
-}
 
+	@media (max-width: 1500px) {
+		padding: var(--spacing-7);
+	}
+}

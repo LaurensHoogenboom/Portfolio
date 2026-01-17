@@ -39,6 +39,10 @@
             clip-path: polygon(-40px -40px, calc(100% + 40px) -40px, calc(100% + 40px) 100%, -40px 100%);
             box-shadow: var(--grey-shadow-2);
 
+            @media (max-width: 1500px) {
+                grid-template-columns: 1.7fr 2fr;
+            }
+
             @media (hover:hover) {
                 :global(&:has(.content button:hover)) {
                     .thumbnail-wrapper .real {

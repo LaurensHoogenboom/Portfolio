@@ -35,5 +35,10 @@
     h1:after {
         content: 'D';
         opacity: 0.3;
+
+		@media (max-width: 1600px) {
+			content: 'E';
+			left: 30%;
+		}
     }
 </style>

@@ -102,6 +102,7 @@
 			z-index: 2;
 			border-radius: var(--border-radius-3);
 			clip-path: polygon(0 0, var(--la) 0, var(--lb) 55px, 100% 55px, 100% calc(100% + 30px), 0 calc(100% + 30px));
+			padding-bottom: var(--spacing-2);
 
 			.items-wrapper {
 				display: flex;

@@ -1,8 +1,8 @@
 <script lang="ts">
-    const { style, color = 'white' } : { style?: string, color?: 'white' | 'grey' } = $props();
+    const { style, color = 'white', CSSClass } : { style?: string, color?: 'white' | 'grey', CSSClass?: string } = $props();
 </script>
 
-<div class="outer" style="{style} --color: var(--{color == 'white' ? 'white' : 'grey-text'});">
+<div class="outer {CSSClass}" style="{style} --color: var(--{color == 'white' ? 'white' : 'grey-text'});">
     <div class="inner"></div>
 </div>
 

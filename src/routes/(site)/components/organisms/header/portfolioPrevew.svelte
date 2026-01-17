@@ -52,17 +52,26 @@
 
 <style>
 	.portfolio-preview {
-		--extra-width: calc((100vw - var(--page-width)) / 2);
-
-		@media (max-width: 1500px) {
-			--extra-width: 0px;
-		}
-
+		--extra-width: calc((100vw - var(--page-width)) / 2 + var(--spacing-5));
 		display: flex;
-		width: calc(100% + (var(--extra-width) + var(--spacing-5)));
+		width: calc(100% + (var(--extra-width)));
 		overflow: hidden;
 		flex-direction: column;
 		grid-row-gap: var(--spacing-5);
+
+		@media (max-width: 1500px) {
+			--extra-width: calc(var(--spacing-7) * 2);
+			margin-left: calc(0px - var(--spacing-7));
+			margin-right: calc(0px - var(--spacing-7));
+			margin-bottom: calc(0px - var(--spacing-7));
+			background-color: var(--primary-base);
+			padding-top: var(--spacing-7);
+			padding-left: var(--spacing-7);
+			padding-bottom: var(--spacing-7);
+			border-top-left-radius: var(--border-radius-3);
+			border-top-right-radius: var(--border-radius-3);
+			border-top: 1px solid var(--primary-borders);
+		}
 	}
 
 	.box-list {

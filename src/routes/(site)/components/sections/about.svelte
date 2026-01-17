@@ -55,6 +55,10 @@
 		grid-gap: var(--spacing-6);
 		align-items: center;
 
+		@media (max-width: 1500px) {
+			grid-template-columns: 400px 1fr;
+		}
+
 		.profile-picture {
 			position: relative;
 			aspect-ratio: 1 / 1;
@@ -79,6 +83,10 @@
 			position: relative;
 			width: 100%;
 			height: 400px;
+
+			@media (max-width: 1500px) {
+				display: none;
+			}
 
 			:global(.icon-square) {
 				position: absolute;
