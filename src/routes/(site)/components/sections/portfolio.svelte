@@ -69,6 +69,11 @@
 			--lb: 460px;
 		}
 
+		@media (max-width: 900px) {
+			--la: calc(100% - 340px - var(--spacing-2));
+			--lb: calc(100% - 300px - var(--spacing-2));
+		}
+
 		.files-dummy {
 			position: absolute;
 			width: 100%;
@@ -103,6 +108,7 @@
 			border-radius: var(--border-radius-3);
 			clip-path: polygon(0 0, var(--la) 0, var(--lb) 55px, 100% 55px, 100% calc(100% + 30px), 0 calc(100% + 30px));
 			padding-bottom: var(--spacing-2);
+			padding-top: var(--spacing-2);
 
 			.items-wrapper {
 				display: flex;

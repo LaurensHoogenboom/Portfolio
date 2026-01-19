@@ -38,7 +38,7 @@
 		@media (max-width: 1180px) {
 			grid-auto-flow: column;
 			grid-template-columns: max-content max-content 2fr max-content;
-			
+
 			hr:first-of-type {
 				display: none;
 			}
@@ -60,6 +60,41 @@
 
 		p {
 			padding-bottom: 0;
+		}
+
+		@media (max-width: 900px) {
+			grid-template-columns: 1fr;
+			grid-auto-flow: row;
+			justify-items: center;
+			padding-top: calc(var(--spacing-7) + var(--border-radius-3));
+			padding-bottom: var(--spacing-7);
+			height: initial;
+			grid-row-gap: var(--spacing-4);
+
+			.watermark {
+				grid-row-start: 1;
+			}
+
+			p {
+				text-align: center;
+				padding-bottom: var(--spacing-2);
+
+				a {
+					display: inline-block;
+					padding-top: var(--spacing-2);
+					width: 100%;
+				}
+			}
+
+			hr:first-of-type {
+				display: block;
+				width: 50px;
+				grid-row-start: 2;
+			}
+
+			hr:last-of-type {
+				display: none;
+			}
 		}
 	}
 </style>

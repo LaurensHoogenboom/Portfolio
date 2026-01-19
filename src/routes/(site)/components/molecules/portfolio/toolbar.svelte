@@ -80,6 +80,10 @@
 			@media (max-width: 1500px) {
 				padding: 0 var(--spacing-7);
 			}
+
+			@media (max-width: 900px) {
+				padding: 0 var(--spacing-2);
+			}
 		}
 
 		&:after {
