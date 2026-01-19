@@ -47,6 +47,14 @@
 <style>
 	:global(#about) {
 		overflow: hidden;
+
+		@media (max-width: 1180px) {
+			overflow: visible;
+
+			:global(.content-container) {
+				padding-top: 0;
+			}
+		}
 	}
 
 	.about-content {
@@ -59,6 +67,11 @@
 			grid-template-columns: 400px 1fr;
 		}
 
+		@media (max-width: 1180px) {
+			grid-template-columns: 1fr;
+			grid-gap: var(--spacing-3);
+		}
+
 		.profile-picture {
 			position: relative;
 			aspect-ratio: 1 / 1;
@@ -69,10 +82,24 @@
 			z-index: 2;
 			background-size: cover;
 			background-position: center;
+
+			@media (max-width: 1180px) {
+				justify-self: center;
+				margin-top: calc(0px - var(--spacing-4));
+				width: min(350px, calc(100% - var(--spacing-4)));
+			}
 		}
 
 		.main-content {
 			padding-top: var(--spacing-4);
+
+			@media (max-width: 1180px) {
+				text-align: center;
+
+				h1 {
+					justify-self: center;
+				}
+			}
 
 			p {
 				max-width: initial;

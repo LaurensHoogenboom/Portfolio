@@ -18,7 +18,7 @@
     .portfolio-article-header{
         display: grid;
         grid-template-rows: 1fr max-content max-content;
-        min-height: calc(100vh - var(--spacing-7) - var(--spacing-6));
+        min-height: calc(100dvh - var(--spacing-7) - var(--spacing-6));
         width: 100%;
         grid-row-gap:  var(--spacing-6);
 

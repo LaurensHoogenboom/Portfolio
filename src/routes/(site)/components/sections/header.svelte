@@ -43,12 +43,12 @@
 		z-index: 1;
 		border-bottom-left-radius: var(--border-radius-3);
 		border-bottom-right-radius: var(--border-radius-3);
-		min-height: calc(100dvh - var(--nav-height) + var(--spacing-6));
+		min-height: calc(100dvh - (var(--nav-height) + var(--spacing-6)));
 		overflow: hidden;
 
 		@media (min-height: 1000px) and (min-width: 1500px) {
 			min-height: initial;
-			height: calc(100dvh - var(--nav-height) + var(--spacing-6));
+			height: calc(100dvh - (var(--nav-height) + var(--spacing-6)));
 			max-height: 900px;
 		}
 
@@ -96,7 +96,7 @@
 
 				@media (min-height: 1000px) {
 					min-height: initial;
-					height: calc(100dvh - var(--nav-height) + var(--spacing-6));
+					height: calc(100dvh - (var(--nav-height) + var(--spacing-6)));
 					max-height: 650px;
 				}
 

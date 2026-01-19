@@ -7,32 +7,30 @@
 </script>
 
 <ContentContainer id="contact" theme="transparent">
-	<div>
+	<article>
 		<h1>Contact</h1>
 		<p>Vragen, opmerkingen, over mij, mijn werk of deze website? Of gewoon zin in een bak koffie? Neem gerust contact op!</p>
+	</article>
 
-		<div class="contact-info">
-			<ButtonLinkGroup>
-				<Button icon={Mail} type="goto" id="mailadres" style="secondary" />
-				<a href="mailto:me@laurens">mail@laureato.nl</a>
-			</ButtonLinkGroup>
+	<div class="contact-info">
+		<ButtonLinkGroup>
+			<Button icon={Mail} type="goto" id="mailadres" style="secondary" />
+			<a href="mailto:me@laurens">mail@laureato.nl</a>
+		</ButtonLinkGroup>
 
-			<ButtonLinkGroup>
-				<Button icon={Phone} type="goto" id="phonenumber" style="secondary" />
-				<a href="tel:+31622854800">+31 6 22 85 48 00</a>
-			</ButtonLinkGroup>
-		</div>
+		<ButtonLinkGroup>
+			<Button icon={Phone} type="goto" id="phonenumber" style="secondary" />
+			<a href="tel:+31622854800">+31 6 22 85 48 00</a>
+		</ButtonLinkGroup>
 	</div>
 
-	<div>
-		<form>
-			<LabelInputGroup name="name" type="text" label="Naam" required={true} />
-			<LabelInputGroup name="name" type="email" label="E-mailadres" required={true} />
-			<LabelInputGroup name="message" type="textarea" label="Bericht" required={true} />
+	<form>
+		<LabelInputGroup name="name" type="text" label="Naam" required={true} />
+		<LabelInputGroup name="name" type="email" label="E-mailadres" required={true} />
+		<LabelInputGroup name="message" type="textarea" label="Bericht" required={true} />
 
-			<Button type="submit" title="Versturen" CSSClass="submit-button" />
-		</form>
-	</div>
+		<Button type="submit" title="Versturen" CSSClass="submit-button" />
+	</form>
 </ContentContainer>
 
 <style>
@@ -50,6 +48,7 @@
 			display: grid;
 			position: relative;
 			grid-template-columns: max-content 1fr;
+			grid-template-rows: max-content 1fr;
 			grid-column-gap: var(--spacing-8);
 			border: 1px solid var(--grey-borders);
 			background: var(--white-background-gradient);
@@ -69,7 +68,12 @@
 				padding-right: var(--spacing-7);
 				grid-template-columns: 1fr 1fr;
 				grid-column-gap: var(--spacing-7);
-				grid-template-columns: 1fr 1fr;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+
+			@media (max-width: 1180px) {
+				grid-template-columns: 1fr;
+				grid-gap: var(--spacing-5);
 			}
 
 			&:before {
@@ -106,6 +110,8 @@
 				display: flex;
 				flex-direction: column;
 				row-gap: var(--spacing-3);
+				grid-column-start: 1;
+				padding-top: var(--spacing-3);
 			}
 
 			form {
@@ -113,13 +119,18 @@
 				grid-template-columns: 1fr 1fr;
 				grid-row-gap: var(--spacing-4);
 				grid-column-gap: var(--spacing-4);
+				grid-column-start: 2;
+				grid-row-start: 1;
+				grid-row-end: 3;
 
 				:global(.submit-button) {
 					justify-self: start;
 				}
 
-				@media (max-width: 1280px) {
+				@media (max-width: 1180px) {
 					grid-template-columns: 1fr;
+					grid-column-start: 1;
+					grid-row-start: initial;
 				}
 			}
 		}

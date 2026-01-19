@@ -11,7 +11,7 @@ body:has(.portfolio-item-detail) {
 }
 
 .site-wrapper {
-	min-height: 100vh;
+	min-height: 100dvh;
 }
 
 .content-container-wrapper {

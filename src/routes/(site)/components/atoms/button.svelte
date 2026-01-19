@@ -41,6 +41,8 @@
 	const gotoOnClick = (e: MouseEvent) => {
 		if (type == 'goto-external') return;
 
+		if (onclick) onclick();
+
 		if (href?.startsWith('#')) {
 			const hash = href.split('#')[1];
 			if (!hash) return;

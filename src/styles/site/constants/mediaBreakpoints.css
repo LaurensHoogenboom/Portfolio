@@ -1,5 +1,6 @@
 :root {
     --tablet-width: 1500px;
+    --small-tablet-width: 1180px;
     --phone-width: 768px;
 }
 

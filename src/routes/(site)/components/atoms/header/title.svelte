@@ -36,7 +36,7 @@
         content: 'D';
         opacity: 0.3;
 
-		@media (max-width: 1600px) {
+		@media (max-width: 1500px) {
 			content: 'E';
 			left: 30%;
 		}

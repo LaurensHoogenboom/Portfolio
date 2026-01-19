@@ -5,15 +5,16 @@
 	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../utils/portfolioUtils';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
+	import { FlaskConical, Palette, SplinePointer } from '@lucide/svelte';
 
 	interface IPortfolioTabItem extends ITabItem {
 		type: PortfolioItemType;
 	}
 
 	const tabItems: IPortfolioTabItem[] = [
-		{ title: 'Research through Design', type: 'research' },
-		{ title: 'Tekeningen', type: 'art' },
-		{ title: 'Designs', type: 'project' }
+		{ title: 'Research through Design', type: 'research', alternateIcon: FlaskConical },
+		{ title: 'Tekeningen', type: 'art', alternateIcon: Palette  },
+		{ title: 'Designs', type: 'project', alternateIcon: SplinePointer }
 	];
 
 	const changePortfolioItemType = (i: number) => {

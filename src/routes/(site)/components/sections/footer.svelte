@@ -35,6 +35,20 @@
 		height: calc(150px + 2 * var(--border-radius-3));
 		padding-top: var(--spacing-5);
 
+		@media (max-width: 1180px) {
+			grid-auto-flow: column;
+			grid-template-columns: max-content max-content 2fr max-content;
+			
+			hr:first-of-type {
+				display: none;
+			}
+
+			.watermark {
+				grid-column-start: 1;
+				padding-right: var(--spacing-2);
+			}
+		}
+
 		.watermark {
 			color: var(--grey-ornament);
 			font-family: 'Adobe Handwriting', serif;

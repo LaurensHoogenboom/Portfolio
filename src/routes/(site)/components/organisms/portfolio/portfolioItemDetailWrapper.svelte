@@ -62,7 +62,7 @@
 		.content-wrapper {
 			position: relative;
 			padding: var(--spacing-7);
-			height: 100vh;
+			height: 100dvh;
 			width: 100%;
 
 			&:has(.overflow-container) {

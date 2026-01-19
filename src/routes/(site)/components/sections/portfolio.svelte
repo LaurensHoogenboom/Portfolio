@@ -110,6 +110,11 @@
 				grid-gap: var(--spacing-7);
 				padding-top: var(--spacing-6);
 
+				@media (max-width: 1180px) {
+					padding-top: var(--spacing-7);
+					grid-gap: var(--spacing-8);
+				}
+
 				&.art-wrapper {
 					flex-direction: row;
 					list-style: none;

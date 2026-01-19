@@ -62,5 +62,9 @@
 				bottom: 10px;
 			}
 		}
+
+		@media (max-width: 1180px) {
+			height: min(380px, calc(100dvh - 200px));
+		}
 	}
 </style>

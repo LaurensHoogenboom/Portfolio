@@ -72,6 +72,10 @@
 			border-top-right-radius: var(--border-radius-3);
 			border-top: 1px solid var(--primary-borders);
 		}
+
+		@media (max-width: 1180px) {
+			padding-bottom: calc(var(--spacing-7) + var(--spacing-5));
+		}
 	}
 
 	.box-list {

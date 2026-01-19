@@ -6,12 +6,13 @@ html {
 	scrollbar-gutter: stable;
 }
 
-body:has(.portfolio-item-detail) {
+body:has(.portfolio-item-detail), 
+body:has(.nav-items.expanded) {
     overflow: hidden;
 }
 
 .site-wrapper {
-	min-height: 100vh;
+	min-height: 100dvh;
 }
 
 .content-container-wrapper {

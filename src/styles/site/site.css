@@ -19,6 +19,7 @@
 
 /* Layout */
 @import url("./layout/layout.css") layer(layouts);
+@import url("./layout/grid.css") layer(layouts);
 
 /* Components */
 @import url("./components/button.css") layer(components);

@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { type Icon as IconType } from '@lucide/svelte';
 
 	export interface ITabItem {
 		title: string;
+		alternateIcon?: typeof IconType;
 	}
 
 	const {
@@ -43,9 +45,20 @@
 
 <ul class="tab-bar {CSSClass} {style}" bind:this={tabbar} style="--selected-width: {selectedWidth}px; --selected-left: {selectedLeft}px;">
 	{#each tabItems as item, i}
-		<li class="tab-item {i == selectedIndex ? 'selected' : ''}">
+		{@const selected = i == selectedIndex}
+
+		<li class="tab-item {selected ? 'selected' : ''}">
 			<button onclick={() => changeSelection(i)}>
-				{item.title}
+				<span class="text">
+					{item.title}
+				</span>
+
+				{#if item.alternateIcon}
+					{@const Icon = item.alternateIcon}
+					<div class="alternate-icon">
+						<Icon strokeWidth={selected ? 2.5 : 2} />
+					</div>
+				{/if}
 			</button>
 		</li>
 	{/each}
@@ -71,6 +84,10 @@
 				position: relative;
 				z-index: 1;
 				cursor: pointer;
+
+				.alternate-icon {
+					display: none;
+				}
 			}
 		}
 
@@ -87,6 +104,18 @@
 					color: var(--primary-base);
 					transition: padding var(--default-animation-duration);
 
+					@media (max-width: 1180px) {
+						.alternate-icon {
+							display: flex;
+							align-items: center;
+							padding-bottom: 2px;
+						}
+
+						.text {
+							display: none;
+						}
+					}
+
 					@media (hover: hover) {
 						&:hover {
 							background-color: var(--grey-inset-background-light);
@@ -97,6 +126,22 @@
 				:global(&.selected) button {
 					font-weight: bold;
 					animation: click 0.2s;
+
+					@media (max-width: 1180px) {
+						position: relative;
+
+						&:after {
+							content: '';
+							height: 2px;
+							background-color: var(--primary-base);
+							left: 50%;
+							transform: translateX(-50%);
+							width: 40px;
+							bottom: 3px;
+							display: block;
+							position: absolute;
+						}
+					}
 				}
 			}
 		}
