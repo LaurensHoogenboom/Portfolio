@@ -24,6 +24,18 @@
 		&:not(:last-of-type) {
 			margin-right: var(--spacing-3);
 		}
+
+		&:not(.round) {
+			@media (max-width: 680px) {
+				width: 100%;
+				justify-content: center;
+
+				&:not(:last-of-type) {
+					margin-bottom: var(--spacing-3);
+					margin-right: 0;
+				}
+			}
+		}
 	}
 
 	&:not(.inline, .transparent) {
@@ -103,6 +115,12 @@
 			}
 		}
 	}
+
+	.title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 .section-dark .button {

@@ -27,6 +27,7 @@
 
 			:global(&:has(.expanded)) {
 				min-height: 100dvh;
+				border-radius: 0;
 
 				.content-container {
                     grid-row-gap: 0;
@@ -40,22 +41,45 @@
 			align-items: center;
 			grid-column-gap: var(--spacing-4);
 
-			h1:after {
-				content: 'LTH';
-				font-size: 60px;
-				top: 15px;
-				left: 50%;
-				transform: translateX(-50%) translateY(0);
-				opacity: 0.2;
-				line-height: 60px;
+			@media (max-width: 680px) {
+				grid-template-columns: 45px 1fr 45px;
+				grid-column-gap: 0;
 			}
 		}
 
-		.logo {
+		h1.logo {
 			font-size: 30px;
 			font-family: 'Adobe Handwriting';
 			padding-bottom: 0;
 			font-weight: normal;
+
+			&:after {
+				content: 'LTH';
+				font-size: 60px;
+				top: 10px;
+				left: 50%;
+				transform: translateX(-50%) translateY(0);
+				opacity: 0.2;
+				line-height: 60px;
+
+				@media (max-width: 680px) {
+					font-size: 50px;
+					line-height: 50px;
+				}
+			}
+
+			@media (max-width: 680px) {
+				font-size: 22px;
+				grid-column-start: 2;
+				text-align: center;
+			}
+		}
+
+		hr {
+			@media (max-width: 680px) {
+				opacity: 0;
+				grid-column-start: 1;
+			}
 		}
 	}
 </style>

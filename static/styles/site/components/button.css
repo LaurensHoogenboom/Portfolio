@@ -5,7 +5,6 @@
 	display: inline-flex;
 	grid-gap: 15px;
 	align-items: center;
-	border: 1px solid var(--primary-base);
 	transition:
 		background-color var(--default-animation-duration),
 		opacity var(--default-animation-duration);
@@ -18,11 +17,24 @@
 		padding: 0 var(--spacing-4);
 		border-radius: var(--border-radius-1);
 		height: 45px;
+		border: 1px solid var(--primary-base);
 		--hover-background-color: var(--primary-background-solid);
 		--background-color: var(--primary-base);
 
 		&:not(:last-of-type) {
 			margin-right: var(--spacing-3);
+		}
+
+		&:not(.round) {
+			@media (max-width: 680px) {
+				width: 100%;
+				justify-content: center;
+
+				&:not(:last-of-type) {
+					margin-bottom: var(--spacing-3);
+					margin-right: 0;
+				}
+			}
 		}
 	}
 
@@ -103,6 +115,12 @@
 			}
 		}
 	}
+
+	.title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 .section-dark .button {

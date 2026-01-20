@@ -70,8 +70,13 @@
 		}
 
 		@media (max-width: 900px) {
-			--la: calc(100% - 340px - var(--spacing-2));
-			--lb: calc(100% - 300px - var(--spacing-2));
+			--la: calc(100% - 330px - var(--spacing-2));
+			--lb: calc(100% - 290px - var(--spacing-2));
+		}
+
+		@media (max-width: 680px) {
+			--la: calc(100% - 265px - var(--spacing-2));
+			--lb: calc(100% - 235px - var(--spacing-2));
 		}
 
 		.files-dummy {
@@ -110,6 +115,11 @@
 			padding-bottom: var(--spacing-2);
 			padding-top: var(--spacing-2);
 
+			@media (max-width: 680px) {
+				border-top-left-radius: 0;
+				clip-path: polygon(0 15px, var(--la) 15px, var(--lb) 55px, 100% 55px, 100% calc(100% + 30px), 0 calc(100% + 30px));
+			}
+
 			.items-wrapper {
 				display: flex;
 				flex-direction: column;
@@ -121,11 +131,48 @@
 					grid-gap: var(--spacing-8);
 				}
 
+				@media (max-width: 680px) {
+					padding-top: var(--spacing-7);
+					grid-gap: calc(var(--spacing-7) + var(--spacing-2));
+				}
+
+				@media (max-width: 420px) {
+					padding-top: var(--spacing-6);
+				}
+
 				&.art-wrapper {
-					flex-direction: row;
+					display: grid;
+					grid-template-columns: repeat(5, minmax(0, 1fr));
+					grid-auto-rows: 1fr;
 					list-style: none;
-					flex-wrap: wrap;
-					grid-gap: var(--spacing-6);
+					grid-column-gap: var(--spacing-6);
+					grid-row-gap: var(--spacing-5);
+					grid-auto-flow: row dense;
+
+					@media (max-width: 1500px) {
+						grid-template-columns: repeat(4, minmax(0, 1fr));
+						grid-column-gap: var(--spacing-5);
+						grid-row-gap: var(--spacing-4);
+					}
+
+					@media (max-width: 1180px) {
+						grid-template-columns: repeat(3, minmax(0, 1fr));
+						padding-top: var(--spacing-6);
+					}
+
+					@media (max-width: 900px) {
+						grid-template-columns: repeat(2, minmax(0, 1fr));
+						grid-column-gap: var(--spacing-4);
+					}
+
+					@media (max-width: 680px) {
+						padding-top: var(--spacing-4);
+					}
+
+					@media (max-width: 420px) {
+						grid-template-columns: repeat(1, minmax(0, 1fr));
+						grid-auto-rows: initial;
+					}
 				}
 			}
 
@@ -142,6 +189,10 @@
 						background-color: var(--grey-inset-background);
 						color: var(--grey-text);
 					}
+				}
+
+				@media (max-width: 680px) {
+					width: initial;
 				}
 			}
 		}

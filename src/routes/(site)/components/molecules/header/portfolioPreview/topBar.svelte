@@ -1,10 +1,9 @@
 <script lang="ts">
-	import type { ITabItem } from "$siteComponents/atoms/tabbar.svelte";
-	import TabBar from "$siteComponents/atoms/tabbar.svelte";
-	import type { PortfolioItemType } from "$lib/types/portfolio";
+	import type { ITabItem } from '$siteComponents/atoms/tabbar.svelte';
+	import TabBar from '$siteComponents/atoms/tabbar.svelte';
+	import type { PortfolioItemType } from '$lib/types/portfolio';
 
-	
-    interface headerPortfolioTabItem extends ITabItem {
+	interface headerPortfolioTabItem extends ITabItem {
 		type: PortfolioItemType | undefined;
 	}
 
@@ -14,23 +13,30 @@
 		{ title: 'Tekeningen', type: 'art' }
 	];
 
-    const { setPortfolioItemType } : { setPortfolioItemType: (type: PortfolioItemType | undefined) => void } = $props();
+	const { setPortfolioItemType }: { setPortfolioItemType: (type: PortfolioItemType | undefined) => void } = $props();
 
-    const onSelectionChange = (index: number) => {
-        setPortfolioItemType(tabItems[index].type);
-    }
+	let selectedIndex = $state(0);
+
+	const onSelectionChange = (index: number) => {
+		selectedIndex = index;
+		setPortfolioItemType(tabItems[index].type);
+	};
 </script>
 
 <div class="top-bar">
-    <TabBar {tabItems} onSelectionChange={onSelectionChange} />
-    <hr />
+	<TabBar {tabItems} {onSelectionChange} {selectedIndex} CSSClass="tab-bar"/>
+	<hr />
 </div>
 
 <style>
-    .top-bar {
-        display: grid;
+	.top-bar {
+		display: grid;
 		align-items: center;
 		grid-column-gap: var(--spacing-4);
 		grid-template-columns: max-content 1fr;
+
+		:global(.select) {
+			display: none;
+		}
 	}
 </style>

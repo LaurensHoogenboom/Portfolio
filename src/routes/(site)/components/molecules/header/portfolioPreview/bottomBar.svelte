@@ -44,7 +44,7 @@
 		justify-content: end;
 
 		@media (max-width: 1500px) {
-			--right: var(--spacing-7);
+			--right: var(--vertical-spacing);
 		}
 
 		:global(.button-group button:not(:last-of-type)) {

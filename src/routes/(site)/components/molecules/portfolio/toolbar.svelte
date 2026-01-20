@@ -75,15 +75,7 @@
 			flex-direction: column;
 			align-items: flex-end;
 			width: min(100%, var(--page-width));
-			padding: 0 var(--spacing-6);
-
-			@media (max-width: 1500px) {
-				padding: 0 var(--spacing-7);
-			}
-
-			@media (max-width: 900px) {
-				padding: 0 var(--spacing-2);
-			}
+			padding: 0 var(--vertical-spacing);
 		}
 
 		&:after {

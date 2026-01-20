@@ -88,6 +88,11 @@
 				margin-top: calc(0px - var(--spacing-4));
 				width: min(350px, calc(100% - var(--spacing-4)));
 			}
+
+			@media (max-width: 680px) {
+				border-width: 5px;
+				width: min(250px, calc(100% - var(--spacing-4)));
+			}
 		}
 
 		.main-content {

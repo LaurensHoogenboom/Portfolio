@@ -1,5 +1,14 @@
 :root {
 	--page-width: 1500px;
+	--vertical-spacing: var(--spacing-6);
+
+	@media (max-width: 1500px) {
+		--vertical-spacing: var(--spacing-7);
+	}
+
+	@media (max-width: 680px) {
+		--vertical-spacing: var(--spacing-3);
+	}
 }
 
 html {
@@ -31,17 +40,9 @@ body:has(.nav-items.expanded) {
 
 nav .content-container, 
 footer .content-container {
-	padding: 0 var(--spacing-6);
-
-	@media (max-width: 1500px) {
-		padding: 0 var(--spacing-7);
-	}
+	padding: 0 var(--vertical-spacing);
 }
  
 main .content-container {
-	padding: var(--spacing-7) var(--spacing-6);
-
-	@media (max-width: 1500px) {
-		padding: var(--spacing-7);
-	}
+	padding: var(--spacing-7) var(--vertical-spacing);
 }

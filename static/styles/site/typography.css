@@ -1,9 +1,9 @@
-*:not(h1, h2, h1 span, h2 span) {
+*:not(h1, h2, h1 span, h2 span, blockquote) {
 	font-family: "Figtree", sans-serif;
     font-size: 20px;
 }
 
-h1, h2 {
+h1, h2, blockquote {
     font-family: "Merriweather", serif;
 	padding-bottom: var(--spacing-2);
 }
@@ -26,6 +26,15 @@ h1 {
 		z-index: -1;
 		color: var(--grey-ornament);
     }
+
+	@media (max-width: 680px) {
+		font-size: 50px;
+
+		&:after {
+			left: 50%;
+			transform: translateX(-60%);
+		}
+	}
 }
 
 h2 {
@@ -33,23 +42,28 @@ h2 {
 	color: var(--primary-base);
 }
 
-p, label, button, input, a, textarea, select, option, li {
+p, label, button, input, a, textarea, select, option, li, b, i {
     font-family: "Figtree", sans-serif;
 	color: var(--grey-text);
 	position: relative;
 	z-index: 1;
+
+	@media (max-width: 680px) {
+		font-size: 18px !important;
+	}
 }
 
 ul, ol {
 	padding-bottom: var(--spacing-4);
-	list-style-position: inside;
+	list-style-position: outside;
+	padding-left: var(--spacing-2);
 
 	li {
 		padding-bottom: var(--spacing-1);
 	}
 }
 
-p {
+p, li, blockquote {
 	padding-bottom: var(--spacing-4);
 	max-width: 565px;
 	
@@ -61,7 +75,16 @@ p {
 		a:hover {
 			color: var(--primary-background-solid);
 		}
-	}	
+	}
+}
+
+blockquote {
+	text-align: center;
+	font-style: italic;
+	margin: 0 auto;
+	color: var(--grey-text);
+	margin-top: var(--spacing-3);
+	margin-bottom: var(--spacing-3);
 }
 
 /* Adobe Handwriting Ernie */

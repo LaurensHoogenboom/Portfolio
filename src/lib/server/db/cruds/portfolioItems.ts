@@ -32,18 +32,12 @@ const getPortfolioItemById = async (id: string) => {
 }
 
 const getPortfolioItemByTitle = async (title: string) => {
-    const item = await db.query.portfolioItems.findFirst({
+    return await db.query.portfolioItems.findFirst({
         where: (portfolioItems, {eq}) => eq(portfolioItems.title, title),
         with: {
             upload: true
         }
     });
-
-    if (item) {
-        return item;
-    } else {
-        throw new Error("No portfolio item with this title was found.");
-    }
 }
 
 const createPortfolioItem = async (data: typeof portfolioItems.$inferInsert) => {

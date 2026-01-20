@@ -26,6 +26,15 @@ h1 {
 		z-index: -1;
 		color: var(--grey-ornament);
     }
+
+	@media (max-width: 680px) {
+		font-size: 50px;
+
+		&:after {
+			left: 50%;
+			transform: translateX(-60%);
+		}
+	}
 }
 
 h2 {
@@ -33,11 +42,15 @@ h2 {
 	color: var(--primary-base);
 }
 
-p, label, button, input, a, textarea, select, option, li {
+p, label, button, input, a, textarea, select, option, li, b, i {
     font-family: "Figtree", sans-serif;
 	color: var(--grey-text);
 	position: relative;
 	z-index: 1;
+
+	@media (max-width: 680px) {
+		font-size: 18px !important;
+	}
 }
 
 ul, ol {
@@ -62,7 +75,7 @@ p, li, blockquote {
 		a:hover {
 			color: var(--primary-background-solid);
 		}
-	}	
+	}
 }
 
 blockquote {
