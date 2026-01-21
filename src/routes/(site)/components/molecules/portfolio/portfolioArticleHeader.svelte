@@ -19,7 +19,7 @@
 		display: grid;
 		grid-template-rows: 1fr max-content max-content;
 		height: calc(100dvh - var(--spacing-7) - var(--spacing-6));
-		min-height: 900px;
+		min-height: 800px;
 		max-height: 1000px;
 		width: 100%;
 		grid-row-gap: var(--spacing-6);
