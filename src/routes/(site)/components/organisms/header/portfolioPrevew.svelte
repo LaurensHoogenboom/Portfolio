@@ -4,6 +4,7 @@
 	import TopBar from '$siteComponents/molecules/header/portfolioPreview/topBar.svelte';
 	import BottomBar from '$siteComponents/molecules/header/portfolioPreview/bottomBar.svelte';
 	import { onMount } from 'svelte';
+	import { SliderSwipe } from '../../../utils/sliderSwipe';
 
 	const { previewItems }: { previewItems: IPortfolioItem[] } = $props();
 
@@ -18,83 +19,47 @@
 	let selectedPortfolioItemId = $derived(visibleItems[selectedIndex].id);
 	let selectedPortfolioItemElement: HTMLElement | undefined = $state();
 	let boxContainer: HTMLUListElement;
-
-	$effect(() => {
-		selectedPortfolioItemElement = document.getElementById(selectedPortfolioItemId) ?? undefined;
-		if (!selectedPortfolioItemElement || !boxContainer) return;
-
-		currentElementScroll = Math.abs(boxContainer.offsetLeft - selectedPortfolioItemElement.offsetLeft);
-
-		boxContainer.scrollTo({
-			left: currentElementScroll,
-			top: 0,
-			behavior: 'smooth'
-		});
-	});
+	let sliderSwipe: SliderSwipe;
 
 	onMount(() => {
-		boxContainer.addEventListener('touchstart', touchStart);
-		boxContainer.addEventListener('touchmove', touchMove);
-		boxContainer.addEventListener('touchend', touchEnd);
+		sliderSwipe = new SliderSwipe(boxContainer, (index: number) => (selectedIndex = index), previewItems.length - 1);
+		sliderSwipe.run();
 
-		return () => {
-			boxContainer.removeEventListener('touchstart', touchStart);
-			boxContainer.removeEventListener('touchmove', touchMove);
-			boxContainer.removeEventListener('touchend', touchEnd);
-		};
+		return () => sliderSwipe.dispose();
 	});
 
-	let startX = 0;
-	let currentElementScroll = 0;
-	let isDragging = false;
+	$effect(() => {
+		if (!sliderSwipe || !boxContainer) return;
+		updateSliderScroll(selectedPortfolioItemId, selectedIndex, visibleItems);
+	});
 
-	const touchStart = (e: TouchEvent) => {
-		startX = e.touches[0].clientX;
-		isDragging = true;
-	};
+	const updateSliderScroll = (id: string, index: number, visibleItems: IPortfolioItem[]) => {
+		selectedPortfolioItemElement = document.getElementById(id) ?? undefined;
+		if (!selectedPortfolioItemElement) return;
 
-	const touchMove = (e: TouchEvent) => {
-		if (!isDragging || !boxContainer || !selectedPortfolioItemElement) return;
+		sliderSwipe.currentElementScroll = Math.abs(boxContainer.offsetLeft - selectedPortfolioItemElement.offsetLeft);
+		sliderSwipe.currentIndex = index;
+		sliderSwipe.maxIndex = visibleItems.length - 1;
 
-		e.preventDefault();
-
-		const currentX = e.touches[0].clientX;
-		const diff = currentX - startX;
-
-		boxContainer.scrollTo({ left: currentElementScroll - diff });
-	};
-
-	const touchEnd = (e: TouchEvent) => {
-		if (!isDragging || !boxContainer || !selectedPortfolioItemElement) return;
-
-		isDragging = false;
-		const endX = e.changedTouches[0].clientX;
-		const diff = startX - endX;
-		const threshold = 100;
-
-		if (Math.abs(diff) > threshold) {
-			switch (true) {
-				case diff > 0 && selectedIndex < visibleItems.length - 1:
-					selectedIndex++;
-					break;
-				case diff < 0 && selectedIndex > 0:
-					selectedIndex--;
-					break;
-				default:
-					snapBack();
-					break;
-			}
-		} else snapBack();
-	};
-
-	const snapBack = () => {
 		boxContainer.scrollTo({
-			left: currentElementScroll,
+			left: sliderSwipe.currentElementScroll,
 			top: 0,
 			behavior: 'smooth'
 		});
 	};
+
+	let resizeTimeout: NodeJS.Timeout;
+
+	const handleResize = () => {
+		clearTimeout(resizeTimeout);
+
+		resizeTimeout = setTimeout(() => {
+			updateSliderScroll(selectedPortfolioItemId, selectedIndex, visibleItems);
+		}, 200);
+	};
 </script>
+
+<svelte:window onresize={handleResize} />
 
 <div class="portfolio-preview">
 	<TopBar

@@ -19,7 +19,7 @@
 		size = 'normal',
 		stretched,
 		scrollContainer,
-		gotoFromNav
+		navigateFromResponsiveNav
 	}: {
 		title?: string;
 		icon?: typeof IconType;
@@ -34,7 +34,7 @@
 		size?: 'normal' | 'small';
 		stretched?: boolean;
 		scrollContainer?: HTMLElement;
-		gotoFromNav?: boolean;
+		navigateFromResponsiveNav?: boolean;
 	} = $props();
 
 	const classString = `button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''} ${size} ${stretched ? 'stretched' : ''}`;
@@ -51,7 +51,7 @@
 
 			e.preventDefault();
 
-			const navCorrection = gotoFromNav ? window.innerHeight - 30 : 0;
+			const navCorrection = navigateFromResponsiveNav ? window.innerHeight - 30 : 0;
 			const boundContainer = scrollContainer ? scrollContainer : window;
 			const targetTop = document.getElementById(hash)?.getBoundingClientRect().top ?? 0;
 			const scrollContainerTop = scrollContainer ? scrollContainer.scrollTop : document.documentElement.scrollTop;

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Folder, IdCard, Mail, type Icon as IconType } from '@lucide/svelte';
 	import Button from '$siteComponents/atoms/button.svelte';
+	import { onMount } from 'svelte';
 
 	interface NavItem {
 		title: string;
@@ -15,12 +16,19 @@
 	];
 
 	let expanded = $state(false);
+	let navigateFromResponsiveNav = $state(false);
 	const closeMenu = () => (expanded = false);
 
 	$effect(() => {
 		if (expanded) {
 			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}
+	});
+
+	onMount(() => {
+		window.addEventListener('resize', () => {
+			navigateFromResponsiveNav = window.innerWidth < 1180;
+		});
 	});
 </script>
 
@@ -35,7 +43,7 @@
 <div class="nav-items {expanded ? 'expanded' : ''}">
 	{#each navItems as n}
 		{@const icon = n.icon}
-		<Button type="goto" href={n.href} title={n.title} {icon} style="inline" onclick={closeMenu} gotoFromNav={true} />
+		<Button type="goto" href={n.href} title={n.title} {icon} style="inline" onclick={closeMenu} {navigateFromResponsiveNav} />
 	{/each}
 </div>
 

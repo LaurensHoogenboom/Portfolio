@@ -58,9 +58,9 @@
 				{/if}
 
 				{#if b.type == 'columns'}
-					<div class="columns">
+					<div class={`grid-container columns-${b.data.cols.length}`}>
 						{#each b.data.cols as c}
-							<div class="column">
+							<div>
 								{#if c.blocks.length}
 									{#each c.blocks as d}
 										{@render contentBlock(d)}
@@ -177,12 +177,6 @@
 				filter: drop-shadow(var(--grey-shadow-1));
 			}
 		}
-	}
-
-	.columns {
-		display: grid;
-		grid-auto-flow: column;
-		grid-gap: var(--spacing-5);
 	}
 
 	:global(.body > .button) {

@@ -11,32 +11,26 @@
 		closeCallback,
 		children,
 		saveCallback,
-		hasOverflow = false,
 		savingStatus,
 		closingStatus
 	}: {
 		closeCallback: () => void;
 		children: Snippet;
 		saveCallback?: () => void;
-		hasOverflow?: boolean;
-		savingStatus?: ButtonActionStatus,
-		closingStatus?: ButtonActionStatus
+		savingStatus?: ButtonActionStatus;
+		closingStatus?: ButtonActionStatus;
 	} = $props();
 </script>
 
 <div class="portfolio-item-detail" transition:slide>
 	<div class="content-wrapper">
-		{#if hasOverflow}
-			<div class="overflow-container" bind:this={overflowContainer}>
-				{@render children()}
-
-				{#key overflowContainer}
-					<ScrollToTopButton scrollContainer={overflowContainer} />
-				{/key}
-			</div>
-		{:else}
+		<div class="overflow-container" bind:this={overflowContainer}>
 			{@render children()}
-		{/if}
+
+			{#key overflowContainer}
+				<ScrollToTopButton scrollContainer={overflowContainer} />
+			{/key}
+		</div>
 
 		<div class="toolbar">
 			<Button type="submit" style="secondary" icon={X} onclick={closeCallback} actionStatus={closingStatus} />
@@ -56,28 +50,40 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		z-index: 10;
+		z-index: 11;
 		display: flex;
+		justify-content: center;
 
 		.content-wrapper {
 			position: relative;
-			padding: var(--spacing-7);
 			height: 100dvh;
 			width: 100%;
+			max-width: var(--page-width);
+			--extra-width: calc(100vw - var(--page-width) + var(--vertical-spacing));
 
-			&:has(.overflow-container) {
-				padding-bottom: 0;
-				padding-top: 0;
-				padding-left: var(--spacing-6);
+			@media (max-width: 1500px) {
+				--extra-width: var(--vertical-spacing);
 			}
 
 			.overflow-container {
 				overflow-y: auto;
 				height: 100%;
-				padding-bottom: var(--spacing-7);
-				padding-top: var(--spacing-7);
-				padding-right: var(--spacing-6);
-				padding-left: var(--spacing-6);
+				padding: var(--spacing-7) calc(var(--vertical-spacing) * 2) var(--spacing-7) var(--vertical-spacing);
+
+				@media (max-width: 1600px) {
+					padding-right: calc(var(--vertical-spacing) * 3);
+				}
+
+				@media (max-width: 1500px) {
+					padding-right: calc(var(--vertical-spacing) * 2);
+					--extra-width: var(--vertical-spacing);
+				}
+
+				@media (max-width: 680px) {
+					padding-right: var(--vertical-spacing);
+					padding-top: var(--spacing-5);
+					padding-bottom: var(--spacing-5);
+				}
 			}
 
 			.toolbar {
@@ -85,13 +91,23 @@
 				display: flex;
 				flex-direction: column;
 				top: var(--spacing-7);
-				right: var(--spacing-7);
+				right: 0;
 				transform: translate(50%);
 				z-index: 1;
 				grid-gap: var(--spacing-3);
 
 				:global(button) {
 					margin-right: 0;
+				}
+
+				@media (max-width: 1600px) {
+					right: calc(0px + var(--vertical-spacing));
+				}
+
+				@media (max-width: 680px) {
+					top: var(--spacing-3);
+					right: var(--spacing-3);
+					transform: initial;
 				}
 			}
 
@@ -102,8 +118,17 @@
 				right: 0;
 				top: 0;
 				bottom: 0;
-				width: var(--spacing-7);
+				transform: translateX(100%);
+				width: var(--extra-width);
 				background: var(--primary-background-gradient);
+
+				@media (max-width: 1600px) {
+					transform: translateX(calc(100% - var(--vertical-spacing)));
+				}
+
+				@media (max-width: 680px) {
+					display: none;
+				}
 			}
 		}
 	}
