@@ -1,0 +1,81 @@
+export class SliderSwipe {
+	private startX: number = 0;
+	private isDragging: boolean = false;
+	private threshold: number;
+	private scrollContainer: HTMLElement;
+	private indexChangeCallback: (index: number) => void;
+
+	public currentElementScroll: number = 0;
+	public currentIndex: number = 0;
+	public maxIndex: number;
+
+	constructor(scrollContainer: HTMLElement, indexChangeCallback: (index: number) => void, maxIndex: number, threshold?: number) {
+		this.scrollContainer = scrollContainer;
+		this.indexChangeCallback = indexChangeCallback;
+		this.maxIndex = maxIndex;
+		this.threshold = threshold ?? 100;
+	}
+
+	public run = () => {
+		this.scrollContainer.addEventListener('touchstart', this.touchStart, { passive: true });
+		this.scrollContainer.addEventListener('touchmove', this.touchMove, { passive: false });
+		this.scrollContainer.addEventListener('touchend', this.touchEnd, { passive: true });
+	}
+
+	public dispose = () => {
+		this.scrollContainer.removeEventListener('touchstart', this.touchStart);
+		this.scrollContainer.removeEventListener('touchmove', this.touchMove);
+		this.scrollContainer.removeEventListener('touchend', this.touchEnd);
+	}
+
+	private touchStart = (e: TouchEvent) => {
+		this.startX = e.touches[0].clientX;
+		this.isDragging = true;
+	}
+
+	private touchMove = (e: TouchEvent) => {
+		if (!this.isDragging) return;
+
+		if (e.cancelable) e.preventDefault();
+
+		const currentX = e.touches[0].clientX;
+		const diff = currentX - this.startX;
+
+		this.scrollContainer.scrollTo({ left: this.currentElementScroll - diff });
+	}
+
+	private touchEnd = (e: TouchEvent) => {
+		if (!this.isDragging) return;
+
+		this.isDragging = false;
+
+		const endX = e.changedTouches[0].clientX;
+		const diff = this.startX - endX;
+
+		if (Math.abs(diff) > this.threshold) {
+			switch (true) {
+				case diff > 0 && this.currentIndex < this.maxIndex:
+					this.setSelectedIndex(this.currentIndex + 1);
+					break;
+				case diff < 0 && this.currentIndex > 0:
+					this.setSelectedIndex(this.currentIndex - 1);
+					break;
+				default:
+					this.snapBack()
+					break;
+			}
+		} else this.snapBack();
+	}
+
+	private setSelectedIndex = (index: number) => {
+		this.currentIndex = index;
+		this.indexChangeCallback(index);
+	}
+
+	private snapBack = () => {
+		this.scrollContainer.scrollTo({
+			left: this.currentElementScroll,
+			behavior: 'smooth'
+		});
+	}
+}

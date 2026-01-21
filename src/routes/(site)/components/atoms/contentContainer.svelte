@@ -6,7 +6,6 @@
 		id,
 		fullHeight = false,
 		theme = 'light',
-		CSSHeight = '',
         CSSClass="",
 		width = "contained"
 	}: {
@@ -14,7 +13,6 @@
 		id?: string;
 		fullHeight?: boolean;
 		theme?: 'dark' | 'dark-gradient' | 'transparent' | 'light';
-		CSSHeight?: string;
         CSSClass?: string;
 		width?: "contained" | "wide";
 	} = $props();
@@ -39,7 +37,6 @@
     {id}
 	bind:this={contentContainer}
 	class="content-container-wrapper {themeClass} {CSSClass}"
-    style="{CSSHeight ? `height: ${CSSHeight}` : ''};"
 >
 	<div class="content-container {width}">
 		{#if children}

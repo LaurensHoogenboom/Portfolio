@@ -18,7 +18,8 @@
 		actionStatus,
 		size = 'normal',
 		stretched,
-		scrollContainer
+		scrollContainer,
+		navigateFromResponsiveNav
 	}: {
 		title?: string;
 		icon?: typeof IconType;
@@ -33,6 +34,7 @@
 		size?: 'normal' | 'small';
 		stretched?: boolean;
 		scrollContainer?: HTMLElement;
+		navigateFromResponsiveNav?: boolean;
 	} = $props();
 
 	const classString = `button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''} ${size} ${stretched ? 'stretched' : ''}`;
@@ -41,16 +43,19 @@
 	const gotoOnClick = (e: MouseEvent) => {
 		if (type == 'goto-external') return;
 
+		if (onclick) onclick();
+
 		if (href?.startsWith('#')) {
 			const hash = href.split('#')[1];
 			if (!hash) return;
 
 			e.preventDefault();
 
+			const navCorrection = navigateFromResponsiveNav ? window.innerHeight - 30 : 0;
 			const boundContainer = scrollContainer ? scrollContainer : window;
 			const targetTop = document.getElementById(hash)?.getBoundingClientRect().top ?? 0;
 			const scrollContainerTop = scrollContainer ? scrollContainer.scrollTop : document.documentElement.scrollTop;
-			const scrollTop = scrollContainerTop + targetTop - 10;
+			const scrollTop = scrollContainerTop + targetTop - 10 - navCorrection;
 			boundContainer.scrollTo({ top: scrollTop, left: 0, behavior: 'smooth' });
 		}
 	};
@@ -74,7 +79,7 @@
 		<ButtonIcon size={iconSize} />
 	{/if}
 	{#if title}
-		<span>
+		<span class="title">
 			{@html title}
 		</span>
 	{/if}

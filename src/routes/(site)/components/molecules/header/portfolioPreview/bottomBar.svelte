@@ -38,9 +38,14 @@
 	}
 
 	.bottom-bar {
+		--right: var(--extra-width);
 		grid-template-columns: max-content;
-		padding-right: var(--extra-width);
+		padding-right: var(--right);
 		justify-content: end;
+
+		@media (max-width: 1500px) {
+			--right: var(--vertical-spacing);
+		}
 
 		:global(.button-group button:not(:last-of-type)) {
 			margin-right: var(--spacing-3);
@@ -49,7 +54,7 @@
 		hr {
 			position: absolute;
 			width: 100vw;
-			right: calc(var(--extra-width) + 90px + var(--spacing-3) + var(--spacing-4));
+			right: calc(var(--right) + 90px + var(--spacing-3) + var(--spacing-4));
 		}
 	}
 </style>

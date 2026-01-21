@@ -42,6 +42,7 @@
 		border: none;
         transition: transform var(--default-animation-duration), opacity var(--default-animation-duration);
         opacity: 0.9;
+		z-index: 10;
 
 		&:not(.visible) {
 			transform: translateX(100%);
@@ -53,5 +54,12 @@
                 opacity: 1.0;
             }
         }
+
+		@media (max-width: 680px) {
+			bottom: var(--spacing-8);
+		}
+		@media (max-width: 420px) {
+			bottom: var(--spacing-5);
+		}
 	}
 </style>
