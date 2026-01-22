@@ -8,12 +8,7 @@ COPY . /app
 # build dependencies
 RUN apk add --no-cache python3 make g++
 
-# env file
-RUN cd /app && npm install && \
-    echo "DB_URL=/app/database/sqlite.db" > /app/.env && \
-    echo "UPLOADS_FOLDER=/app/uploads/" >> /app/.env && \
-    echo "ORIGIN=https://www.laurenshoogenboom.nl/" >> /app/.env && \
-    npm run build
+RUN cd /app && npm install && npm run build
 
 # build actual image
 FROM node:24-alpine 
@@ -32,7 +27,5 @@ RUN cd /app && \
     npm cache clean --force
 
 WORKDIR /app
-
-ENV BODY_SIZE_LIMIT=20M
 
 CMD ["node", "build/index.js"]
