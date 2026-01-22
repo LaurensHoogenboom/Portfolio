@@ -19,7 +19,7 @@
 
 				<p>
 					Experimenterend onderzoeken, ontwerpend overbruggen en verbeeldend tot leven wekken. Van begrijpen naar verbinden, en van
-					verbinden naar beleven. En alles door elkaar, <i>natuurlijk.</i>
+					verbinden naar beleven.
 				</p>
 
 				<div>

@@ -22,7 +22,7 @@
 				</p>
 				<p>
 					Bij dit alles combineer ik ervaring als ontwikkelaar, interactie ontwerper en artiest om snel tot inzichten, prototypes en
-					resultaten te komen
+					resultaten te komen.
 				</p>
 			</article>
 			<div style="padding-bottom: var(--spacing-4);">
