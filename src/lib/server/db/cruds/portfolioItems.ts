@@ -3,7 +3,7 @@ import { db } from "../client"
 import { portfolioItems } from "../schema/portfolioItems";
 import type { PortfolioItemType } from "../../../types/portfolio";
 
-const getPortfolioItems = async (number: number = 10, offset: number = 0) => {
+const getPortfolioItems = async (number: number = 20, offset: number = 0) => {
     return await db.query.portfolioItems.findMany({
         limit: number,
         offset: offset,
