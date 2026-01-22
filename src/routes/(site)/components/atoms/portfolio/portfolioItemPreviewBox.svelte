@@ -12,7 +12,7 @@
 </script>
 
 <li id={portfolioItem.id} class="portfolio-preview-box {horizontal ? 'horizontal' : ''}">
-	<button onclick={() => openPortfolioItem(portfolioItem)}>
+	<button onclick={() => openPortfolioItem(portfolioItem)} aria-label={portfolioItem.title}>
 		<div
 			class="image-card {fixedSize ? 'fixed-size' : ''}"
 			style="background-image: url({JSON.stringify(portfolioItem.image?.thumbnail.url)}); aspect-ratio: {portfolioItem.image?.thumbnail
