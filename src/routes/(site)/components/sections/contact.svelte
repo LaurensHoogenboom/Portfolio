@@ -1,9 +1,24 @@
 <script lang="ts">
 	import { Mail, Phone } from '@lucide/svelte';
-	import Button from '$siteComponents/atoms/button.svelte';
+	import Button, { type ButtonActionStatus } from '$siteComponents/atoms/button.svelte';
 	import ContentContainer from '$siteComponents/atoms/contentContainer.svelte';
 	import LabelInputGroup from '$siteComponents/molecules/labelInputGroup.svelte';
 	import ButtonLinkGroup from '$siteComponents/molecules/buttonLinkGroup.svelte';
+	import { enhance } from '$app/forms';
+	import Notice from '$siteComponents/atoms/notice.svelte';
+
+	let { success, message }: { success?: boolean; message?: string } = $props();
+	let buttonStatus: ButtonActionStatus | undefined = $state();
+
+	$effect(() => {
+		if (success || message) {
+			setTimeout(() => {
+				buttonStatus = undefined;
+				success = undefined;
+				message = undefined;
+			}, 6000);
+		}
+	});
 </script>
 
 <ContentContainer id="contact" theme="transparent">
@@ -15,7 +30,7 @@
 	<div class="contact-info">
 		<ButtonLinkGroup>
 			<Button icon={Mail} type="goto" id="mailadres" style="secondary" />
-			<a href="mailto:me@laurens">mail@laureato.nl</a>
+			<a href="mailto:me@laurens">info@laurenshoogenboom.nl</a>
 		</ButtonLinkGroup>
 
 		<ButtonLinkGroup>
@@ -24,12 +39,28 @@
 		</ButtonLinkGroup>
 	</div>
 
-	<form>
+	<form
+		method="POST"
+		action="?/sendmail"
+		enctype="multipart/form-data"
+		use:enhance={() => {
+			buttonStatus = 'processing';
+
+			return async ({ update }) => {
+				await update({ reset: false });
+				buttonStatus = 'success';
+			};
+		}}
+	>
+		{#if message}
+			<Notice message={message} type={success ? 'success' : 'fail'} />
+		{/if}
+
 		<LabelInputGroup name="name" type="text" label="Naam" required={true} />
-		<LabelInputGroup name="name" type="email" label="E-mailadres" required={true} />
+		<LabelInputGroup name="email" type="email" label="E-mailadres" required={true} />
 		<LabelInputGroup name="message" type="textarea" label="Bericht" required={true} />
 
-		<Button type="submit" title="Versturen" CSSClass="submit-button" />
+		<Button type="submit" title="Versturen" CSSClass="submit-button" actionStatus={buttonStatus} />
 	</form>
 </ContentContainer>
 

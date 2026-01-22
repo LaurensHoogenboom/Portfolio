@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { PageData } from './$types';
+	import type { ActionData, PageData } from './$types';
 	import About from '$siteComponents/sections/about.svelte';
 	import Contact from '$siteComponents/sections/contact.svelte';
 	import Header from '$siteComponents/sections/header.svelte';
-	import type { IPortfolioItem } from '$lib/types/portfolio'
+	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import Portfolio from '$siteComponents/sections/portfolio.svelte';
 	import { replaceState } from '$app/navigation';
 	import VerticalSeperator from '$siteComponents/atoms/verticalSeperator.svelte';
@@ -13,7 +13,7 @@
 	import { page } from '$app/state';
 	import ScrollToTopButton from '$siteComponents/atoms/scrollToTopButton.svelte';
 
-	let { data }: { data: PageData } = $props();
+	let { data, form }: { data: PageData; form: ActionData | undefined } = $props();
 
 	onMount(async () => {
 		const [hash, query] = window.location.href.split('#')[1] ? window.location.href.split('#')[1].split('?') : [undefined, undefined];
@@ -48,10 +48,10 @@
 <Portfolio portfolioItems={data.portfolioItems} />
 
 {#if page.state.activePortfolioItem}
-	<PortfolioItemDetail portfolioItem={page.state.activePortfolioItem}/>
+	<PortfolioItemDetail portfolioItem={page.state.activePortfolioItem} />
 {/if}
 
-<Contact />
+<Contact success={form?.success} message={form?.message} />
 
 <ScrollToTopButton />
 

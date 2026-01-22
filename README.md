@@ -15,6 +15,10 @@ The required environment variables are:
 
 - DB_URL=
 - UPLOADS_FOLDER=
+- SMTP_HOST=
+- SMTP_PORT=
+- SMTP_USER=
+- SMTP_PASS=
 
 For the uploads folder the following folder structure is expected:
 
