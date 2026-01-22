@@ -3,7 +3,7 @@ import type { IPortfolioItem } from '$lib/types/portfolio';
 import type { Actions, PageServerLoad } from './$types';
 import nodemailer from 'nodemailer';
 import { fail } from '@sveltejs/kit';
-import { SMTP_HOST, SMTP_PASS, SMTP_PORT, SMTP_USER } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export const load = (async () => {
     const data = (await getPortfolioItems()).sort((a, b) => {
@@ -39,12 +39,12 @@ export const actions: Actions = {
         }
 
         const transporter = nodemailer.createTransport({
-            host: SMTP_HOST,
-            port: Number(SMTP_PORT),
+            host: env.SMTP_HOST,
+            port: Number(env.SMTP_PORT),
             secure: true,
             auth: {
-                user: SMTP_USER,
-                pass: SMTP_PASS
+                user: env.SMTP_USER,
+                pass: env.SMTP_PASS
             },
             tls: {
                 rejectUnauthorized: true
@@ -52,9 +52,9 @@ export const actions: Actions = {
         });
 
         const mailOptions = {
-            from: `Portfolio Contact Form <${SMTP_USER}>`,
+            from: `Portfolio Contact Form <${env.SMTP_USER}>`,
             replyTo: email,
-            to: SMTP_USER,
+            to: env.SMTP_USER,
             subject: `Portfolio Contact Inquiry by ${name}`,
             text: message
         }
