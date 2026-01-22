@@ -87,7 +87,7 @@
 	{#if actionStatus}
 		{#if actionStatus == 'processing'}
 			<div class="button-overlay" transition:fly|global={{ y: 20 }}>
-				<Circle size={iconSize} color="var(--primary-base)" />
+				<Circle size={iconSize} color={style == 'primary' ? 'var(--white)' : 'var(--primary-base)'} />
 			</div>
 		{:else if actionStatus == 'success'}
 			<div class="button-overlay" transition:fly|global={{ y: 20 }}>
