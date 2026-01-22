@@ -15,7 +15,7 @@ export class SliderSwipe {
 		this.scrollContainer = scrollContainer;
 		this.indexChangeCallback = indexChangeCallback;
 		this.maxIndex = maxIndex;
-		this.threshold = threshold ?? 100;
+		this.threshold = threshold ?? 50;
 	}
 
 	public run = () => {
