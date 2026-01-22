@@ -14,13 +14,6 @@
 	{:else}
 		<link rel="stylesheet" type="text/css" media="screen" href="/styles/site/site.css" />
 	{/if}
-
-	<title>Laurens Hoogenboom</title>
-
-	<meta
-		name="description"
-		content="Mijn portfolio: van ontwerpend onderzoek tot tekeningen en designs. Er is van alles wat. Kijk vooral eens rond. Wil je verder praten? Neem gerust contact op!"
-	/>
 </svelte:head>
 
 <div class="site-wrapper">
