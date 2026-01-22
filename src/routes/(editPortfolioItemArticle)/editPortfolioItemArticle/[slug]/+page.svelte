@@ -62,7 +62,7 @@
 	});
 </script>
 
-<PortfolioItemDetailWrapper closeCallback={close} saveCallback={save} {savingStatus} {closingStatus} hasOverflow={true}>
+<PortfolioItemDetailWrapper closeCallback={close} saveCallback={save} {savingStatus} {closingStatus}>
 	<PortfolioArticleHeader portfolioItem={data.portfolioItem} />
 	<PortfolioItemEdit portfolioItem={data.portfolioItem} bind:editor bind:unSavedUploadedImages />
 </PortfolioItemDetailWrapper>

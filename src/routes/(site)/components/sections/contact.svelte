@@ -9,7 +9,7 @@
 <ContentContainer id="contact" theme="transparent">
 	<article>
 		<h1>Contact</h1>
-		<p>Vragen, opmerkingen, over mij, mijn werk of deze website? Of gewoon zin in een bak koffie? Neem gerust contact op!</p>
+		<p>Vragen, opmerkingen, over mijzelf, mijn werk of deze website? Of gewoon zin in een bak koffie? Neem gerust contact op!</p>
 	</article>
 
 	<div class="contact-info">
