@@ -20,6 +20,7 @@ The required environment variables are:
 - SMTP_PORT=
 - SMTP_USER=
 - SMTP_PASS=
+- ORIGIN=
 
 For the uploads folder the following folder structure is expected:
 
