@@ -3,6 +3,7 @@
 	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	import { SliderSwipe } from '../../utils/sliderSwipe';
+	import ImageContainer from '$siteComponents/atoms/imageContainer.svelte';
 
 	export interface ISlide {
 		id: string;
@@ -67,7 +68,7 @@
 		resizeTimeout = setTimeout(() => {
 			updateSliderScroll(currentSlideId);
 		}, 200);
-	}
+	};
 </script>
 
 <svelte:window onresize={() => handleResize()} />
@@ -76,8 +77,8 @@
 	<div class="shadow-container">
 		<ul class="slide-container" bind:this={slideContainer}>
 			{#each slides as s}
-				<li class="slide image-wrapper" id={s.id}>
-					<img src={s.imgUrl} alt={s.caption} />
+				<li class="slide" id={s.id}>
+					<ImageContainer imgUrl={s.imgUrl} caption={s.caption} />
 				</li>
 			{/each}
 		</ul>
@@ -124,10 +125,17 @@
 		grid-template-rows: 1fr max-content;
 		width: 100%;
 		padding-bottom: var(--spacing-3);
+		position: relative;
+		z-index: 11;
 
 		.shadow-container {
 			width: 100%;
-			filter: drop-shadow(var(--grey-shadow-1));
+			position: relative;
+			z-index: 2;
+
+			&:not(:has(.image-container.fullscreen)) {
+				filter: drop-shadow(var(--grey-shadow-1));
+			}
 		}
 
 		.slide-container {
@@ -216,23 +224,6 @@
 				@media (max-width: 680px) and (pointer: coarse) {
 					display: none;
 				}
-			}
-		}
-
-		.image-wrapper {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			grid-row-gap: var(--spacing-3);
-			margin-top: var(--spacing-4);
-
-			img {
-				max-height: 60dvh;
-				min-height: 200px;
-				max-width: 100%;
-				object-fit: cover;
-				border-radius: var(--border-radius-2);
 			}
 		}
 
