@@ -89,14 +89,18 @@
 				border-top-right-radius: var(--border-radius-3);
 				z-index: -1;
 				transition: top var(--default-animation-duration);
+			}
 
-				@media (max-width: 1500px) {
+			@media (max-width: 1500px) {
+				&:before {
 					top: calc(0px - var(--spacing-4));
 					left: var(--vertical-spacing);
 					right: var(--vertical-spacing);
 				}
+			}
 
-				@media (max-width: 680px) {
+			@media (max-width: 680px) {
+				&:before {
 					top: calc(0px - var(--spacing-3));
 				}
 			}

@@ -1,6 +1,8 @@
 export class SliderSwipe {
 	private startX: number = 0;
+	private startY: number = 0;
 	private isDragging: boolean = false;
+	private isHorizontalSwipe: boolean | null = null;
 	private threshold: number;
 	private scrollContainer: HTMLElement;
 	private indexChangeCallback: (index: number) => void;
@@ -13,7 +15,7 @@ export class SliderSwipe {
 		this.scrollContainer = scrollContainer;
 		this.indexChangeCallback = indexChangeCallback;
 		this.maxIndex = maxIndex;
-		this.threshold = threshold ?? 100;
+		this.threshold = threshold ?? 50;
 	}
 
 	public run = () => {
@@ -30,18 +32,31 @@ export class SliderSwipe {
 
 	private touchStart = (e: TouchEvent) => {
 		this.startX = e.touches[0].clientX;
+		this.startY = e.touches[0].clientY;
 		this.isDragging = true;
+		this.isHorizontalSwipe = null;
 	}
 
 	private touchMove = (e: TouchEvent) => {
 		if (!this.isDragging) return;
 
+		const absDiffX = Math.abs(e.touches[0].clientX - this.startX);
+		const absDiffY = Math.abs(e.touches[0].clientY - this.startY);
+
+		if (this.isHorizontalSwipe === null) {
+			if (absDiffX < 5 && absDiffY < 5) return;
+			this.isHorizontalSwipe = absDiffX > absDiffY;
+		}
+
+		if (!this.isHorizontalSwipe) {
+			this.isDragging = false;
+			return;
+		}
+
 		if (e.cancelable) e.preventDefault();
 
-		const currentX = e.touches[0].clientX;
-		const diff = currentX - this.startX;
-
-		this.scrollContainer.scrollTo({ left: this.currentElementScroll - diff });
+		const diffMove = e.touches[0].clientX - this.startX;
+		this.scrollContainer.scrollTo({ left: this.currentElementScroll - diffMove });
 	}
 
 	private touchEnd = (e: TouchEvent) => {

@@ -5,6 +5,7 @@
     --primary-background-gradient: linear-gradient(135deg, var(--primary-background-solid), var(--primary-base));
 
     --white: rgb(255,255,255);
+    --black-transparent: rgba(0, 0, 0, 0.5);
     --grey-text: rgb(112,112,112);
     --grey-borders: rgb(180,180,180);
     --grey-ornament: rgb(227,227,227);

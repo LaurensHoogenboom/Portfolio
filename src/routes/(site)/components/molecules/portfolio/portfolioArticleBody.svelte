@@ -5,6 +5,7 @@
 	import Accordion from '../accordion.svelte';
 	import { Download } from '@lucide/svelte';
 	import Slider, { type ISlide } from '../slider.svelte';
+	import ImageContainer from '$siteComponents/atoms/imageContainer.svelte';
 
 	const { portfolioItem }: { portfolioItem: IPortfolioItem } = $props();
 
@@ -28,7 +29,7 @@
 
 		let slides: ISlide[] = [];
 
-		portfolioItem.articleContent.blocks.forEach(b => {
+		portfolioItem.articleContent.blocks.forEach((b) => {
 			if (b.type == 'image') {
 				const inlineSettings = b.data.caption.split('@');
 				const url = b.data.file.url;
@@ -46,7 +47,7 @@
 		});
 
 		return slides;
-	}
+	};
 </script>
 
 <div class="body">
@@ -117,11 +118,8 @@
 		{/if}
 
 		{#if !isSlider}
-			<div class="image-wrapper">
-				<img src={b.data.file.url} alt={title}/>
-				<p>{@html title}</p>
-			</div>
-		{/if}		
+			<ImageContainer imgUrl={b.data.file.url} caption={title} showCaption={true} showShadow={true} />
+		{/if}
 	{/if}
 
 	{#if b.type == 'list' && b.data.style == 'unordered'}
@@ -153,29 +151,10 @@
 			margin-top: var(--spacing-4);
 		}
 
-		p, li, blockquote {
+		p,
+		li,
+		blockquote {
 			max-width: 850px;
-		}
-
-		.image-wrapper {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			grid-row-gap: var(--spacing-3);
-			margin-top: var(--spacing-4);
-
-			p {
-				font-style: italic;
-			}
-
-			img {
-				max-height: 60dvh;
-				min-height: 200px;
-				max-width: 100%;
-				object-fit: cover;
-				border-radius: var(--border-radius-2);
-				filter: drop-shadow(var(--grey-shadow-1));
-			}
 		}
 	}
 

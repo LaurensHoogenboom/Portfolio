@@ -131,6 +131,7 @@
 		padding-right: 100vw;
 		list-style: none;
 		overflow: hidden;
+		touch-action: pan-y pinch-zoom;
 
 		@media (max-width: 680px) {
 			grid-column-gap: var(--spacing-4);

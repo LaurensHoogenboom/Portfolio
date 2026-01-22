@@ -258,8 +258,10 @@
 				transition:
 					left var(--default-animation-duration),
 					width var(--default-animation-duration);
+			}
 
-				@media (max-width: 420px) {
+			@media (max-width: 420px) {
+				&:after {
 					height: 35px;
 				}
 			}
