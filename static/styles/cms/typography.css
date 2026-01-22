@@ -26,7 +26,7 @@ p, label {
 a {
 	color: var(--primary-base);
 
-	@media (hover:hover) {
+	@media (hover:hover) and (pointer: fine) {
 		&:hover {
 			color: var(--primary-background);
 		}

@@ -16,7 +16,7 @@
         :global(a) {
             text-decoration: none;
 
-            @media (hover:hover) {
+            @media (hover:hover) and (pointer: fine) {
                 &:hover {
                     text-decoration: underline;
                 }

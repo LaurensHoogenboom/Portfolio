@@ -48,7 +48,7 @@
 			transform: translateX(100%);
 		}
 
-        @media (hover:hover) {
+        @media (hover:hover) and (pointer: fine) {
             &:hover {
                 cursor: pointer;
                 opacity: 1.0;
