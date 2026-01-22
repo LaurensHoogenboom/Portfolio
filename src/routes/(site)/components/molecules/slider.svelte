@@ -137,6 +137,7 @@
 			overflow: hidden;
 			padding-bottom: 0;
 			padding-left: 0;
+			touch-action: pan-y pinch-zoom;
 
 			.slide {
 				width: 100%;
