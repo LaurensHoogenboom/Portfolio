@@ -78,7 +78,7 @@
 			z-index: 12;
 
 			img {
-				max-height: 80dvh;
+				max-height: 90dvh;
 				border-radius: 0;
 				filter: drop-shadow(var(--grey-shadow-2))
 			}
