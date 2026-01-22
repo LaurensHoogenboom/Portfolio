@@ -60,7 +60,7 @@
 		"@sveltejs/adapter-auto": "^7.0.0",
 		"better-sqlite3": "^11.8.0",
 		"copy-folder-util": "^1.2.0",
-		"dotenv": "^16.4.7",
+		"dotenv": "^17.2.3",
 		"drizzle-orm": "^0.40.0",
 		"editorjs-collapsible-block": "^1.0.1",
 		"nodemailer": "^7.0.12",
