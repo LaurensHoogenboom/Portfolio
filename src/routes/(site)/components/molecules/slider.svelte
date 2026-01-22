@@ -223,6 +223,7 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+			justify-content: center;
 			grid-row-gap: var(--spacing-3);
 			margin-top: var(--spacing-4);
 

@@ -121,12 +121,16 @@
 				transform: translateX(100%);
 				width: var(--extra-width);
 				background: var(--primary-background-gradient);
+			}
 
-				@media (max-width: 1600px) {
+			@media (max-width: 1600px) {
+				&:after {
 					transform: translateX(calc(100% - var(--vertical-spacing)));
 				}
+			}
 
-				@media (max-width: 680px) {
+			@media (max-width: 680px) {
+				&:after {
 					display: none;
 				}
 			}
