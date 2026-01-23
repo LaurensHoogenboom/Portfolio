@@ -23,14 +23,14 @@ export const actions: Actions = {
             visiblePriority: string
         };
 
-        const imageFile = formData.get('image') as File;
-        const image: Upload = await uploadImage(imageFile, title);
+        const imageFile = formData.get('image');
+        const image: Upload | undefined = imageFile ? await uploadImage(imageFile as File, title) : undefined;
 
         const portfolioItem: typeof portfolioItems.$inferInsert = {
             title: title,
             description: description,
             type: type as PortfolioItemType,
-            imageUploadId: image.id,
+            imageUploadId: image ? image.id : undefined,
             visiblePriority: parseInt(visiblePriority)
         }
 

@@ -74,7 +74,6 @@
 						min={0}
 						value={portfolioItemToEdit.visiblePriority}
 						instruction="Items with a higher visible priority are shown first."
-						required
 					/>
 				</fieldset>
 			</div>
@@ -87,7 +86,6 @@
 						label="Header Image"
 						acceptFile="image/*"
 						value={portfolioItemToEdit.image ? portfolioItemToEdit.image.thumbnail.url : undefined}
-						required
 					/>
 				</fieldset>
 			</div>
