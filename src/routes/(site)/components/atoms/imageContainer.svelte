@@ -52,7 +52,6 @@
 
 		img {
 			max-height: 60dvh;
-			min-height: 200px;
 			max-width: 100%;
 			object-fit: cover;
 			border-radius: var(--border-radius-2);
