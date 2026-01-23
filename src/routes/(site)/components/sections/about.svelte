@@ -14,7 +14,7 @@
 		<div class="main-content">
 			<article>
 				<h1>Over Mij</h1>
-				<p>De kern van het verhaal: ik ben een maker (professionele knustelaar 😉) op het spanningsveld tussen systeem en beleving.</p>
+				<p>De kern van het verhaal: ik ben een maker (professionele knutselaar 😉) op het spanningsveld tussen systeem en beleving.</p>
 				<p>
 					<b>Als analist,</b> breng ik de behoeften, waarden en routines van mens en systeem in kaart. <b>Als ontwerper,</b> maak ik
 					toepassingen die mogelijke spanningsvelden hiertussen inzichtelijk maken en/of overbruggen. <b>Als vormgever c.q. artiest,</b> maak

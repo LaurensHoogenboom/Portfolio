@@ -2,6 +2,7 @@
 	import { Instagram, Linkedin } from '@lucide/svelte';
 	import Button from '$siteComponents/atoms/button.svelte';
 	import ContentContainer from '$siteComponents/atoms/contentContainer.svelte';
+	import privacyStatement from '$lib/media/site/privacy_statement_23-1-2026.pdf';
 
 	let currentYear = new Date().getFullYear();
 </script>
@@ -9,7 +10,7 @@
 <footer>
 	<ContentContainer>
 		<div class="footer-content">
-			<p>Copyright &copy; LTH {currentYear} &nbsp; <a href="/">Privacy Verklaring</a></p>
+			<p>Copyright &copy; LTH {currentYear} &nbsp; <a href={privacyStatement} target="_blank">Privacy Verklaring</a></p>
 
 			<hr />
 
