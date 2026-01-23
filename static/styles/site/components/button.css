@@ -110,7 +110,7 @@
 			--color: var(--white);
 			cursor: pointer;
 
-			.button-overlay {
+			&:not(.primary) .button-overlay {
 				color: var(--primary-base);
 			}
 		}

@@ -7,21 +7,11 @@
 	import { enhance } from '$app/forms';
 	import Notice from '$siteComponents/atoms/notice.svelte';
 
-	let { success, message }: { success?: boolean; message?: string } = $props();
+	const { success, message }: { success?: boolean; message?: string } = $props();
+
 	let buttonStatus: ButtonActionStatus | undefined = $state();
-
 	let form: HTMLFormElement | undefined = $state();
-
-	$effect(() => {
-		if (success || message) {
-			setTimeout(() => {
-				buttonStatus = undefined;
-				success = undefined;
-				message = undefined;
-				form?.reset();
-			}, 6000);
-		}
-	});
+	let showNotice: boolean = $state(false);
 </script>
 
 <ContentContainer id="contact" theme="transparent">
@@ -47,18 +37,24 @@
 		action="?/sendmail"
 		enctype="multipart/form-data"
 		bind:this={form}
-
 		use:enhance={() => {
 			buttonStatus = 'processing';
 
 			return async ({ update }) => {
 				await update({ reset: false });
-				buttonStatus = 'success';
+				showNotice = true;
+				buttonStatus = success ? 'success' : 'fail';
+
+				setTimeout(() => {
+					showNotice = false;
+					buttonStatus = undefined;
+					form?.reset();
+				}, 6000);
 			};
 		}}
 	>
-		{#if message}
-			<Notice message={message} type={success ? 'success' : 'fail'} />
+		{#if showNotice && message}
+			<Notice {message} type={success ? 'success' : 'fail'} />
 		{/if}
 
 		<LabelInputGroup name="name" type="text" label="Naam" required={true} />
