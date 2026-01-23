@@ -67,7 +67,7 @@ docker run -d -p 3000:3000 `
 
 ### On Deployment
 
-Make sure you bind mount volumes to target `/app/database/` and `/app/uploads/`.
+Make sure you bind mount volumes to target `/app/database/` and `/app/uploads/`, and provide the required environment variables.
 
 ## Docker Cleanup
 
