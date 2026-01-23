@@ -49,6 +49,7 @@
 			margin-top: 0;
 			height: 100%;
 			overflow: hidden;
+			filter: drop-shadow(var(--grey-shadow-2));
 
 			:global(.image-wrapper) {
 				max-height: 100%;
@@ -61,7 +62,6 @@
 					min-height: 0;
 					max-height: 100%;
 					object-fit: contain;
-					filter: drop-shadow(var(--grey-shadow-2));
 					border-radius: 0;
 
 					@media (max-width: 1180px) {

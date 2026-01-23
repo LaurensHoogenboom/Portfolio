@@ -101,7 +101,7 @@
 				border-bottom-right-radius: var(--border-radius-s);
 			}
 
-			@media (hover: hover) {
+			@media (hover: hover) and (pointer: fine) {
 				&:hover {
 					background-color: var(--grey-background-2);
 				}

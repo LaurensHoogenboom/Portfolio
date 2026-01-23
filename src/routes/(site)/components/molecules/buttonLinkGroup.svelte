@@ -16,14 +16,14 @@
         :global(a) {
             text-decoration: none;
 
-            @media (hover:hover) and (pointer: fine) {
+            @media (hover: hover) and (pointer: fine) {
                 &:hover {
                     text-decoration: underline;
                 }
             }
         }
 
-        @media (hover: hover) {
+        @media (hover: hover) and (pointer: fine) {
             :global(&:has(.button:hover) a) {
                 color: var(--primary-base);
                 text-decoration: underline;

@@ -9,7 +9,7 @@
 		showShadow = false,
 		canEnlarge = true,
 		CSSClass
-	}: { imgUrl: string; caption: string; showCaption?: boolean; showShadow?: boolean; canEnlarge?: boolean, CSSClass?: string } = $props();
+	}: { imgUrl: string; caption: string; showCaption?: boolean; showShadow?: boolean; canEnlarge?: boolean; CSSClass?: string } = $props();
 
 	let fullscreen = $state(false);
 </script>
@@ -18,10 +18,14 @@
 	<div class="image-wrapper">
 		<img src={imgUrl} alt={caption} />
 
-		{#if canEnlarge}
-			<Button type="submit" icon={fullscreen ? Minimize : Maximize} CSSClass="enlarge-button" onclick={() => (fullscreen = !fullscreen)} />
+		{#if canEnlarge && !fullscreen}
+			<Button type="submit" icon={Maximize} CSSClass="enlarge-button" onclick={() => (fullscreen = true)} />
 		{/if}
 	</div>
+
+	{#if canEnlarge && fullscreen}
+		<Button type="submit" icon={Minimize} CSSClass="shrink-button" onclick={() => (fullscreen = false)} />
+	{/if}
 
 	{#if showCaption}
 		<p>{@html caption}</p>
@@ -37,22 +41,21 @@
 		grid-row-gap: var(--spacing-3);
 		margin-top: var(--spacing-4);
 
+		:global(.enlarge-button, .shrink-button) {
+			position: absolute;
+			top: var(--spacing-2);
+			right: var(--spacing-2);
+			border: 1px solid var(--grey-borders);
+			background-color: var(--black-transparent);
+		}
+
 		.image-wrapper {
 			position: relative;
 			display: inline-flex;
-
-			:global(.enlarge-button) {
-				position: absolute;
-				top: var(--spacing-2);
-				right: var(--spacing-2);
-				border: 1px solid var(--grey-borders);
-				background-color: var(--black-transparent);
-			}
 		}
 
 		img {
 			max-height: 60dvh;
-			min-height: 200px;
 			max-width: 100%;
 			object-fit: cover;
 			border-radius: var(--border-radius-2);
@@ -80,7 +83,7 @@
 			img {
 				max-height: 90dvh;
 				border-radius: 0;
-				filter: drop-shadow(var(--grey-shadow-2))
+				filter: drop-shadow(var(--grey-shadow-2));
 			}
 		}
 	}

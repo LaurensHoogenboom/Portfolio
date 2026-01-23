@@ -191,7 +191,7 @@
 						}
 					}
 
-					@media (hover: hover) {
+					@media (hover: hover) and (pointer: fine) {
 						&:hover {
 							background-color: var(--grey-inset-background-light);
 						}

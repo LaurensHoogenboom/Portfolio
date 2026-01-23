@@ -184,7 +184,7 @@
 				box-sizing: border-box;
 				box-shadow: 0 0 0 var(--spacing-1) var(--primary-base);
 
-				@media (hover: hover) {
+				@media (hover: hover) and (pointer: fine) {
 					&:hover {
 						background-color: var(--grey-inset-background);
 						color: var(--grey-text);

@@ -109,7 +109,7 @@
 			}
 		}
 
-		@media (hover: hover) {
+		@media (hover: hover) and (pointer: fine) {
 			&:hover {
 				bottom: 10px;
 			}

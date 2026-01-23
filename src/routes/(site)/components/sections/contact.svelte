@@ -10,12 +10,15 @@
 	let { success, message }: { success?: boolean; message?: string } = $props();
 	let buttonStatus: ButtonActionStatus | undefined = $state();
 
+	let form: HTMLFormElement | undefined = $state();
+
 	$effect(() => {
 		if (success || message) {
 			setTimeout(() => {
 				buttonStatus = undefined;
 				success = undefined;
 				message = undefined;
+				form?.reset();
 			}, 6000);
 		}
 	});
@@ -43,6 +46,8 @@
 		method="POST"
 		action="?/sendmail"
 		enctype="multipart/form-data"
+		bind:this={form}
+
 		use:enhance={() => {
 			buttonStatus = 'processing';
 
@@ -136,7 +141,7 @@
 				}
 			}
 
-			@media (hover: hover) {
+			@media (hover: hover) and (pointer: fine) {
 				:global(&:has(form button:hover):before) {
 					top: -50px;
 				}
