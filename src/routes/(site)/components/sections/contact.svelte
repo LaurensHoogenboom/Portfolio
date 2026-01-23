@@ -141,7 +141,7 @@
 				}
 			}
 
-			@media (hover: hover) {
+			@media (hover: hover) and (pointer: fine) {
 				:global(&:has(form button:hover):before) {
 					top: -50px;
 				}

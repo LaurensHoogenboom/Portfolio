@@ -57,7 +57,7 @@
 			padding: 0 var(--spacing-3);
 			border: none;
 
-			@media (hover: hover) {
+			@media (hover: hover) and (pointer: fine) {
 				&:hover {
 					background-color: var(--grey-inset-background);
 					opacity: 1;

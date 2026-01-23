@@ -63,7 +63,7 @@
 		height: auto;
 		--color: var(--primary-base);
 
-		@media (hover: hover) {
+		@media (hover: hover) and (pointer: fine) {
 			&:hover:not(.disabled) {
 				opacity: 0.6;
 			}
@@ -104,7 +104,7 @@
 		color: var(--color);
 	}
 
-	@media (hover: hover) {
+	@media (hover: hover) and (pointer: fine) {
 		&:hover:not(.inline, .disabled) {
 			background-color: var(--hover-background-color);
 			--color: var(--white);
@@ -147,7 +147,7 @@
 		--color: var(--white);
 	}
 
-	@media (hover: hover) {
+	@media (hover: hover) and (pointer: fine) {
 		&:hover:not(.inline, .disabled) {
 			--background-color: var(--hover-background-color);
 			cursor: pointer;

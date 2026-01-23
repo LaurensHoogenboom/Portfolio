@@ -49,7 +49,7 @@
 				border-bottom-right-radius: var(--border-radius-3);
 			}
 
-			@media (hover: hover) and (min-width: 1180px) {
+			@media (hover: hover) and (pointer: fine) and (min-width: 1180px) {
 				:global(&:has(.content button:hover)) {
 					.thumbnail-wrapper .thumbnail {
 						transform: rotate(-1deg) translateY(calc(-5% - 10px)) translateX(20px);

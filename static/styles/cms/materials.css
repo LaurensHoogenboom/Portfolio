@@ -125,7 +125,7 @@
             transition: background-color var(--default-animation-time);
             z-index: 1;
 
-            @media (hover:hover) and (pointer: fine) {
+            @media (hover: hover) and (pointer: fine) {
                 &:hover {
                     background-color: var(--grey-background-1);
                     cursor: pointer;
@@ -218,7 +218,7 @@
         transition: opacity var(--default-animation-time);
     }
 
-    @media (hover: hover) {
+    @media (hover: hover) and (pointer: fine) {
         &:hover:before {
             opacity: 1;
         }
@@ -252,7 +252,7 @@
         box-shadow: none;
         border: 1px solid transparent;
 
-        @media (hover: hover) {
+        @media (hover: hover) and (pointer: fine) {
             &:hover {
                 background-color: var(--grey-background-1);
 

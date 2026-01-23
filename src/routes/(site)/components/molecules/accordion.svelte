@@ -81,7 +81,7 @@
 				color: var(--primary-base);
 			}
 
-			@media (hover: hover) {
+			@media (hover: hover) and (pointer: fine) {
 				&:hover {
 					cursor: pointer;
 					background-color: var(--grey-inset-background-light);
