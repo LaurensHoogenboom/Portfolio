@@ -87,6 +87,7 @@
 						label="Header Image"
 						acceptFile="image/*"
 						value={portfolioItemToEdit.image ? portfolioItemToEdit.image.thumbnail.url : undefined}
+						required
 					/>
 				</fieldset>
 			</div>

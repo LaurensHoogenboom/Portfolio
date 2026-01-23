@@ -61,7 +61,7 @@
             </div>
             <div>
                 <fieldset>
-                    <LabelInputGroup type="file" name="image" label="Header Image" acceptFile="image/*" />
+                    <LabelInputGroup type="file" name="image" label="Header Image" acceptFile="image/*" required />
                 </fieldset>
             </div>
         </div>
