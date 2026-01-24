@@ -9,11 +9,11 @@ const uploadImage = async (image: File | Buffer, title: string): Promise<Upload>
     const imageBuffer = image instanceof File ? await image.arrayBuffer() : image;
     const metaData = await sharp(imageBuffer).metadata();
 
-    const fullImage = await sharp(imageBuffer, { animated: metaData.format == 'gif' ? true : false })
+    const fullImage = await sharp(imageBuffer, { animated: metaData.format == 'gif' ? true : false, limitInputPixels: false })
         .webp()
         .resize(metaData.width > 1920 ? 1920 : undefined, undefined)
         .toBuffer();
-    const thumbnail = await sharp(imageBuffer)
+    const thumbnail = await sharp(imageBuffer, { limitInputPixels: false })
         .webp()
         .resize(500, undefined)
         .toBuffer();
