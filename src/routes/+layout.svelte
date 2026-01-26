@@ -9,7 +9,7 @@
 
 	<meta
 		name="description"
-		content="Mijn portfolio: van ontwerpend onderzoek tot tekeningen en designs. Er is van alles wat. Kijk vooral eens rond. Wil je verder praten? Neem gerust contact op!"
+		content="Van ontwerpend onderzoek tot tekeningen en designs. Er is van alles wat. Kijk vooral eens rond."
 	/>
 
 	<link rel="icon" type="image/png" href="/favicons/favicon-96x96.png" sizes="96x96" />
