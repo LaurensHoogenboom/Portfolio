@@ -18,7 +18,8 @@
 		required = false,
 		instruction,
 		selectOptions,
-		acceptFile
+		acceptFile,
+		layout = 'vertical'
 	}: {
 		name: string;
 		type: 'text' | 'textarea' | 'password' | 'select' | 'file' | 'number';
@@ -31,6 +32,7 @@
 		instruction?: string;
 		selectOptions?: ISelectOption[];
 		acceptFile?: string;
+		layout?: 'horizontal' | 'vertical'
 	} = $props();
 
 	let files: FileList | undefined = $state();
@@ -59,7 +61,7 @@
 	});
 </script>
 
-<div class="label-input-group">
+<div class="label-input-group {layout}">
 	<label for={name}>{label}</label>
 
 	{#if type == 'text' || type == 'password' || type == 'number'}
@@ -108,6 +110,17 @@
 
 		&:last-child :global(.instruction) {
 			margin-bottom: 0;
+		}
+
+		&.horizontal {
+			flex-direction: row;
+			align-items: center;
+			grid-gap: var(--padding-3);
+			margin-bottom: 0;
+
+			label {
+				padding-bottom: 0;
+			}
 		}
 	}
 

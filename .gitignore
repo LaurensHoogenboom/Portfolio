@@ -20,8 +20,8 @@ vite.config.ts.timestamp-*
 *.db
 
 # Content
-uploads
-database
+/uploads
+/database
 
 # Build styles
 static/styles

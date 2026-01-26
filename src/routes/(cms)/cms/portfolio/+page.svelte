@@ -4,11 +4,14 @@
 	import { Plus } from '@lucide/svelte';
 	import type { ActionData, PageData } from './$types';
 	import ListItem from '$cmsComponents/molecules/listItem.svelte';
-	import DataList from '$cmsComponents/organisms/dataList.svelte';
+	import DataList, { type IDataListKeyValuePair } from '$cmsComponents/organisms/dataList.svelte';
 	import EditPortfolioItemDialog, { type IPortfolioItemToEdit } from './components/editPortfolioItemDialog.svelte';
 	import CreatePortfolioItemDialog from './components/createPortfolioItemDialog.svelte';
 	import { isFormActionType, notifyFormActionSuccess } from '../shared/globalNotifications.svelte';
 	import { goto } from '$app/navigation';
+	import LabelInputGroup, { type ISelectOption } from '$cmsComponents/molecules/labelInputGroup.svelte';
+	import { portfolioSelectOptions, type ISelectPortfolioType } from './shared/portfolioSelectOptions';
+	import { isPortfolioItemType, type PortfolioItemType } from '$lib/types/portfolio';
 
 	let { data, form }: { data: PageData; form: ActionData | undefined } = $props();
 
@@ -31,26 +34,40 @@
 		}
 	};
 
+	let selectOptions: ISelectOption[] = [{ value: 'all', title: 'All' }].concat(portfolioSelectOptions as ISelectOption[]);
+	let selectedValue: string | undefined = $state();
+	let selectedCategory: PortfolioItemType | undefined = $derived(
+		selectedValue && isPortfolioItemType(selectedValue) ? selectedValue : undefined
+	);
+	let visibleItems = $derived(selectedCategory ? data.portfolioItems.filter((p) => p.type == selectedCategory) : data.portfolioItems);
+
 	$effect(() => {
-        if (form?.succes && isFormActionType(form.action) && form.portfolioItemTitle) {
-            notifyFormActionSuccess(form.action, form.portfolioItemTitle);
-            createFormVisible = false;
+		if (form?.succes && isFormActionType(form.action) && form.portfolioItemTitle) {
+			notifyFormActionSuccess(form.action, form.portfolioItemTitle);
+			createFormVisible = false;
 			editFormVisible = false;
-            form = undefined;
-        }
+			form = undefined;
+		}
 	});
 </script>
 
 <PageToolbar>
-	<Button title="Portfolio Item" type="button" style="secondary" onclick={() => (createFormVisible = true)} icon={Plus} />
+	<LabelInputGroup type="select" label="Category" name="category" layout="horizontal" {selectOptions} bind:value={selectedValue} />
+	<Button title="Add" type="button" style="primary" onclick={() => (createFormVisible = true)} icon={Plus} />
 </PageToolbar>
 
 <main>
-	<DataList itemNamePlural="Portfolio Items" itemCount={data.portfolioItems.length}>
-		{#each data.portfolioItems as pItem}
+	<DataList itemNamePlural="Portfolio Items" itemCount={visibleItems.length}>
+		{#each visibleItems as pItem}
 			{@const writeAction = pItem.type != 'art' ? () => goto(`/editPortfolioItemArticle/${pItem.id}`) : undefined}
+			{@const displayValues: IDataListKeyValuePair[] = [
+				{ key: 'title', value: pItem.title },
+				{ key: 'type', value: pItem.type },
+				{ key: 'visible priority', value: pItem.visiblePriority.toString() }
+			]}
+
 			<ListItem
-				title={pItem.title}
+				displayKeyValuePairs={displayValues}
 				id={pItem.id}
 				editAction={() => openEditDialog(pItem.id)}
 				{writeAction}

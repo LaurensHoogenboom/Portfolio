@@ -1,7 +1,7 @@
 import type { ISelectOption } from "$cmsComponents/molecules/labelInputGroup.svelte";
 import type { PortfolioItemType } from "$lib/types/portfolio";
 
-interface ISelectPortfolioType extends ISelectOption {
+export interface ISelectPortfolioType extends ISelectOption {
     title: string;
     value: PortfolioItemType;
 }
