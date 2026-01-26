@@ -1,7 +1,0 @@
-:root {
-    --nav-height: 100px;
-
-    @media (max-width: 680px) {
-        --nav-height: 80px;
-    }
-}
