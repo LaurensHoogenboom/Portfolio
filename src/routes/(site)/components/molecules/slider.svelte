@@ -126,12 +126,10 @@
 		width: 100%;
 		padding-bottom: var(--spacing-3);
 		position: relative;
-		z-index: 11;
 
 		.shadow-container {
 			width: 100%;
 			position: relative;
-			z-index: 2;
 
 			&:not(:has(.image-container.fullscreen)) {
 				filter: drop-shadow(var(--grey-shadow-1));

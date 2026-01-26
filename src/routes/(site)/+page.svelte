@@ -12,6 +12,7 @@
 	import PortfolioItemDetail from '$siteComponents/organisms/portfolio/portfolioItemDetail.svelte';
 	import { page } from '$app/state';
 	import ScrollToTopButton from '$siteComponents/atoms/scrollToTopButton.svelte';
+	import FullscreenImage from '$siteComponents/atoms/fullscreenImage.svelte';
 
 	let { data, form }: { data: PageData; form: ActionData | undefined } = $props();
 
@@ -54,6 +55,8 @@
 <Contact success={form?.success} message={form?.message} />
 
 <ScrollToTopButton />
+
+<FullscreenImage />
 
 <style>
 	:global(.about-portfolio-seperator) {
