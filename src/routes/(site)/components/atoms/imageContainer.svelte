@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Maximize, Minimize } from '@lucide/svelte';
 	import Button from './button.svelte';
+	import { hideFullScreenImage, showFullScreenImage } from '../../shared/fullScreenImageState.svelte';
 
 	const {
 		imgUrl,
@@ -8,10 +9,17 @@
 		showCaption = false,
 		showShadow = false,
 		canEnlarge = true,
-		CSSClass
-	}: { imgUrl: string; caption: string; showCaption?: boolean; showShadow?: boolean; canEnlarge?: boolean; CSSClass?: string } = $props();
-
-	let fullscreen = $state(false);
+		CSSClass,
+		fullscreen = false
+	}: {
+		imgUrl: string;
+		caption: string;
+		showCaption?: boolean;
+		showShadow?: boolean;
+		canEnlarge?: boolean;
+		CSSClass?: string;
+		fullscreen?: boolean;
+	} = $props();
 </script>
 
 <div class="image-container {showShadow ? 'shadow' : ''} {fullscreen ? 'fullscreen' : ''} {CSSClass}">
@@ -19,12 +27,17 @@
 		<img src={imgUrl} alt={caption} />
 
 		{#if canEnlarge && !fullscreen}
-			<Button type="submit" icon={Maximize} CSSClass="enlarge-button" onclick={() => (fullscreen = true)} />
+			<Button
+				type="submit"
+				icon={Maximize}
+				CSSClass="enlarge-button"
+				onclick={() => showFullScreenImage(imgUrl, caption, showCaption, CSSClass)}
+			/>
 		{/if}
 	</div>
 
-	{#if canEnlarge && fullscreen}
-		<Button type="submit" icon={Minimize} CSSClass="shrink-button" onclick={() => (fullscreen = false)} />
+	{#if fullscreen}
+		<Button type="submit" icon={Minimize} CSSClass="shrink-button" onclick={hideFullScreenImage} />
 	{/if}
 
 	{#if showCaption}

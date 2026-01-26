@@ -1,8 +1,0 @@
-.grid-container {
-    display: grid;
-    grid-gap: var(--padding-1);
-    
-    &.columns-2 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}

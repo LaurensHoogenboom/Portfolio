@@ -22,3 +22,7 @@ vite.config.ts.timestamp-*
 # Content
 uploads
 database
+
+# Build styles
+static/styles
+static/fonts
