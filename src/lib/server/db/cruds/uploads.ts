@@ -21,13 +21,29 @@ const getUploadById = async (id: string) => {
 
 const createUpload = async (data: typeof uploads.$inferInsert) => {
     if (!data.title) {
-        throw new Error("An upload must have an title.");
-    } 
+        throw new Error("An upload must have a title.");
+    }
+
+    const titleExists = await getUploadByTitle(data.title);
+
+    if (titleExists) {
+        throw new Error("An upload must have an unique title.");
+    }
 
     return await db.insert(uploads).values(data).returning().get();
 }
 
 const updateUpload = async (id: string, data: Partial<typeof uploads.$inferInsert>) => {
+    const uploadToUpdate = await getUploadById(id);
+
+    if (data.title && data.title != uploadToUpdate?.id) {
+        const titleExists = await getUploadByTitle(data.title);
+
+        if (titleExists) {
+            throw new Error("An upload must have an unique title.");
+        }
+    }
+
     return await db.update(uploads).set(data).where(eq(uploads.id, id)).returning().get();
 }
 
