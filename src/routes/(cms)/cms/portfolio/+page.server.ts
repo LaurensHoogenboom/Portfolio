@@ -24,7 +24,15 @@ export const actions: Actions = {
         };
 
         const imageFile = formData.get('image');
-        const image: Upload | undefined = imageFile ? await uploadImage(imageFile as File, title) : undefined;
+        let image: Upload | undefined;
+
+        try {
+            image = imageFile ? await uploadImage(imageFile as File, title) : undefined;
+        } catch (e) {
+            const error = e as Error;
+            console.log(error);
+            return fail(422, { error: error.message });
+        }
 
         const portfolioItem: typeof portfolioItems.$inferInsert = {
             title: title,
@@ -60,8 +68,8 @@ export const actions: Actions = {
             visiblePriority: string
         };
 
-        let imageUpload: Upload | undefined = undefined;
         const imageFile = formData.get('image') as File;
+        let imageUpload: Upload | undefined;
 
         if (imageFile.name && imageFile.size) {
             const portfolioItem = await getPortfolioItemById(id);
@@ -70,7 +78,13 @@ export const actions: Actions = {
                 await deleteFileAndUpload(portfolioItem.upload);
             };
 
-            imageUpload = await uploadImage(imageFile, title);
+            try {
+                imageUpload = await uploadImage(imageFile, title);
+            } catch (e) {
+                const error = e as Error;
+                console.log(error);
+                return fail(422, { error: error.message });
+            }
         };
 
         try {

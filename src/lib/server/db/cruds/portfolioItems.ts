@@ -48,7 +48,7 @@ const createPortfolioItem = async (data: typeof portfolioItems.$inferInsert) => 
     const titleExists = await getPortfolioItemByTitle(data.title);
 
     if (titleExists) {
-        throw new Error("A portfolio item must have a unique title.");
+        throw new Error("A portfolio item must have an unique title.");
     }
 
     const createdItem = await db
@@ -67,7 +67,7 @@ const updatePortfolioItem = async (id: string, data: Partial<typeof portfolioIte
         const titleExists = await db.select().from(portfolioItems).where(eq(portfolioItems.title, data.title)).get();
 
         if (titleExists) {
-            throw new Error("A portfolio item must have a unique title.");
+            throw new Error("A portfolio item must have an unique title.");
         }
     }
 
