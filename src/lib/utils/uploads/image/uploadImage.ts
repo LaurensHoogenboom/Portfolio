@@ -24,20 +24,28 @@ const uploadImage = async (image: File | Buffer, title: string): Promise<Upload>
     const fullImageUrl = getWriteUrl(fullImageName, 'image');
     const thumbnailImageUrl = getWriteUrl(thumbnailImageName, 'image');
 
+    let upload: Upload;
+
+    try {
+        upload = await createUpload({
+            title: title,
+            fileType: 'image',
+            image: {
+                url: path.join('/images/', fullImageName),
+                thumbnail: {
+                    url: path.join('/images/', thumbnailImageName),
+                    aspectRatio: metaData.width / metaData.height
+                }
+            }
+        });
+    } catch (e) {
+        const error = e as Error;
+        console.log(error);
+        throw error;
+    }
+
     await writeFile(fullImageUrl, Buffer.from(fullImage));
     await writeFile(thumbnailImageUrl, Buffer.from(thumbnail));
-
-    const upload = await createUpload({
-        title: title,
-        fileType: 'image',
-        image: {
-            url: path.join('/images/', fullImageName),
-            thumbnail: {
-                url: path.join('/images/', thumbnailImageName),
-                aspectRatio: metaData.width / metaData.height
-            }
-        }
-    });
 
     return upload;
 }
