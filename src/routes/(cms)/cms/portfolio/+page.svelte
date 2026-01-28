@@ -2,10 +2,9 @@
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import PageToolbar from '$cmsComponents/organisms/pageToolbar.svelte';
 	import { Plus } from '@lucide/svelte';
-	import type { ActionData, PageData } from './$types';
+	import type { PageData } from './$types';
 	import EditPortfolioItemDialog, { type IPortfolioItemToEdit } from './components/editPortfolioItemDialog.svelte';
 	import CreatePortfolioItemDialog from './components/createPortfolioItemDialog.svelte';
-	import { isFormActionType, notifyFormActionSuccess } from '../shared/globalNotifications.svelte';
 	import LabelInputGroup, { type ISelectOption } from '$cmsComponents/molecules/labelInputGroup.svelte';
 	import { portfolioSelectOptions } from './shared/portfolioSelectOptions';
 	import { isPortfolioItemType } from '$lib/types/portfolio';
@@ -13,7 +12,7 @@
 	import { goto } from '$app/navigation';
 	import DataList from '$cmsComponents/dataList.svelte';
 
-	let { data, form }: { data: PageData; form: ActionData | undefined } = $props();
+	let { data }: { data: PageData } = $props();
 
 	let portfolioItemToEdit: IPortfolioItemToEdit | undefined = $state();
 	let editFormVisible = $derived(!!portfolioItemToEdit);
@@ -41,9 +40,7 @@
 	let selectOptions: ISelectOption[] = [{ value: 'all', title: 'All' }, ...(portfolioSelectOptions as ISelectOption[])];
 	let selectedValue: string | undefined = $state('all');
 	let filteredItems = $derived(
-		selectedValue && isPortfolioItemType(selectedValue) 
-		? data.portfolioItems.filter(p => p.type == selectedValue)
-		: data.portfolioItems
+		selectedValue && isPortfolioItemType(selectedValue) ? data.portfolioItems.filter((p) => p.type == selectedValue) : data.portfolioItems
 	);
 </script>
 
@@ -64,10 +61,7 @@
 </main>
 
 {#if editFormVisible && portfolioItemToEdit}
-	<EditPortfolioItemDialog
-		{portfolioItemToEdit}
-		closeCallback={() => (portfolioItemToEdit = undefined)}
-	/>
+	<EditPortfolioItemDialog {portfolioItemToEdit} closeCallback={() => (portfolioItemToEdit = undefined)} />
 {/if}
 
 {#if createFormVisible}

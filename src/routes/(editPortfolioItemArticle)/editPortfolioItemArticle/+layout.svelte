@@ -2,7 +2,7 @@
 	import { dev } from '$app/environment';
     import type { LayoutProps } from './$types';
 
-    let { data, children }: LayoutProps = $props();
+    let { children }: LayoutProps = $props();
 </script>
 
 <svelte:head>

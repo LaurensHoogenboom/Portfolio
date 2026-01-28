@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { ActionData, PageData } from './$types';
+	import type { PageData } from './$types';
 	import About from '$siteComponents/sections/about.svelte';
 	import Contact from '$siteComponents/sections/contact.svelte';
 	import Header from '$siteComponents/sections/header.svelte';
@@ -14,7 +14,7 @@
 	import ScrollToTopButton from '$siteComponents/atoms/scrollToTopButton.svelte';
 	import FullscreenImage from '$siteComponents/atoms/fullscreenImage.svelte';
 
-	let { data, form }: { data: PageData; form: ActionData | undefined } = $props();
+	let { data }: { data: PageData; } = $props();
 
 	onMount(async () => {
 		const [hash, query] = window.location.href.split('#')[1] ? window.location.href.split('#')[1].split('?') : [undefined, undefined];
@@ -52,7 +52,7 @@
 	<PortfolioItemDetail portfolioItem={page.state.activePortfolioItem} />
 {/if}
 
-<Contact success={form?.success} message={form?.message} />
+<Contact />
 
 <ScrollToTopButton />
 
