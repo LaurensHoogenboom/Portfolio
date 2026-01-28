@@ -6,12 +6,14 @@ const usersTableUIConfig: TableConfig<User> = {
     username: {
         label: 'Username',
         priority: 1,
-        visible: true
+        visible: true,
+        sortable: true
     },
     createdAt: {
         label: 'Created At',
         priority: 1,
         visible: true,
+        sortable: true,
         format: toFullDataTimeString
     }
 };

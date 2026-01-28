@@ -4,7 +4,7 @@
     import { Circle } from 'svelte-loading-spinners';
     import { fly } from 'svelte/transition';
 
-    const { title, type, style, alignment, url, onclick, icon, children, loading = false, form, succes = false, labelFor } : {
+    const { title, type, style, alignment, url, onclick, icon, children, loading = false, form, succes = false, labelFor, iconPosition = 'right' } : {
         title?: string,
         type: "submit" | "button" | "goto" | "label",
         style: "primary" | "secondary" | "transparent" | "inset-outset",
@@ -16,7 +16,8 @@
         loading?: boolean,
         form?: string,
         succes?: boolean,
-        labelFor?: string
+        labelFor?: string,
+        iconPosition?: 'left' | 'right'
     } = $props();
 
     const classString = `${style == "inset-outset" ? "inset round" : `clickable-input ${style}`}`;
@@ -52,6 +53,7 @@
         {icon ? "has-icon" : ""} 
         {!title && !children ? "only-icon same-height-as-width" : ""} 
         {(loading || succes) ? "hidden" : ""}
+        icon-{iconPosition}
     ">
         {#if children}
             {@render children()}

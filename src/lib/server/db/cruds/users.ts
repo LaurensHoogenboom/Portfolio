@@ -5,19 +5,19 @@ import { sha256 } from "@oslojs/crypto/sha2";
 import { isEqualBuffer } from "../utils/utils";
 
 const getUsers = async (number: number = 10, offset: number = 0) => {
-    const {password, ...rest} = getTableColumns(users);
+    const {password, securityQuestionAnswer, ...rest} = getTableColumns(users);
 
     return await db.select({...rest}).from(users).limit(number).offset(offset);
 }
 
 const getUserById = async (id: string) => {
-    const {password, ...rest} = getTableColumns(users);
+    const {password, securityQuestionAnswer, ...rest} = getTableColumns(users);
 
     return await db.select({...rest}).from(users).where(eq(users.id, id)).get();
 }
 
 const getUserByUsername = async (username: string) => {
-    const {password, ...rest} = getTableColumns(users);
+    const {password, securityQuestionAnswer, ...rest} = getTableColumns(users);
     const user = db.select({...rest}).from(users).where(eq(users.username, username)).get();
 
     if (user) {

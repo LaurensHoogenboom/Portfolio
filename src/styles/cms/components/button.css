@@ -43,6 +43,11 @@
     &.center-alignment {
         justify-content: center;
     }
+
+    &.icon-left {
+        flex-direction: row-reverse;
+        justify-content: start;
+    }
 }
 
 .clickable-input {

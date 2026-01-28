@@ -1,5 +1,5 @@
 <script lang="ts" generics="T extends { id: string } & Record<string, unknown>">
-	import type { TableConfig } from '$lib/types/dataList';
+	import type { SortState, TableConfig } from '$lib/types/dataList';
 	import DataListBody from './organisms/dataList/dataListBody.svelte';
 	import DataListHeader from './organisms/dataList/dataListHeader.svelte';
 
@@ -21,13 +21,46 @@
 	);
 
 	const gridStyle = $derived(
-		`grid-template-columns: repeat(${sortedKeys.length}, minmax(0, 1fr)) ${editAction || writeAction || deleteAction ? '100px' : ''};`
+		`grid-template-columns: repeat(${sortedKeys.length}, minmax(0, 1fr)) ${editAction || writeAction || deleteAction ? '100px' : '0px'};`
 	);
+
+	let sortState = $state<SortState<T>>({ key: null, direction: 'asc' });
+	let sortedData = $derived(() => {
+		if (!sortState.key) return data;
+
+		const { key, direction } = sortState;
+		const multiplier = direction == 'asc' ? 1 : -1;
+
+		return [...data].sort((a, b) => {
+			const aValue = a[key];
+			const bValue = b[key];
+
+			if (aValue > bValue) return 1 * multiplier;
+			if (aValue < bValue) return -1 * multiplier;
+			return 0;
+		});
+	});
+
+	const toggleSort = (key: keyof T) => {
+		if (key == sortState.key) {
+			sortState.direction = sortState.direction == 'asc' ? 'desc' : 'asc';
+		} else {
+			sortState.key = key;
+			sortState.direction = 'asc';
+		}
+	};
 </script>
 
 <div class="data-list">
-	<DataListHeader {config} {sortedKeys} {gridStyle} hasActions={editAction || writeAction || deleteAction ? true : false} />
-	<DataListBody {data} {config} {sortedKeys} {gridStyle} {itemNamePlural} {editAction} {writeAction} {deleteAction} />
+	<DataListHeader
+		{config}
+		{sortedKeys}
+		{sortState}
+		{gridStyle}
+		hasActions={editAction || writeAction || deleteAction ? true : false}
+		sortCallback={toggleSort}
+	/>
+	<DataListBody data={sortedData()} {config} {sortedKeys} {gridStyle} {itemNamePlural} {editAction} {writeAction} {deleteAction} />
 </div>
 
 <style>

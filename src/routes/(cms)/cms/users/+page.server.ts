@@ -38,9 +38,8 @@ export const actions: Actions = {
                 action: 'create'
             };
         } catch (e) {
-            const error = e as Error;
-            console.log(error);
-            return fail(422, { error: error.message });
+            console.log(e);
+            return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
     },
 
@@ -59,7 +58,7 @@ export const actions: Actions = {
             username: username,
             password: newPassword.length ? sha256(Buffer.from(newPassword)) : undefined,
             securityQuestion: securityQuestion,
-            securityQuestionAnswer: securityQuestionAnswer
+            securityQuestionAnswer: securityQuestionAnswer.length ? securityQuestionAnswer : undefined
         }
 
         try {
@@ -72,9 +71,8 @@ export const actions: Actions = {
                 action: 'update'
             };
         } catch (e) {
-            const error = e as Error;
-            console.log(error);
-            return fail(422, { error: error.message });
+            console.log(e);
+            return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
     },
 
@@ -92,9 +90,8 @@ export const actions: Actions = {
                 action: 'delete'
             };
         } catch (e) {
-            const error = e as Error;
-            console.log(error);
-            return fail(422, { error: error.message });
+            console.log(e);
+            return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
     }
 } satisfies Actions;

@@ -11,14 +11,7 @@ export const load = (async () => {
     });
 
     const portfolioItems = data.map(pItem => {
-        return {
-            id: pItem.id,
-            type: pItem.type,
-            title: pItem.title,
-            description: pItem.description,
-            image: pItem.upload?.image,
-            articleContent: pItem.articleContent
-        } as IPortfolioItem
+        return { ...pItem, image: pItem.upload?.image } as IPortfolioItem
     })
 
     return { portfolioItems: portfolioItems };
@@ -63,8 +56,7 @@ export const actions: Actions = {
             await transporter.sendMail(mailOptions);
             return { success: true, message: "Gelukt! We nemen zo snel mogelijk contact met je op." }
         } catch (e) {
-            const error = e as Error;
-            console.log(error);
+            console.log(e);
             return fail(500, { success: false, message: "Er ging iets mis. Probeer later opnieuw." });
         }
     }

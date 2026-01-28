@@ -39,9 +39,8 @@ const uploadImage = async (image: File | Buffer, title: string): Promise<Upload>
             }
         });
     } catch (e) {
-        const error = e as Error;
-        console.log(error);
-        throw error;
+        console.log(e);
+        throw e;
     }
 
     await writeFile(fullImageUrl, Buffer.from(fullImage));

@@ -5,12 +5,26 @@
 	import LabelInputGroup from "$cmsComponents/molecules/labelInputGroup.svelte";
 	import Dialog from "$cmsComponents/organisms/dialog.svelte";
 	import PasswordInput from "$cmsComponents/organisms/passwordInput.svelte";
+	import { notifyFormActionSuccess } from "../../shared/globalNotifications.svelte";
 
-    let { closeCallback, errorMessage } : { closeCallback: () => void, errorMessage?: string } = $props();
+    let { closeCallback } : { closeCallback: () => void } = $props();
+
+    let errorMessage: string | undefined = $state();
 </script>
 
 <Dialog title="Add User" closeCallback={closeCallback}>
-    <form method="post" action="?/create" use:enhance>
+    <form method="post" action="?/create" use:enhance={() => {
+        return async ({result, update}) => {
+            await update({ reset: false });
+
+            if (result.type == 'success') {
+                notifyFormActionSuccess('create', result.data?.username as string);
+                closeCallback();
+            } else if (result.type == 'failure') {
+                errorMessage = result.data?.error as string;
+            }
+        }
+    }}>
         {#if errorMessage}
             <Notice message={errorMessage} type="warning" />
         {/if}

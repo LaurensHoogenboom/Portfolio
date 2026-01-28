@@ -6,17 +6,20 @@ const uploadsTableUIConfig: TableConfig<Upload> = {
     title: {
         label: 'Title',
         priority: 1,
-        visible: true
+        visible: true,
+        sortable: true
     },
     fileType: {
         label: 'Type',
         priority: 1,
-        visible: true
+        visible: true,
+        sortable: true
     },
     createdAt: {
         label: 'Created At',
         priority: 1,
         visible: true,
+        sortable: true,
         format: toFullDataTimeString
     }
 };

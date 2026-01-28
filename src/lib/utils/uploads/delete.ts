@@ -32,9 +32,8 @@ const checkAndRemove = async (filename: string, fileType: UploadFileType) => {
     if (path && fs.existsSync(path)) {
         await fs.unlink(path, e => {
             if (e) {
-                const error = e as Error;
-                console.log(error);
-                return fail(422, { error: error.message });
+                console.log(e);
+                return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
             }
         });
     }
