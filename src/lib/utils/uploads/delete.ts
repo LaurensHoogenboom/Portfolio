@@ -1,5 +1,6 @@
 import { deleteUpload } from "$lib/server/db/cruds/uploads";
-import type { Upload, UploadFileType } from "$lib/types/uploads";
+import type { UploadFileType } from "$lib/types/uploads";
+import type { Upload } from "$lib/server/db/schema/uploads";
 import { getWriteUrl } from "./utils";
 import { fail } from "@sveltejs/kit";
 import fs from 'fs';
@@ -25,7 +26,7 @@ const deleteFileAndUpload = async (upload: Upload) => {
     await deleteUpload(upload.id);
 }
 
-const checkAndRemove = async (filename:string, fileType: UploadFileType ) => {
+const checkAndRemove = async (filename: string, fileType: UploadFileType) => {
     const path = getWriteUrl(filename, fileType);
 
     if (path && fs.existsSync(path)) {

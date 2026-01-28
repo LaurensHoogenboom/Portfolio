@@ -14,6 +14,8 @@ const users = sqliteTable("users", {
         .notNull(),
     
     ...timestamp
-})
+});
 
-export { users };
+type User = typeof users.$inferSelect;
+
+export { users, type User };

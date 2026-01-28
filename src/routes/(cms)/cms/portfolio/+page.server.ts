@@ -3,7 +3,7 @@ import type { portfolioItems } from '$lib/server/db/schema/portfolioItems';
 import type { PortfolioItemType } from '$lib/types/portfolio';
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import type { Upload } from '$lib/types/uploads';
+import type { Upload } from '$lib/server/db/schema/uploads';
 import { uploadImage } from '$lib/utils/uploads/image/uploadImage';
 import { deleteFileAndUpload } from '$lib/utils/uploads/delete';
 

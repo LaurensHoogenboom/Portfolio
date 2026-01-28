@@ -21,5 +21,6 @@ const portfolioItems = sqliteTable("portfolioItems", {
     ...timestamp
 });
 
-export { portfolioItems };
+type PortfolioItem = typeof portfolioItems.$inferSelect;
 
+export { portfolioItems, type PortfolioItem };

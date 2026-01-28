@@ -8,7 +8,7 @@
 	import Accordion from 'editorjs-collapsible-block';
 	import EditorjsList from '@editorjs/list';
 	import type { IPortfolioItem } from '$lib/types/portfolio';
-	import type { Upload } from '$lib/types/uploads';
+	import type { Upload } from '$lib/server/db/schema/uploads';
 	import { CustomImage } from './customImageTool';
 	import Quote from '@editorjs/quote';
 

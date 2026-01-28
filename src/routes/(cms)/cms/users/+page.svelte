@@ -1,14 +1,16 @@
 <script lang="ts">
 	import type { PageData, ActionData } from '../../cms/users/$types';
-	import ListItem from '$cmsComponents/molecules/listItem.svelte';
 	import PageToolbar from '$cmsComponents/organisms/pageToolbar.svelte';
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import EditUserDialog from './components/editUserDialog.svelte';
 	import type { IUserToEdit } from './components/editUserDialog.svelte';
 	import CreateUserDialog from './components/createUserDialog.svelte';
 	import { Plus } from '@lucide/svelte';
-	import DataList, { type IDataListKeyValuePair } from '$cmsComponents/organisms/dataList.svelte';
 	import { isFormActionType, notifyFormActionSuccess } from '../shared/globalNotifications.svelte';
+	import { usersTableUIConfig } from '$lib/configs/users';
+	import DataListBody from '$cmsComponents/organisms/dataList/dataListBody.svelte';
+	import DataListHeader from '$cmsComponents/organisms/dataList/dataListHeader.svelte';
+	import DataList from '$cmsComponents/dataList.svelte';
 
 	let { data, form }: { data: PageData; form: ActionData | undefined } = $props();
 
@@ -46,16 +48,13 @@
 </PageToolbar>
 
 <main>
-	<DataList itemNamePlural="Users" itemCount={data.users.length}>
-		{#each data.users as user}
-			{@const displayKeyValuePairs: IDataListKeyValuePair[] = [
-                {key: 'name', value: user.username},
-                {key: 'created at', value: user.createdAt.toDateString()}
-            ]}
-
-			<ListItem id={user.id} {displayKeyValuePairs} editAction={() => openEditDialog(user.id)} deleteAction="/cms/users?/delete" />
-		{/each}
-	</DataList>
+	<DataList 
+		data={data.users}
+		config={usersTableUIConfig}
+		itemNamePlural="Users"
+		editAction={openEditDialog}
+		deleteAction="?/delete"
+	/>
 </main>
 
 {#if editFormVisible && userToEdit}

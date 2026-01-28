@@ -3,15 +3,15 @@
 	import PageToolbar from '$cmsComponents/organisms/pageToolbar.svelte';
 	import { Plus } from '@lucide/svelte';
 	import type { ActionData, PageData } from './$types';
-	import ListItem from '$cmsComponents/molecules/listItem.svelte';
-	import DataList, { type IDataListKeyValuePair } from '$cmsComponents/organisms/dataList.svelte';
 	import EditPortfolioItemDialog, { type IPortfolioItemToEdit } from './components/editPortfolioItemDialog.svelte';
 	import CreatePortfolioItemDialog from './components/createPortfolioItemDialog.svelte';
 	import { isFormActionType, notifyFormActionSuccess } from '../shared/globalNotifications.svelte';
-	import { goto } from '$app/navigation';
 	import LabelInputGroup, { type ISelectOption } from '$cmsComponents/molecules/labelInputGroup.svelte';
-	import { portfolioSelectOptions, type ISelectPortfolioType } from './shared/portfolioSelectOptions';
+	import { portfolioSelectOptions } from './shared/portfolioSelectOptions';
 	import { isPortfolioItemType, type PortfolioItemType } from '$lib/types/portfolio';
+	import { portfolioTableUIConfig } from '$lib/configs/portfolioItems';
+	import { goto } from '$app/navigation';
+	import DataList from '$cmsComponents/dataList.svelte';
 
 	let { data, form }: { data: PageData; form: ActionData | undefined } = $props();
 
@@ -31,6 +31,14 @@
 				image: portfolioItem.upload?.image ?? null,
 				visiblePriority: portfolioItem.visiblePriority
 			};
+		}
+	};
+
+	const openWriteMenu = (id: string) => {
+		const portfolioItem = data.portfolioItems.find((pItem) => pItem.id == id);
+
+		if (portfolioItem && portfolioItem.type != 'art') {
+			goto(`/editPortfolioItemArticle/${portfolioItem.id}`);
 		}
 	};
 
@@ -57,24 +65,14 @@
 </PageToolbar>
 
 <main>
-	<DataList itemNamePlural="Portfolio Items" itemCount={visibleItems.length}>
-		{#each visibleItems as pItem}
-			{@const writeAction = pItem.type != 'art' ? () => goto(`/editPortfolioItemArticle/${pItem.id}`) : undefined}
-			{@const displayValues: IDataListKeyValuePair[] = [
-				{ key: 'title', value: pItem.title },
-				{ key: 'type', value: pItem.type },
-				{ key: 'visible priority', value: pItem.visiblePriority.toString() }
-			]}
-
-			<ListItem
-				displayKeyValuePairs={displayValues}
-				id={pItem.id}
-				editAction={() => openEditDialog(pItem.id)}
-				{writeAction}
-				deleteAction="/cms/portfolio?/delete"
-			/>
-		{/each}
-	</DataList>
+	<DataList
+		data={visibleItems}
+		config={portfolioTableUIConfig}
+		itemNamePlural="portfolio items"
+		editAction={openEditDialog}
+		writeAction={openWriteMenu}
+		deleteAction="?/delete"
+	/>
 </main>
 
 {#if editFormVisible && portfolioItemToEdit}

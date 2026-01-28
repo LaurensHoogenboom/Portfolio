@@ -1,7 +1,3 @@
-import type { uploads } from "$lib/server/db/schema/uploads";
-import type { InferSelectModel } from "drizzle-orm";
-
-type Upload = InferSelectModel<typeof uploads>;
 type UploadFileType = 'image' | 'document';
 
 interface IUploadedDocument {
@@ -18,4 +14,4 @@ interface IUploadedImage {
     thumbnail: IThumbnail,
 }
 
-export type { UploadFileType, IUploadedDocument, IThumbnail, IUploadedImage, Upload };
+export type { UploadFileType, IUploadedDocument, IThumbnail, IUploadedImage };

@@ -2,7 +2,7 @@ import sharp from "sharp";
 import { writeFile } from 'fs/promises';
 import { createUpload } from "$lib/server/db/cruds/uploads";
 import path from "path";
-import type { Upload } from "$lib/types/uploads";
+import type { Upload } from "$lib/server/db/schema/uploads";
 import { getWriteUrl } from "../utils";
 
 const uploadImage = async (image: File | Buffer, title: string): Promise<Upload> => {

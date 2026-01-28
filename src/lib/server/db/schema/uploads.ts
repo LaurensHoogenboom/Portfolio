@@ -15,4 +15,6 @@ const uploads = sqliteTable("uploads", {
     ...timestamp
 });
 
-export { uploads }
+type Upload = typeof uploads.$inferSelect;
+
+export { uploads, type Upload }
