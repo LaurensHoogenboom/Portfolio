@@ -14,6 +14,7 @@ const uploadsTableUIConfig: TableConfig<UploadWithMeta> = {
         priority: 1,
         visible: true,
         sortable: true,
+        maxWidth: 80,
         format: (val) => val.charAt(0).toUpperCase() + val.slice(1)
     },
     createdAt: {
@@ -21,21 +22,30 @@ const uploadsTableUIConfig: TableConfig<UploadWithMeta> = {
         priority: 1,
         visible: true,
         sortable: true,
-        format: toFullDataTimeString
+        format: toFullDataTimeString,
+        maxWidth: 150
     },
     updatedAt: {
         label: 'Updated At',
         priority: 4,
         visible: true,
         sortable: true,
-        format: toFullDataTimeString
+        format: toFullDataTimeString,
+        maxWidth: 150
     },
     isUsed: {
         label: 'In use',
         priority: 5,
         visible: true,
         sortable: true,
-        format: (val) => val ? 'true' : 'false'
+        maxWidth: 80,
+        format: (val) => val ? 'Yes' : 'No'
+    },
+    url: {
+        label: 'Url',
+        priority: 6,
+        visible: true,
+        sortable: false
     },
     renderActions: (row) => ({
         showDelete: !row.isUsed

@@ -23,12 +23,9 @@
 <div class="list-item" style={gridStyle} in:fly={{ y: 20 }} out:slide>
 	{#each sortedKeys as key}
 		{@const column = config[key] as UIColumn<any> | undefined}
+		{@const value = column?.format ? column.format(row[key]) : row[key]}
 
-		{#if column?.format}
-			<p>{column?.format(row[key])}</p>
-		{:else}
-			<p>{row[key]}</p>
-		{/if}
+		<p title={value as string}>{value}</p>
 	{/each}
 
 	{#if writeAction || editAction || deleteAction}
@@ -73,6 +70,8 @@
 		display: grid;
 		width: 100%;
 		align-items: center;
+		min-height: 40px;
+		grid-gap: var(--padding-2);
 
 		&:not(:last-child) {
 			border-bottom: var(--default-border);
@@ -82,6 +81,9 @@
 		p {
 			width: 100%;
 			padding-bottom: 0;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 
 		.actions {

@@ -21,7 +21,11 @@
 	);
 
 	const gridStyle = $derived(
-		`grid-template-columns: repeat(${sortedKeys.length}, minmax(0, 1fr)) ${editAction || writeAction || deleteAction ? '100px' : '0px'};`
+		`grid-template-columns: ${sortedKeys
+			.map((k) => {
+				return config[k]?.maxWidth ? `${config[k].maxWidth}px` : 'minmax(0, 1fr)';
+			})
+			.join(' ')} ${editAction || writeAction || deleteAction ? '100px' : '0px'};`
 	);
 
 	let sortState = $state<SortState<T>>({ key: null, direction: 'asc' });

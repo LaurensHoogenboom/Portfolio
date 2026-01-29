@@ -48,6 +48,8 @@
 		top: var(--padding-1);
 		z-index: 2;
 		padding: var(--padding-4) var(--padding-3);
+		align-items: center;
+		grid-gap: var(--padding-2);
 
 		p {
 			padding-bottom: 0;

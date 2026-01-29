@@ -3,6 +3,7 @@ export interface UIColumn<V = unknown> {
     priority: number,
     visible: boolean,
     sortable?: boolean,
+    maxWidth?: number,
     format?: (value: V) => string | number;
 }
 

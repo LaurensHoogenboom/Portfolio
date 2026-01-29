@@ -18,7 +18,12 @@ export const load = (async () => {
 
     const uploadsWithMeta: UploadWithMeta[] = await Promise.all(uploads.map(async uItem => ({
         ...uItem,
-        isUsed: isUploadInUse(uItem, portfolioItems)
+        isUsed: isUploadInUse(uItem, portfolioItems),
+        url: uItem.fileType == 'document' && uItem.document 
+            ? uItem.document.url 
+            : uItem.fileType == 'image' && uItem.image 
+                ? uItem.image.url
+                : undefined
     })));
 
     return { uploads: uploadsWithMeta };
