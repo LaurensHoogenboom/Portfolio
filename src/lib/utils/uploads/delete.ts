@@ -9,8 +9,8 @@ const deleteFileAndUpload = async (upload: Upload) => {
     if (upload.fileType == 'image') {
         if (!upload.image) return;
 
-        const thumbnailFileName = upload.image.thumbnail.url.split('\\').pop();
-        const fullImageName = upload.image.url.split('\\').pop();
+        const thumbnailFileName = upload.image.thumbnail.url.split(/[\\/]/).pop();
+        const fullImageName = upload.image.url.split(/[\\/]/).pop();
 
         if (thumbnailFileName) await checkAndRemove(thumbnailFileName, 'image');
         if (fullImageName) await checkAndRemove(fullImageName, 'image');
@@ -19,7 +19,7 @@ const deleteFileAndUpload = async (upload: Upload) => {
     if (upload.fileType == 'document') {
         if (!upload.document) return;
 
-        const documentFileName = upload.document.url.split('\\').pop();
+        const documentFileName = upload.document.url.split(/[\\/]/).pop();
         if (documentFileName) await checkAndRemove(documentFileName, 'document');
     }
 

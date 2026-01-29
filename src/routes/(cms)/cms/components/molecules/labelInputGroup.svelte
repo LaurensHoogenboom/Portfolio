@@ -36,7 +36,7 @@
 	} = $props();
 
 	let files: FileList | undefined = $state();
-	let fileName: string | undefined = $state(typeof value == 'string' ? value.split('/').pop() : '');
+	let fileName: string | undefined = $state(typeof value == 'string' ? value.split(/[\\/]/).pop() : '');
 
 	let showImage = $state(acceptFile == 'image/*');
 	let imagePreviewSrc = $state(typeof value == 'string' ? value : '');
