@@ -14,5 +14,5 @@
 </PageToolbar>
 
 <main>
-	<DataList data={data.uploads} config={uploadsTableUIConfig} itemNamePlural="Uploads" />
+	<DataList data={data.uploads} config={uploadsTableUIConfig} itemNamePlural="Uploads" deleteAction="?/delete" />
 </main>

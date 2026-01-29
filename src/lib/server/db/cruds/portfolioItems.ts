@@ -72,7 +72,7 @@ const updatePortfolioItem = async (id: string, data: Partial<typeof portfolioIte
     }
 
     const updatedItem = await db.update(portfolioItems)
-        .set(data)
+        .set({...data, updatedAt: new Date()})
         .where(eq(portfolioItems.id, id))
         .returning()
         .get();

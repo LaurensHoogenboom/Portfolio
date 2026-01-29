@@ -11,7 +11,14 @@ const usersTableUIConfig: TableConfig<User> = {
     },
     createdAt: {
         label: 'Created At',
-        priority: 1,
+        priority: 2,
+        visible: true,
+        sortable: true,
+        format: toFullDataTimeString
+    },
+    updatedAt: {
+        label: 'Updated At',
+        priority: 3,
         visible: true,
         sortable: true,
         format: toFullDataTimeString

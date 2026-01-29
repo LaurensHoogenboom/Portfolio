@@ -44,7 +44,7 @@ const updateUpload = async (id: string, data: Partial<typeof uploads.$inferInser
         }
     }
 
-    return await db.update(uploads).set(data).where(eq(uploads.id, id)).returning().get();
+    return await db.update(uploads).set({...data, updatedAt: new Date()}).where(eq(uploads.id, id)).returning().get();
 }
 
 const deleteUpload = async (id: string) => {

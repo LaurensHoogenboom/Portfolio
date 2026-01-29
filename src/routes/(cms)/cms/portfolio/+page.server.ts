@@ -118,7 +118,7 @@ export const actions: Actions = {
 
             return {
                 succes: true,
-                portfolioItemTitle: portfolioItem?.title,
+                itemName: portfolioItem?.title,
                 action: 'delete'
             }
         } catch (e) {

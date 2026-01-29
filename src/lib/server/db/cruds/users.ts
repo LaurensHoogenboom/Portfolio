@@ -49,7 +49,7 @@ const updateUser = async (id: string, data: Partial<typeof users.$inferInsert>, 
     }
 
     if ((user && isEqualBuffer(user.password, sha256(Buffer.from(currentPassword || "")))) || !data?.password) {
-        return await db.update(users).set(data).where(eq(users.id, id)).returning().get();
+        return await db.update(users).set({...data, updatedAt: new Date()}).where(eq(users.id, id)).returning().get();
     } else {
         throw new Error("Incorrect current password was given.");
     }

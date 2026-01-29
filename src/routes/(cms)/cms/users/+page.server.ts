@@ -86,7 +86,7 @@ export const actions: Actions = {
 
             return {
                 succes: true,
-                username: userToDelete?.username,
+                itemName: userToDelete?.username,
                 action: 'delete'
             };
         } catch (e) {

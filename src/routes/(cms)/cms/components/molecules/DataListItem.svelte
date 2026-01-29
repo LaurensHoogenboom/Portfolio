@@ -4,6 +4,7 @@
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import { Pencil, TextCursor, Trash2 } from '@lucide/svelte';
 	import type { TableConfig, UIColumn } from '$lib/types/dataList';
+	import { dispatchWarningNotification, notifyFormActionSuccess } from '../../shared/globalNotifications.svelte';
 
 	interface Props {
 		row: T;
@@ -16,6 +17,7 @@
 	}
 
 	let { row, config, sortedKeys, gridStyle, deleteAction, editAction, writeAction }: Props = $props();
+	let saving = $state(false);
 </script>
 
 <div class="list-item" style={gridStyle} in:fly={{ y: 20 }} out:slide>
@@ -39,10 +41,27 @@
 				<Button type="button" style="transparent" icon={Pencil} onclick={() => editAction(row.id)} />
 			{/if}
 
-			{#if deleteAction}
-				<form method="post" action={deleteAction} use:enhance>
+			{#if deleteAction && (config.renderActions?.(row).showDelete ?? true)}
+				<form
+					method="post"
+					action={deleteAction}
+					use:enhance={() => {
+						saving = true;
+
+						return async ({ update, result }) => {
+							await update({ reset: false });
+							saving = false;
+
+							if (result.type == 'success') {
+								notifyFormActionSuccess('delete', result.data?.itemName as string);
+							} else if (result.type == 'failure') {
+								dispatchWarningNotification(result.data?.error as string);
+							}
+						};
+					}}
+				>
 					<input type="hidden" name="id" value={row.id} />
-					<Button type="submit" style="transparent" icon={Trash2} />
+					<Button type="submit" style="transparent" icon={Trash2} loading={saving} />
 				</form>
 			{/if}
 		</div>

@@ -17,4 +17,8 @@ const uploads = sqliteTable("uploads", {
 
 type Upload = typeof uploads.$inferSelect;
 
-export { uploads, type Upload }
+type UploadWithMeta = Upload & {
+    isUsed: boolean;
+}
+
+export { uploads, type Upload, type UploadWithMeta }

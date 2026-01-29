@@ -9,7 +9,11 @@ export interface UIColumn<V = unknown> {
 export type TableConfig<T> = {
     [K in keyof T]?: UIColumn<T[K]>
 } & {
-    renderActions?: (row: T) => { showWrite?: boolean; showEdit?: boolean }
+    renderActions?: (row: T) => {
+        showWrite?: boolean;
+        showEdit?: boolean;
+        showDelete?: boolean
+    }
 }
 
 export type SortState<T> = {
