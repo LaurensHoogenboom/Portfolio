@@ -22,7 +22,7 @@
 	<div class="contact-info">
 		<ButtonLinkGroup>
 			<Button icon={Mail} type="goto" id="mailadres" style="secondary" />
-			<a href="mailto:me@laurens">info@laurenshoogenboom.nl</a>
+			<a href="mailto:info@laurenshoogenboom.nl">info@laurenshoogenboom.nl</a>
 		</ButtonLinkGroup>
 
 		<ButtonLinkGroup>
