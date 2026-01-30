@@ -1,6 +1,7 @@
 import type { TableConfig } from "$lib/types/dataList";
 import type { PortfolioItem } from "$lib/server/db/schema/portfolioItems";
 import { toFullDataTimeString } from "$lib/utils/format/date";
+import { startWithUpperCase } from "$lib/utils/format/text";
 
 const portfolioTableUIConfig: TableConfig<PortfolioItem> = {
     title: {
@@ -14,7 +15,7 @@ const portfolioTableUIConfig: TableConfig<PortfolioItem> = {
         priority: 2,
         visible: true,
         sortable: true,
-        format: (val) => val.charAt(0).toUpperCase() + val.slice(1)
+        format: startWithUpperCase
     },
     visiblePriority: {
         label: 'Visible priority',

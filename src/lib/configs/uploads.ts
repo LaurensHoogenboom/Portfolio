@@ -1,6 +1,7 @@
 import type { UploadWithMeta } from "$lib/server/db/schema/uploads"
 import type { TableConfig } from "$lib/types/dataList"
 import { toFullDataTimeString } from "$lib/utils/format/date";
+import { startWithUpperCase } from "$lib/utils/format/text";
 
 const uploadsTableUIConfig: TableConfig<UploadWithMeta> = {
     title: {
@@ -15,7 +16,7 @@ const uploadsTableUIConfig: TableConfig<UploadWithMeta> = {
         visible: true,
         sortable: true,
         maxWidth: 80,
-        format: (val) => val.charAt(0).toUpperCase() + val.slice(1)
+        format: startWithUpperCase
     },
     createdAt: {
         label: 'Created At',
@@ -45,7 +46,8 @@ const uploadsTableUIConfig: TableConfig<UploadWithMeta> = {
         label: 'Url',
         priority: 6,
         visible: true,
-        sortable: false
+        sortable: false,
+        format: (val) => `<a href="${val}" target="_blank">${val}<a>`
     },
     renderActions: (row) => ({
         showDelete: !row.isUsed

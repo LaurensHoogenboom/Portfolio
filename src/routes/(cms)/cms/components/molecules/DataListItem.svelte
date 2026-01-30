@@ -25,7 +25,7 @@
 		{@const column = config[key] as UIColumn<any> | undefined}
 		{@const value = column?.format ? column.format(row[key]) : row[key]}
 
-		<p title={value as string}>{value}</p>
+		<p>{@html value}</p>
 	{/each}
 
 	{#if writeAction || editAction || deleteAction}
