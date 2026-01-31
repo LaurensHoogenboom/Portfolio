@@ -153,5 +153,9 @@
 				font-family: 'Merriweather', serif;
 			}
 		}
+
+		:global(input[type="checkbox"]) {
+			appearance: auto;
+		}
 	}
 </style>
