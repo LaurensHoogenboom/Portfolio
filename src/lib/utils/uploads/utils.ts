@@ -18,8 +18,13 @@ const getWriteUrl = (filename: string, fileType: UploadFileType) => {
 
 const isUploadInUse = (upload: Upload, portfolioItems: IPortfolioItem[]): boolean => {
     return portfolioItems.some(p => {
-        if (upload?.fileType == 'document') {
-            return false;
+        if (upload.fileType == 'document' && upload.document && p.articleContent) {
+            const contentString = JSON.stringify(p.articleContent);
+            const fileName = upload.document.url.split(/[\\/]/).pop();
+
+            if (fileName && contentString.includes(fileName)) {
+                return true;
+            }
         }
 
         if (upload?.fileType == 'image' && upload.image) {
