@@ -10,12 +10,8 @@ export const GET: RequestHandler = async ({ params }) => {
 
         if (data) {
             const portfolioItem = {
-                id: data.id,
-                type: data.type,
-                title: data.title,
-                description: data.description,
-                image: data.upload?.image,
-                articleContent: data.articleContent
+                ...data,
+                image: data.upload?.image
             } as IPortfolioItem;
 
             return json(portfolioItem);

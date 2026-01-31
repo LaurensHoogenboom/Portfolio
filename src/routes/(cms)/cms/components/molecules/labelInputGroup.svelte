@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import Instruction from '$cmsComponents/atoms/instruction.svelte';
+	import { File as FileIcon } from '@lucide/svelte';
 
 	export interface ISelectOption {
 		title: string;
@@ -18,7 +19,8 @@
 		required = false,
 		instruction,
 		selectOptions,
-		acceptFile
+		acceptFile,
+		layout = 'vertical'
 	}: {
 		name: string;
 		type: 'text' | 'textarea' | 'password' | 'select' | 'file' | 'number';
@@ -31,10 +33,11 @@
 		instruction?: string;
 		selectOptions?: ISelectOption[];
 		acceptFile?: string;
+		layout?: 'horizontal' | 'vertical'
 	} = $props();
 
 	let files: FileList | undefined = $state();
-	let fileName: string | undefined = $state(typeof value == 'string' ? value.split('/').pop() : '');
+	let fileName: string | undefined = $state(typeof value == 'string' ? value.split(/[\\/]/).pop() : '');
 
 	let showImage = $state(acceptFile == 'image/*');
 	let imagePreviewSrc = $state(typeof value == 'string' ? value : '');
@@ -59,7 +62,7 @@
 	});
 </script>
 
-<div class="label-input-group">
+<div class="label-input-group {layout}">
 	<label for={name}>{label}</label>
 
 	{#if type == 'text' || type == 'password' || type == 'number'}
@@ -83,7 +86,10 @@
 				{#if showImage}
 					<img class="outset" alt={fileName} src={imagePreviewSrc} />
 				{:else}
-					<p>{fileName}</p>
+					<div class="file-preview">
+						<FileIcon size={30}/>
+						<p>{fileName}</p>
+					</div>
 				{/if}
 			{/if}
 		</div>
@@ -109,6 +115,17 @@
 		&:last-child :global(.instruction) {
 			margin-bottom: 0;
 		}
+
+		&.horizontal {
+			flex-direction: row;
+			align-items: center;
+			grid-gap: var(--padding-3);
+			margin-bottom: 0;
+
+			label {
+				padding-bottom: 0;
+			}
+		}
 	}
 
 	.file-input {
@@ -128,6 +145,23 @@
 			max-width: 370px;
 			border-radius: var(--border-radius-s);
 			object-fit: cover;
+		}
+
+		.file-preview {
+			display: grid;
+			justify-items: center;
+			align-items: center;
+			padding: var(--padding-1) var(--padding-3);
+			border: 1px solid var(--grey-borders);
+			border-radius: var(--border-radius-s);
+			background-color: var(--grey-background-1);
+			grid-gap: var(--padding-3);
+
+			p {
+				text-align: center;
+				margin: 0;
+				color: var(--grey-text-1)
+			}
 		}
 	}
 </style>

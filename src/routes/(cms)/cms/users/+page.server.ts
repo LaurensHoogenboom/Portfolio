@@ -32,15 +32,12 @@ export const actions: Actions = {
             const newUser = await createUser(user);
 
             return {
-                succes: true,
                 userId: newUser.id,
                 username: newUser.username,
-                action: 'create'
             };
         } catch (e) {
-            const error = e as Error;
-            console.log(error);
-            return fail(422, { error: error.message });
+            console.log(e);
+            return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
     },
 
@@ -59,22 +56,19 @@ export const actions: Actions = {
             username: username,
             password: newPassword.length ? sha256(Buffer.from(newPassword)) : undefined,
             securityQuestion: securityQuestion,
-            securityQuestionAnswer: securityQuestionAnswer
+            securityQuestionAnswer: securityQuestionAnswer.length ? securityQuestionAnswer : undefined
         }
 
         try {
             const updatedUser = await updateUser(id, update, currentPassword);
 
             return {
-                succes: true,
                 userId: updatedUser.id,
                 username: updatedUser.username,
-                action: 'update'
             };
         } catch (e) {
-            const error = e as Error;
-            console.log(error);
-            return fail(422, { error: error.message });
+            console.log(e);
+            return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
     },
 
@@ -87,14 +81,11 @@ export const actions: Actions = {
             await deleteUser(id);
 
             return {
-                succes: true,
-                username: userToDelete?.username,
-                action: 'delete'
+                itemName: userToDelete?.username,
             };
         } catch (e) {
-            const error = e as Error;
-            console.log(error);
-            return fail(422, { error: error.message });
+            console.log(e);
+            return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
     }
 } satisfies Actions;

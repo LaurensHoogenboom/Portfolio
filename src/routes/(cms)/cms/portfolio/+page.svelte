@@ -2,18 +2,20 @@
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import PageToolbar from '$cmsComponents/organisms/pageToolbar.svelte';
 	import { Plus } from '@lucide/svelte';
-	import type { ActionData, PageData } from './$types';
-	import ListItem from '$cmsComponents/molecules/listItem.svelte';
-	import DataList from '$cmsComponents/organisms/dataList.svelte';
+	import type { PageData } from './$types';
 	import EditPortfolioItemDialog, { type IPortfolioItemToEdit } from './components/editPortfolioItemDialog.svelte';
 	import CreatePortfolioItemDialog from './components/createPortfolioItemDialog.svelte';
-	import { isFormActionType, notifyFormActionSuccess } from '../shared/globalNotifications.svelte';
+	import LabelInputGroup, { type ISelectOption } from '$cmsComponents/molecules/labelInputGroup.svelte';
+	import { portfolioSelectOptions } from './shared/portfolioSelectOptions';
+	import { isPortfolioItemType } from '$lib/types/portfolio';
+	import { portfolioTableUIConfig } from '$lib/configs/portfolioItems';
 	import { goto } from '$app/navigation';
+	import DataList from '$cmsComponents/dataList.svelte';
 
-	let { data, form }: { data: PageData; form: ActionData | undefined } = $props();
+	let { data }: { data: PageData } = $props();
 
 	let portfolioItemToEdit: IPortfolioItemToEdit | undefined = $state();
-	let editFormVisible = $derived(portfolioItemToEdit ? true : false);
+	let editFormVisible = $derived(!!portfolioItemToEdit);
 	let createFormVisible = $state(false);
 
 	const openEditDialog = (id: string) => {
@@ -21,54 +23,47 @@
 
 		if (portfolioItem) {
 			portfolioItemToEdit = {
-				id: portfolioItem.id,
-				title: portfolioItem.title,
-				description: portfolioItem.description,
-				type: portfolioItem.type,
-				image: portfolioItem.upload?.image ?? null,
-				visiblePriority: portfolioItem.visiblePriority
+				...portfolioItem,
+				image: portfolioItem.upload?.image ?? null
 			};
 		}
 	};
 
-	$effect(() => {
-        if (form?.succes && isFormActionType(form.action) && form.portfolioItemTitle) {
-            notifyFormActionSuccess(form.action, form.portfolioItemTitle);
-            createFormVisible = false;
-			editFormVisible = false;
-            form = undefined;
-        }
-	});
+	const openWriteMenu = (id: string) => {
+		const portfolioItem = data.portfolioItems.find((pItem) => pItem.id == id);
+
+		if (portfolioItem && portfolioItem.type != 'art') {
+			goto(`/editPortfolioItemArticle/${portfolioItem.id}`);
+		}
+	};
+
+	let selectOptions: ISelectOption[] = [{ value: 'all', title: 'All' }, ...(portfolioSelectOptions as ISelectOption[])];
+	let selectedValue: string | undefined = $state('all');
+	let filteredItems = $derived(
+		selectedValue && isPortfolioItemType(selectedValue) ? data.portfolioItems.filter((p) => p.type == selectedValue) : data.portfolioItems
+	);
 </script>
 
 <PageToolbar>
-	<Button title="Portfolio Item" type="button" style="secondary" onclick={() => (createFormVisible = true)} icon={Plus} />
+	<LabelInputGroup type="select" label="Category" name="category" layout="horizontal" {selectOptions} bind:value={selectedValue} />
+	<Button title="Add" type="button" style="primary" onclick={() => (createFormVisible = true)} icon={Plus} />
 </PageToolbar>
 
 <main>
-	<DataList itemNamePlural="Portfolio Items" itemCount={data.portfolioItems.length}>
-		{#each data.portfolioItems as pItem}
-			{@const writeAction = pItem.type != 'art' ? () => goto(`/editPortfolioItemArticle/${pItem.id}`) : undefined}
-			<ListItem
-				title={pItem.title}
-				id={pItem.id}
-				editAction={() => openEditDialog(pItem.id)}
-				{writeAction}
-				deleteAction="/cms/portfolio?/delete"
-			/>
-		{/each}
-	</DataList>
+	<DataList
+		data={filteredItems}
+		config={portfolioTableUIConfig}
+		itemNamePlural="portfolio items"
+		editAction={openEditDialog}
+		writeAction={openWriteMenu}
+		deleteAction="?/delete"
+	/>
 </main>
 
 {#if editFormVisible && portfolioItemToEdit}
-	<EditPortfolioItemDialog
-		{portfolioItemToEdit}
-		closeCallback={() => (portfolioItemToEdit = undefined)}
-		errorMessage={form?.error}
-		editSuccess={form?.succes}
-	/>
+	<EditPortfolioItemDialog {portfolioItemToEdit} closeCallback={() => (portfolioItemToEdit = undefined)} />
 {/if}
 
 {#if createFormVisible}
-	<CreatePortfolioItemDialog closeCallback={() => (createFormVisible = false)} errorMessage={form?.error} createSuccess={form?.succes} />
+	<CreatePortfolioItemDialog closeCallback={() => (createFormVisible = false)} />
 {/if}

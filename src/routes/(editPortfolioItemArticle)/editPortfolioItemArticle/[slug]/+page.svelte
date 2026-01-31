@@ -6,7 +6,7 @@
 	import type { PageData } from './$types';
 	import type { ButtonActionStatus } from '$siteComponents/atoms/button.svelte';
 	import EditorJS, { type OutputData } from '@editorjs/editorjs';
-	import type { Upload } from '$lib/types/uploads';
+	import type { Upload } from '$lib/server/db/schema/uploads';
 
 	let { data }: { data: PageData } = $props();
 	let savingStatus: ButtonActionStatus | undefined = $state();

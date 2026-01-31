@@ -75,7 +75,7 @@
 			cursor: pointer;
 			position: relative;
 			border: 1px solid transparent;
-			z-index: 2;
+			z-index: 3;
 
 			p {
 				padding: 0;

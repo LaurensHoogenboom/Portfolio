@@ -1,8 +1,9 @@
-import type { uploads } from "$lib/server/db/schema/uploads";
-import type { InferSelectModel } from "drizzle-orm";
+const uploadFileTypeStringMap = {
+    image: 'image',
+    document: 'document'
+}
 
-type Upload = InferSelectModel<typeof uploads>;
-type UploadFileType = 'image' | 'document';
+type UploadFileType = keyof typeof uploadFileTypeStringMap;
 
 interface IUploadedDocument {
     url: string
@@ -18,4 +19,8 @@ interface IUploadedImage {
     thumbnail: IThumbnail,
 }
 
-export type { UploadFileType, IUploadedDocument, IThumbnail, IUploadedImage, Upload };
+const isUploadFileType = (value: string): value is UploadFileType => {
+    return value in uploadFileTypeStringMap;
+}
+
+export { type UploadFileType, type IUploadedDocument, type IThumbnail, type IUploadedImage, isUploadFileType };

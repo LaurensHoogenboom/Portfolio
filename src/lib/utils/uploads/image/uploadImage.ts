@@ -2,10 +2,10 @@ import sharp from "sharp";
 import { writeFile } from 'fs/promises';
 import { createUpload } from "$lib/server/db/cruds/uploads";
 import path from "path";
-import type { Upload } from "$lib/types/uploads";
+import type { Upload } from "$lib/server/db/schema/uploads";
 import { getWriteUrl } from "../utils";
 
-const uploadImage = async (image: File | Buffer, title: string): Promise<Upload> => {
+const uploadImage = async (image: File | Buffer, title: string, description?: string): Promise<Upload> => {
     const imageBuffer = image instanceof File ? await image.arrayBuffer() : image;
     const metaData = await sharp(imageBuffer).metadata();
 
@@ -36,12 +36,12 @@ const uploadImage = async (image: File | Buffer, title: string): Promise<Upload>
                     url: path.join('/images/', thumbnailImageName),
                     aspectRatio: metaData.width / metaData.height
                 }
-            }
+            },
+            description: description
         });
     } catch (e) {
-        const error = e as Error;
-        console.log(error);
-        throw error;
+        console.log(e);
+        throw e;
     }
 
     await writeFile(fullImageUrl, Buffer.from(fullImage));

@@ -1,10 +1,11 @@
 import type { UploadFileType } from "$lib/types/uploads";
 import path from "path";
-import * as dotenv from "dotenv";
+import type { Upload } from "$lib/server/db/schema/uploads";
+import type { IPortfolioItem } from "$lib/types/portfolio";
+import { env } from '$env/dynamic/private';
 
 const getUploadsFolder = (type: 'cms' | 'portfolio') => {
-    dotenv.config();
-    return process.env.UPLOADS_FOLDER + `/${type}/`;
+    return env.UPLOADS_FOLDER + `/${type}/`;
 }
 
 const getWriteUrl = (filename: string, fileType: UploadFileType) => {
@@ -15,4 +16,27 @@ const getWriteUrl = (filename: string, fileType: UploadFileType) => {
     }
 }
 
-export { getWriteUrl, getUploadsFolder };
+const isUploadInUse = (upload: Upload, portfolioItems: IPortfolioItem[]): boolean => {
+    return portfolioItems.some(p => {
+        if (upload?.fileType == 'document') {
+            return false;
+        }
+
+        if (upload?.fileType == 'image' && upload.image) {
+            if (p.image?.url == upload.image.url) return true;
+
+            if (p.articleContent) {
+                const contentString = JSON.stringify(p.articleContent);
+                const fileName = upload.image.url.split(/[\\/]/).pop();
+
+                if (fileName && contentString.includes(fileName)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    });
+}
+
+export { getWriteUrl, getUploadsFolder, isUploadInUse };

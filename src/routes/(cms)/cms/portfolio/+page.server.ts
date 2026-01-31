@@ -1,9 +1,9 @@
 import { createPortfolioItem, deletePortfolioItem, getPortfolioItemById, getPortfolioItems, updatePortfolioItem } from '$lib/server/db/cruds/portfolioItems';
-import type { portfolioItems } from '$lib/server/db/schema/portfolioItems';
+import { portfolioItems } from '$lib/server/db/schema/portfolioItems';
 import type { PortfolioItemType } from '$lib/types/portfolio';
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import type { Upload } from '$lib/types/uploads';
+import type { Upload } from '$lib/server/db/schema/uploads';
 import { uploadImage } from '$lib/utils/uploads/image/uploadImage';
 import { deleteFileAndUpload } from '$lib/utils/uploads/delete';
 
@@ -23,15 +23,14 @@ export const actions: Actions = {
             visiblePriority: string
         };
 
-        const imageFile = formData.get('image');
+        const imageFile = formData.get('image') as File | null;
         let image: Upload | undefined;
 
         try {
-            image = imageFile ? await uploadImage(imageFile as File, title) : undefined;
+            image = imageFile && imageFile.size > 0 ? await uploadImage(imageFile, title) : undefined;
         } catch (e) {
-            const error = e as Error;
-            console.log(error);
-            return fail(422, { error: error.message });
+            console.log(e);
+            return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
 
         const portfolioItem: typeof portfolioItems.$inferInsert = {
@@ -46,66 +45,58 @@ export const actions: Actions = {
             const newPortfolioItem = await createPortfolioItem(portfolioItem);
 
             return {
-                succes: true,
                 portfolioItemId: newPortfolioItem?.id,
                 portfolioItemTitle: newPortfolioItem?.title,
-                action: 'create'
             }
         } catch (e) {
-            const error = e as Error;
-            console.log(error);
-            return fail(422, { error: error.message });
+            console.log(e);
+            return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
     },
     update: async ({ request }) => {
         const formData = await request.formData();
-        const formDataObject = Object.fromEntries(formData);
-        const { id, title, description, type, visiblePriority } = formDataObject as {
-            id: string
-            title: string,
-            description: string,
-            type: string,
-            visiblePriority: string
-        };
 
-        const imageFile = formData.get('image') as File;
-        let imageUpload: Upload | undefined;
+        const id = formData.get('id') as string;
+        const title = formData.get('title') as string;
+        const description = formData.get('description') as string;
+        const type = formData.get('type') as PortfolioItemType;
+        const visiblePriority = parseInt(formData.get('visiblePriority') as string) || 0;
+        const imageFile = formData.get('image') as File | null;
 
-        if (imageFile.name && imageFile.size) {
-            const portfolioItem = await getPortfolioItemById(id);
+        let imageUploadId: string | undefined;
 
-            if (portfolioItem && portfolioItem.upload) {
-                await deleteFileAndUpload(portfolioItem.upload);
-            };
-
+        if (imageFile && imageFile.size > 0) {
             try {
-                imageUpload = await uploadImage(imageFile, title);
+                const portfolioItem = await getPortfolioItemById(id);
+                if (portfolioItem && portfolioItem.upload) {
+                    await deleteFileAndUpload(portfolioItem.upload);
+                };
+                imageUploadId = (await uploadImage(imageFile, title)).id;
             } catch (e) {
-                const error = e as Error;
-                console.log(error);
-                return fail(422, { error: error.message });
+                console.log(e);
+                return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
             }
         };
 
         try {
-            const updatedPortfolioItem = await updatePortfolioItem(id, {
-                title: title,
-                description: description,
-                type: type as PortfolioItemType,
-                imageUploadId: imageUpload ? imageUpload.id : undefined,
-                visiblePriority: parseInt(visiblePriority)
-            });
+            const updateData: Partial<typeof portfolioItems.$inferInsert> = {
+                title,
+                description,
+                type,
+                visiblePriority
+            };
+
+            if (imageUploadId) updateData.imageUploadId = imageUploadId;
+
+            const updatedPortfolioItem = await updatePortfolioItem(id, updateData);
 
             return {
-                succes: true,
                 portfolioItemId: updatedPortfolioItem?.id,
                 portfolioItemTitle: updatedPortfolioItem?.title,
-                action: 'update'
             }
         } catch (e) {
-            const error = e as Error;
-            console.log(error);
-            return fail(422, { error: error.message });
+            console.log(e);
+            return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
     },
     delete: async ({ request }) => {
@@ -122,14 +113,11 @@ export const actions: Actions = {
             await deletePortfolioItem(id);
 
             return {
-                succes: true,
-                portfolioItemTitle: portfolioItem?.title,
-                action: 'delete'
+                itemName: portfolioItem?.title,
             }
         } catch (e) {
-            const error = e as Error;
-            console.log(error);
-            return fail(422, { error: error.message });
+            console.log(e);
+            return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
     }
 }

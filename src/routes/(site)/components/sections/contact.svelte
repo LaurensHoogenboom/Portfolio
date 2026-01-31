@@ -7,11 +7,10 @@
 	import { enhance } from '$app/forms';
 	import Notice from '$siteComponents/atoms/notice.svelte';
 
-	const { success, message }: { success?: boolean; message?: string } = $props();
-
 	let buttonStatus: ButtonActionStatus | undefined = $state();
 	let form: HTMLFormElement | undefined = $state();
-	let showNotice: boolean = $state(false);
+	let message: string | undefined = $state();
+	let formSuccess: boolean | undefined = $state();
 </script>
 
 <ContentContainer id="contact" theme="transparent">
@@ -23,7 +22,7 @@
 	<div class="contact-info">
 		<ButtonLinkGroup>
 			<Button icon={Mail} type="goto" id="mailadres" style="secondary" />
-			<a href="mailto:me@laurens">info@laurenshoogenboom.nl</a>
+			<a href="mailto:info@laurenshoogenboom.nl">info@laurenshoogenboom.nl</a>
 		</ButtonLinkGroup>
 
 		<ButtonLinkGroup>
@@ -40,21 +39,32 @@
 		use:enhance={() => {
 			buttonStatus = 'processing';
 
-			return async ({ update }) => {
+			return async ({ update , result }) => {
 				await update({ reset: false });
-				showNotice = true;
-				buttonStatus = success ? 'success' : 'fail';
+
+				formSuccess = result.type == 'success' ? true : false;
+
+				if (result.type == 'success') {
+					buttonStatus = 'success';
+					message = result.data?.message as string;
+				} else if (result.type == 'failure') {
+					buttonStatus = 'fail';
+					message = result.data?.message as string;
+				}
 
 				setTimeout(() => {
-					showNotice = false;
 					buttonStatus = undefined;
+				}, 2000);
+
+				setTimeout(() => {
 					form?.reset();
+					message = undefined;
 				}, 6000);
 			};
 		}}
 	>
-		{#if showNotice && message}
-			<Notice {message} type={success ? 'success' : 'fail'} />
+		{#if message}
+			<Notice {message} type={formSuccess ? 'success' : 'fail'} />
 		{/if}
 
 		<LabelInputGroup name="name" type="text" label="Naam" required={true} />

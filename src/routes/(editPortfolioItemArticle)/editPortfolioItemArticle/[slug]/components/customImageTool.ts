@@ -6,7 +6,7 @@ export class CustomImage extends ImageTool {
             const url = this._data.file.url;
             if (!url) return;
 
-            const filename = url.split('\\').pop();
+            const filename = url.split(/[\\/]/).pop();
             if (!filename) return;
 
             const title = filename.split('.')[0];

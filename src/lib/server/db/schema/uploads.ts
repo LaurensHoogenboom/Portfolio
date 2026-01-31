@@ -15,4 +15,11 @@ const uploads = sqliteTable("uploads", {
     ...timestamp
 });
 
-export { uploads }
+type Upload = typeof uploads.$inferSelect;
+
+type UploadWithMeta = Upload & {
+    isUsed: boolean;
+    url?: string
+}
+
+export { uploads, type Upload, type UploadWithMeta }

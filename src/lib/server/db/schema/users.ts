@@ -14,6 +14,10 @@ const users = sqliteTable("users", {
         .notNull(),
     
     ...timestamp
-})
+});
 
-export { users };
+type UserWithSecrets = typeof users.$inferSelect;
+
+type User = Omit<UserWithSecrets, "password" | "securityQuestionAnswer">;
+
+export { users, type User, type UserWithSecrets };
