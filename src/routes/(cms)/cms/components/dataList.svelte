@@ -1,7 +1,7 @@
 <script lang="ts" generics="T extends { id: string } & Record<string, unknown>">
 	import type { SortState, TableConfig } from '$lib/types/dataList';
-	import DataListBody from './organisms/dataList/dataListBody.svelte';
-	import DataListHeader from './organisms/dataList/dataListHeader.svelte';
+	import DataListBody from '$cmsComponents/organisms/dataList/dataListBody.svelte';
+	import DataListHeader from '$cmsComponents/organisms/dataList/dataListHeader.svelte';
 
 	interface Props {
 		data: T[];
