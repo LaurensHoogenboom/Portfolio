@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import Instruction from '$cmsComponents/atoms/instruction.svelte';
+	import { File as FileIcon } from '@lucide/svelte';
 
 	export interface ISelectOption {
 		title: string;
@@ -85,7 +86,10 @@
 				{#if showImage}
 					<img class="outset" alt={fileName} src={imagePreviewSrc} />
 				{:else}
-					<p>{fileName}</p>
+					<div class="file-preview">
+						<FileIcon size={30}/>
+						<p>{fileName}</p>
+					</div>
 				{/if}
 			{/if}
 		</div>
@@ -141,6 +145,23 @@
 			max-width: 370px;
 			border-radius: var(--border-radius-s);
 			object-fit: cover;
+		}
+
+		.file-preview {
+			display: grid;
+			justify-items: center;
+			align-items: center;
+			padding: var(--padding-1) var(--padding-3);
+			border: 1px solid var(--grey-borders);
+			border-radius: var(--border-radius-s);
+			background-color: var(--grey-background-1);
+			grid-gap: var(--padding-3);
+
+			p {
+				text-align: center;
+				margin: 0;
+				color: var(--grey-text-1)
+			}
 		}
 	}
 </style>

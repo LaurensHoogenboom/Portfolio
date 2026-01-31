@@ -45,10 +45,8 @@ export const actions: Actions = {
             const newPortfolioItem = await createPortfolioItem(portfolioItem);
 
             return {
-                succes: true,
                 portfolioItemId: newPortfolioItem?.id,
                 portfolioItemTitle: newPortfolioItem?.title,
-                action: 'create'
             }
         } catch (e) {
             console.log(e);
@@ -93,10 +91,8 @@ export const actions: Actions = {
             const updatedPortfolioItem = await updatePortfolioItem(id, updateData);
 
             return {
-                succes: true,
                 portfolioItemId: updatedPortfolioItem?.id,
                 portfolioItemTitle: updatedPortfolioItem?.title,
-                action: 'update'
             }
         } catch (e) {
             console.log(e);
@@ -117,9 +113,7 @@ export const actions: Actions = {
             await deletePortfolioItem(id);
 
             return {
-                succes: true,
                 itemName: portfolioItem?.title,
-                action: 'delete'
             }
         } catch (e) {
             console.log(e);

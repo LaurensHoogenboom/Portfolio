@@ -1,4 +1,9 @@
-type UploadFileType = 'image' | 'document';
+const uploadFileTypeStringMap = {
+    image: 'image',
+    document: 'document'
+}
+
+type UploadFileType = keyof typeof uploadFileTypeStringMap;
 
 interface IUploadedDocument {
     url: string
@@ -14,4 +19,8 @@ interface IUploadedImage {
     thumbnail: IThumbnail,
 }
 
-export type { UploadFileType, IUploadedDocument, IThumbnail, IUploadedImage };
+const isUploadFileType = (value: string): value is UploadFileType => {
+    return value in uploadFileTypeStringMap;
+}
+
+export { type UploadFileType, type IUploadedDocument, type IThumbnail, type IUploadedImage, isUploadFileType };

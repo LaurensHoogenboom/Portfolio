@@ -9,7 +9,6 @@ const login = async (username: string, password: string) => {
 
     if (user && isEqualBuffer(user.password, sha256(Buffer.from(password)))) {
         return {
-            succes: true,
             userId: user.id,
             username: user.username
         };

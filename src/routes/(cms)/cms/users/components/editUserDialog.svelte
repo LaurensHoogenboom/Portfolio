@@ -50,7 +50,7 @@
         
         <fieldset>
             <LabelInputGroup type="text" name="securityQuestion" label="Secret Question" max={250} required={true} value={userToEdit.securityQuestion}/>
-            <LabelInputGroup type="text" name="securityQuestionAnswer" label="Secret Answer" max={250} instruction="Leave this field empty, if you want to keep the answer the same."/>
+            <LabelInputGroup type="text" name="securityQuestionAnswer" label="Secret Answer" max={250} instruction="Leave blank to keep the current answer."/>
         </fieldset>
           
         <div class="box nested-box form-actions">

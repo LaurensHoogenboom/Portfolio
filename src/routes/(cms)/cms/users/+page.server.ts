@@ -32,10 +32,8 @@ export const actions: Actions = {
             const newUser = await createUser(user);
 
             return {
-                succes: true,
                 userId: newUser.id,
                 username: newUser.username,
-                action: 'create'
             };
         } catch (e) {
             console.log(e);
@@ -65,10 +63,8 @@ export const actions: Actions = {
             const updatedUser = await updateUser(id, update, currentPassword);
 
             return {
-                succes: true,
                 userId: updatedUser.id,
                 username: updatedUser.username,
-                action: 'update'
             };
         } catch (e) {
             console.log(e);
@@ -85,9 +81,7 @@ export const actions: Actions = {
             await deleteUser(id);
 
             return {
-                succes: true,
                 itemName: userToDelete?.username,
-                action: 'delete'
             };
         } catch (e) {
             console.log(e);

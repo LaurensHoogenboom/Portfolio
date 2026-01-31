@@ -5,7 +5,7 @@ import path from "path";
 import type { Upload } from "$lib/server/db/schema/uploads";
 import { getWriteUrl } from "../utils";
 
-const uploadImage = async (image: File | Buffer, title: string): Promise<Upload> => {
+const uploadImage = async (image: File | Buffer, title: string, description?: string): Promise<Upload> => {
     const imageBuffer = image instanceof File ? await image.arrayBuffer() : image;
     const metaData = await sharp(imageBuffer).metadata();
 
@@ -36,7 +36,8 @@ const uploadImage = async (image: File | Buffer, title: string): Promise<Upload>
                     url: path.join('/images/', thumbnailImageName),
                     aspectRatio: metaData.width / metaData.height
                 }
-            }
+            },
+            description: description
         });
     } catch (e) {
         console.log(e);
