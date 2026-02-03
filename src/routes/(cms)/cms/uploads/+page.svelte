@@ -3,7 +3,7 @@
 	import DataList from '$cmsComponents/dataList.svelte';
 	import PageToolbar from '$cmsComponents/organisms/pageToolbar.svelte';
 	import { Plus } from '@lucide/svelte';
-	import type { ActionData, PageData } from './$types';
+	import type { PageData } from './$types';
 	import { uploadsTableUIConfig } from '$lib/configs/uploads';
 	import CreateUploadDialog from './components/createUploadDialog.svelte';
 	import type { ISelectOption } from '$cmsComponents/molecules/labelInputGroup.svelte';
@@ -11,15 +11,15 @@
 	import { isUploadFileType } from '$lib/types/uploads';
 	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
 
-	let { data }: { data: PageData; form: ActionData | undefined } = $props();
+	let { data }: { data: PageData } = $props();
 
 	let createFormVisible = $state(false);
 
-	let selectOptions: ISelectOption[] = [{ value: 'all', title: 'All'}, ...(uploadSelectOptions as ISelectOption[])];
+	let selectOptions: ISelectOption[] = [{ value: 'all', title: 'All' }, ...(uploadSelectOptions as ISelectOption[])];
 	let selectedValue: string | undefined = $state('all');
 	let filteredItems = $derived(
-		selectedValue && isUploadFileType(selectedValue) ? data.uploads.filter(u => u.fileType == selectedValue) : data.uploads
-	)
+		selectedValue && isUploadFileType(selectedValue) ? data.uploads.filter((u) => u.fileType == selectedValue) : data.uploads
+	);
 </script>
 
 <PageToolbar>
@@ -28,7 +28,13 @@
 </PageToolbar>
 
 <main>
-	<DataList data={filteredItems} config={uploadsTableUIConfig} itemNamePlural="Uploads" deleteAction="?/delete" />
+	<DataList
+		data={filteredItems}
+		config={uploadsTableUIConfig}
+		itemNamePlural="Uploads"
+		totalItemCount={data.uploadCount}
+		deleteAction="?/delete"
+	/>
 </main>
 
 {#if createFormVisible}

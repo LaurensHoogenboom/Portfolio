@@ -5,7 +5,7 @@
 
 	export interface ISelectOption {
 		title: string;
-		value: string;
+		value: string | number;
 	}
 
 	let {
@@ -28,7 +28,7 @@
 		label: string;
 		min?: number;
 		max?: number;
-		callback?: () => void;
+		callback?: (e: Event) => void;
 		required?: boolean;
 		instruction?: string;
 		selectOptions?: ISelectOption[];

@@ -1,4 +1,4 @@
-import { getUploadById, getUploads } from '$lib/server/db/cruds/uploads';
+import { getUploadById, getUploadCount, getUploads } from '$lib/server/db/cruds/uploads';
 import type { Upload, UploadWithMeta } from '$lib/server/db/schema/uploads';
 import { deleteFileAndUpload } from '$lib/utils/uploads/delete';
 import { isUploadInUse } from '$lib/utils/uploads/utils';
@@ -10,9 +10,17 @@ import { uploadImage } from '$lib/utils/uploads/image/uploadImage';
 import { type UploadFileType } from '$lib/types/uploads';
 import { uploadDocument } from '$lib/utils/uploads/document/uploadDocument';
 
-export const load = (async () => {
-    const uploads = await getUploads(200);
-    const portfolioItems: IPortfolioItem[] = (await getPortfolioItems(200)).map((item) => {
+export const load = (async ({url}) => {
+    const pageIndex = parseInt(url.searchParams.get('pageIndex') ?? "0");
+    const itemsPerPage = parseInt(url.searchParams.get('itemsPerPage') ?? "10");
+
+    const [uploads, rawPortfolioItems, uploadCount] = await Promise.all([
+        getUploads(itemsPerPage, pageIndex * itemsPerPage),
+        getPortfolioItems('all'),
+        getUploadCount()
+    ]);
+
+    const portfolioItems: IPortfolioItem[] = rawPortfolioItems.map((item) => {
         return {
             ...item,
             image: item.upload?.image ?? null
@@ -29,7 +37,7 @@ export const load = (async () => {
                 : undefined
     })));
 
-    return { uploads: uploadsWithMeta };
+    return { uploads: uploadsWithMeta, uploadCount: uploadCount?.count ?? 0 };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {

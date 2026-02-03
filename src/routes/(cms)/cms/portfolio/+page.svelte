@@ -54,6 +54,7 @@
 		data={filteredItems}
 		config={portfolioTableUIConfig}
 		itemNamePlural="portfolio items"
+		totalItemCount={data.portfolioItemCount}
 		editAction={openEditDialog}
 		writeAction={openWriteMenu}
 		deleteAction="?/delete"

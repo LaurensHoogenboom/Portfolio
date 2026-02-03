@@ -1,4 +1,4 @@
-import { createPortfolioItem, deletePortfolioItem, getPortfolioItemById, getPortfolioItems, updatePortfolioItem } from '$lib/server/db/cruds/portfolioItems';
+import { createPortfolioItem, deletePortfolioItem, getPortfolioItemById, getPortfolioItemCount, getPortfolioItems, updatePortfolioItem } from '$lib/server/db/cruds/portfolioItems';
 import { portfolioItems } from '$lib/server/db/schema/portfolioItems';
 import type { PortfolioItemType } from '$lib/types/portfolio';
 import { fail } from '@sveltejs/kit';
@@ -7,9 +7,16 @@ import type { Upload } from '$lib/server/db/schema/uploads';
 import { uploadImage } from '$lib/utils/uploads/image/uploadImage';
 import { deleteFileAndUpload } from '$lib/utils/uploads/delete';
 
-export const load = (async () => {
-    const portfolioItems = await getPortfolioItems();
-    return { portfolioItems: portfolioItems };
+export const load = (async ({ url }) => {
+    const pageIndex = parseInt(url.searchParams.get('pageIndex') ?? "0");
+    const itemsPerPage = parseInt(url.searchParams.get('itemsPerPage') ?? "10");
+
+    const [portfolioItems, portfolioItemCount] = await Promise.all([
+        getPortfolioItems(itemsPerPage, pageIndex * itemsPerPage),
+        getPortfolioItemCount()
+    ]);
+
+    return { portfolioItems: portfolioItems, portfolioItemCount: portfolioItemCount?.count ?? 0 };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {

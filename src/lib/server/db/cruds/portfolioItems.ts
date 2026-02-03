@@ -1,11 +1,11 @@
-import { eq } from "drizzle-orm";
+import { count, eq } from "drizzle-orm";
 import { db } from "../client"
 import { portfolioItems } from "../schema/portfolioItems";
 import type { PortfolioItemType } from "../../../types/portfolio";
 
-const getPortfolioItems = async (number: number = 20, offset: number = 0) => {
+const getPortfolioItems = async (number: number | 'all' = 20, offset: number = 0) => {
     return await db.query.portfolioItems.findMany({
-        limit: number,
+        limit: number != 'all' ? number : undefined,
         offset: offset,
         with: {
             upload: true
@@ -15,7 +15,7 @@ const getPortfolioItems = async (number: number = 20, offset: number = 0) => {
 
 const getPortfolioItemsByType = async (type: PortfolioItemType) => {
     return await db.query.portfolioItems.findMany({
-        where: (portfolioItems, {eq}) => eq(portfolioItems.type, type),
+        where: (portfolioItems, { eq }) => eq(portfolioItems.type, type),
         with: {
             upload: true
         }
@@ -24,7 +24,7 @@ const getPortfolioItemsByType = async (type: PortfolioItemType) => {
 
 const getPortfolioItemById = async (id: string) => {
     return await db.query.portfolioItems.findFirst({
-        where: (portfolioItems, {eq}) => eq(portfolioItems.id, id),
+        where: (portfolioItems, { eq }) => eq(portfolioItems.id, id),
         with: {
             upload: true
         }
@@ -33,11 +33,15 @@ const getPortfolioItemById = async (id: string) => {
 
 const getPortfolioItemByTitle = async (title: string) => {
     return await db.query.portfolioItems.findFirst({
-        where: (portfolioItems, {eq}) => eq(portfolioItems.title, title),
+        where: (portfolioItems, { eq }) => eq(portfolioItems.title, title),
         with: {
             upload: true
         }
     });
+}
+
+const getPortfolioItemCount = async () => {
+    return await db.select({ count: count() }).from(portfolioItems).get();
 }
 
 const createPortfolioItem = async (data: typeof portfolioItems.$inferInsert) => {
@@ -72,7 +76,7 @@ const updatePortfolioItem = async (id: string, data: Partial<typeof portfolioIte
     }
 
     const updatedItem = await db.update(portfolioItems)
-        .set({...data, updatedAt: new Date()})
+        .set({ ...data, updatedAt: new Date() })
         .where(eq(portfolioItems.id, id))
         .returning()
         .get();
@@ -85,4 +89,4 @@ const deletePortfolioItem = async (id: string) => {
         .where(eq(portfolioItems.id, id));
 }
 
-export { getPortfolioItems, getPortfolioItemsByType, getPortfolioItemByTitle, getPortfolioItemById, createPortfolioItem, updatePortfolioItem, deletePortfolioItem }
+export { getPortfolioItems, getPortfolioItemsByType, getPortfolioItemByTitle, getPortfolioItemById, getPortfolioItemCount, createPortfolioItem, updatePortfolioItem, deletePortfolioItem }
