@@ -1,13 +1,20 @@
 import type { PageServerLoad, Actions } from '../../cms/users/$types';
-import { createUser, deleteUser, getUserById, getUsers, updateUser } from '$lib/server/db/cruds/users';
+import { createUser, deleteUser, getUserById, getUserCount, getUsers, updateUser } from '$lib/server/db/cruds/users';
 import { fail } from '@sveltejs/kit';
 import { sha256 } from "@oslojs/crypto/sha2";
 
-export const load: PageServerLoad = (async () => {
-    const users = await getUsers();
-    
+export const load: PageServerLoad = (async ({ url }) => {
+    const pageIndex = parseInt(url.searchParams.get('pageIndex') ?? "0");
+    const itemsPerPage = parseInt(url.searchParams.get('itemsPerPage') ?? "20");
+
+    const [users, userCount] = await Promise.all([
+        getUsers(itemsPerPage, pageIndex * itemsPerPage),
+        getUserCount()
+    ]);
+
     return {
-        users: users
+        users: users,
+        userCount: userCount?.count ?? 0
     };
 }) satisfies PageServerLoad;
 

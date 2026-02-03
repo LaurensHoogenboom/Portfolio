@@ -2,17 +2,19 @@
 	import type { SortState, TableConfig } from '$lib/types/dataList';
 	import DataListBody from '$cmsComponents/organisms/dataList/dataListBody.svelte';
 	import DataListHeader from '$cmsComponents/organisms/dataList/dataListHeader.svelte';
+	import DataListFooter from './organisms/dataList/dataListFooter.svelte';
 
 	interface Props {
 		data: T[];
 		config: TableConfig<T>;
 		itemNamePlural: string;
+		totalItemCount: number;
 		editAction?: (id: string) => void;
 		writeAction?: (id: string) => void;
 		deleteAction?: string;
 	}
 
-	const { data, config, itemNamePlural, editAction, writeAction, deleteAction }: Props = $props();
+	const { data, config, itemNamePlural, totalItemCount, editAction, writeAction, deleteAction }: Props = $props();
 
 	const sortedKeys = $derived(
 		(Object.keys(config) as Array<keyof T>)
@@ -65,6 +67,7 @@
 		sortCallback={toggleSort}
 	/>
 	<DataListBody data={sortedData()} {config} {sortedKeys} {gridStyle} {itemNamePlural} {editAction} {writeAction} {deleteAction} />
+	<DataListFooter {totalItemCount} />
 </div>
 
 <style>

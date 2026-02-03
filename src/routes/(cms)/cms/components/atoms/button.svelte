@@ -4,7 +4,7 @@
     import { Circle } from 'svelte-loading-spinners';
     import { fly } from 'svelte/transition';
 
-    const { title, type, style, alignment, url, onclick, icon, children, loading = false, form, succes = false, labelFor, iconPosition = 'right' } : {
+    const { title, type, style, alignment, url, onclick, icon, children, loading = false, form, succes = false, labelFor, iconPosition = 'right', CSSClass } : {
         title?: string,
         type: "submit" | "button" | "goto" | "label",
         style: "primary" | "secondary" | "transparent" | "inset-outset",
@@ -17,10 +17,11 @@
         form?: string,
         succes?: boolean,
         labelFor?: string,
-        iconPosition?: 'left' | 'right'
+        iconPosition?: 'left' | 'right',
+        CSSClass?: string
     } = $props();
 
-    const classString = `${style == "inset-outset" ? "inset round" : `clickable-input ${style}`}`;
+    const classString = `${style == "inset-outset" ? "inset round" : `clickable-input ${style} ${CSSClass}`}`;
 </script>
 
 {#if type == "goto" && url}

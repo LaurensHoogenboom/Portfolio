@@ -1,15 +1,30 @@
-import { createPortfolioItem, deletePortfolioItem, getPortfolioItemById, getPortfolioItems, updatePortfolioItem } from '$lib/server/db/cruds/portfolioItems';
-import { portfolioItems } from '$lib/server/db/schema/portfolioItems';
-import type { PortfolioItemType } from '$lib/types/portfolio';
+import { createPortfolioItem, deletePortfolioItem, getPortfolioItemById, getPortfolioItemCount, getPortfolioItems, updatePortfolioItem } from '$lib/server/db/cruds/portfolioItems';
+import { portfolioItems as portfolioItemTable } from '$lib/server/db/schema/portfolioItems';
+import { isPortfolioItemType, type PortfolioItemType } from '$lib/types/portfolio';
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import type { Upload } from '$lib/server/db/schema/uploads';
 import { uploadImage } from '$lib/utils/uploads/image/uploadImage';
 import { deleteFileAndUpload } from '$lib/utils/uploads/delete';
+import { and, eq } from 'drizzle-orm';
 
-export const load = (async () => {
-    const portfolioItems = await getPortfolioItems();
-    return { portfolioItems: portfolioItems };
+export const load = (async ({ url }) => {
+    const pageIndex = parseInt(url.searchParams.get('pageIndex') ?? "0");
+    const itemsPerPage = parseInt(url.searchParams.get('itemsPerPage') ?? "20");
+    const category = url.searchParams.get('category');
+
+    const filters = [
+        category && isPortfolioItemType(category) ? eq(portfolioItemTable.type, category) : undefined
+    ].filter(Boolean);
+
+    const where = filters.length > 0 ? and(...filters) : undefined;
+
+    const [portfolioItems, portfolioItemCount] = await Promise.all([
+        getPortfolioItems(itemsPerPage, pageIndex * itemsPerPage, where),
+        getPortfolioItemCount(where)
+    ]);
+
+    return { portfolioItems: portfolioItems, portfolioItemCount: portfolioItemCount?.count ?? 0 };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
@@ -33,7 +48,7 @@ export const actions: Actions = {
             return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
 
-        const portfolioItem: typeof portfolioItems.$inferInsert = {
+        const portfolioItem: typeof portfolioItemTable.$inferInsert = {
             title: title,
             description: description,
             type: type as PortfolioItemType,
@@ -79,7 +94,7 @@ export const actions: Actions = {
         };
 
         try {
-            const updateData: Partial<typeof portfolioItems.$inferInsert> = {
+            const updateData: Partial<typeof portfolioItemTable.$inferInsert> = {
                 title,
                 description,
                 type,
