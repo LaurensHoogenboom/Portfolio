@@ -14,7 +14,8 @@ export type TableConfig<T> = {
         showWrite?: boolean;
         showEdit?: boolean;
         showDelete?: boolean
-    }
+    };
+    getLabel?: (row: T) => string;
 }
 
 export type SortState<T> = {
