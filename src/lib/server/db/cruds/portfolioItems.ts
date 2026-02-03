@@ -1,15 +1,16 @@
-import { count, eq } from "drizzle-orm";
+import { count, eq, SQL } from "drizzle-orm";
 import { db } from "../client"
 import { portfolioItems } from "../schema/portfolioItems";
 import type { PortfolioItemType } from "../../../types/portfolio";
 
-const getPortfolioItems = async (number: number | 'all' = 20, offset: number = 0) => {
+const getPortfolioItems = async (number: number | 'all' = 20, offset: number = 0, where?: SQL<unknown>) => {
     return await db.query.portfolioItems.findMany({
         limit: number != 'all' ? number : undefined,
         offset: offset,
         with: {
             upload: true
-        }
+        },
+        where: where
     });
 }
 
@@ -40,8 +41,8 @@ const getPortfolioItemByTitle = async (title: string) => {
     });
 }
 
-const getPortfolioItemCount = async () => {
-    return await db.select({ count: count() }).from(portfolioItems).get();
+const getPortfolioItemCount = async (where?: SQL<unknown>) => {
+    return await db.select({ count: count() }).from(portfolioItems).where(where).get();
 }
 
 const createPortfolioItem = async (data: typeof portfolioItems.$inferInsert) => {

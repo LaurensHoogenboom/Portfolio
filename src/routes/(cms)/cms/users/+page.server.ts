@@ -5,7 +5,7 @@ import { sha256 } from "@oslojs/crypto/sha2";
 
 export const load: PageServerLoad = (async ({ url }) => {
     const pageIndex = parseInt(url.searchParams.get('pageIndex') ?? "0");
-    const itemsPerPage = parseInt(url.searchParams.get('itemsPerPage') ?? "10");
+    const itemsPerPage = parseInt(url.searchParams.get('itemsPerPage') ?? "20");
 
     const [users, userCount] = await Promise.all([
         getUsers(itemsPerPage, pageIndex * itemsPerPage),

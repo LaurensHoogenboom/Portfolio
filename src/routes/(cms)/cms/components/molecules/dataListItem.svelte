@@ -1,6 +1,6 @@
 <script lang="ts" generics="T extends { id: string }">
 	import { enhance } from '$app/forms';
-	import { fly, slide } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import { Pencil, TextCursor, Trash2 } from '@lucide/svelte';
 	import type { TableConfig, UIColumn } from '$lib/types/dataList';
@@ -20,7 +20,7 @@
 	let saving = $state(false);
 </script>
 
-<div class="list-item" style={gridStyle} in:fly={{ y: 20 }} out:slide>
+<div class="list-item" style={gridStyle} in:fly|local={{ y: 20, duration: 400, delay: 100 }} out:fade|local={{ duration: 200 }}>
 	{#each sortedKeys as key}
 		{@const column = config[key] as UIColumn<any> | undefined}
 		{@const value = column?.format ? column.format(row[key]) : row[key]}
@@ -70,13 +70,8 @@
 		display: grid;
 		width: 100%;
 		align-items: center;
-		min-height: 40px;
+		min-height: 30px;
 		grid-gap: var(--padding-2);
-
-		&:not(:last-child) {
-			border-bottom: var(--default-border);
-			padding-bottom: var(--padding-4);
-		}
 
 		p {
 			width: 100%;

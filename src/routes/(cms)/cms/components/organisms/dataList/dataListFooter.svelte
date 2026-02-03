@@ -2,28 +2,31 @@
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import LabelInputGroup, { type ISelectOption } from '$cmsComponents/molecules/labelInputGroup.svelte';
 	import { ArrowLeft, ArrowRight } from '@lucide/svelte';
+	import { page } from '$app/state';
+	import { updatePageParams } from '$lib/utils/updatePageParams';
 
-	export interface IPaginationStatus {
+	const { totalItemCount }: { totalItemCount: number } = $props();
+
+	interface IPaginationStatus {
 		activePageIndex: number;
 		pageCount: number;
 		itemsPerPage: number;
 	}
 
 	const pageSizeOptions: ISelectOption[] = [
-		{ title: '10', value: 10 },
 		{ title: '20', value: 20 },
-		{ title: '50', value: 50 }
+		{ title: '50', value: 50 },
+		{ title: '100', value: 100 }
 	];
 
-	const {
-		setPage,
-		setPageSize,
-		paginationStatus
-	}: {
-		setPage: (index: number) => void;
-		setPageSize: (itemCount: number) => void;
-		paginationStatus: IPaginationStatus;
-	} = $props();
+	const setPage = (index: number) => updatePageParams({ pageIndex: index });
+	const setPageSize = (itemCount: number) => updatePageParams({ itemsPerPage: itemCount }, true);
+
+	const paginationStatus: IPaginationStatus = $derived({
+		activePageIndex: parseInt(page.url.searchParams.get('pageIndex') ?? '0'),
+		pageCount: Math.ceil(totalItemCount / parseInt(page.url.searchParams.get('itemsPerPage') ?? pageSizeOptions[0].title)),
+		itemsPerPage: parseInt(page.url.searchParams.get('itemsPerPage') ?? pageSizeOptions[0].title)
+	});
 </script>
 
 <div class="box data-list-footer">

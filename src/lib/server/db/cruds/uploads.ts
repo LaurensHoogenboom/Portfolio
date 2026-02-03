@@ -1,10 +1,10 @@
 import type { UploadFileType } from "$lib/types/uploads";
-import { count, eq } from "drizzle-orm";
+import { count, eq, SQL } from "drizzle-orm";
 import { db } from "../client";
 import { uploads } from "../schema/uploads";
 
-const getUploads = async (number: number = 10, offset: number = 0) => {
-    return await db.select().from(uploads).limit(number).offset(offset);
+const getUploads = async (number: number = 10, offset: number = 0, where?: SQL<unknown>) => {
+    return await db.select().from(uploads).where(where).limit(number).offset(offset);
 }
 
 const getUploadsByFileType = async (fileType: UploadFileType) => {
@@ -19,8 +19,8 @@ const getUploadById = async (id: string) => {
     return await db.select().from(uploads).where(eq(uploads.id, id)).get();
 }
 
-const getUploadCount = async () => {
-    return await db.select({count: count()}).from(uploads).get()
+const getUploadCount = async (where?: SQL<unknown>) => {
+    return await db.select({count: count()}).from(uploads).where(where).get()
 }
 
 const createUpload = async (data: typeof uploads.$inferInsert) => {

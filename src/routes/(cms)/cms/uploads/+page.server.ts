@@ -7,17 +7,26 @@ import type { Actions, PageServerLoad } from './$types';
 import { getPortfolioItems } from '$lib/server/db/cruds/portfolioItems';
 import type { IPortfolioItem } from '$lib/types/portfolio';
 import { uploadImage } from '$lib/utils/uploads/image/uploadImage';
-import { type UploadFileType } from '$lib/types/uploads';
+import { isUploadFileType, type UploadFileType } from '$lib/types/uploads';
 import { uploadDocument } from '$lib/utils/uploads/document/uploadDocument';
+import { and, eq } from 'drizzle-orm';
+import { uploads as uploadsTable } from '$lib/server/db/schema/uploads';
 
 export const load = (async ({url}) => {
     const pageIndex = parseInt(url.searchParams.get('pageIndex') ?? "0");
-    const itemsPerPage = parseInt(url.searchParams.get('itemsPerPage') ?? "10");
+    const itemsPerPage = parseInt(url.searchParams.get('itemsPerPage') ?? "20");
+    const fileType = url.searchParams.get('fileType');
+
+    const filters = [
+        fileType && isUploadFileType(fileType) ? eq(uploadsTable.fileType, fileType) : undefined
+    ].filter(Boolean);
+
+    const where = filters.length > 0 ? and(...filters) : undefined;
 
     const [uploads, rawPortfolioItems, uploadCount] = await Promise.all([
-        getUploads(itemsPerPage, pageIndex * itemsPerPage),
+        getUploads(itemsPerPage, pageIndex * itemsPerPage, where),
         getPortfolioItems('all'),
-        getUploadCount()
+        getUploadCount(where)
     ]);
 
     const portfolioItems: IPortfolioItem[] = rawPortfolioItems.map((item) => {

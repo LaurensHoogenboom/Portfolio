@@ -7,10 +7,10 @@
 	import CreatePortfolioItemDialog from './components/createPortfolioItemDialog.svelte';
 	import LabelInputGroup, { type ISelectOption } from '$cmsComponents/molecules/labelInputGroup.svelte';
 	import { portfolioSelectOptions } from './shared/portfolioSelectOptions';
-	import { isPortfolioItemType } from '$lib/types/portfolio';
 	import { portfolioTableUIConfig } from '$lib/configs/portfolioItems';
 	import { goto } from '$app/navigation';
 	import DataList from '$cmsComponents/dataList.svelte';
+	import { updatePageParams } from '$lib/utils/updatePageParams';
 
 	let { data }: { data: PageData } = $props();
 
@@ -37,21 +37,27 @@
 		}
 	};
 
-	let selectOptions: ISelectOption[] = [{ value: 'all', title: 'All' }, ...(portfolioSelectOptions as ISelectOption[])];
-	let selectedValue: string | undefined = $state('all');
-	let filteredItems = $derived(
-		selectedValue && isPortfolioItemType(selectedValue) ? data.portfolioItems.filter((p) => p.type == selectedValue) : data.portfolioItems
-	);
+	const selectOptions: ISelectOption[] = [{ value: 'all', title: 'All' }, ...(portfolioSelectOptions as ISelectOption[])];
 </script>
 
 <PageToolbar>
-	<LabelInputGroup type="select" label="Category" name="category" layout="horizontal" {selectOptions} bind:value={selectedValue} />
+	<LabelInputGroup
+		type="select"
+		label="Category"
+		name="category"
+		layout="horizontal"
+		{selectOptions}
+		callback={(e) => {
+			const target = e.target as HTMLSelectElement;
+			updatePageParams({ category: target.value }, true);
+		}}
+	/>
 	<Button title="Add" type="button" style="primary" onclick={() => (createFormVisible = true)} icon={Plus} />
 </PageToolbar>
 
 <main>
 	<DataList
-		data={filteredItems}
+		data={data.portfolioItems}
 		config={portfolioTableUIConfig}
 		itemNamePlural="portfolio items"
 		totalItemCount={data.portfolioItemCount}
