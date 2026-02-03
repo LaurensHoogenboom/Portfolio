@@ -1,5 +1,5 @@
 <script lang="ts" generics="T extends { id: string } & Record<string, unknown>">
-	import DataListItem from '$cmsComponents/molecules/dataListItem.svelte';
+	import DataListItem from '$cmsComponents/organisms/dataList/dataListItem.svelte';
 	import type { TableConfig } from '$lib/types/dataList';
 	import { flip } from 'svelte/animate';
 

@@ -1,10 +1,9 @@
 <script lang="ts" generics="T extends { id: string }">
-	import { enhance } from '$app/forms';
 	import { fade, fly } from 'svelte/transition';
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import { Pencil, TextCursor, Trash2 } from '@lucide/svelte';
 	import type { TableConfig, UIColumn } from '$lib/types/dataList';
-	import { dispatchWarningNotification, notifyFormActionSuccess } from '../../shared/globalNotifications.svelte';
+	import DeleteConfirmationDialog from '$cmsComponents/deleteConfirmationDialog.svelte';
 
 	interface Props {
 		row: T;
@@ -17,7 +16,8 @@
 	}
 
 	let { row, config, sortedKeys, gridStyle, deleteAction, editAction, writeAction }: Props = $props();
-	let saving = $state(false);
+
+	let deleteConfirmationDialogVisible = $state(false);
 </script>
 
 <div class="list-item" style={gridStyle} in:fly|local={{ y: 20, duration: 400, delay: 100 }} out:fade|local={{ duration: 200 }}>
@@ -39,31 +39,22 @@
 			{/if}
 
 			{#if deleteAction && (config.renderActions?.(row).showDelete ?? true)}
-				<form
-					method="post"
-					action={deleteAction}
-					use:enhance={() => {
-						saving = true;
-
-						return async ({ update, result }) => {
-							await update({ reset: false });
-							saving = false;
-
-							if (result.type == 'success') {
-								notifyFormActionSuccess('delete', result.data?.itemName as string);
-							} else if (result.type == 'failure') {
-								dispatchWarningNotification(result.data?.error as string);
-							}
-						};
-					}}
-				>
-					<input type="hidden" name="id" value={row.id} />
-					<Button type="submit" style="transparent" icon={Trash2} loading={saving} />
-				</form>
+				<Button type="submit" style="transparent" icon={Trash2} onclick={() => (deleteConfirmationDialogVisible = true)} />
 			{/if}
 		</div>
 	{/if}
 </div>
+
+{#if deleteConfirmationDialogVisible && deleteAction}
+	{@const label = config.getLabel ? config.getLabel(row) : (row as any).title as string || undefined}
+
+	<DeleteConfirmationDialog
+		action={deleteAction}
+		closeCallback={() => (deleteConfirmationDialogVisible = false)}
+		itemId={row.id}
+		itemTitle={label}
+	/>
+{/if}
 
 <style>
 	.list-item {

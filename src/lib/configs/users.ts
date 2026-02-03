@@ -22,7 +22,8 @@ const usersTableUIConfig: TableConfig<User> = {
         visible: true,
         sortable: true,
         format: toFullDataTimeString
-    }
+    },
+    getLabel: (row) => row.username
 };
 
 export { usersTableUIConfig };
