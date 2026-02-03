@@ -4,7 +4,7 @@ import { users } from "../schema/users";
 import { sha256 } from "@oslojs/crypto/sha2";
 import { isEqualBuffer } from "../utils/utils";
 
-const getUsers = async (number: number = 10, offset: number = 0) => {
+const getUsers = async (number: number = 20, offset: number = 0) => {
     const { password, securityQuestionAnswer, ...rest } = getTableColumns(users);
 
     return await db.select({ ...rest }).from(users).limit(number).offset(offset);

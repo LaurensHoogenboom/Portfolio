@@ -3,7 +3,7 @@ import { count, eq, SQL } from "drizzle-orm";
 import { db } from "../client";
 import { uploads } from "../schema/uploads";
 
-const getUploads = async (number: number = 10, offset: number = 0, where?: SQL<unknown>) => {
+const getUploads = async (number: number = 20, offset: number = 0, where?: SQL<unknown>) => {
     return await db.select().from(uploads).where(where).limit(number).offset(offset);
 }
 
