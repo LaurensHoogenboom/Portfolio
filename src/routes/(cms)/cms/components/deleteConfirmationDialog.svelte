@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { CircleAlert, TriangleAlert } from '@lucide/svelte';
+	import { CircleAlert } from '@lucide/svelte';
 	import { notifyFormActionSuccess } from '../shared/globalNotifications.svelte';
 	import Button from './atoms/button.svelte';
 	import Notice from './atoms/notice.svelte';
@@ -25,7 +25,7 @@
 
 				if (result.type == 'success') {
 					notifyFormActionSuccess('delete', itemTitle as string);
-					closeCallback;
+					closeCallback();
 				} else if (result.type == 'failure') {
 					errorMessage = result.data?.error as string;
 				}
@@ -62,5 +62,9 @@
         grid-gap: var(--padding-2);
         padding: var(--padding-1) var(--padding-3) var(--padding-4) var(--padding-4);
         align-items: center;
+
+		p {
+			max-width: 500px;
+		}
     }
 </style>
