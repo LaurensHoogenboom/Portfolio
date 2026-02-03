@@ -33,7 +33,7 @@
 		instruction?: string;
 		selectOptions?: ISelectOption[];
 		acceptFile?: string;
-		layout?: 'horizontal' | 'vertical'
+		layout?: 'horizontal' | 'vertical';
 	} = $props();
 
 	let files: FileList | undefined = $state();
@@ -42,10 +42,20 @@
 	let showImage = $state(acceptFile == 'image/*');
 	let imagePreviewSrc = $state(typeof value == 'string' ? value : '');
 
+	let validationWarning: string | undefined = $state();
+
 	$effect(() => {
 		if (files instanceof FileList && files.length > 0) {
 			value = files[0];
+
+			if (value.size > (20 * 1024 * 1024)) {
+				validationWarning = "Files must be smaller than 20 MB.";
+				fileName = undefined;
+				return;
+			}
+
 			fileName = files[0].name;
+			validationWarning = undefined;
 
 			if (acceptFile == 'image/*') {
 				const reader = new FileReader();
@@ -87,7 +97,7 @@
 					<img class="outset" alt={fileName} src={imagePreviewSrc} />
 				{:else}
 					<div class="file-preview">
-						<FileIcon size={30}/>
+						<FileIcon size={30} />
 						<p>{fileName}</p>
 					</div>
 				{/if}
@@ -95,8 +105,8 @@
 		</div>
 	{/if}
 
-	{#if instruction}
-		<Instruction message={instruction} />
+	{#if instruction || validationWarning}
+		<Instruction message={validationWarning ? validationWarning : instruction ? instruction : ''} type={validationWarning ? 'warning' : 'neutral'} />
 	{/if}
 </div>
 
@@ -160,7 +170,7 @@
 			p {
 				text-align: center;
 				margin: 0;
-				color: var(--grey-text-1)
+				color: var(--grey-text-1);
 			}
 		}
 	}
