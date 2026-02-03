@@ -6,7 +6,7 @@ import { fail } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 
 export const load = (async () => {
-    const data = (await getPortfolioItems()).sort((a, b) => {
+    const data = (await getPortfolioItems('all')).sort((a, b) => {
         return b.visiblePriority - a.visiblePriority;
     });
 
