@@ -50,7 +50,7 @@
 
 		<div class="box nested-box form-actions">
 			<Button type="button" style="secondary" title="Cancel" onclick={closeCallback} />
-			<Button type="submit" style="primary" title="Yes" loading={deleting} />
+			<Button type="submit" style="primary" primaryColor="red" title="Delete" loading={deleting} />
 		</div>
 	</form>
 </Dialog>

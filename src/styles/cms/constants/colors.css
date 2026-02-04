@@ -19,6 +19,7 @@
 
     --red: rgb(234,86,61);
     --red-dark: hsl(from var(--red) h s 53%);
+    --red-background-gradient: linear-gradient(135deg, var(--red), var(--red-dark));
     --blue: rgb(1,186,239);
     --blue-dark: hsl(from var(--blue) h s 32%);
     --green: rgb(35,206,107);

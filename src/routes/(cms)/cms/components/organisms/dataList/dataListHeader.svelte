@@ -46,7 +46,7 @@
 		display: grid;
 		position: sticky;
 		top: var(--padding-1);
-		z-index: 2;
+		z-index: 3;
 		padding: var(--padding-4) var(--padding-3);
 		align-items: center;
 		grid-gap: var(--padding-2);
