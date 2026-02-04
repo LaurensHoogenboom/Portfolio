@@ -13,7 +13,7 @@
         padding-right: var(--padding-1);
         position: sticky;
         top: calc(0px - var(--padding-1));
-        z-index: 2;
+        z-index: 3;
 
         .page-width-container {
             display: flex;
