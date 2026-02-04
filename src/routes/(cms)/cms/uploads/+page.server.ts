@@ -11,10 +11,10 @@ import { isUploadFileType, type UploadFileType } from '$lib/types/uploads';
 import { uploadDocument } from '$lib/utils/uploads/document/uploadDocument';
 import { and, eq } from 'drizzle-orm';
 import { uploads as uploadsTable } from '$lib/server/db/schema/uploads';
+import { getPagingAndSortingParams } from '../shared/getPaginationAndSortingParams';
 
 export const load = (async ({url}) => {
-    const pageIndex = parseInt(url.searchParams.get('pageIndex') ?? "0");
-    const itemsPerPage = parseInt(url.searchParams.get('itemsPerPage') ?? "20");
+    const { pageIndex, itemsPerPage, sortBy, sortDirection } = getPagingAndSortingParams(url);
     const fileType = url.searchParams.get('fileType');
 
     const filters = [
@@ -24,7 +24,7 @@ export const load = (async ({url}) => {
     const where = filters.length > 0 ? and(...filters) : undefined;
 
     const [uploads, rawPortfolioItems, uploadCount] = await Promise.all([
-        getUploads(itemsPerPage, pageIndex * itemsPerPage, where),
+        getUploads('all', 0, where, sortBy, sortDirection),
         getPortfolioItems('all'),
         getUploadCount(where)
     ]);
@@ -36,7 +36,7 @@ export const load = (async ({url}) => {
         }
     });
 
-    const uploadsWithMeta: UploadWithMeta[] = await Promise.all(uploads.map(async uItem => ({
+    const uploadsWithMeta: UploadWithMeta[] = uploads.map(uItem => ({
         ...uItem,
         isUsed: isUploadInUse(uItem, portfolioItems),
         url: uItem.fileType == 'document' && uItem.document 
@@ -44,9 +44,22 @@ export const load = (async ({url}) => {
             : uItem.fileType == 'image' && uItem.image 
                 ? uItem.image.url
                 : undefined
-    })));
+    }));
 
-    return { uploads: uploadsWithMeta, uploadCount: uploadCount?.count ?? 0 };
+    if (sortBy == 'isUsed') {
+        uploadsWithMeta.sort((a, b) => {
+            const valA = a.isUsed ? 1 : 0;
+            const valB = b.isUsed ? 1 : 0;
+            return sortDirection == 'asc' ? valA - valB : valB - valA;
+        });
+    }
+
+    const paginatedUploads = uploadsWithMeta.slice(
+        pageIndex * itemsPerPage,
+        (pageIndex + 1) * itemsPerPage
+    );
+
+    return { uploads: paginatedUploads, uploadCount: uploadCount?.count ?? 0 };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {

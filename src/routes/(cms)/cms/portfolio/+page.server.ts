@@ -7,10 +7,10 @@ import type { Upload } from '$lib/server/db/schema/uploads';
 import { uploadImage } from '$lib/utils/uploads/image/uploadImage';
 import { deleteFileAndUpload } from '$lib/utils/uploads/delete';
 import { and, eq } from 'drizzle-orm';
+import { getPagingAndSortingParams } from '../shared/getPaginationAndSortingParams';
 
 export const load = (async ({ url }) => {
-    const pageIndex = parseInt(url.searchParams.get('pageIndex') ?? "0");
-    const itemsPerPage = parseInt(url.searchParams.get('itemsPerPage') ?? "20");
+    const { pageIndex, itemsPerPage, sortBy, sortDirection } = getPagingAndSortingParams(url);
     const category = url.searchParams.get('category');
 
     const filters = [
@@ -20,7 +20,7 @@ export const load = (async ({ url }) => {
     const where = filters.length > 0 ? and(...filters) : undefined;
 
     const [portfolioItems, portfolioItemCount] = await Promise.all([
-        getPortfolioItems(itemsPerPage, pageIndex * itemsPerPage, where),
+        getPortfolioItems(itemsPerPage, pageIndex * itemsPerPage, where, sortDirection, sortBy),
         getPortfolioItemCount(where)
     ]);
 

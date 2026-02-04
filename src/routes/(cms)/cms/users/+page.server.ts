@@ -2,13 +2,13 @@ import type { PageServerLoad, Actions } from '../../cms/users/$types';
 import { createUser, deleteUser, getUserById, getUserCount, getUsers, updateUser } from '$lib/server/db/cruds/users';
 import { fail } from '@sveltejs/kit';
 import { sha256 } from "@oslojs/crypto/sha2";
+import { getPagingAndSortingParams } from '../shared/getPaginationAndSortingParams';
 
 export const load: PageServerLoad = (async ({ url }) => {
-    const pageIndex = parseInt(url.searchParams.get('pageIndex') ?? "0");
-    const itemsPerPage = parseInt(url.searchParams.get('itemsPerPage') ?? "20");
+    const { pageIndex, itemsPerPage, sortBy, sortDirection } = getPagingAndSortingParams(url);
 
     const [users, userCount] = await Promise.all([
-        getUsers(itemsPerPage, pageIndex * itemsPerPage),
+        getUsers(itemsPerPage, pageIndex * itemsPerPage, undefined, sortBy, sortDirection),
         getUserCount()
     ]);
 
