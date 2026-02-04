@@ -56,7 +56,7 @@
         top: 100%;
         right: 0;
         position: absolute;
-        z-index: 3;
+        z-index: 5;
         padding-top: var(--padding-4);
 
         .notification {
