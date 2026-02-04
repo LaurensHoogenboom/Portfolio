@@ -9,7 +9,8 @@
 		sortState,
 		gridStyle,
 		hasActions,
-		sortCallback
+		sortCallback,
+		isSorting = false
 	}: {
 		config: TableConfig<T>;
 		sortedKeys: (keyof T)[];
@@ -17,6 +18,7 @@
 		gridStyle: string;
 		hasActions: boolean;
 		sortCallback: (key: keyof T) => void;
+		isSorting?: boolean
 	} = $props();
 </script>
 
@@ -30,6 +32,7 @@
 				title={config[key]?.label}
 				onclick={() => sortCallback(key)}
 				iconPosition="left"
+				loading={sortState.key == key && isSorting ? true : false}
 			/>
 		{:else}
 			<p>{config[key]?.label}</p>

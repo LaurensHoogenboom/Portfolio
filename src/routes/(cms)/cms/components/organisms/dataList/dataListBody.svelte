@@ -22,9 +22,7 @@
 
 <div class="box list-body" style="flex-direction: column;">
 	{#if navigating.to}
-		<div class="loading-box" transition:fade>
-			<Circle color="var(--primary-base)" size={40} />
-		</div>
+		<div class="loading-box" transition:fade></div>
 	{/if}
 
 	{#if data.length > 0}
@@ -52,7 +50,6 @@
 	}
 
 	.loading-box {
-		display: flex;
 		position: absolute;
 		top: 0;
 		bottom: 0;
@@ -60,7 +57,5 @@
 		right: 0;
 		background-color: rgb(from var(--white-background) r g b / 0.8);
 		z-index: 2;
-		align-items: center;
-		justify-content: center;
 	}
 </style>

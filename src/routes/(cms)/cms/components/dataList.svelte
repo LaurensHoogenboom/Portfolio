@@ -40,6 +40,7 @@
 	const toggleSort = (key: keyof T) => {
 		const isCurrentKey = key == sortState.key;
 		const newDirection = isCurrentKey && sortState.direction == 'asc' ? 'desc' : 'asc';
+		isSorting = true;
 
 		updatePageParams(
 			{
@@ -49,6 +50,12 @@
 			true
 		);
 	};
+
+	let isSorting: boolean = $state(false);
+
+	$effect(() => {
+		if (data) isSorting = false;
+	})
 </script>
 
 <div class="data-list">
@@ -59,6 +66,7 @@
 		{gridStyle}
 		hasActions={editAction || writeAction || deleteAction ? true : false}
 		sortCallback={toggleSort}
+		{isSorting}
 	/>
 	<DataListBody {data} {config} {sortedKeys} {gridStyle} {itemNamePlural} {editAction} {writeAction} {deleteAction} />
 	<DataListFooter {totalItemCount} />
