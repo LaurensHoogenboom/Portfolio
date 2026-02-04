@@ -3,6 +3,8 @@
 	import DataListBody from '$cmsComponents/organisms/dataList/dataListBody.svelte';
 	import DataListHeader from '$cmsComponents/organisms/dataList/dataListHeader.svelte';
 	import DataListFooter from './organisms/dataList/dataListFooter.svelte';
+	import { page } from '$app/state';
+	import { updatePageParams } from '$lib/utils/updatePageParams';
 
 	interface Props {
 		data: T[];
@@ -30,30 +32,22 @@
 			.join(' ')} ${editAction || writeAction || deleteAction ? '100px' : '0px'};`
 	);
 
-	let sortState = $state<SortState<T>>({ key: null, direction: 'asc' });
-	let sortedData = $derived(() => {
-		if (!sortState.key) return data;
-
-		const { key, direction } = sortState;
-		const multiplier = direction == 'asc' ? 1 : -1;
-
-		return [...data].sort((a, b) => {
-			const aValue = a[key];
-			const bValue = b[key];
-
-			if (aValue > bValue) return 1 * multiplier;
-			if (aValue < bValue) return -1 * multiplier;
-			return 0;
-		});
+	const sortState: SortState<T> = $derived({
+		key: page.url.searchParams.get('sortBy') as keyof T | null,
+		direction: (page.url.searchParams.get('sortDirection') ?? 'asc') as 'asc' | 'desc'
 	});
 
 	const toggleSort = (key: keyof T) => {
-		if (key == sortState.key) {
-			sortState.direction = sortState.direction == 'asc' ? 'desc' : 'asc';
-		} else {
-			sortState.key = key;
-			sortState.direction = 'asc';
-		}
+		const isCurrentKey = key == sortState.key;
+		const newDirection = isCurrentKey && sortState.direction == 'asc' ? 'desc' : 'asc';
+
+		updatePageParams(
+			{
+				sortBy: key as string,
+				sortDirection: newDirection
+			},
+			true
+		);
 	};
 </script>
 
@@ -66,7 +60,7 @@
 		hasActions={editAction || writeAction || deleteAction ? true : false}
 		sortCallback={toggleSort}
 	/>
-	<DataListBody data={sortedData()} {config} {sortedKeys} {gridStyle} {itemNamePlural} {editAction} {writeAction} {deleteAction} />
+	<DataListBody {data} {config} {sortedKeys} {gridStyle} {itemNamePlural} {editAction} {writeAction} {deleteAction} />
 	<DataListFooter {totalItemCount} />
 </div>
 

@@ -3,10 +3,14 @@ import { db } from "../client"
 import { portfolioItems } from "../schema/portfolioItems";
 import type { PortfolioItemType } from "../../../types/portfolio";
 
-const getPortfolioItems = async (number: number | 'all' = 20, offset: number = 0, where?: SQL<unknown>) => {
+const getPortfolioItems = async (number: number | 'all' = 20, offset: number = 0, where?: SQL<unknown>, sortDirection: 'asc' | 'desc' = 'desc', sortBy: string = 'visiblePriority') => {
     return await db.query.portfolioItems.findMany({
         limit: number != 'all' ? number : undefined,
         offset: offset,
+        orderBy: (fields, { asc, desc}) => {
+            const column = fields[sortBy as keyof typeof fields] ?? fields.visiblePriority;
+            return sortDirection == 'asc' ? [asc(column)] : [desc(column)]
+        },
         with: {
             upload: true
         },

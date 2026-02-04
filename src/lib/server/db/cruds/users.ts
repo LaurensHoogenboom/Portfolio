@@ -1,13 +1,20 @@
-import { count, eq, getTableColumns } from "drizzle-orm";
+import { asc, count, desc, eq, getTableColumns, SQL } from "drizzle-orm";
 import { db } from "../client";
 import { users } from "../schema/users";
 import { sha256 } from "@oslojs/crypto/sha2";
 import { isEqualBuffer } from "../utils/utils";
 
-const getUsers = async (number: number = 20, offset: number = 0) => {
+const getUsers = async (number: number = 20, offset: number = 0, where?: SQL<unknown>, sortBy: string = 'username', sortDirection: 'asc' | 'desc' = 'desc') => {
     const { password, securityQuestionAnswer, ...rest } = getTableColumns(users);
+    const orderByColumn = rest[sortBy as keyof typeof rest] ?? rest.username;
+    const order = sortDirection == 'asc' ? asc(orderByColumn) : desc(orderByColumn);
 
-    return await db.select({ ...rest }).from(users).limit(number).offset(offset);
+    return await db.select({ ...rest })
+        .from(users)
+        .where(where)
+        .orderBy(order)
+        .limit(number)
+        .offset(offset);
 }
 
 const getUserById = async (id: string) => {

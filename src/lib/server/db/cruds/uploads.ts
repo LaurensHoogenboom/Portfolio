@@ -3,8 +3,16 @@ import { count, eq, SQL } from "drizzle-orm";
 import { db } from "../client";
 import { uploads } from "../schema/uploads";
 
-const getUploads = async (number: number = 20, offset: number = 0, where?: SQL<unknown>) => {
-    return await db.select().from(uploads).where(where).limit(number).offset(offset);
+const getUploads = async (number: number | 'all' = 20, offset: number = 0, where?: SQL<unknown>, sortBy: string = 'createdAt', sortDirection: 'asc' | 'desc' = 'desc') => {
+    return await db.query.uploads.findMany({
+        limit: number != 'all' ? number : undefined,
+        offset: offset,
+        where: where,
+        orderBy: (fields, {asc, desc}) => {
+            const column = fields[sortBy as keyof typeof fields] ?? fields.createdAt;
+            return sortDirection == 'asc' ? [asc(column)] : [desc(column)] 
+        }
+    });
 }
 
 const getUploadsByFileType = async (fileType: UploadFileType) => {
@@ -20,7 +28,7 @@ const getUploadById = async (id: string) => {
 }
 
 const getUploadCount = async (where?: SQL<unknown>) => {
-    return await db.select({count: count()}).from(uploads).where(where).get()
+    return await db.select({ count: count() }).from(uploads).where(where).get()
 }
 
 const createUpload = async (data: typeof uploads.$inferInsert) => {
@@ -48,7 +56,7 @@ const updateUpload = async (id: string, data: Partial<typeof uploads.$inferInser
         }
     }
 
-    return await db.update(uploads).set({...data, updatedAt: new Date()}).where(eq(uploads.id, id)).returning().get();
+    return await db.update(uploads).set({ ...data, updatedAt: new Date() }).where(eq(uploads.id, id)).returning().get();
 }
 
 const deleteUpload = async (id: string) => {

@@ -77,10 +77,6 @@
 			grid-auto-flow: column;
 			flex-direction: row;
 			justify-content: end;
-
-			form {
-				flex-grow: initial;
-			}
 		}
 	}
 </style>
