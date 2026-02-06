@@ -2,7 +2,7 @@
 	import { fade, fly } from 'svelte/transition';
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import { Pencil, TextCursor, Trash2 } from '@lucide/svelte';
-	import type { TableConfig, UIColumn } from '$lib/types/dataList';
+	import type { IConfigContext, TableConfig, UIColumn } from '$lib/types/dataList';
 	import DeleteConfirmationDialog from '$cmsComponents/deleteConfirmationDialog.svelte';
 
 	interface Props {
@@ -13,14 +13,15 @@
 		deleteAction?: string;
 		editAction?: (id: string) => void;
 		writeAction?: (id: string) => void;
+		configContext?: IConfigContext
 	}
 
-	let { row, config, sortedKeys, gridStyle, deleteAction, editAction, writeAction }: Props = $props();
+	let { row, config, sortedKeys, gridStyle, deleteAction, editAction, writeAction, configContext }: Props = $props();
 
 	let deleteConfirmationDialogVisible = $state(false);
 </script>
 
-<div class="list-item" style={gridStyle} in:fly|local={{ y: 20, duration: 400, delay: 100 }} out:fade|local={{ duration: 200 }}>
+<div class="list-item" style={gridStyle} in:fly|local={{ y: 20, duration: 200, delay: 100 }} out:fade|local={{ duration: 200 }}>
 	{#each sortedKeys as key}
 		{@const column = config[key] as UIColumn<any> | undefined}
 		{@const value = column?.format ? column.format(row[key]) : row[key]}
@@ -38,7 +39,7 @@
 				<Button type="button" style="transparent" icon={Pencil} onclick={() => editAction(row.id)} />
 			{/if}
 
-			{#if deleteAction && (config.renderActions?.(row).showDelete ?? true)}
+			{#if deleteAction && (config.renderActions?.(row, configContext).showDelete ?? true)}
 				<Button type="submit" style="transparent" icon={Trash2} onclick={() => (deleteConfirmationDialogVisible = true)} />
 			{/if}
 		</div>

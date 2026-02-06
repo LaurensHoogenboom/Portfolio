@@ -30,6 +30,7 @@ export const handle: Handle = async ({ event, resolve }) => {
         const user = userId ? await getUserById(userId) : undefined;
 
         event.locals.username = user ? user.username : '';
+        event.locals.userId = user ? user.id : '';
 
         if (isProtectedPage && !user) {
             throw redirect(303, `/login?redirectUrl=${event.url.pathname}`);

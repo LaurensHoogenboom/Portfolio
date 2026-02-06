@@ -23,7 +23,12 @@ const usersTableUIConfig: TableConfig<User> = {
         sortable: true,
         format: toFullDataTimeString
     },
-    getLabel: (row) => row.username
+    getLabel: (row) => row.username,
+    renderActions: (row, context) => {        
+        return {
+            showDelete: context?.userId ? context.userId != row.id : true
+        }
+    }
 };
 
 export { usersTableUIConfig };
