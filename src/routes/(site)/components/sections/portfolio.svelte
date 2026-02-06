@@ -12,8 +12,8 @@
 
 	let { portfolioItems }: { portfolioItems: IPortfolioItem[] } = $props();
 
-	let selectedType = $derived(page.state.selectedPortfolioItemType);
-	let numberOfVisibleItems = $derived(page.state.numberOfVisibleItems);
+	let selectedType = $derived(page.state.selectedPortfolioItemType ?? 'research');
+	let numberOfVisibleItems = $derived(page.state.numberOfVisibleItems ?? DEFAULT_VISIBLE_COUNT);
 	let filteredItems = $derived(portfolioItems.filter((i) => i.type == selectedType));
 	let visibleItems = $derived.by(() => {
 		if (numberOfVisibleItems == DEFAULT_VISIBLE_COUNT) {
