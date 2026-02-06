@@ -1,33 +1,40 @@
+import { building } from '$app/environment';
+import { BetterSQLite3Database, drizzle } from "drizzle-orm/better-sqlite3";
 import Database from "better-sqlite3";
-import { drizzle } from "drizzle-orm/better-sqlite3";
 import * as portfolioItems from "./schema/portfolioItems";
 import * as uploads from "./schema/uploads";
 import * as users from "./schema/users";
 import * as relations from './relations/relations';
 
-let dbUrl: string | undefined;
-    
-try {
-    const { env } = await import('$env/dynamic/private');
-    dbUrl = env.DB_URL;
-} catch {
-    const dotenv = await import('dotenv');
-    dotenv.config();
-    dbUrl = process.env.DB_URL;
+const schema = {
+    ...portfolioItems,
+    ...uploads,
+    ...users,
+    ...relations
 }
 
-if (!dbUrl) {
-    throw new Error("DB_URL is not defined.");
-}
+type DbClient = BetterSQLite3Database<typeof schema>;
 
-const sqlite = new Database(dbUrl);
-const db = drizzle(sqlite, {
-    schema: {
-        ...portfolioItems,
-        ...uploads,
-        ...users,
-        ...relations
+let db: DbClient;
+
+if (!building) {
+    let dbUrl: string | undefined;
+
+    try {
+        const { env } = await import('$env/dynamic/private');
+        dbUrl = env.DB_URL;
+    } catch {
+        const dotenv = await import('dotenv');
+        dotenv.config();
+        dbUrl = process.env.DB_URL;
     }
-});
 
-export { db, sqlite }
+    if (!dbUrl) {
+        throw new Error("DB_URL is not defined.");
+    }
+
+    const sqlite = new Database(dbUrl);
+    db = drizzle(sqlite, { schema });
+}
+
+export { db };
