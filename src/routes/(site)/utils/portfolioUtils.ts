@@ -3,31 +3,31 @@ import { page } from '$app/state';
 import { isPortfolioItemType, type IPortfolioItem, type PortfolioItemType } from '$lib/types/portfolio';
 
 interface IPortfolioState {
-    showAllPortfolioItems: boolean,
+    numberOfVisibleItems: number,
     activePortfolioItemId?: string,
     activePortfolioItem?: IPortfolioItem,
-    selectedPortfolioCategory?: PortfolioItemType
+    selectedPortfolioItemType: PortfolioItemType
 }
 
-export const getPortfolioUrlWithParams = ({ showAllPortfolioItems, activePortfolioItemId, selectedPortfolioCategory }: IPortfolioState): string => {
-    return `#portfolio?showAllPortfolioItems=${showAllPortfolioItems}&activePortfolioItemId=${activePortfolioItemId}&selectedPortfolioCategory=${selectedPortfolioCategory}`;
+export const getPortfolioUrlWithParams = ({ numberOfVisibleItems, activePortfolioItemId, selectedPortfolioItemType }: IPortfolioState): string => {
+    return `#portfolio?numberOfVisibleItems=${numberOfVisibleItems}&activePortfolioItemId=${activePortfolioItemId}&selectedPortfolioItemType=${selectedPortfolioItemType}`;
 }
 
 export const getPortfolioSearchParams = (searchParams: URLSearchParams): IPortfolioState => {
     return {
-        showAllPortfolioItems: searchParams.get('showAllPortfolioItems') == 'true' ? true : false,
+        numberOfVisibleItems: parseInt(searchParams.get('numberOfVisibleItems') ?? "4"),
         activePortfolioItemId: searchParams.get('activePortfolioItemId') ?? undefined,
-        selectedPortfolioCategory: isPortfolioItemType(searchParams.get('selectedPortfolioCategory') as string)
-            ? searchParams.get('selectedPortfolioCategory') as PortfolioItemType
-            : undefined
+        selectedPortfolioItemType: isPortfolioItemType(searchParams.get('selectedPortfolioItemType') as string)
+            ? searchParams.get('selectedPortfolioItemType') as PortfolioItemType
+            : 'research'
     }
 }
 
 export const getPortfolioState = (): IPortfolioState => {
     return {
-        showAllPortfolioItems: page.state.showAllPortfolioItems ?? false,
+        numberOfVisibleItems: page.state.numberOfVisibleItems ?? 4,
         activePortfolioItemId: page.state.activePortfolioItemId,
-        selectedPortfolioCategory: page.state.selectedPortfolioCategory
+        selectedPortfolioItemType: page.state.selectedPortfolioItemType ?? 'research'
     }
 }
 

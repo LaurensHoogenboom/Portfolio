@@ -6,13 +6,10 @@ import { fail } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 
 export const load = (async () => {
-    const data = (await getPortfolioItems('all')).sort((a, b) => {
-        return b.visiblePriority - a.visiblePriority;
-    });
-
-    const portfolioItems = data.map(pItem => {
+    const rawPortfolioItems = await getPortfolioItems('all');
+    const portfolioItems = rawPortfolioItems.map(pItem => {
         return { ...pItem, image: pItem.upload?.image } as IPortfolioItem
-    })
+    });
 
     return { portfolioItems: portfolioItems };
 }) satisfies PageServerLoad;

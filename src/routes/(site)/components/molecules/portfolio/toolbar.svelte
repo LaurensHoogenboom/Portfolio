@@ -19,8 +19,8 @@
 
 	const changePortfolioItemType = (i: number) => {
 		const state = getPortfolioState();
-		state.selectedPortfolioCategory = tabItems[i].type;
-		state.showAllPortfolioItems = false;
+		state.selectedPortfolioItemType = tabItems[i].type;
+		state.numberOfVisibleItems = 4;
 		pushState(getPortfolioUrlWithParams(state), state);
 		
 		const portfolioTop = document.getElementById('portfolio')?.getBoundingClientRect().top ?? 0;
@@ -45,8 +45,8 @@
 	});
 
 	$effect(() => {
-		selectedIndex = page.state.selectedPortfolioCategory 
-			? tabItems.findIndex(t => t.type == page.state.selectedPortfolioCategory)
+		selectedIndex = page.state.selectedPortfolioItemType 
+			? tabItems.findIndex(t => t.type == page.state.selectedPortfolioItemType)
 			: 0;
 	});
 </script>
