@@ -2,6 +2,7 @@
 // for information about these interfaces
 
 import type { IPortfolioItem, PortfolioItemType } from "$lib/types/portfolio";
+import type { UserType } from "$lib/types/users";
 
 declare global {
 	namespace App {
@@ -10,6 +11,8 @@ declare global {
 		interface Locals {
 			username?: string;
 			userId?: string;
+			userType?: UserType;
+			adminCount?: number;
 		}
 
 		// interface PageData {}

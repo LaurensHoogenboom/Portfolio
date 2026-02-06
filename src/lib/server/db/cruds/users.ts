@@ -34,8 +34,8 @@ const getUserByUsername = async (username: string) => {
     }
 }
 
-const getUserCount = async () => {
-    return await db.select({ count: count() }).from(users).get();
+const getUserCount = async (where?: SQL<unknown>) => {
+    return await db.select({ count: count() }).from(users).where(where).get();
 }
 
 const createUser = async (data: typeof users.$inferInsert) => {

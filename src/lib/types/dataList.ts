@@ -1,5 +1,9 @@
+import type { UserType } from "./users";
+
 export interface IConfigContext {
-    userId?: string
+    userId?: string;
+    userType?: UserType;
+    adminCount?: number;
 };
 
 export interface UIColumn<V = unknown> {

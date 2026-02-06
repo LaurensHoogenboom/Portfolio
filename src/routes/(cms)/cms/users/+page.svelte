@@ -22,7 +22,9 @@
 	};
 
 	let configContext: IConfigContext = {
-		userId: data.userId
+		userId: data.userId,
+		userType: data.userType,
+		adminCount: data.adminCount
 	};
 </script>
 
