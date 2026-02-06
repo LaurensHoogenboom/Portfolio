@@ -1,11 +1,10 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import type { LayoutData } from './$types';
 	import { dev } from '$app/environment';
 	import Nav from '$siteComponents/sections/nav.svelte';
 	import Footer from '$siteComponents/sections/footer.svelte';
 
-	let { data, children }: { data: LayoutData; children: Snippet } = $props();
+	let { children }: { children: Snippet } = $props();
 </script>
 
 <svelte:head>

@@ -16,8 +16,8 @@ declare global {
 		interface PageState {
 			activePortfolioItemId?: string;
 			activePortfolioItem?: IPortfolioItem;
-			selectedPortfolioCategory?: PortfolioItemType;
-			showAllPortfolioItems?: boolean;
+			selectedPortfolioItemType?: PortfolioItemType;
+			numberOfVisibleItems?: number;
 		}
 
 		// interface Platform {}

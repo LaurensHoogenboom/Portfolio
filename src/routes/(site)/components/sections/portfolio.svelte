@@ -7,22 +7,25 @@
 	import Button from '$siteComponents/atoms/button.svelte';
 	import { pushState } from '$app/navigation';
 	import type { IPortfolioItem } from '$lib/types/portfolio';
-	import { getPortfolioState, getPortfolioUrlWithParams } from '../../utils/portfolioUtils';
+	import { DEFAULT_VISIBLE_COUNT, getPortfolioState, getPortfolioUrlWithParams } from '../../utils/portfolioUtils';
 	import Title from '$siteComponents/atoms/portfolio/title.svelte';
 
 	let { portfolioItems }: { portfolioItems: IPortfolioItem[] } = $props();
 
-	let selectedPortfolioItemType = $derived(page.state.selectedPortfolioCategory ?? 'research');
-	let filteredItems = $derived(portfolioItems.filter((i) => i.type == selectedPortfolioItemType));
-	let visibleItems = $derived(page.state.showAllPortfolioItems 
-		? filteredItems 
-		: selectedPortfolioItemType == 'art' 
-			? filteredItems.slice(0, 4)
-			: filteredItems.slice(0, 2));
+	let selectedType = $derived(page.state.selectedPortfolioItemType);
+	let numberOfVisibleItems = $derived(page.state.numberOfVisibleItems);
+	let filteredItems = $derived(portfolioItems.filter((i) => i.type == selectedType));
+	let visibleItems = $derived.by(() => {
+		if (numberOfVisibleItems == DEFAULT_VISIBLE_COUNT) {
+			return filteredItems.slice(0, selectedType == 'art' ? DEFAULT_VISIBLE_COUNT : 2);
+		}
 
-	const showAllItems = () => {
+		return filteredItems.slice(0, numberOfVisibleItems);
+	});
+
+	const showMoreItems = () => {
 		const state = getPortfolioState();
-		state.showAllPortfolioItems = true;
+		state.numberOfVisibleItems += 4;
 		pushState(getPortfolioUrlWithParams(state), state);
 	};
 </script>
@@ -38,8 +41,8 @@
 		<ContentContainer id="portfolio">
 			<Title />
 
-			<div class="items-wrapper {selectedPortfolioItemType == 'art' ? 'art-wrapper' : ''}">
-				{#if selectedPortfolioItemType == 'art'}
+			<div class="items-wrapper {selectedType == 'art' ? 'art-wrapper' : ''}">
+				{#if selectedType == 'art'}
 					{#each visibleItems as vItem}
 						<PortfolioItemPreviewBox portfolioItem={vItem} showTitleBelow={true} />
 					{/each}
@@ -50,8 +53,8 @@
 				{/if}
 			</div>
 
-			{#if !page.state.showAllPortfolioItems && visibleItems.length < filteredItems.length}
-				<Button type="submit" style="secondary" title="Meer weergeven" CSSClass="more-projects-button" onclick={showAllItems} />
+			{#if visibleItems.length < filteredItems.length}
+				<Button type="submit" style="secondary" title="Meer weergeven" CSSClass="more-projects-button" onclick={showMoreItems} />
 			{/if}
 		</ContentContainer>
 	</div>

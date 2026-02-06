@@ -9,7 +9,7 @@
 
 	const openSimilarItems = () => {
 		const state = getPortfolioState();
-		state.selectedPortfolioCategory = portfolioItem.type;
+		state.selectedPortfolioItemType = portfolioItem.type;
 		pushState(getPortfolioUrlWithParams(state), state);
 
 		const portfolioTop = document.getElementById('portfolio')?.getBoundingClientRect().top ?? 0;

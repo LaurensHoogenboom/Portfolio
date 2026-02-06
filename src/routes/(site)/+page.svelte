@@ -31,7 +31,7 @@
 		setTimeout(() => {
 			replaceState(getPortfolioUrlWithParams(state), state);
 
-			if (state.selectedPortfolioCategory) {
+			if (state.selectedPortfolioItemType) {
 				const portfolioTop = document.getElementById('portfolio')?.getBoundingClientRect().top ?? 0;
 				const scrollTop = document.documentElement.scrollTop + portfolioTop - 10;
 				window.scrollTo({ top: scrollTop, left: 0, behavior: 'smooth' });

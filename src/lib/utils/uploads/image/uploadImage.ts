@@ -15,7 +15,7 @@ const uploadImage = async (image: File | Buffer, title: string, description?: st
         .toBuffer();
     const thumbnail = await sharp(imageBuffer, { limitInputPixels: false })
         .webp()
-        .resize(undefined, 550)
+        .resize(undefined, 768)
         .toBuffer();
 
     const fullImageName = `${title.replace(/[^a-zA-Z0-9]/g, "")}.webp`;
