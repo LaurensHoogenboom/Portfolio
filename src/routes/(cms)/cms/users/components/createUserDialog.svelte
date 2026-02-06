@@ -6,6 +6,7 @@
 	import Dialog from "$cmsComponents/organisms/dialog.svelte";
 	import PasswordInput from "$cmsComponents/organisms/passwordInput.svelte";
 	import { notifyFormActionSuccess } from "../../shared/globalNotifications.svelte";
+	import { userTypeSelectOptions } from "../shared/userTypeSelectOptions";
 
     let { closeCallback } : { closeCallback: () => void } = $props();
 
@@ -31,6 +32,13 @@
 
         <fieldset>
             <LabelInputGroup type="text" name="username" label="Username" max={120} required={true}/>
+            <LabelInputGroup
+				type="select"
+				name="type"
+				label="Type"
+				selectOptions={userTypeSelectOptions}
+				required={true}
+			/>
         </fieldset>
 
         <fieldset>

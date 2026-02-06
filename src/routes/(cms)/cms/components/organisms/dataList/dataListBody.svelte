@@ -1,6 +1,6 @@
 <script lang="ts" generics="T extends { id: string } & Record<string, unknown>">
 	import DataListItem from '$cmsComponents/organisms/dataList/dataListItem.svelte';
-	import type { TableConfig } from '$lib/types/dataList';
+	import type { IConfigContext, TableConfig } from '$lib/types/dataList';
 	import { flip } from 'svelte/animate';
 	import { navigating } from '$app/state';
 	import { Circle } from 'svelte-loading-spinners';
@@ -15,9 +15,10 @@
 		editAction?: (id: string) => void;
 		writeAction?: (id: string) => void;
 		deleteAction?: string;
+		configContext?: IConfigContext;
 	}
 
-	const { data, config, sortedKeys, gridStyle, itemNamePlural, editAction, writeAction, deleteAction }: Props = $props();
+	const { data, config, sortedKeys, gridStyle, itemNamePlural, editAction, writeAction, deleteAction, configContext }: Props = $props();
 </script>
 
 <div class="box list-body" style="flex-direction: column;">
@@ -28,7 +29,7 @@
 	{#if data.length > 0}
 		{#each data as row (row.id)}
 			<div class="list-item-wrapper" animate:flip={{ duration: 400 }}>
-				<DataListItem {row} {config} {sortedKeys} {gridStyle} {editAction} {writeAction} {deleteAction} />
+				<DataListItem {row} {config} {sortedKeys} {gridStyle} {editAction} {writeAction} {deleteAction} {configContext} />
 			</div>
 		{/each}
 	{:else}

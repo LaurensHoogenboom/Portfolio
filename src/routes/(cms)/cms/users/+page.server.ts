@@ -3,6 +3,7 @@ import { createUser, deleteUser, getUserById, getUserCount, getUsers, updateUser
 import { fail } from '@sveltejs/kit';
 import { sha256 } from "@oslojs/crypto/sha2";
 import { getPagingAndSortingParams } from '../shared/getPaginationAndSortingParams';
+import type { UserType } from '$lib/types/users';
 
 export const load: PageServerLoad = (async ({ url }) => {
     const { pageIndex, itemsPerPage, sortBy, sortDirection } = getPagingAndSortingParams(url);
@@ -21,9 +22,10 @@ export const load: PageServerLoad = (async ({ url }) => {
 export const actions: Actions = {
     create: async ({ request }) => {
         const formData = Object.fromEntries(await request.formData());
-        const { username, newPassword, securityQuestion, securityQuestionAnswer } = formData as {
+        const { username, newPassword, type, securityQuestion, securityQuestionAnswer } = formData as {
             username: string,
             newPassword: string,
+            type: UserType,
             securityQuestion: string,
             securityQuestionAnswer: string
         };
@@ -31,6 +33,7 @@ export const actions: Actions = {
         const user = {
             username: username,
             password: sha256(Buffer.from(newPassword)),
+            type: type,
             securityQuestion: securityQuestion,
             securityQuestionAnswer: securityQuestionAnswer
         }
@@ -50,9 +53,10 @@ export const actions: Actions = {
 
     update: async ({ request }) => {
         const formData = Object.fromEntries(await request.formData());
-        const { id, username, currentPassword, newPassword, securityQuestion, securityQuestionAnswer } = formData as {
+        const { id, username, type, currentPassword, newPassword, securityQuestion, securityQuestionAnswer } = formData as {
             id: string,
             username: string,
+            type: UserType,
             currentPassword: string,
             newPassword: string,
             securityQuestion: string,
@@ -62,6 +66,7 @@ export const actions: Actions = {
         const update = {
             username: username,
             password: newPassword.length ? sha256(Buffer.from(newPassword)) : undefined,
+            type: type,
             securityQuestion: securityQuestion,
             securityQuestionAnswer: securityQuestionAnswer.length ? securityQuestionAnswer : undefined
         }

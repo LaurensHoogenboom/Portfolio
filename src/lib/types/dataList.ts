@@ -1,3 +1,11 @@
+import type { UserType } from "./users";
+
+export interface IConfigContext {
+    userId?: string;
+    userType?: UserType;
+    adminCount?: number;
+};
+
 export interface UIColumn<V = unknown> {
     label: string,
     priority: number,
@@ -10,7 +18,7 @@ export interface UIColumn<V = unknown> {
 export type TableConfig<T> = {
     [K in keyof T]?: UIColumn<T[K]>
 } & {
-    renderActions?: (row: T) => {
+    renderActions?: (row: T, context?: IConfigContext) => {
         showWrite?: boolean;
         showEdit?: boolean;
         showDelete?: boolean

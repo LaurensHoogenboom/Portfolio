@@ -8,6 +8,7 @@
 	import { Plus } from '@lucide/svelte';
 	import { usersTableUIConfig } from '$lib/configs/users';
 	import DataList from '$cmsComponents/dataList.svelte';
+	import type { IConfigContext } from '$lib/types/dataList';
 
 	let { data }: { data: PageData } = $props();
 
@@ -18,6 +19,12 @@
 	const openEditDialog = (id: string) => {
 		let user = data.users.find((u) => u.id == id);
 		if (user) userToEdit = { ...user };
+	};
+
+	let configContext: IConfigContext = {
+		userId: data.userId,
+		userType: data.userType,
+		adminCount: data.adminCount
 	};
 </script>
 
@@ -33,6 +40,7 @@
 		totalItemCount={data.userCount}
 		editAction={openEditDialog}
 		deleteAction="?/delete"
+		{configContext}
 	/>
 </main>
 

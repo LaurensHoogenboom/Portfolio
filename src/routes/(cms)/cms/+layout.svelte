@@ -5,19 +5,21 @@
 	import UserActions from './components/userActions.svelte';
 	import NotificationContainer from './components/notificationContainer.svelte';
 	import { dev } from '$app/environment';
+	import type { UserType } from '$lib/types/users';
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
 	interface INavigationItem {
 		title: string;
 		url: string;
+		requiredRole?: UserType
 	}
 
 	const navigationItems: INavigationItem[] = [
 		{ title: 'Home', url: '/cms' },
 		{ title: 'Portfolio', url: '/cms/portfolio' },
-		{ title: 'Uploads', url: '/cms/uploads' },
-		{ title: 'Users', url: '/cms/users' }
+		{ title: 'Uploads', url: '/cms/uploads', requiredRole: 'admin' },
+		{ title: 'Users', url: '/cms/users', requiredRole: 'admin' }
 	];
 
     const isCurrentPage = (url: string) => {
@@ -40,7 +42,13 @@
 		<nav>
 			<div class="nav-links inset primary">
                 {#each navigationItems as nItem}
-                    <a href={nItem.url} class={isCurrentPage(nItem.url) ? 'outset primary' : ''}>{nItem.title}</a>
+					{#if nItem.requiredRole == 'admin' && data.userType == 'admin'}
+						<a href={nItem.url} class={isCurrentPage(nItem.url) ? 'outset primary' : ''}>{nItem.title}</a>
+					{/if}
+
+                    {#if nItem.requiredRole != 'admin'}
+						<a href={nItem.url} class={isCurrentPage(nItem.url) ? 'outset primary' : ''}>{nItem.title}</a>
+					{/if}
                 {/each}
 			</div>
 

@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `type` text DEFAULT 'default' NOT NULL;

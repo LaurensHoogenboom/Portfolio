@@ -1,5 +1,5 @@
 <script lang="ts" generics="T extends { id: string } & Record<string, unknown>">
-	import type { SortState, TableConfig } from '$lib/types/dataList';
+	import type { IConfigContext, SortState, TableConfig } from '$lib/types/dataList';
 	import DataListBody from '$cmsComponents/organisms/dataList/dataListBody.svelte';
 	import DataListHeader from '$cmsComponents/organisms/dataList/dataListHeader.svelte';
 	import DataListFooter from './organisms/dataList/dataListFooter.svelte';
@@ -14,9 +14,10 @@
 		editAction?: (id: string) => void;
 		writeAction?: (id: string) => void;
 		deleteAction?: string;
+		configContext?: IConfigContext
 	}
 
-	const { data, config, itemNamePlural, totalItemCount, editAction, writeAction, deleteAction }: Props = $props();
+	const { data, config, itemNamePlural, totalItemCount, editAction, writeAction, deleteAction, configContext }: Props = $props();
 
 	const sortedKeys = $derived(
 		(Object.keys(config) as Array<keyof T>)
@@ -68,7 +69,7 @@
 		sortCallback={toggleSort}
 		{isSorting}
 	/>
-	<DataListBody {data} {config} {sortedKeys} {gridStyle} {itemNamePlural} {editAction} {writeAction} {deleteAction} />
+	<DataListBody {data} {config} {sortedKeys} {gridStyle} {itemNamePlural} {editAction} {writeAction} {deleteAction} {configContext} />
 	<DataListFooter {totalItemCount} />
 </div>
 
