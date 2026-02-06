@@ -7,7 +7,7 @@
 	import Button from '$siteComponents/atoms/button.svelte';
 	import { pushState } from '$app/navigation';
 	import type { IPortfolioItem } from '$lib/types/portfolio';
-	import { getPortfolioState, getPortfolioUrlWithParams } from '../../utils/portfolioUtils';
+	import { DEFAULT_VISIBLE_COUNT, getPortfolioState, getPortfolioUrlWithParams } from '../../utils/portfolioUtils';
 	import Title from '$siteComponents/atoms/portfolio/title.svelte';
 
 	let { portfolioItems }: { portfolioItems: IPortfolioItem[] } = $props();
@@ -16,8 +16,8 @@
 	let numberOfVisibleItems = $derived(page.state.numberOfVisibleItems);
 	let filteredItems = $derived(portfolioItems.filter((i) => i.type == selectedType));
 	let visibleItems = $derived.by(() => {
-		if (numberOfVisibleItems == 4) {
-			return filteredItems.slice(0, selectedType == 'art' ? 4 : 2);
+		if (numberOfVisibleItems == DEFAULT_VISIBLE_COUNT) {
+			return filteredItems.slice(0, selectedType == 'art' ? DEFAULT_VISIBLE_COUNT : 2);
 		}
 
 		return filteredItems.slice(0, numberOfVisibleItems);

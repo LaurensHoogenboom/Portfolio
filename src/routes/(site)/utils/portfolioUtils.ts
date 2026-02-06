@@ -2,6 +2,8 @@ import { pushState } from '$app/navigation';
 import { page } from '$app/state';
 import { isPortfolioItemType, type IPortfolioItem, type PortfolioItemType } from '$lib/types/portfolio';
 
+export const DEFAULT_VISIBLE_COUNT = 4 as const;
+
 interface IPortfolioState {
     numberOfVisibleItems: number,
     activePortfolioItemId?: string,
@@ -10,24 +12,36 @@ interface IPortfolioState {
 }
 
 export const getPortfolioUrlWithParams = ({ numberOfVisibleItems, activePortfolioItemId, selectedPortfolioItemType }: IPortfolioState): string => {
-    return `#portfolio?numberOfVisibleItems=${numberOfVisibleItems}&activePortfolioItemId=${activePortfolioItemId}&selectedPortfolioItemType=${selectedPortfolioItemType}`;
+    const params = new URLSearchParams();
+
+    params.set('numberOfVisibleItems', numberOfVisibleItems.toString());
+    params.set('selectedPortfolioItemType', selectedPortfolioItemType);
+
+    if (activePortfolioItemId) {
+        params.set('activePortfolioItemId', activePortfolioItemId);
+    }
+    
+    return `#portfolio?${params.toString()}`;
 }
 
 export const getPortfolioSearchParams = (searchParams: URLSearchParams): IPortfolioState => {
+    const typeParam = searchParams.get('selectedPortfolioItemType');
+    
     return {
-        numberOfVisibleItems: parseInt(searchParams.get('numberOfVisibleItems') ?? "4"),
+        numberOfVisibleItems: parseInt(searchParams.get('numberOfVisibleItems') ?? DEFAULT_VISIBLE_COUNT.toString()),
         activePortfolioItemId: searchParams.get('activePortfolioItemId') ?? undefined,
-        selectedPortfolioItemType: isPortfolioItemType(searchParams.get('selectedPortfolioItemType') as string)
-            ? searchParams.get('selectedPortfolioItemType') as PortfolioItemType
+        selectedPortfolioItemType: isPortfolioItemType(typeParam ?? '')
+            ? (typeParam as PortfolioItemType)
             : 'research'
     }
 }
 
 export const getPortfolioState = (): IPortfolioState => {
     return {
-        numberOfVisibleItems: page.state.numberOfVisibleItems ?? 4,
+        numberOfVisibleItems: page.state.numberOfVisibleItems ?? DEFAULT_VISIBLE_COUNT,
         activePortfolioItemId: page.state.activePortfolioItemId,
-        selectedPortfolioItemType: page.state.selectedPortfolioItemType ?? 'research'
+        selectedPortfolioItemType: page.state.selectedPortfolioItemType ?? 'research',
+        activePortfolioItem: page.state.activePortfolioItem
     }
 }
 

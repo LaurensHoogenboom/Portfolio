@@ -2,7 +2,7 @@
 	import Tabbar, { type ITabItem } from '$siteComponents/atoms/tabbar.svelte';
 	import { pushState } from '$app/navigation';
 	import type { PortfolioItemType } from '$lib/types/portfolio';
-	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../utils/portfolioUtils';
+	import { DEFAULT_VISIBLE_COUNT, getPortfolioState, getPortfolioUrlWithParams } from '../../../utils/portfolioUtils';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { FlaskConical, Palette, SplinePointer } from '@lucide/svelte';
@@ -20,7 +20,7 @@
 	const changePortfolioItemType = (i: number) => {
 		const state = getPortfolioState();
 		state.selectedPortfolioItemType = tabItems[i].type;
-		state.numberOfVisibleItems = 4;
+		state.numberOfVisibleItems = DEFAULT_VISIBLE_COUNT;
 		pushState(getPortfolioUrlWithParams(state), state);
 		
 		const portfolioTop = document.getElementById('portfolio')?.getBoundingClientRect().top ?? 0;
