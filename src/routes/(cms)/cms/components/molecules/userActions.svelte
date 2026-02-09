@@ -54,6 +54,7 @@
 		position: relative;
 		padding-left: var(--padding-3);
 		grid-gap: var(--padding-2);
+		margin-left: 60px;
 
 		&:after {
 			position: absolute;

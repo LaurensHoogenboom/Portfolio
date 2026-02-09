@@ -1,58 +1,64 @@
 <script lang="ts">
-	import { enhance } from "$app/forms";
-	import Button from "$cmsComponents/atoms/button.svelte";
-	import Notice from "$cmsComponents/atoms/notice.svelte";
-	import LabelInputGroup from "$cmsComponents/molecules/labelInputGroup.svelte";
-	import Dialog from "$cmsComponents/organisms/dialog.svelte";
-	import PasswordInput from "$cmsComponents/organisms/passwordInput.svelte";
-	import { notifyFormActionSuccess } from "../../shared/globalNotifications.svelte";
-	import { userTypeSelectOptions } from "../shared/userTypeSelectOptions";
+	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
+	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
+	import PasswordInput from '$cmsComponents/organisms/passwordInput.svelte';
+	import CreateDialog from '$cmsComponents/templates/createDialog.svelte';
+	import type { Workspace } from '$lib/server/db/schema/workspaces';
+	import type { UserType } from '$lib/types/users';
+	import { userTypeSelectOptions } from '../shared/userTypeSelectOptions';
 
-    let { closeCallback } : { closeCallback: () => void } = $props();
+	let { closeCallback, workspaces }: { closeCallback: () => void; workspaces: Workspace[] } = $props();
 
-    let errorMessage: string | undefined = $state();
+	let selectedUserType: UserType | undefined = $state();
+	let filteredWorkspaces = $derived(selectedUserType == 'default' ? workspaces.filter((n) => n.adminRequired == false) : workspaces);
+	let workSpaceSelectOptions = $derived(
+		filteredWorkspaces.map((w) => {
+			return {
+				title: w.title,
+				value: w.id
+			};
+		})
+	);
 </script>
 
-<Dialog title="Add User" closeCallback={closeCallback}>
-    <form method="post" action="?/create" use:enhance={() => {
-        return async ({result, update}) => {
-            await update({ reset: false });
+<CreateDialog {closeCallback} itemName="user" itemTitleKey="username">
+	<div class="grid-container columns-2" style="--column-min-width: 300px;">
+		<div>
+			<fieldset>
+				<LabelInputGroup type="text" name="username" label="Username" max={120} required={true} />
+			</fieldset>
 
-            if (result.type == 'success') {
-                notifyFormActionSuccess('create', result.data?.username as string);
-                closeCallback();
-            } else if (result.type == 'failure') {
-                errorMessage = result.data?.error as string;
-            }
-        }
-    }}>
-        {#if errorMessage}
-            <Notice message={errorMessage} type="warning" />
-        {/if}
+			<fieldset>
+				<LabelInputGroup
+					type="select"
+					name="type"
+					label="Type"
+					selectOptions={userTypeSelectOptions}
+					required={true}
+					bind:value={selectedUserType}
+				/>
 
-        <fieldset>
-            <LabelInputGroup type="text" name="username" label="Username" max={120} required={true}/>
-            <LabelInputGroup
-				type="select"
-				name="type"
-				label="Type"
-				selectOptions={userTypeSelectOptions}
-				required={true}
-			/>
-        </fieldset>
+				{#if workSpaceSelectOptions && workSpaceSelectOptions.length > 0}
+					<LabelInputGroup
+						type="select"
+						name="preferredWorkspaceId"
+						label="Preferred Workspace"
+						selectOptions={workSpaceSelectOptions}
+						required={true}
+					/>
+				{/if}
+			</fieldset>
+		</div>
 
-        <fieldset>
-            <PasswordInput requireCurrentPassword={false} required={true} />
-        </fieldset>
+		<div>
+			<fieldset>
+				<PasswordInput requireCurrentPassword={false} required={true} />
+			</fieldset>
 
-        <fieldset>
-            <LabelInputGroup type="text" name="securityQuestion" label="Secret Question" max={250} required={true}/>
-            <LabelInputGroup type="text" name="securityQuestionAnswer" label="Secret Answer" max={250} required={true}/>
-        </fieldset>
-
-        <div class="box nested-box form-actions">
-            <Button type="button" style="secondary" title="Cancel" onclick={closeCallback} />
-            <Button type="submit" style="primary" title="Add User" />
-        </div>
-    </form>
-</Dialog>
+			<fieldset>
+				<LabelInputGroup type="text" name="securityQuestion" label="Secret Question" max={250} required={true} />
+				<LabelInputGroup type="text" name="securityQuestionAnswer" label="Secret Answer" max={250} required={true} />
+			</fieldset>
+		</div>
+	</div>
+</CreateDialog>

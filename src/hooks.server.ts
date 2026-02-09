@@ -16,7 +16,8 @@ const protectedPageRoutes = [
 
 const adminPages = [
     '/cms/users',
-    '/cms/uploads'
+    '/cms/uploads',
+    '/cms/workspaces'
 ];
 
 const checkIfUrlStartsWith = (string: string, options: string[]) => {
@@ -25,7 +26,7 @@ const checkIfUrlStartsWith = (string: string, options: string[]) => {
 
 export const handle: Handle = async ({ event, resolve }) => {
     const host = event.url.hostname;
-    
+
     if (host === 'laurenshoogenboom.nl') {
         throw redirect(301, 'https://www.laurenshoogenboom.nl' + event.url.pathname + event.url.hash + event.url.search);
     }
@@ -41,6 +42,7 @@ export const handle: Handle = async ({ event, resolve }) => {
         event.locals.username = user ? user.username : undefined;
         event.locals.userId = user ? user.id : undefined;
         event.locals.userType = user ? user.type : undefined;
+        event.locals.preferredWorkspaceId = user && user.preferredWorkspaceId ? user.preferredWorkspaceId : undefined;
         event.locals.adminCount = (await getUserCount(eq(users.type, 'admin')))?.count ?? undefined;
     }
 

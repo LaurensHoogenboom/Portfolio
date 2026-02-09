@@ -1,9 +1,10 @@
 <script lang="ts">
 	import Button from '$cmsComponents/atoms/button.svelte';
-	import LabelInputGroup, { type ISelectOption } from '$cmsComponents/molecules/labelInputGroup.svelte';
+	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
 	import { ArrowLeft, ArrowRight } from '@lucide/svelte';
 	import { page } from '$app/state';
 	import { updatePageParams } from '$lib/utils/updatePageParams';
+	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 
 	const { totalItemCount }: { totalItemCount: number } = $props();
 

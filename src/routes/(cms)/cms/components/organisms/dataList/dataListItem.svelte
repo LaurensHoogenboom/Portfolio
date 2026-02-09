@@ -3,7 +3,7 @@
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import { Pencil, TextCursor, Trash2 } from '@lucide/svelte';
 	import type { IConfigContext, TableConfig, UIColumn } from '$lib/types/dataList';
-	import DeleteConfirmationDialog from '$cmsComponents/deleteConfirmationDialog.svelte';
+	import DeleteConfirmationDialog from '$cmsComponents/templates/deleteConfirmationDialog.svelte';
 
 	interface Props {
 		row: T;

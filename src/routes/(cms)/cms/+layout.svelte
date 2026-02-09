@@ -2,38 +2,34 @@
 	import type { Snippet } from 'svelte';
 	import type { LayoutData } from '../cms/$types';
 	import { page } from '$app/state';
-	import UserActions from './components/userActions.svelte';
-	import NotificationContainer from './components/notificationContainer.svelte';
+	import UserActions from './components/molecules/userActions.svelte';
+	import NotificationContainer from './components/molecules/notificationContainer.svelte';
 	import { dev } from '$app/environment';
-	import type { UserType } from '$lib/types/users';
+	import { navigationItems } from './shared/navigation';
+	import Select from '$cmsComponents/atoms/inputs/select.svelte';
+	import { goto } from '$app/navigation';
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
-	interface INavigationItem {
-		title: string;
-		url: string;
-		requiredRole?: UserType
-	}
+	let selectedWorkspaceId = $state(data.preferredWorkspaceId ?? data.userWorkspaces[0].id);
+	const selectedWorkspace = $derived(data.userWorkspaces.find(w => w.id == selectedWorkspaceId));
+	const accessibleNavItems = $derived.by(() => {
+		const items = selectedWorkspace?.navigationItems?.length ? selectedWorkspace.navigationItems : navigationItems;
+		return items.filter(n => n.requiredUserType !== 'admin' || data.userType == 'admin');
+	});
 
-	const navigationItems: INavigationItem[] = [
-		{ title: 'Home', url: '/cms' },
-		{ title: 'Portfolio', url: '/cms/portfolio' },
-		{ title: 'Uploads', url: '/cms/uploads', requiredRole: 'admin' },
-		{ title: 'Users', url: '/cms/users', requiredRole: 'admin' }
-	];
+	const workSpaceSelectOptions = $derived(data.userWorkspaces.map(w => ({ title: w.title, value: w.id})));
 
-    const isCurrentPage = (url: string) => {
-        return page.url.pathname === url;
-    }
+	$effect(() => {
+		if (selectedWorkspace?.navigationItems?.length) {
+			const currentInNav = selectedWorkspace.navigationItems.some(n => n.url === page.url.pathname);
+			if (!currentInNav) goto(selectedWorkspace.navigationItems[0].url);
+		}
+	});
 </script>
 
 <svelte:head>
-	{#if dev}
-		<link rel="stylesheet" href="/src/styles/cms/cms.css" />
-	{:else}
-		<link rel="stylesheet" href="/styles/cms/cms.css" />
-	{/if}
-
+	<link rel="stylesheet" href="{dev ? '/src' : ''}/styles/cms/cms.css" />
 	<title>CMS: Laurens Hoogenboom</title>
 </svelte:head>
 
@@ -41,16 +37,14 @@
 	<div class="nav-wrapper">
 		<nav>
 			<div class="nav-links inset primary">
-                {#each navigationItems as nItem}
-					{#if nItem.requiredRole == 'admin' && data.userType == 'admin'}
-						<a href={nItem.url} class={isCurrentPage(nItem.url) ? 'outset primary' : ''}>{nItem.title}</a>
-					{/if}
-
-                    {#if nItem.requiredRole != 'admin'}
-						<a href={nItem.url} class={isCurrentPage(nItem.url) ? 'outset primary' : ''}>{nItem.title}</a>
-					{/if}
-                {/each}
+				{#each accessibleNavItems as { url, title }}
+					<a href={url} class={page.url.pathname == url ? 'outset primary' : ''}>{title}</a>
+				{/each}
 			</div>
+
+			{#if data.userWorkspaces.length > 0}
+				<Select type="single" style="primary" name="workspace" selectOptions={workSpaceSelectOptions} bind:value={selectedWorkspaceId} />
+			{/if}
 
 			{#if data.username}
 				<UserActions username={data.username} />

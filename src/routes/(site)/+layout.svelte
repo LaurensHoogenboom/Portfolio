@@ -8,11 +8,8 @@
 </script>
 
 <svelte:head>
-	{#if dev}
-		<link rel="stylesheet" type="text/css" media="screen" href="/src/styles/site/site.css" />
-	{:else}
-		<link rel="stylesheet" type="text/css" media="screen" href="/styles/site/site.css" />
-	{/if}
+	<link rel="stylesheet" type="text/css" media="screen" href="{dev ? '/src' : ''}/styles/site/site.css" />
+	<title>Laurens Hoogenboom</title>
 </svelte:head>
 
 <div class="site-wrapper">

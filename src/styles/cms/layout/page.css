@@ -19,7 +19,7 @@
 
     nav {
         display: grid;
-        grid-template-columns: max-content max-content;
+        grid-template-columns: 1fr max-content max-content;
         justify-content: space-between;
         align-items: center;
         width: 100%;
@@ -30,6 +30,7 @@
         .nav-links {
             display: flex;
             align-items: center;
+            justify-self: start;
             height: 40px;
             padding: var(--padding-6);
 

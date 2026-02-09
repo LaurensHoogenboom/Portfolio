@@ -5,12 +5,13 @@
 	import type { PageData } from './$types';
 	import EditPortfolioItemDialog, { type IPortfolioItemToEdit } from './components/editPortfolioItemDialog.svelte';
 	import CreatePortfolioItemDialog from './components/createPortfolioItemDialog.svelte';
-	import LabelInputGroup, { type ISelectOption } from '$cmsComponents/molecules/labelInputGroup.svelte';
+	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
 	import { portfolioSelectOptions } from './shared/portfolioSelectOptions';
 	import { portfolioTableUIConfig } from '$lib/configs/portfolioItems';
 	import { goto } from '$app/navigation';
-	import DataList from '$cmsComponents/dataList.svelte';
+	import DataList from '$cmsComponents/organisms/dataList.svelte';
 	import { updatePageParams } from '$lib/utils/updatePageParams';
+	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 
 	let { data }: { data: PageData } = $props();
 

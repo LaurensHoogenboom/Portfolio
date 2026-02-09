@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `preferredWorkspaceId` text REFERENCES workspaces(id);

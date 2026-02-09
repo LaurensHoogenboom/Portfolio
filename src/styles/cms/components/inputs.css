@@ -14,4 +14,14 @@ textarea {
 
 select {
     padding: var(--padding-5);
+
+    &:before,
+    &:after {
+        display: none;
+    }
+
+    &.primary {
+        color: var(--white-text);
+        border-color: var(--white-text);
+    }
 }

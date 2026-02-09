@@ -1,15 +1,15 @@
 <script lang="ts">
 	import Button from '$cmsComponents/atoms/button.svelte';
-	import DataList from '$cmsComponents/dataList.svelte';
+	import DataList from '$cmsComponents/organisms/dataList.svelte';
 	import PageToolbar from '$cmsComponents/organisms/pageToolbar.svelte';
 	import { Plus } from '@lucide/svelte';
 	import type { PageData } from './$types';
 	import { uploadsTableUIConfig } from '$lib/configs/uploads';
 	import CreateUploadDialog from './components/createUploadDialog.svelte';
-	import type { ISelectOption } from '$cmsComponents/molecules/labelInputGroup.svelte';
 	import { uploadSelectOptions } from './shared/fileTypeSelectOptions';
 	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
 	import { updatePageParams } from '$lib/utils/updatePageParams';
+	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 
 	let { data }: { data: PageData } = $props();
 

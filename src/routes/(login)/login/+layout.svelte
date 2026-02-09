@@ -8,12 +8,7 @@
 </script>
 
 <svelte:head>
-    {#if dev}
-        <link rel="stylesheet" href="/src/styles/cms/cms.css">
-    {:else}
-        <link rel="stylesheet" href="/styles/cms/cms.css">
-    {/if}
-
+    <link rel="stylesheet" href="{dev ? '/src' : ''}/styles/cms/cms.css" />
     <title>CMS: Laurens Hoogenboom</title>
 </svelte:head>
 
