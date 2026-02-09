@@ -65,11 +65,12 @@
 			left: -1000vw;
 
 			+ .inset .outset {
-				display: none;
+				opacity: 0;
+				transition: opacity var(--default-animation-time), background-color var(--default-animation-time);
 			}
 
 			&:checked + .inset .outset {
-				display: flex;
+				opacity: 1;
 			}
 
 			&:focus-visible + .inset {
@@ -82,11 +83,26 @@
 				height: 25px;
 				aspect-ratio: 1 / 1;
 				padding: var(--padding-7);
-				transition: border-color var(--default-animation-time);
+				transition:
+					border-color var(--default-animation-time),
+					background-color var(--default-animation-time);
+
+				@media (hover: hover) and (pointer: fine) {
+					&:hover {
+						background-color: var(--grey-background-2);
+					}
+				}
 
 				.outset {
+					display: flex;
 					justify-content: center;
 					align-items: center;
+
+					@media (hover: hover) and (pointer: fine) {
+						&:hover {
+							background-color: var(--grey-background-1);
+						}
+					}
 				}
 			}
 		}
