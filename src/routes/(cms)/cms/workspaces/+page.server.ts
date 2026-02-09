@@ -25,7 +25,7 @@ export const actions: Actions = {
             return navigationItems.find(n => n.id == id);
         }).filter((item): item is INavigationItem => !!item);
 
-        const adminRequired = selectedNavigationItems.some(n => n.requiredRole == 'admin');
+        const adminRequired = selectedNavigationItems.some(n => n.requiredUserType == 'admin');
 
         try {
             const newWorkspace = await createWorkspace({ title: title, navigationItems: selectedNavigationItems, adminRequired: adminRequired });
@@ -46,7 +46,7 @@ export const actions: Actions = {
             return navigationItems.find(n => n.id == id);
         }).filter((item): item is INavigationItem => !!item);
 
-        const adminRequired = selectedNavigationItems.some(n => n.requiredRole == 'admin');
+        const adminRequired = selectedNavigationItems.some(n => n.requiredUserType == 'admin');
 
         try {
             const updatedWorkspace = await updateWorkspace(id, { title: title, navigationItems: selectedNavigationItems, adminRequired: adminRequired });

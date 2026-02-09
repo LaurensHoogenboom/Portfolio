@@ -6,12 +6,42 @@
 	import NotificationContainer from './components/molecules/notificationContainer.svelte';
 	import { dev } from '$app/environment';
 	import { navigationItems } from './shared/navigation';
+	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
+	import Select from '$cmsComponents/atoms/inputs/select.svelte';
+	import type { Workspace } from '$lib/server/db/schema/workspaces';
+	import { goto } from '$app/navigation';
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
-    const isCurrentPage = (url: string) => {
-        return page.url.pathname === url;
-    }
+	const isCurrentPage = (url: string) => {
+		return page.url.pathname === url;
+	};
+
+	const workSpaceSelectOptions: ISelectOption[] = data.workspaces.map((wItem) => {
+		return {
+			title: wItem.title,
+			value: wItem.id
+		};
+	});
+
+	let selectedWorkspaceId = $state(data.workspaces.length > 0 ? data.workspaces[0].id : undefined);
+	let selectedWorkspace: Workspace | undefined = $derived(data.workspaces.find((w) => w.id == selectedWorkspaceId));
+
+	let visibleNavItems = $derived(
+		selectedWorkspace?.navigationItems && selectedWorkspace.navigationItems.length > 0 ? selectedWorkspace.navigationItems : navigationItems
+	);
+	let accessibleNavItems = $derived(visibleNavItems.filter((n) => n.requiredUserType !== 'admin' || data.userType == 'admin'));
+
+	$effect(() => {
+		if (!selectedWorkspace?.navigationItems) return;
+
+		const currentPageUrl = page.url.pathname;
+		const isCurrentPageInWorkSpace = selectedWorkspace.navigationItems.some((n) => n.url == currentPageUrl);
+
+		if (!isCurrentPageInWorkSpace) {
+			goto(selectedWorkspace.navigationItems[0].url);
+		}
+	});
 </script>
 
 <svelte:head>
@@ -28,16 +58,14 @@
 	<div class="nav-wrapper">
 		<nav>
 			<div class="nav-links inset primary">
-                {#each navigationItems as nItem}
-					{#if nItem.requiredRole == 'admin' && data.userType == 'admin'}
-						<a href={nItem.url} class={isCurrentPage(nItem.url) ? 'outset primary' : ''}>{nItem.title}</a>
-					{/if}
-
-                    {#if nItem.requiredRole != 'admin'}
-						<a href={nItem.url} class={isCurrentPage(nItem.url) ? 'outset primary' : ''}>{nItem.title}</a>
-					{/if}
-                {/each}
+				{#each accessibleNavItems as nItem}
+					<a href={nItem.url} class={isCurrentPage(nItem.url) ? 'outset primary' : ''}>{nItem.title}</a>
+				{/each}
 			</div>
+
+			{#if data.workspaces.length > 0}
+				<Select type="single" style="primary" name="workspace" selectOptions={workSpaceSelectOptions} bind:value={selectedWorkspaceId} />
+			{/if}
 
 			{#if data.username}
 				<UserActions username={data.username} />

@@ -2,19 +2,21 @@
 	import { Check } from '@lucide/svelte';
 
 	let {
-		type,
+		type = "single",
 		selectOptions = [],
 		name,
 		callback,
-		required,
-		value = $bindable()
+		required = false,
+		value = $bindable(),
+		style = 'secondary'
 	}: {
-		type: 'single' | 'multiple';
+		type?: 'single' | 'multiple';
 		selectOptions?: ISelectOption[];
 		name: string;
 		callback?: (e: Event) => void;
-		required: boolean;
+		required?: boolean;
 		value?: string | string[] | File | number | null;
+		style?: 'secondary' | 'primary';
 	} = $props();
 
 	export interface ISelectOption {
@@ -40,7 +42,7 @@
 		</div>
 	{/each}
 {:else}
-	<select class="clickable-input" id={name} {name} onchange={callback} {required} bind:value>
+	<select class="clickable-input {style}" id={name} {name} onchange={callback} {required} bind:value>
 		{#if selectOptions}
 			{#each selectOptions as option}
 				<option value={option.value}>{option.title}</option>

@@ -19,4 +19,9 @@ select {
     &:after {
         display: none;
     }
+
+    &.primary {
+        color: var(--white-text);
+        border-color: var(--white-text);
+    }
 }

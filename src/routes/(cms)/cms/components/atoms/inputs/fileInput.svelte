@@ -4,13 +4,13 @@
 
 	let {
 		name,
-		required,
+		required = false,
 		acceptFile,
 		value = $bindable(),
 		setValidationWarning
 	}: {
 		name: string;
-		required: boolean;
+		required?: boolean;
 		acceptFile?: string;
 		value?: string | string[] | File | number | null;
 		setValidationWarning: (message?: string) => void;
