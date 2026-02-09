@@ -16,7 +16,8 @@ const protectedPageRoutes = [
 
 const adminPages = [
     '/cms/users',
-    '/cms/uploads'
+    '/cms/uploads',
+    '/cms/workspaces'
 ];
 
 const checkIfUrlStartsWith = (string: string, options: string[]) => {

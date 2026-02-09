@@ -50,7 +50,7 @@ export const actions: Actions = {
             return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
     },
-
+    
     update: async ({ request }) => {
         const formData = Object.fromEntries(await request.formData());
         const { id, username, type, currentPassword, newPassword, securityQuestion, securityQuestionAnswer } = formData as {

@@ -127,6 +127,13 @@
       "when": 1770403491270,
       "tag": "0017_dashing_azazel",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "6",
+      "when": 1770479779470,
+      "tag": "0018_careful_firebrand",
+      "breakpoints": true
     }
   ]
 }

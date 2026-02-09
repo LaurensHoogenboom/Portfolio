@@ -2,7 +2,7 @@
 	import type { IConfigContext, SortState, TableConfig } from '$lib/types/dataList';
 	import DataListBody from '$cmsComponents/organisms/dataList/dataListBody.svelte';
 	import DataListHeader from '$cmsComponents/organisms/dataList/dataListHeader.svelte';
-	import DataListFooter from './organisms/dataList/dataListFooter.svelte';
+	import DataListFooter from './dataList/dataListFooter.svelte';
 	import { page } from '$app/state';
 	import { updatePageParams } from '$lib/utils/updatePageParams';
 
@@ -14,7 +14,7 @@
 		editAction?: (id: string) => void;
 		writeAction?: (id: string) => void;
 		deleteAction?: string;
-		configContext?: IConfigContext
+		configContext?: IConfigContext;
 	}
 
 	const { data, config, itemNamePlural, totalItemCount, editAction, writeAction, deleteAction, configContext }: Props = $props();
@@ -56,21 +56,27 @@
 
 	$effect(() => {
 		if (data) isSorting = false;
-	})
+	});
 </script>
 
 <div class="data-list">
-	<DataListHeader
-		{config}
-		{sortedKeys}
-		{sortState}
-		{gridStyle}
-		hasActions={editAction || writeAction || deleteAction ? true : false}
-		sortCallback={toggleSort}
-		{isSorting}
-	/>
+	{#if data.length}
+		<DataListHeader
+			{config}
+			{sortedKeys}
+			{sortState}
+			{gridStyle}
+			hasActions={editAction || writeAction || deleteAction ? true : false}
+			sortCallback={toggleSort}
+			{isSorting}
+		/>
+	{/if}
+
 	<DataListBody {data} {config} {sortedKeys} {gridStyle} {itemNamePlural} {editAction} {writeAction} {deleteAction} {configContext} />
-	<DataListFooter {totalItemCount} />
+
+	{#if data.length}
+		<DataListFooter {totalItemCount} />
+	{/if}
 </div>
 
 <style>

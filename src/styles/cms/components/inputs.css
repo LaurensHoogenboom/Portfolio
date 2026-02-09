@@ -14,4 +14,9 @@ textarea {
 
 select {
     padding: var(--padding-5);
+
+    &:before,
+    &:after {
+        display: none;
+    }
 }

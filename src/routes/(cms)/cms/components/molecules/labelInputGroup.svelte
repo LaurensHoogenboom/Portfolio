@@ -1,12 +1,8 @@
 <script lang="ts">
-	import Button from '$cmsComponents/atoms/button.svelte';
+	import FileInput from '$cmsComponents/atoms/inputs/fileInput.svelte';
+	import Select from '$cmsComponents/atoms/inputs/select.svelte';
+	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 	import Instruction from '$cmsComponents/atoms/instruction.svelte';
-	import { File as FileIcon } from '@lucide/svelte';
-
-	export interface ISelectOption {
-		title: string;
-		value: string | number;
-	}
 
 	let {
 		name,
@@ -23,8 +19,8 @@
 		layout = 'vertical'
 	}: {
 		name: string;
-		type: 'text' | 'textarea' | 'password' | 'select' | 'file' | 'number';
-		value?: string | File | number | null;
+		type: 'text' | 'textarea' | 'password' | 'select' | 'select-multiple' | 'file' | 'number';
+		value?: string | string[] | File | number | null;
 		label: string;
 		min?: number;
 		max?: number;
@@ -36,40 +32,7 @@
 		layout?: 'horizontal' | 'vertical';
 	} = $props();
 
-	let files: FileList | undefined = $state();
-	let fileName: string | undefined = $state(typeof value == 'string' ? value.split(/[\\/]/).pop() : '');
-
-	let showImage = $state(acceptFile == 'image/*');
-	let imagePreviewSrc = $state(typeof value == 'string' ? value : '');
-
 	let validationWarning: string | undefined = $state();
-
-	$effect(() => {
-		if (files instanceof FileList && files.length > 0) {
-			value = files[0];
-
-			if (value.size > (20 * 1024 * 1024)) {
-				validationWarning = "Files must be smaller than 20 MB.";
-				fileName = undefined;
-				return;
-			}
-
-			fileName = files[0].name;
-			validationWarning = undefined;
-
-			if (acceptFile == 'image/*') {
-				const reader = new FileReader();
-
-				reader.addEventListener('load', () => {
-					if (typeof reader.result == 'string') {
-						imagePreviewSrc = reader.result;
-					}
-				});
-
-				reader.readAsDataURL(value);
-			}
-		}
-	});
 </script>
 
 <div class="label-input-group {layout}">
@@ -79,34 +42,17 @@
 		<input id={name} class="inset" {type} {name} bind:value onchange={callback} {min} {max} {required} />
 	{:else if type == 'textarea'}
 		<textarea rows="5" class="inset" bind:value {name} onchange={callback} maxlength={max} {required}></textarea>
-	{:else if type == 'select'}
-		<select class="clickable-input" id={name} {name} onchange={callback} {required} bind:value>
-			{#if selectOptions}
-				{#each selectOptions as option}
-					<option value={option.value}>{option.title}</option>
-				{/each}
-			{/if}
-		</select>
+	{:else if type == 'select' || type == 'select-multiple'}
+		<Select {name} {required} type={type == 'select-multiple' ? 'multiple' : 'single'} {selectOptions} {callback} bind:value />
 	{:else if (type = 'file')}
-		<div class="file-input">
-			<input id={name} type="file" {name} bind:files {required} accept={acceptFile} />
-			<Button type="label" labelFor={name} style="secondary" title={value ? 'Change File' : 'Select File'} alignment="center" />
-
-			{#if fileName}
-				{#if showImage}
-					<img class="outset" alt={fileName} src={imagePreviewSrc} />
-				{:else}
-					<div class="file-preview">
-						<FileIcon size={30} />
-						<p>{fileName}</p>
-					</div>
-				{/if}
-			{/if}
-		</div>
+		<FileInput {name} {required} {acceptFile} bind:value setValidationWarning={(message) => (validationWarning = message)} />
 	{/if}
 
 	{#if instruction || validationWarning}
-		<Instruction message={validationWarning ? validationWarning : instruction ? instruction : ''} type={validationWarning ? 'warning' : 'neutral'} />
+		<Instruction
+			message={validationWarning ? validationWarning : instruction ? instruction : ''}
+			type={validationWarning ? 'warning' : 'neutral'}
+		/>
 	{/if}
 </div>
 
@@ -134,43 +80,6 @@
 
 			label {
 				padding-bottom: 0;
-			}
-		}
-	}
-
-	.file-input {
-		display: flex;
-		flex-direction: column;
-		grid-row-gap: var(--padding-3);
-
-		input[type='file'] {
-			opacity: 0;
-			width: 0.1px;
-			height: 0.1px;
-			position: absolute;
-		}
-
-		img {
-			width: 100%;
-			max-width: 370px;
-			border-radius: var(--border-radius-s);
-			object-fit: cover;
-		}
-
-		.file-preview {
-			display: grid;
-			justify-items: center;
-			align-items: center;
-			padding: var(--padding-1) var(--padding-3);
-			border: 1px solid var(--grey-borders);
-			border-radius: var(--border-radius-s);
-			background-color: var(--grey-background-1);
-			grid-gap: var(--padding-3);
-
-			p {
-				text-align: center;
-				margin: 0;
-				color: var(--grey-text-1);
 			}
 		}
 	}

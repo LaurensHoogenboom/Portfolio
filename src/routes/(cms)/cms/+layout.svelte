@@ -2,25 +2,12 @@
 	import type { Snippet } from 'svelte';
 	import type { LayoutData } from '../cms/$types';
 	import { page } from '$app/state';
-	import UserActions from './components/userActions.svelte';
-	import NotificationContainer from './components/notificationContainer.svelte';
+	import UserActions from './components/molecules/userActions.svelte';
+	import NotificationContainer from './components/molecules/notificationContainer.svelte';
 	import { dev } from '$app/environment';
-	import type { UserType } from '$lib/types/users';
+	import { navigationItems } from './shared/navigation';
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
-
-	interface INavigationItem {
-		title: string;
-		url: string;
-		requiredRole?: UserType
-	}
-
-	const navigationItems: INavigationItem[] = [
-		{ title: 'Home', url: '/cms' },
-		{ title: 'Portfolio', url: '/cms/portfolio' },
-		{ title: 'Uploads', url: '/cms/uploads', requiredRole: 'admin' },
-		{ title: 'Users', url: '/cms/users', requiredRole: 'admin' }
-	];
 
     const isCurrentPage = (url: string) => {
         return page.url.pathname === url;

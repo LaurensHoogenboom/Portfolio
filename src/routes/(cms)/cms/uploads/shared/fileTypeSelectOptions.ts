@@ -1,4 +1,4 @@
-import type { ISelectOption } from "$cmsComponents/molecules/labelInputGroup.svelte";
+import type { ISelectOption } from "$cmsComponents/atoms/inputs/select.svelte";
 import type { UploadFileType } from "$lib/types/uploads";
 
 interface ISelectUploadType extends ISelectOption {

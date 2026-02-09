@@ -1,58 +1,24 @@
 <script lang="ts">
-	import { enhance } from "$app/forms";
-	import Button from "$cmsComponents/atoms/button.svelte";
-	import Notice from "$cmsComponents/atoms/notice.svelte";
-	import LabelInputGroup from "$cmsComponents/molecules/labelInputGroup.svelte";
-	import Dialog from "$cmsComponents/organisms/dialog.svelte";
-	import PasswordInput from "$cmsComponents/organisms/passwordInput.svelte";
-	import { notifyFormActionSuccess } from "../../shared/globalNotifications.svelte";
-	import { userTypeSelectOptions } from "../shared/userTypeSelectOptions";
+	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
+	import PasswordInput from '$cmsComponents/organisms/passwordInput.svelte';
+	import CreateDialog from '$cmsComponents/templates/createDialog.svelte';
+	import { userTypeSelectOptions } from '../shared/userTypeSelectOptions';
 
-    let { closeCallback } : { closeCallback: () => void } = $props();
-
-    let errorMessage: string | undefined = $state();
+	let { closeCallback }: { closeCallback: () => void } = $props();
 </script>
 
-<Dialog title="Add User" closeCallback={closeCallback}>
-    <form method="post" action="?/create" use:enhance={() => {
-        return async ({result, update}) => {
-            await update({ reset: false });
+<CreateDialog {closeCallback} itemName="user" itemTitleKey="username">
+	<fieldset>
+		<LabelInputGroup type="text" name="username" label="Username" max={120} required={true} />
+		<LabelInputGroup type="select" name="type" label="Type" selectOptions={userTypeSelectOptions} required={true} />
+	</fieldset>
 
-            if (result.type == 'success') {
-                notifyFormActionSuccess('create', result.data?.username as string);
-                closeCallback();
-            } else if (result.type == 'failure') {
-                errorMessage = result.data?.error as string;
-            }
-        }
-    }}>
-        {#if errorMessage}
-            <Notice message={errorMessage} type="warning" />
-        {/if}
+	<fieldset>
+		<PasswordInput requireCurrentPassword={false} required={true} />
+	</fieldset>
 
-        <fieldset>
-            <LabelInputGroup type="text" name="username" label="Username" max={120} required={true}/>
-            <LabelInputGroup
-				type="select"
-				name="type"
-				label="Type"
-				selectOptions={userTypeSelectOptions}
-				required={true}
-			/>
-        </fieldset>
-
-        <fieldset>
-            <PasswordInput requireCurrentPassword={false} required={true} />
-        </fieldset>
-
-        <fieldset>
-            <LabelInputGroup type="text" name="securityQuestion" label="Secret Question" max={250} required={true}/>
-            <LabelInputGroup type="text" name="securityQuestionAnswer" label="Secret Answer" max={250} required={true}/>
-        </fieldset>
-
-        <div class="box nested-box form-actions">
-            <Button type="button" style="secondary" title="Cancel" onclick={closeCallback} />
-            <Button type="submit" style="primary" title="Add User" />
-        </div>
-    </form>
-</Dialog>
+	<fieldset>
+		<LabelInputGroup type="text" name="securityQuestion" label="Secret Question" max={250} required={true} />
+		<LabelInputGroup type="text" name="securityQuestionAnswer" label="Secret Answer" max={250} required={true} />
+	</fieldset>
+</CreateDialog>

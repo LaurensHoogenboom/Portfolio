@@ -7,7 +7,7 @@
 	import CreateUserDialog from './components/createUserDialog.svelte';
 	import { Plus } from '@lucide/svelte';
 	import { usersTableUIConfig } from '$lib/configs/users';
-	import DataList from '$cmsComponents/dataList.svelte';
+	import DataList from '$cmsComponents/organisms/dataList.svelte';
 	import type { IConfigContext } from '$lib/types/dataList';
 
 	let { data }: { data: PageData } = $props();

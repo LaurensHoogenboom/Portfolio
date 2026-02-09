@@ -1,7 +1,5 @@
-import type { ISelectOption } from "$cmsComponents/molecules/labelInputGroup.svelte";
+import type { ISelectOption } from "$cmsComponents/atoms/inputs/select.svelte";
 import type { UserType } from "$lib/types/users";
-
-
 
 interface ISelectUserType extends ISelectOption {
     title: string;

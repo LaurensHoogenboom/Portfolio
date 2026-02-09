@@ -14,7 +14,6 @@ const users = sqliteTable("users", {
         .notNull(),
     securityQuestionAnswer: text("securityQuestionAnswer")
         .notNull(),
-    
     ...timestamp
 });
 

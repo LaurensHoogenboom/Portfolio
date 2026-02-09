@@ -4,13 +4,15 @@ import Database from "better-sqlite3";
 import * as portfolioItems from "./schema/portfolioItems";
 import * as uploads from "./schema/uploads";
 import * as users from "./schema/users";
+import * as workspaces from "./schema/workspaces";
 import * as relations from './relations/relations';
 
 const schema = {
     ...portfolioItems,
     ...uploads,
     ...users,
-    ...relations
+    ...relations,
+    ...workspaces
 }
 
 type DbClient = BetterSQLite3Database<typeof schema>;
