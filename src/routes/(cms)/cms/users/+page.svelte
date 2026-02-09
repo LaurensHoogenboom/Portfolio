@@ -45,9 +45,9 @@
 </main>
 
 {#if editFormVisible && userToEdit}
-	<EditUserDialog closeCallback={() => (userToEdit = undefined)} {userToEdit} />
+	<EditUserDialog closeCallback={() => (userToEdit = undefined)} {userToEdit} workspaces={data.workspaces} />
 {/if}
 
 {#if createFormVisible}
-	<CreateUserDialog closeCallback={() => (createFormVisible = false)} />
+	<CreateUserDialog closeCallback={() => (createFormVisible = false)} workspaces={data.workspaces} />
 {/if}

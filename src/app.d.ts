@@ -13,6 +13,7 @@ declare global {
 			userId?: string;
 			userType?: UserType;
 			adminCount?: number;
+			preferredWorkspaceId?: string; 
 		}
 
 		// interface PageData {}

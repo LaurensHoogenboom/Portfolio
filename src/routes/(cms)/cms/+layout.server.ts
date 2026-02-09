@@ -12,6 +12,7 @@ export const load: LayoutServerLoad = (async ({ locals }) => {
         userId: locals.userId,
         userType: locals.userType,
         adminCount: locals.adminCount,
-        workspaces: userWorkspaces
+        preferredWorkspaceId: locals.preferredWorkspaceId,
+        userWorkspaces: userWorkspaces
     }
 }) satisfies LayoutServerLoad;

@@ -6,8 +6,7 @@
 	import NotificationContainer from './components/molecules/notificationContainer.svelte';
 	import { dev } from '$app/environment';
 	import { navigationItems } from './shared/navigation';
-	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
-	import Select from '$cmsComponents/atoms/inputs/select.svelte';
+	import Select, { type ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 	import type { Workspace } from '$lib/server/db/schema/workspaces';
 	import { goto } from '$app/navigation';
 
@@ -17,15 +16,11 @@
 		return page.url.pathname === url;
 	};
 
-	const workSpaceSelectOptions: ISelectOption[] = data.workspaces.map((wItem) => {
-		return {
-			title: wItem.title,
-			value: wItem.id
-		};
-	});
-
-	let selectedWorkspaceId = $state(data.workspaces.length > 0 ? data.workspaces[0].id : undefined);
-	let selectedWorkspace: Workspace | undefined = $derived(data.workspaces.find((w) => w.id == selectedWorkspaceId));
+	let workspaces = data.userWorkspaces;
+	let selectedWorkspaceId = $state(
+		data.preferredWorkspaceId ? data.preferredWorkspaceId : workspaces.length > 0 ? workspaces[0].id : undefined
+	);
+	let selectedWorkspace: Workspace | undefined = $derived(workspaces.find((w) => w.id == selectedWorkspaceId));
 
 	let visibleNavItems = $derived(
 		selectedWorkspace?.navigationItems && selectedWorkspace.navigationItems.length > 0 ? selectedWorkspace.navigationItems : navigationItems
@@ -41,6 +36,13 @@
 		if (!isCurrentPageInWorkSpace) {
 			goto(selectedWorkspace.navigationItems[0].url);
 		}
+	});
+
+	export const workSpaceSelectOptions: ISelectOption[] = workspaces.map((wItem) => {
+		return {
+			title: wItem.title,
+			value: wItem.id
+		};
 	});
 </script>
 
@@ -63,7 +65,7 @@
 				{/each}
 			</div>
 
-			{#if data.workspaces.length > 0}
+			{#if workspaces.length > 0}
 				<Select type="single" style="primary" name="workspace" selectOptions={workSpaceSelectOptions} bind:value={selectedWorkspaceId} />
 			{/if}
 

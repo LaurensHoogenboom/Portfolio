@@ -4,30 +4,34 @@ import { fail } from '@sveltejs/kit';
 import { sha256 } from "@oslojs/crypto/sha2";
 import { getPagingAndSortingParams } from '../shared/getPaginationAndSortingParams';
 import type { UserType } from '$lib/types/users';
+import { getWorkspaces } from '$lib/server/db/cruds/workspaces';
 
 export const load: PageServerLoad = (async ({ url }) => {
     const { pageIndex, itemsPerPage, sortBy, sortDirection } = getPagingAndSortingParams(url);
 
-    const [users, userCount] = await Promise.all([
+    const [users, userCount, workspaces] = await Promise.all([
         getUsers(itemsPerPage, pageIndex * itemsPerPage, undefined, sortBy, sortDirection),
-        getUserCount()
+        getUserCount(),
+        getWorkspaces('all')
     ]);
 
     return {
         users: users,
-        userCount: userCount?.count ?? 0
+        userCount: userCount?.count ?? 0,
+        workspaces: workspaces
     };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
     create: async ({ request }) => {
         const formData = Object.fromEntries(await request.formData());
-        const { username, newPassword, type, securityQuestion, securityQuestionAnswer } = formData as {
+        const { username, newPassword, type, securityQuestion, securityQuestionAnswer, preferredWorkspaceId } = formData as {
             username: string,
             newPassword: string,
             type: UserType,
             securityQuestion: string,
-            securityQuestionAnswer: string
+            securityQuestionAnswer: string,
+            preferredWorkspaceId: string
         };
 
         const user = {
@@ -35,15 +39,16 @@ export const actions: Actions = {
             password: sha256(Buffer.from(newPassword)),
             type: type,
             securityQuestion: securityQuestion,
-            securityQuestionAnswer: securityQuestionAnswer
+            securityQuestionAnswer: securityQuestionAnswer,
+            preferredWorkspaceId: preferredWorkspaceId
         }
 
         try {
             const newUser = await createUser(user);
 
             return {
-                userId: newUser.id,
-                username: newUser.username,
+                userId: newUser?.id,
+                username: newUser?.username,
             };
         } catch (e) {
             console.log(e);
@@ -53,14 +58,15 @@ export const actions: Actions = {
     
     update: async ({ request }) => {
         const formData = Object.fromEntries(await request.formData());
-        const { id, username, type, currentPassword, newPassword, securityQuestion, securityQuestionAnswer } = formData as {
+        const { id, username, type, currentPassword, newPassword, securityQuestion, securityQuestionAnswer, preferredWorkspaceId } = formData as {
             id: string,
             username: string,
             type: UserType,
             currentPassword: string,
             newPassword: string,
             securityQuestion: string,
-            securityQuestionAnswer: string
+            securityQuestionAnswer: string,
+            preferredWorkspaceId: string
         }
 
         const update = {
@@ -68,15 +74,16 @@ export const actions: Actions = {
             password: newPassword.length ? sha256(Buffer.from(newPassword)) : undefined,
             type: type,
             securityQuestion: securityQuestion,
-            securityQuestionAnswer: securityQuestionAnswer.length ? securityQuestionAnswer : undefined
+            securityQuestionAnswer: securityQuestionAnswer.length ? securityQuestionAnswer : undefined,
+            preferredWorkspaceId: preferredWorkspaceId
         }
 
         try {
             const updatedUser = await updateUser(id, update, currentPassword);
 
             return {
-                userId: updatedUser.id,
-                username: updatedUser.username,
+                userId: updatedUser?.id,
+                username: updatedUser?.username,
             };
         } catch (e) {
             console.log(e);

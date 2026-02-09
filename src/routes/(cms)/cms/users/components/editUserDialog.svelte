@@ -1,7 +1,9 @@
 <script lang="ts">
+	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
 	import PasswordInput from '$cmsComponents/organisms/passwordInput.svelte';
 	import EditDialog from '$cmsComponents/templates/editDialog.svelte';
+	import type { Workspace } from '$lib/server/db/schema/workspaces';
 	import type { UserType } from '$lib/types/users';
 	import { userTypeSelectOptions } from '../shared/userTypeSelectOptions';
 
@@ -10,9 +12,21 @@
 		username: string;
 		type: UserType;
 		securityQuestion: string;
+		preferredWorkspaceId: string | null;
 	}
 
-	let { closeCallback, userToEdit }: { closeCallback: () => void; userToEdit: IUserToEdit } = $props();
+	let { closeCallback, userToEdit, workspaces }: { closeCallback: () => void; userToEdit: IUserToEdit; workspaces: Workspace[] } = $props();
+
+	let selectedUserType: UserType = $state(userToEdit.type);
+	let filteredWorkspaces = $derived(selectedUserType == 'default' ? workspaces.filter((n) => n.adminRequired == false) : workspaces);
+	let workSpaceSelectOptions = $derived(
+		filteredWorkspaces.map((w) => {
+			return {
+				title: w.title,
+				value: w.id
+			};
+		})
+	);
 </script>
 
 <EditDialog {closeCallback} itemTitle={userToEdit.username} itemTitleKey="username">
@@ -20,7 +34,25 @@
 
 	<fieldset>
 		<LabelInputGroup type="text" name="username" label="Username" max={120} required={true} value={userToEdit.username} />
-		<LabelInputGroup type="select" name="type" label="Type" selectOptions={userTypeSelectOptions} required={true} value={userToEdit.type} />
+		<LabelInputGroup
+			type="select"
+			name="type"
+			label="Type"
+			selectOptions={userTypeSelectOptions}
+			required={true}
+			bind:value={selectedUserType}
+		/>
+
+		{#if workSpaceSelectOptions && workSpaceSelectOptions.length > 0}
+			<LabelInputGroup
+				type="select"
+				name="preferredWorkspaceId"
+				label="Preferred Workspace"
+				selectOptions={workSpaceSelectOptions}
+				required={true}
+				value={userToEdit.preferredWorkspaceId}
+			/>
+		{/if}
 	</fieldset>
 
 	<fieldset>
