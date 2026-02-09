@@ -134,6 +134,13 @@
       "when": 1770479779470,
       "tag": "0018_careful_firebrand",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "6",
+      "when": 1770650192228,
+      "tag": "0019_real_captain_britain",
+      "breakpoints": true
     }
   ]
 }

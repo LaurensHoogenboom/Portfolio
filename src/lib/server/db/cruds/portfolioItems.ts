@@ -7,7 +7,7 @@ const getPortfolioItems = async (number: number | 'all' = 20, offset: number = 0
     return await db.query.portfolioItems.findMany({
         limit: number != 'all' ? number : undefined,
         offset: offset,
-        orderBy: (fields, { asc, desc}) => {
+        orderBy: (fields, { asc, desc }) => {
             const column = fields[sortBy as keyof typeof fields] ?? fields.visiblePriority;
             return sortDirection == 'asc' ? [asc(column)] : [desc(column)]
         },
@@ -73,7 +73,7 @@ const updatePortfolioItem = async (id: string, data: Partial<typeof portfolioIte
     const portfolioItem = await getPortfolioItemById(id);
 
     if (data.title && data.title != portfolioItem?.title) {
-        const titleExists = await db.select().from(portfolioItems).where(eq(portfolioItems.title, data.title)).get();
+        const titleExists = await getPortfolioItemByTitle(data.title);
 
         if (titleExists) {
             throw new Error("A portfolio item must have an unique title.");
