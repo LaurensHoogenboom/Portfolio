@@ -15,7 +15,7 @@
 		<LabelInputGroup
 			type="select-multiple"
 			name="navigationItems"
-			label="Navigation Items"
+			label="Pages"
 			selectOptions={navigationItemSelectOptions}
 			required
 		/>

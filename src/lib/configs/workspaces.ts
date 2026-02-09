@@ -34,7 +34,7 @@ const workspacesTableUIConfig: TableConfig<Workspace> = {
         maxWidth: 170
     },
     navigationItems: {
-        label: 'Navigation Items',
+        label: 'Pages',
         priority: 5,
         visible: true,
         sortable: true,

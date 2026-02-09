@@ -22,34 +22,43 @@
 </script>
 
 <CreateDialog {closeCallback} itemName="user" itemTitleKey="username">
-	<fieldset>
-		<LabelInputGroup type="text" name="username" label="Username" max={120} required={true} />
-		<LabelInputGroup
-			type="select"
-			name="type"
-			label="Type"
-			selectOptions={userTypeSelectOptions}
-			required={true}
-			bind:value={selectedUserType}
-		/>
+	<div class="grid-container columns-2" style="--column-min-width: 300px;">
+		<div>
+			<fieldset>
+				<LabelInputGroup type="text" name="username" label="Username" max={120} required={true} />
+			</fieldset>
 
-		{#if workSpaceSelectOptions && workSpaceSelectOptions.length > 0}
-			<LabelInputGroup
-				type="select"
-				name="preferredWorkspaceId"
-				label="Preferred Workspace"
-				selectOptions={workSpaceSelectOptions}
-				required={true}
-			/>
-		{/if}
-	</fieldset>
+			<fieldset>
+				<LabelInputGroup
+					type="select"
+					name="type"
+					label="Type"
+					selectOptions={userTypeSelectOptions}
+					required={true}
+					bind:value={selectedUserType}
+				/>
 
-	<fieldset>
-		<PasswordInput requireCurrentPassword={false} required={true} />
-	</fieldset>
+				{#if workSpaceSelectOptions && workSpaceSelectOptions.length > 0}
+					<LabelInputGroup
+						type="select"
+						name="preferredWorkspaceId"
+						label="Preferred Workspace"
+						selectOptions={workSpaceSelectOptions}
+						required={true}
+					/>
+				{/if}
+			</fieldset>
+		</div>
 
-	<fieldset>
-		<LabelInputGroup type="text" name="securityQuestion" label="Secret Question" max={250} required={true} />
-		<LabelInputGroup type="text" name="securityQuestionAnswer" label="Secret Answer" max={250} required={true} />
-	</fieldset>
+		<div>
+			<fieldset>
+				<PasswordInput requireCurrentPassword={false} required={true} />
+			</fieldset>
+
+			<fieldset>
+				<LabelInputGroup type="text" name="securityQuestion" label="Secret Question" max={250} required={true} />
+				<LabelInputGroup type="text" name="securityQuestionAnswer" label="Secret Answer" max={250} required={true} />
+			</fieldset>
+		</div>
+	</div>
 </CreateDialog>

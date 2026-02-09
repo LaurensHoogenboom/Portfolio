@@ -6,53 +6,30 @@
 	import NotificationContainer from './components/molecules/notificationContainer.svelte';
 	import { dev } from '$app/environment';
 	import { navigationItems } from './shared/navigation';
-	import Select, { type ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
-	import type { Workspace } from '$lib/server/db/schema/workspaces';
+	import Select from '$cmsComponents/atoms/inputs/select.svelte';
 	import { goto } from '$app/navigation';
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
-	const isCurrentPage = (url: string) => {
-		return page.url.pathname === url;
-	};
-
-	let workspaces = data.userWorkspaces;
-	let selectedWorkspaceId = $state(
-		data.preferredWorkspaceId ? data.preferredWorkspaceId : workspaces.length > 0 ? workspaces[0].id : undefined
-	);
-	let selectedWorkspace: Workspace | undefined = $derived(workspaces.find((w) => w.id == selectedWorkspaceId));
-
-	let visibleNavItems = $derived(
-		selectedWorkspace?.navigationItems && selectedWorkspace.navigationItems.length > 0 ? selectedWorkspace.navigationItems : navigationItems
-	);
-	let accessibleNavItems = $derived(visibleNavItems.filter((n) => n.requiredUserType !== 'admin' || data.userType == 'admin'));
-
-	$effect(() => {
-		if (!selectedWorkspace?.navigationItems) return;
-
-		const currentPageUrl = page.url.pathname;
-		const isCurrentPageInWorkSpace = selectedWorkspace.navigationItems.some((n) => n.url == currentPageUrl);
-
-		if (!isCurrentPageInWorkSpace) {
-			goto(selectedWorkspace.navigationItems[0].url);
-		}
+	let selectedWorkspaceId = $state(data.preferredWorkspaceId ?? data.userWorkspaces[0].id);
+	const selectedWorkspace = $derived(data.userWorkspaces.find(w => w.id == selectedWorkspaceId));
+	const accessibleNavItems = $derived.by(() => {
+		const items = selectedWorkspace?.navigationItems?.length ? selectedWorkspace.navigationItems : navigationItems;
+		return items.filter(n => n.requiredUserType !== 'admin' || data.userType == 'admin');
 	});
 
-	export const workSpaceSelectOptions: ISelectOption[] = workspaces.map((wItem) => {
-		return {
-			title: wItem.title,
-			value: wItem.id
-		};
+	const workSpaceSelectOptions = $derived(data.userWorkspaces.map(w => ({ title: w.title, value: w.id})));
+
+	$effect(() => {
+		if (selectedWorkspace?.navigationItems?.length) {
+			const currentInNav = selectedWorkspace.navigationItems.some(n => n.url === page.url.pathname);
+			if (!currentInNav) goto(selectedWorkspace.navigationItems[0].url);
+		}
 	});
 </script>
 
 <svelte:head>
-	{#if dev}
-		<link rel="stylesheet" href="/src/styles/cms/cms.css" />
-	{:else}
-		<link rel="stylesheet" href="/styles/cms/cms.css" />
-	{/if}
-
+	<link rel="stylesheet" href="{dev ? '/src' : ''}/styles/cms/cms.css" />
 	<title>CMS: Laurens Hoogenboom</title>
 </svelte:head>
 
@@ -60,12 +37,12 @@
 	<div class="nav-wrapper">
 		<nav>
 			<div class="nav-links inset primary">
-				{#each accessibleNavItems as nItem}
-					<a href={nItem.url} class={isCurrentPage(nItem.url) ? 'outset primary' : ''}>{nItem.title}</a>
+				{#each accessibleNavItems as { url, title }}
+					<a href={url} class={page.url.pathname == url ? 'outset primary' : ''}>{title}</a>
 				{/each}
 			</div>
 
-			{#if workspaces.length > 0}
+			{#if data.userWorkspaces.length > 0}
 				<Select type="single" style="primary" name="workspace" selectOptions={workSpaceSelectOptions} bind:value={selectedWorkspaceId} />
 			{/if}
 

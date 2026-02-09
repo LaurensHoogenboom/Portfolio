@@ -32,48 +32,57 @@
 <EditDialog {closeCallback} itemTitle={userToEdit.username} itemTitleKey="username">
 	<input type="hidden" name="id" value={userToEdit.id} />
 
-	<fieldset>
-		<LabelInputGroup type="text" name="username" label="Username" max={120} required={true} value={userToEdit.username} />
-		<LabelInputGroup
-			type="select"
-			name="type"
-			label="Type"
-			selectOptions={userTypeSelectOptions}
-			required={true}
-			bind:value={selectedUserType}
-		/>
+	<div class="grid-container columns-2">
+		<div>
+			<fieldset>
+				<LabelInputGroup type="text" name="username" label="Username" max={120} required={true} value={userToEdit.username} />
+			</fieldset>
 
-		{#if workSpaceSelectOptions && workSpaceSelectOptions.length > 0}
-			<LabelInputGroup
-				type="select"
-				name="preferredWorkspaceId"
-				label="Preferred Workspace"
-				selectOptions={workSpaceSelectOptions}
-				required={true}
-				value={userToEdit.preferredWorkspaceId}
-			/>
-		{/if}
-	</fieldset>
+			<fieldset>
+				<LabelInputGroup
+					type="select"
+					name="type"
+					label="Type"
+					selectOptions={userTypeSelectOptions}
+					required={true}
+					bind:value={selectedUserType}
+				/>
 
-	<fieldset>
-		<PasswordInput requireCurrentPassword={true} required={false} />
-	</fieldset>
+				{#if workSpaceSelectOptions && workSpaceSelectOptions.length > 0}
+					<LabelInputGroup
+						type="select"
+						name="preferredWorkspaceId"
+						label="Preferred Workspace"
+						selectOptions={workSpaceSelectOptions}
+						required={true}
+						value={userToEdit.preferredWorkspaceId}
+					/>
+				{/if}
+			</fieldset>
+		</div>
 
-	<fieldset>
-		<LabelInputGroup
-			type="text"
-			name="securityQuestion"
-			label="Secret Question"
-			max={250}
-			required={true}
-			value={userToEdit.securityQuestion}
-		/>
-		<LabelInputGroup
-			type="text"
-			name="securityQuestionAnswer"
-			label="Secret Answer"
-			max={250}
-			instruction="Leave blank to keep the current answer."
-		/>
-	</fieldset>
+		<div>
+			<fieldset>
+				<PasswordInput requireCurrentPassword={true} required={false} />
+			</fieldset>
+
+			<fieldset>
+				<LabelInputGroup
+					type="text"
+					name="securityQuestion"
+					label="Secret Question"
+					max={250}
+					required={true}
+					value={userToEdit.securityQuestion}
+				/>
+				<LabelInputGroup
+					type="text"
+					name="securityQuestionAnswer"
+					label="Secret Answer"
+					max={250}
+					instruction="Leave blank to keep the current answer."
+				/>
+			</fieldset>
+		</div>
+	</div>
 </EditDialog>
