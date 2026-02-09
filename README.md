@@ -15,7 +15,7 @@ The required environment variables are:
 
 - DB_URL=
 - UPLOADS_FOLDER=
-- BODY_SIZE_LIMIT=
+- BODY_SIZE_LIMIT= (20MB in code)
 - SMTP_HOST=
 - SMTP_PORT=
 - SMTP_USER=
