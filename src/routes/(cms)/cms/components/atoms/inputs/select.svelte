@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { Check } from '@lucide/svelte';
+
 	let {
 		type,
 		selectOptions = [],
@@ -23,9 +25,18 @@
 
 {#if type == 'multiple'}
 	{#each selectOptions as option}
+		{@const id = `${name}-${option.value.toString()}`}
+
 		<div class="checkbox-group">
-			<input type="checkbox" {name} id="{name}-{option.value.toString()}" value={option.value} bind:group={value} onchange={callback} />
-			<label for="{name}-{option.value.toString()}">{option.title}</label>
+			<input type="checkbox" {name} {id} value={option.value} bind:group={value} onchange={callback} />
+
+			<label class="inset" for={id}>
+				<div class="outset">
+					<Check size={17} color="var(--primary-base)" />
+				</div>
+			</label>
+
+			<label for={id}>{option.title}</label>
 		</div>
 	{/each}
 {:else}
@@ -37,3 +48,47 @@
 		{/if}
 	</select>
 {/if}
+
+<style>
+	.checkbox-group {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		grid-column-gap: var(--padding-4);
+		align-items: center;
+
+		&:not(:last-of-type) {
+			padding-bottom: var(--padding-4);
+		}
+
+		input[type='checkbox'] {
+			position: absolute;
+			left: -1000vw;
+
+			+ .inset .outset {
+				display: none;
+			}
+
+			&:checked + .inset .outset {
+				display: flex;
+			}
+
+			&:focus-visible + .inset {
+				border: var(--primary-border);
+				box-shadow: var(--shadow-float-3);
+			}
+
+			+ .inset {
+				display: inline-block;
+				height: 25px;
+				aspect-ratio: 1 / 1;
+				padding: var(--padding-7);
+				transition: border-color var(--default-animation-time);
+
+				.outset {
+					justify-content: center;
+					align-items: center;
+				}
+			}
+		}
+	}
+</style>
