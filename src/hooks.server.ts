@@ -15,13 +15,6 @@ const protectedPageRoutes = [
     '/editPortfolioItemArticle'
 ];
 
-const cacheRoutes = [
-    '/images',
-    '/styles',
-    '/fonts',
-    '/_app/immutable'
-]
-
 const checkIfUrlStartsWith = (string: string, options: string[]) => {
     return options.some(o => string.startsWith(o));
 }
