@@ -59,9 +59,7 @@ export const handle: Handle = async ({ event, resolve }) => {
         throw redirect(303, user ? '/cms' : '/login');
     }
 
-    const response = await resolve(event, {
-        preload: ({ path }) => path.includes('/fonts')
-    });
+    const response = await resolve(event);
 
     if (isProtected || isAdminRequired) {
         response.headers.set('cache-control', 'no-store, no-cache, must-revalidate');
