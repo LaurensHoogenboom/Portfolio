@@ -1,0 +1,1 @@
+ALTER TABLE `portfolioItems` ADD `clicks` integer DEFAULT 0 NOT NULL;

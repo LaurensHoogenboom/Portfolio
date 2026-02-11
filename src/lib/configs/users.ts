@@ -29,17 +29,25 @@ const usersTableUIConfig: TableConfig<User> = {
         priority: 4,
         visible: true,
         sortable: true,
-        format: startWithUpperCase
+        format: startWithUpperCase,
+        maxWidth: 150
+    },
+    preferredWorkspace: {
+        label: 'Preferred Workspace',
+        priority: 5,
+        visible: true,
+        sortable: true,
+        format: (v) => v ? v.title : 'None'
     },
     getLabel: (row) => row.username,
     renderActions: (row, context) => {
+        const currentUserIsAdmin = context?.userType == 'admin';
+        const isNotSelf = context?.userId != row.id;
+        const targetIsAdmin = row.type == 'admin';
+        const otherAdminsExist = (context?.adminCount || 0) > 1;
+
         return {
-            showDelete: (
-                context &&
-                context.adminCount && context.adminCount > 1 &&
-                context.userType && context.userType == 'admin' &&
-                context.userId && context.userId != row.id
-            ) ? true : false
+            showDelete: currentUserIsAdmin && isNotSelf && (!targetIsAdmin || otherAdminsExist)
         }
     }
 };

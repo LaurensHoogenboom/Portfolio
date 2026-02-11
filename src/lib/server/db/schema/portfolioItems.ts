@@ -18,6 +18,7 @@ const portfolioItems = sqliteTable("portfolioItems", {
     }),
     visiblePriority: integer({mode: "number"}).default(0).notNull(),
     articleContent: text("articleContent", {mode: "json"}).$type<OutputData>(),
+    clicks: integer({ mode: "number" }).default(0).notNull(),
     ...timestamp
 });
 

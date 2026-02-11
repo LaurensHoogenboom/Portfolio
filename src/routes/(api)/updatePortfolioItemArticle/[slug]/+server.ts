@@ -10,7 +10,7 @@ export const POST: RequestHandler = async ({ request, params }) => {
 
     try {
         const portfolioItem = await updatePortfolioItem(portfolioItemId, { articleContent: articleContent as OutputData });
-        return json({ portfolioItem: portfolioItem}, { status: 201});
+        return json({ portfolioItem: portfolioItem }, { status: 201 });
     } catch (e) {
         console.log(e);
         throw error(403, 'Could not save portfolio item article content.');

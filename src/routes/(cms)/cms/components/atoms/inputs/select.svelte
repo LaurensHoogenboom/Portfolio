@@ -21,13 +21,13 @@
 
 	export interface ISelectOption {
 		title: string;
-		value: string | number;
+		value: string | number | undefined;
 	}
 </script>
 
 {#if type == 'multiple'}
 	{#each selectOptions as option}
-		{@const id = `${name}-${option.value.toString()}`}
+		{@const id = `${name}-${option.value ? option.value.toString() : 'unset'}`}
 
 		<div class="checkbox-group">
 			<input type="checkbox" {name} {id} value={option.value} bind:group={value} onchange={callback} />
