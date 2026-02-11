@@ -15,6 +15,13 @@ const protectedPageRoutes = [
     '/editPortfolioItemArticle'
 ];
 
+const cacheRoutes = [
+    '/images',
+    '/styles',
+    '/fonts',
+    '/_app/immutable'
+]
+
 const checkIfUrlStartsWith = (string: string, options: string[]) => {
     return options.some(o => string.startsWith(o));
 }
@@ -52,9 +59,25 @@ export const handle: Handle = async ({ event, resolve }) => {
         throw redirect(303, user ? '/cms' : '/login');
     }
 
-    const response = await resolve(event);
+    const response = await resolve(event, {
+        preload: ({ path }) => path.includes('/fonts')
+    });
 
-    if (isProtected || isAdminRequired) response.headers.set('cache-control', 'no-store, no-cache, must-revalidate');
+    if (isProtected || isAdminRequired) {
+        response.headers.set('cache-control', 'no-store, no-cache, must-revalidate');
+    } else {
+        const path = url.pathname;
+
+        const isStaticAsset =
+            path.match(/\.(woff2|woff|ttf|otf|css|js|png|jpg|jpeg|webp|svg|ico)$/i) ||
+            checkIfUrlStartsWith(url.pathname, cacheRoutes);
+
+        if (isStaticAsset) {
+            response.headers.set('cache-control', 'public, max-age=3600, immutable');
+        } else {
+            response.headers.set('cache-control', 'public, no-cache');
+        }
+    }
 
     return response;
 }

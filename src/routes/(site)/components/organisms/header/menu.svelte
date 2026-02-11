@@ -32,7 +32,7 @@
 	});
 </script>
 
-<button class="expand-button" aria-label="expand-main-navigation" onclick={() => (expanded = !expanded)}>
+<button class="expand-button" aria-label="navigatie" onclick={() => (expanded = !expanded)}>
 	<div class="hamburger {expanded ? 'expanded' : ''}">
 		<span></span>
 		<span></span>
