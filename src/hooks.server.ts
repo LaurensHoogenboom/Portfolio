@@ -63,18 +63,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     if (isProtected || isAdminRequired) {
         response.headers.set('cache-control', 'no-store, no-cache, must-revalidate');
-    } else {
-        const path = url.pathname;
-
-        const isStaticAsset =
-            path.match(/\.(woff2|css|js|jpg|webp|svg|ico)$/i) ||
-            checkIfUrlStartsWith(url.pathname, cacheRoutes);
-
-        if (isStaticAsset) {
-            response.headers.set('cache-control', 'public, max-age=3600, immutable');
-        } else {
-            response.headers.set('cache-control', 'public, no-cache');
-        }
     }
 
     return response;
