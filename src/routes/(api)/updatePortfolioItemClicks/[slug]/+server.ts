@@ -14,9 +14,7 @@ export const POST: RequestHandler = async ({ params, cookies }) => {
     try {
         const portfolioItemToUpdate = await getPortfolioItemById(params.slug);
 
-        if (!portfolioItemToUpdate) {
-            throw error(404, "Portfolio item not found.");
-        }
+        if (!portfolioItemToUpdate) throw error(404, "Portfolio item not found.");
 
         await updatePortfolioItem(portfolioItemId, { clicks: (portfolioItemToUpdate.clicks || 0) + 1 });
 

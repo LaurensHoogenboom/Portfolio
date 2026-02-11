@@ -21,7 +21,7 @@ const resetPassword = async (id: string, newPassword: Uint8Array, securityQuesti
     const user = await db.select().from(users).where(eq(users.id, id)).get();
 
     if (user && user.securityQuestionAnswer == securityQuestionAnswer) {
-        await db.update(users).set({password: newPassword});
+        await db.update(users).set({password: newPassword}).where(eq(users.id, id));
     } else {
         throw new Error("Wrong answer to secret question provided.");
     }

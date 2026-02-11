@@ -2,6 +2,7 @@ import { getUserById, getUserCount } from "$lib/server/db/cruds/users";
 import { users } from "$lib/server/db/schema/users";
 import { error, redirect, type Handle } from "@sveltejs/kit";
 import { eq } from "drizzle-orm";
+import { navigationItems } from "./routes/(cms)/cms/shared/navigation";
 
 const protectedApiRoutes = [
     '/deleteUpload',
@@ -12,12 +13,6 @@ const protectedApiRoutes = [
 const protectedPageRoutes = [
     '/cms',
     '/editPortfolioItemArticle'
-];
-
-const adminPages = [
-    '/cms/users',
-    '/cms/uploads',
-    '/cms/workspaces'
 ];
 
 const checkIfUrlStartsWith = (string: string, options: string[]) => {
@@ -46,7 +41,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
 
     const isProtected = checkIfUrlStartsWith(url.pathname, [...protectedPageRoutes, ...protectedApiRoutes]);
-    const isAdminRequired = checkIfUrlStartsWith(url.pathname, adminPages);
+    const isAdminRequired = navigationItems.some(n => n.url == url.pathname && n.requiredUserType == 'admin');
 
     if (!user && isProtected) {
         if (checkIfUrlStartsWith(url.pathname, protectedApiRoutes)) throw error(401, 'Unauthorized Request');
