@@ -1,7 +1,7 @@
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { generateId, timestamp } from "../utils/utils";
 import type { UserType } from "$lib/types/users";
-import { workspaces } from "./workspaces";
+import { workspaces, type Workspace } from "./workspaces";
 
 const users = sqliteTable("users", {
     id: text("id")
@@ -22,7 +22,9 @@ const users = sqliteTable("users", {
     ...timestamp
 });
 
-type UserWithSecrets = typeof users.$inferSelect;
+type UserWithSecrets = typeof users.$inferSelect & {
+    preferredWorkspace: Workspace | null
+};
 
 type User = Omit<UserWithSecrets, "password" | "securityQuestionAnswer">;
 

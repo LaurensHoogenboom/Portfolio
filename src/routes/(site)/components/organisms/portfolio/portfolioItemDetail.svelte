@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { IPortfolioItem } from '$lib/types/portfolio';
-	import { getPortfolioState, getPortfolioUrlWithParams } from '../../../utils/portfolioUtils';
+	import { getPortfolioState, getPortfolioUrlWithParams, updatePortfolioItemStats } from '../../../utils/portfolioUtils';
 	import { pushState } from '$app/navigation';
 	import PortfolioItemDetailWrapper from './portfolioItemDetailWrapper.svelte';
 	import PortfolioArticleHeader from '$siteComponents/molecules/portfolio/portfolioArticleHeader.svelte';
@@ -32,6 +32,10 @@
 				});
 			}
 		});
+	});
+
+	$effect(() => {
+		updatePortfolioItemStats(portfolioItem);
 	});
 </script>
 

@@ -37,6 +37,12 @@ const portfolioTableUIConfig: TableConfig<PortfolioItem> = {
         sortable: true,
         format: toFullDataTimeString
     },
+    clicks: {
+        label: 'Clicks',
+        priority: 6,
+        visible: true,
+        sortable: true
+    },
     renderActions: (row) => ({
         showWrite: row.type === 'research' || row.type === 'project'
     })

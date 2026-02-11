@@ -20,13 +20,13 @@ export const getPortfolioUrlWithParams = ({ numberOfVisibleItems, activePortfoli
     if (activePortfolioItemId) {
         params.set('activePortfolioItemId', activePortfolioItemId);
     }
-    
+
     return `#portfolio?${params.toString()}`;
 }
 
 export const getPortfolioSearchParams = (searchParams: URLSearchParams): IPortfolioState => {
     const typeParam = searchParams.get('selectedPortfolioItemType');
-    
+
     return {
         numberOfVisibleItems: parseInt(searchParams.get('numberOfVisibleItems') ?? DEFAULT_VISIBLE_COUNT.toString()),
         activePortfolioItemId: searchParams.get('activePortfolioItemId') ?? undefined,
@@ -50,4 +50,11 @@ export const openPortfolioItem = (portfolioItem: IPortfolioItem) => {
     state.activePortfolioItemId = portfolioItem.id;
     state.activePortfolioItem = portfolioItem;
     pushState(getPortfolioUrlWithParams(state), state);
+}
+
+export const updatePortfolioItemStats = async (portfolioItem: IPortfolioItem) => {
+    fetch(`/updatePortfolioItemClicks/${portfolioItem.id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    }).catch((e) => console.log(e));
 }

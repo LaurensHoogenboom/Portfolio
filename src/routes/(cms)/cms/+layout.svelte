@@ -42,7 +42,7 @@
 				{/each}
 			</div>
 
-			{#if data.userWorkspaces.length > 0}
+			{#if data.userWorkspaces.length > 1}
 				<Select type="single" style="primary" name="workspace" selectOptions={workSpaceSelectOptions} bind:value={selectedWorkspaceId} />
 			{/if}
 

@@ -12,12 +12,12 @@
 	let selectedUserType: UserType | undefined = $state();
 	let filteredWorkspaces = $derived(selectedUserType == 'default' ? workspaces.filter((n) => n.adminRequired == false) : workspaces);
 	let workSpaceSelectOptions = $derived(
-		filteredWorkspaces.map((w) => {
+		[...filteredWorkspaces.map((w) => {
 			return {
 				title: w.title,
 				value: w.id
 			};
-		})
+		}), { title: 'None', value: undefined }]
 	);
 </script>
 

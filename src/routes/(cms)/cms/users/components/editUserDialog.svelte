@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
 	import PasswordInput from '$cmsComponents/organisms/passwordInput.svelte';
 	import EditDialog from '$cmsComponents/templates/editDialog.svelte';
@@ -19,14 +18,15 @@
 
 	let selectedUserType: UserType = $state(userToEdit.type);
 	let filteredWorkspaces = $derived(selectedUserType == 'default' ? workspaces.filter((n) => n.adminRequired == false) : workspaces);
-	let workSpaceSelectOptions = $derived(
-		filteredWorkspaces.map((w) => {
+	let workSpaceSelectOptions = $derived([
+		...filteredWorkspaces.map((w) => {
 			return {
 				title: w.title,
 				value: w.id
 			};
-		})
-	);
+		}),
+		{ title: 'None', value: undefined }
+	]);
 </script>
 
 <EditDialog {closeCallback} itemTitle={userToEdit.username} itemTitleKey="username">
