@@ -25,8 +25,8 @@
 	<hr />
 
 	<div class="button-group">
-		<Button type="submit" icon={ChevronLeft} style="transparent" onclick={previousItem} disabled={currentIndex == 0} />
-		<Button type="submit" icon={ChevronRight} style="transparent" onclick={nextItem} disabled={currentIndex == maxIndex}/>
+		<Button type="submit" icon={ChevronLeft} style="transparent" onclick={previousItem} disabled={currentIndex == 0} hiddenTitle="Vorig Item" />
+		<Button type="submit" icon={ChevronRight} style="transparent" onclick={nextItem} disabled={currentIndex == maxIndex} hiddenTitle="Volgend Item"/>
 	</div>
 </div>
 

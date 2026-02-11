@@ -21,7 +21,7 @@
     }
 </script>
 
-<button class="scroll-to-top-button {visible ? 'visible' : ''}" onclick={scrollToTop}>
+<button class="scroll-to-top-button {visible ? 'visible' : ''}" onclick={scrollToTop} aria-label="Ga naar begin van pagina">
 	<ChevronUp size={25} />
 </button>
 

@@ -31,8 +31,8 @@
 				<Button type="goto" style="secondary" title="Contact" href="#contact" />
 			</div>
 			<div>
-				<Button type="goto-external" icon={Instagram} style="secondary" href="https://www.instagram.com/laureato_/" />
-				<Button type="goto-external" icon={Linkedin} style="secondary" href="https://www.linkedin.com/in/laurens-hoogenboom-3aa78515a/" />
+				<Button type="goto-external" icon={Instagram} style="secondary" href="https://www.instagram.com/laureato_/" hiddenTitle="Instagram" />
+				<Button type="goto-external" icon={Linkedin} style="secondary" href="https://www.linkedin.com/in/laurens-hoogenboom-3aa78515a/" hiddenTitle="LinkedIn" />
 			</div>
 		</div>
 		<div class="ornaments">
