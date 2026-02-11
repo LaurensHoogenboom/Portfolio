@@ -69,7 +69,7 @@ export const handle: Handle = async ({ event, resolve }) => {
         const path = url.pathname;
 
         const isStaticAsset =
-            path.match(/\.(woff2|woff|ttf|otf|css|js|png|jpg|jpeg|webp|svg|ico)$/i) ||
+            path.match(/\.(woff2|css|js|jpg|webp|svg|ico)$/i) ||
             checkIfUrlStartsWith(url.pathname, cacheRoutes);
 
         if (isStaticAsset) {
