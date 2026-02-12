@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { IPortfolioItem } from '$lib/types/portfolio';
+	import { fade } from 'svelte/transition';
 	import { openPortfolioItem } from '../../../utils/portfolioUtils';
 
 	const {
@@ -11,7 +12,7 @@
 	const horizontal = !fixedSize && portfolioItem.image && portfolioItem.image.thumbnail.aspectRatio > 4 / 3 ? true : false;
 </script>
 
-<li id={portfolioItem.id} class="portfolio-preview-box {horizontal ? 'horizontal' : ''}">
+<li id={portfolioItem.id} class="portfolio-preview-box {horizontal ? 'horizontal' : ''}" transition:fade|global={{ duration: 200 }}>
 	<button onclick={() => openPortfolioItem(portfolioItem)} aria-label={portfolioItem.title}>
 		<div
 			class="image-card {fixedSize ? 'fixed-size' : ''}"

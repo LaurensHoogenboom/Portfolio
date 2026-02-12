@@ -2,11 +2,12 @@
 	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import { openPortfolioItem } from '../../../utils/portfolioUtils';
 	import Button from '$siteComponents/atoms/button.svelte';
+	import { fade } from 'svelte/transition';
 
 	const { portfolioItem }: { portfolioItem: IPortfolioItem } = $props();
 </script>
 
-<div class="portfolio-preview-banner">
+<div class="portfolio-preview-banner" transition:fade={{ duration: 200 }}>
 	<div class="body">
 		<div class="thumbnail-wrapper">
 			<div class="thumbnail" style="background-image: url({JSON.stringify(portfolioItem.image?.thumbnail.url)});"></div>
@@ -133,7 +134,7 @@
 			}
 
 			@media (max-width: 680px) {
-                padding: var(--spacing-4) var(--spacing-4);
+				padding: var(--spacing-4) var(--spacing-4);
 			}
 		}
 	}

@@ -5,6 +5,7 @@
 	import BottomBar from '$siteComponents/molecules/header/portfolioPreview/bottomBar.svelte';
 	import { onMount } from 'svelte';
 	import { SliderSwipe } from '../../../utils/sliderSwipe';
+	import { flip } from 'svelte/animate';
 
 	const { previewItems }: { previewItems: IPortfolioItem[] } = $props();
 
@@ -70,8 +71,10 @@
 	/>
 
 	<ul class="box-list" bind:this={boxContainer}>
-		{#each visibleItems as pItem}
-			<PortfolioItemPreviewBox portfolioItem={pItem} fixedSize={true} />
+		{#each visibleItems as pItem (pItem.id)}
+			<div animate:flip={{ duration: 100 }}>
+				<PortfolioItemPreviewBox portfolioItem={pItem} fixedSize={true} />
+			</div>
 		{/each}
 	</ul>
 
