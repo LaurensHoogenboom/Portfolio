@@ -26,7 +26,7 @@
             }
 
 			:global(&:has(.expanded)) {
-				min-height: 100dvh;
+				min-height: 100svh;
 				border-radius: 0;
 
 				.content-container {

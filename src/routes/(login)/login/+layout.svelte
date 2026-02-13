@@ -14,7 +14,7 @@
 
 <div class="authentication">
     <div class="ornament">
-        <CustomIcon icon="feather" color="var(--grey-background-2)" size="120dvh" />
+        <CustomIcon icon="feather" color="var(--grey-background-2)" size="120svh" />
     </div>
 
     <div class="authentication-center">
@@ -32,7 +32,7 @@
     .authentication {
         display: flex;
         justify-content: center;
-        height: 100dvh;
+        height: 100svh;
         width: 100vw;
         background: var(--grey-background-gradient);
 

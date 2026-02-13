@@ -20,7 +20,8 @@
 		stretched,
 		scrollContainer,
 		navigateFromResponsiveNav,
-		hiddenTitle
+		hiddenTitle,
+		preloadCallback
 	}: {
 		title?: string;
 		icon?: typeof IconType;
@@ -37,6 +38,7 @@
 		scrollContainer?: HTMLElement;
 		navigateFromResponsiveNav?: boolean;
 		hiddenTitle?: string;
+		preloadCallback?: () => void;
 	} = $props();
 
 	const classString = `button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''} ${size} ${stretched ? 'stretched' : ''}`;
@@ -66,13 +68,31 @@
 </script>
 
 {#if type == 'submit'}
-	<button {onclick} class={classString} {id} aria-label={hiddenTitle}>
+	<button
+		{onclick}
+		class={classString}
+		{id}
+		aria-label={hiddenTitle}
+		onfocus={preloadCallback}
+		onmouseenter={preloadCallback}
+		ontouchstart={preloadCallback}
+	>
 		{@render buttonContent()}
 	</button>
 {/if}
 
 {#if type == 'goto' || type == 'goto-external'}
-	<a {href} class={classString} target={type == 'goto-external' ? '_blank' : '_self'} {id} onclick={gotoOnClick} aria-label={hiddenTitle}>
+	<a
+		{href}
+		class={classString}
+		target={type == 'goto-external' ? '_blank' : '_self'}
+		{id}
+		onclick={gotoOnClick}
+		aria-label={hiddenTitle}
+		onfocus={preloadCallback}
+		onmouseenter={preloadCallback}
+		ontouchstart={preloadCallback}
+	>
 		{@render buttonContent()}
 	</a>
 {/if}

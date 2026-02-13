@@ -5,6 +5,13 @@
 	import { fade } from 'svelte/transition';
 
 	const { portfolioItem }: { portfolioItem: IPortfolioItem } = $props();
+
+	let hasPreloaded = $state(false);
+	const preload = () => {
+		if (hasPreloaded || !portfolioItem.image) return;
+		new Image().src = portfolioItem.image.url;
+		hasPreloaded = true;
+	};
 </script>
 
 <div class="portfolio-preview-banner" transition:fade={{ duration: 200 }}>
@@ -17,7 +24,7 @@
 				<h2>{portfolioItem.title}</h2>
 				<p>{@html portfolioItem.description}</p>
 			</article>
-			<Button type="submit" title="Meer Lezen" onclick={() => openPortfolioItem(portfolioItem)} />
+			<Button type="submit" title="Meer Lezen" onclick={() => openPortfolioItem(portfolioItem)} preloadCallback={preload} />
 		</div>
 	</div>
 

@@ -135,7 +135,7 @@
 		}
 
 		:global(img) {
-			max-height: 80dvh;
+			max-height: 80svh;
 			min-height: 200px;
 			max-width: 100%;
 			object-fit: cover;

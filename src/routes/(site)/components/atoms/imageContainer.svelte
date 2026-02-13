@@ -68,7 +68,7 @@
 		}
 
 		img {
-			max-height: 60dvh;
+			max-height: 60svh;
 			max-width: 100%;
 			object-fit: cover;
 			border-radius: var(--border-radius-2);
@@ -94,7 +94,7 @@
 			z-index: 12;
 
 			img {
-				max-height: 90dvh;
+				max-height: 90svh;
 				border-radius: 0;
 				filter: drop-shadow(var(--grey-shadow-2));
 			}

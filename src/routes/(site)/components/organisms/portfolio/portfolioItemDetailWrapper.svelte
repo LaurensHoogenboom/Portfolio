@@ -56,7 +56,7 @@
 
 		.content-wrapper {
 			position: relative;
-			height: 100dvh;
+			height: 100svh;
 			width: 100%;
 			max-width: var(--page-width);
 			--extra-width: calc(100vw - var(--page-width) + var(--vertical-spacing));

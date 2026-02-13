@@ -10,9 +10,23 @@
 	}: { portfolioItem: IPortfolioItem; showTitleBelow?: boolean; fixedSize?: boolean } = $props();
 
 	const horizontal = !fixedSize && portfolioItem.image && portfolioItem.image.thumbnail.aspectRatio > 4 / 3 ? true : false;
+	let hasPreloaded = $state(false);
+
+	const preload = () => {
+		if (hasPreloaded || !portfolioItem.image) return;
+		new Image().src = portfolioItem.image.url;
+		hasPreloaded = true;
+	};
 </script>
 
-<li id={portfolioItem.id} class="portfolio-preview-box {horizontal ? 'horizontal' : ''}" transition:fade|global={{ duration: 200 }}>
+<li
+	id={portfolioItem.id}
+	class="portfolio-preview-box {horizontal ? 'horizontal' : ''}"
+	transition:fade|global={{ duration: 200 }}
+	ontouchstart={preload}
+	onmouseenter={preload}
+	onfocus={preload}
+>
 	<button onclick={() => openPortfolioItem(portfolioItem)} aria-label={portfolioItem.title}>
 		<div
 			class="image-card {fixedSize ? 'fixed-size' : ''}"
@@ -100,7 +114,7 @@
 			height: 340px;
 
 			@media (max-width: 1180px) {
-				height: min(380px, calc(100dvh - 200px));
+				height: min(380px, calc(100svh - 200px));
 			}
 
 			@media (max-width: 680px) {
