@@ -1,16 +1,23 @@
 <script lang="ts">
 	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import { openPortfolioItem } from '../../../utils/portfolioUtils';
-	import Button from '$siteComponents/atoms/button.svelte';
+	import Button, { type ButtonActionStatus } from '$siteComponents/atoms/button.svelte';
 	import { fade } from 'svelte/transition';
 
 	const { portfolioItem }: { portfolioItem: IPortfolioItem } = $props();
+	let preloadStatus: ButtonActionStatus | undefined = $state();
 
-	let hasPreloaded = $state(false);
-	const preload = () => {
-		if (hasPreloaded || !portfolioItem.image) return;
-		new Image().src = portfolioItem.image.url;
-		hasPreloaded = true;
+	const handleClick = async () => {
+		preloadStatus = 'processing';
+		const image = new Image();
+		image.src = portfolioItem.image ? portfolioItem.image.url : '';
+
+		await new Promise((resolve) => {
+			image.onload = resolve;
+		});
+
+		preloadStatus = undefined;
+		openPortfolioItem(portfolioItem);
 	};
 </script>
 
@@ -24,7 +31,7 @@
 				<h2>{portfolioItem.title}</h2>
 				<p>{@html portfolioItem.description}</p>
 			</article>
-			<Button type="submit" title="Meer Lezen" onclick={() => openPortfolioItem(portfolioItem)} preloadCallback={preload} />
+			<Button type="submit" title="Meer Lezen" onclick={handleClick} actionStatus={preloadStatus} />
 		</div>
 	</div>
 

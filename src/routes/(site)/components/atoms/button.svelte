@@ -20,8 +20,7 @@
 		stretched,
 		scrollContainer,
 		navigateFromResponsiveNav,
-		hiddenTitle,
-		preloadCallback
+		hiddenTitle
 	}: {
 		title?: string;
 		icon?: typeof IconType;
@@ -38,7 +37,6 @@
 		scrollContainer?: HTMLElement;
 		navigateFromResponsiveNav?: boolean;
 		hiddenTitle?: string;
-		preloadCallback?: () => void;
 	} = $props();
 
 	const classString = `button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''} ${size} ${stretched ? 'stretched' : ''}`;
@@ -63,36 +61,16 @@
 			boundContainer.scrollTo({ top: scrollTop, left: 0, behavior: 'smooth' });
 		}
 	};
-
-	const ariaLabel = title ?? hiddenTitle;
 </script>
 
 {#if type == 'submit'}
-	<button
-		{onclick}
-		class={classString}
-		{id}
-		aria-label={hiddenTitle}
-		onfocus={preloadCallback}
-		onmouseenter={preloadCallback}
-		ontouchstart={preloadCallback}
-	>
+	<button {onclick} class={classString} {id} aria-label={hiddenTitle}>
 		{@render buttonContent()}
 	</button>
 {/if}
 
 {#if type == 'goto' || type == 'goto-external'}
-	<a
-		{href}
-		class={classString}
-		target={type == 'goto-external' ? '_blank' : '_self'}
-		{id}
-		onclick={gotoOnClick}
-		aria-label={hiddenTitle}
-		onfocus={preloadCallback}
-		onmouseenter={preloadCallback}
-		ontouchstart={preloadCallback}
-	>
+	<a {href} class={classString} target={type == 'goto-external' ? '_blank' : '_self'} {id} onclick={gotoOnClick} aria-label={hiddenTitle}>
 		{@render buttonContent()}
 	</a>
 {/if}

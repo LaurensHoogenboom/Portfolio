@@ -19,7 +19,7 @@
 		display: grid;
 		grid-template-rows: 1fr max-content max-content;
 		height: calc(100dvh - var(--spacing-7) - var(--spacing-6));
-		min-height: 850px;
+		min-height: 800px;
 		max-height: 1000px;
 		width: 100%;
 		grid-row-gap: var(--spacing-6);
@@ -31,8 +31,7 @@
         @media (max-width: 680px) {
             grid-row-gap: var(--spacing-5);
 			min-height: 600px;
-			max-height: 700px;
-			padding-top: var(--spacing-6);
+			max-height: 650px;
         }
 
 		.header-image {
@@ -42,7 +41,7 @@
 			background-position: center;
 			border-radius: var(--border-radius-2);
 			max-height: 500px;
-			min-height: 400px;
+			min-height: 350px;
 			filter: drop-shadow(var(--grey-shadow-1));
 
 			@media (max-width: 1180px) {
