@@ -19,7 +19,7 @@ const uploadImage = async (image: File | Buffer, title: string, description?: st
         .toBuffer();
 
     const fullImageName = `${title.replace(/[^a-zA-Z0-9]/g, "")}.webp`;
-    const thumbnailImageName = `${title.replace(/[^a-zA-Z0-9]/g, "")}-thumnail.webp`;
+    const thumbnailImageName = `${title.replace(/[^a-zA-Z0-9]/g, "")}-thumbnail.webp`;
 
     const fullImageUrl = getWriteUrl(fullImageName, 'image');
     const thumbnailImageUrl = getWriteUrl(thumbnailImageName, 'image');
