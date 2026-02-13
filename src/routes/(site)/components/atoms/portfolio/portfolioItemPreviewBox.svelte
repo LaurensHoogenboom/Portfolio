@@ -1,6 +1,9 @@
 <script lang="ts">
 	import type { IPortfolioItem } from '$lib/types/portfolio';
+	import { fade } from 'svelte/transition';
 	import { openPortfolioItem } from '../../../utils/portfolioUtils';
+	import type { ButtonActionStatus } from '../button.svelte';
+	import { Circle } from 'svelte-loading-spinners';
 
 	const {
 		portfolioItem,
@@ -9,10 +12,24 @@
 	}: { portfolioItem: IPortfolioItem; showTitleBelow?: boolean; fixedSize?: boolean } = $props();
 
 	const horizontal = !fixedSize && portfolioItem.image && portfolioItem.image.thumbnail.aspectRatio > 4 / 3 ? true : false;
+	let preloadStatus: ButtonActionStatus | undefined = $state();
+
+	const handleClick = async () => {
+		preloadStatus = 'processing';
+		const image = new Image();
+		image.src = portfolioItem.image ? portfolioItem.image.url : '';
+
+		await new Promise((resolve) => {
+			image.onload = resolve;
+		});
+
+		preloadStatus = undefined;
+		openPortfolioItem(portfolioItem);
+	};
 </script>
 
-<li id={portfolioItem.id} class="portfolio-preview-box {horizontal ? 'horizontal' : ''}">
-	<button onclick={() => openPortfolioItem(portfolioItem)} aria-label={portfolioItem.title}>
+<li id={portfolioItem.id} class="portfolio-preview-box {horizontal ? 'horizontal' : ''}" transition:fade|global={{ duration: 200 }}>
+	<button onclick={handleClick} aria-label={portfolioItem.title}>
 		<div
 			class="image-card {fixedSize ? 'fixed-size' : ''}"
 			style="background-image: url({JSON.stringify(portfolioItem.image?.thumbnail.url)}); aspect-ratio: {portfolioItem.image?.thumbnail
@@ -21,7 +38,13 @@
 					? '4/3'
 					: '3/4'
 				: ''}"
-		></div>
+		>
+			{#if preloadStatus == 'processing'}
+				<div class="loading-overlay" transition:fade={{ duration: 200 }}>
+					<Circle color="var(--white)" size={30} />
+				</div>
+			{/if}
+		</div>
 
 		{#if showTitleBelow}
 			<p><b>{portfolioItem.title}</b></p>
@@ -93,6 +116,7 @@
 		box-shadow: var(--primary-shadow);
 		bottom: 0;
 		transition: bottom var(--default-animation-duration);
+		overflow: hidden;
 
 		:global(&.fixed-size) {
 			width: initial;
@@ -107,6 +131,18 @@
 				width: min(380px, calc(100vw - var(--vertical-spacing) * 2));
 				aspect-ratio: 3 / 4 !important;
 			}
+		}
+
+		.loading-overlay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			background-color: var(--primary-base);
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 
 		@media (hover: hover) and (pointer: fine) {

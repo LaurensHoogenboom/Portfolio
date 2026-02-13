@@ -9,6 +9,7 @@
 	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import { DEFAULT_VISIBLE_COUNT, getPortfolioState, getPortfolioUrlWithParams } from '../../utils/portfolioUtils';
 	import Title from '$siteComponents/atoms/portfolio/title.svelte';
+	import { fade } from 'svelte/transition';
 
 	let { portfolioItems }: { portfolioItems: IPortfolioItem[] } = $props();
 
@@ -41,17 +42,23 @@
 		<ContentContainer id="portfolio">
 			<Title />
 
-			<div class="items-wrapper {selectedType == 'art' ? 'art-wrapper' : ''}">
-				{#if selectedType == 'art'}
-					{#each visibleItems as vItem}
-						<PortfolioItemPreviewBox portfolioItem={vItem} showTitleBelow={true} />
-					{/each}
-				{:else}
-					{#each visibleItems as vItem}
-						<PortfolioPreviewBanner portfolioItem={vItem} />
-					{/each}
-				{/if}
-			</div>
+			{#key selectedType}
+				<div
+					class="items-wrapper {selectedType == 'art' ? 'art-wrapper' : ''}"
+					in:fade={{ duration: 100, delay: 160 }}
+					out:fade={{ duration: 100 }}
+				>
+					{#if selectedType == 'art'}
+						{#each visibleItems as vItem}
+							<PortfolioItemPreviewBox portfolioItem={vItem} showTitleBelow={true} />
+						{/each}
+					{:else}
+						{#each visibleItems as vItem}
+							<PortfolioPreviewBanner portfolioItem={vItem} />
+						{/each}
+					{/if}
+				</div>
+			{/key}
 
 			{#if visibleItems.length < filteredItems.length}
 				<Button type="submit" style="secondary" title="Meer weergeven" CSSClass="more-projects-button" onclick={showMoreItems} />

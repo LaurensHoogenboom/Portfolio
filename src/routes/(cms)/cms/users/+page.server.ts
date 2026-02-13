@@ -40,7 +40,7 @@ export const actions: Actions = {
             type: type,
             securityQuestion: securityQuestion,
             securityQuestionAnswer: securityQuestionAnswer,
-            preferredWorkspaceId: preferredWorkspaceId
+            preferredWorkspaceId: preferredWorkspaceId.length ? preferredWorkspaceId : null
         }
 
         try {
@@ -75,7 +75,7 @@ export const actions: Actions = {
             type: type,
             securityQuestion: securityQuestion,
             securityQuestionAnswer: securityQuestionAnswer.length ? securityQuestionAnswer : undefined,
-            preferredWorkspaceId: preferredWorkspaceId
+            preferredWorkspaceId: preferredWorkspaceId.length ? preferredWorkspaceId : null
         }
 
         try {

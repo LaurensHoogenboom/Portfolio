@@ -61,8 +61,6 @@
 			boundContainer.scrollTo({ top: scrollTop, left: 0, behavior: 'smooth' });
 		}
 	};
-
-	const ariaLabel = title ?? hiddenTitle;
 </script>
 
 {#if type == 'submit'}
