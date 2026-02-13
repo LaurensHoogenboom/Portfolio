@@ -31,7 +31,8 @@
         @media (max-width: 680px) {
             grid-row-gap: var(--spacing-5);
 			min-height: 600px;
-			max-height: 650px;
+			max-height: 750px;
+			padding-top: var(--spacing-6);
         }
 
 		.header-image {
