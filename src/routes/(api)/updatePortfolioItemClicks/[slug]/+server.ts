@@ -2,13 +2,19 @@ import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { getPortfolioItemById, updatePortfolioItem } from '$lib/server/db/cruds/portfolioItems';
 import { cookieHelper } from '$lib/utils/cookieHelper';
+import { env } from '$env/dynamic/private';
 
-export const POST: RequestHandler = async ({ params, cookies }) => {
+export const POST: RequestHandler = async ({ params, cookies, getClientAddress }) => {
     const portfolioItemId = params.slug;
     const viewedPortfolioItems = cookieHelper.getViewedPortfolioItems(cookies);
+    const ignoredIps = env.DEV_IPS?.split(',') || [];
 
     if (viewedPortfolioItems.includes(portfolioItemId)) {
         return json({ message: 'Already counted.' }, { status: 200 });
+    }
+
+    if (ignoredIps.some(ip => getClientAddress().includes(ip))) {
+        return json({ message: 'Ignored Dev IP' }, { status: 200 });
     }
 
     try {
