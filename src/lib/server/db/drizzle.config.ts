@@ -9,4 +9,3 @@ export default {
     },
     out: "./src/lib/server/db/migrations"
 } satisfies Config;
-

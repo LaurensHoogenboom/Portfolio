@@ -21,6 +21,7 @@ The required environment variables are:
 - SMTP_USER=
 - SMTP_PASS=
 - ORIGIN=
+- DEV_IPS= (for being ignored in tracking clicks)
 
 For the uploads folder the following folder structure is expected:
 
