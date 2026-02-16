@@ -52,6 +52,9 @@ export const handle: Handle = async ({ event, resolve }) => {
         throw redirect(303, user ? '/cms' : '/login');
     }
 
+    console.log("Alle headers:", Object.fromEntries(event.request.headers.entries()));
+    console.log("Client IP volgens SvelteKit:", event.getClientAddress());
+
     const response = await resolve(event);
 
     if (isProtected || isAdminRequired) {
