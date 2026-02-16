@@ -67,7 +67,7 @@
 
 	.header-content {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 1.1fr 1fr;
 		grid-gap: 50px;
 		height: 100%;
 		align-items: center;
@@ -75,6 +75,16 @@
 		.article-wrapper {
 			padding-bottom: var(--spacing-6);
 			padding-top: var(--spacing-6);
+			padding-left: var(--spacing-6);
+
+			@media (min-width: 1500px) {
+				padding-bottom: calc(2 * var(--spacing-6));
+
+				article {
+					display: grid;
+					grid-gap: 10px;
+				}
+			}
 
 			.files {
 				display: none;
