@@ -76,6 +76,10 @@
 			padding-bottom: var(--spacing-6);
 			padding-top: var(--spacing-6);
 
+			@media (min-width: 1500px) {
+				padding-bottom: calc(var(--spacing-6) + var(--spacing-4));
+			}
+
 			.files {
 				display: none;
 			}
