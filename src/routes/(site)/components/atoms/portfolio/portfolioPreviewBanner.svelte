@@ -31,7 +31,12 @@
 				<h2>{portfolioItem.title}</h2>
 				<p>{@html portfolioItem.description}</p>
 			</article>
-			<Button type="submit" title="Meer Lezen" onclick={handleClick} actionStatus={preloadStatus} />
+			<Button
+				type="submit"
+				title={portfolioItem.isArticle ? 'Meer lezen' : 'Bekijken'}
+				onclick={handleClick}
+				actionStatus={preloadStatus}
+			/>
 		</div>
 	</div>
 

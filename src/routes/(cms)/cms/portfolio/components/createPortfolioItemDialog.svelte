@@ -7,6 +7,11 @@
 	const { closeCallback }: { closeCallback: () => void } = $props();
 
 	let portfolioItemCategory: PortfolioItemType = $state('research');
+	let isArticle = $state(true);
+
+	$effect(() => {
+		isArticle = portfolioItemCategory == 'art' ? false : true;
+	});
 </script>
 
 <CreateDialog {closeCallback} itemName="Portfolio Item" itemTitleKey="portfolioItemTitle">
@@ -25,7 +30,7 @@
 				/>
 
 				{#if portfolioItemCategory != 'art'}
-					<LabelInputGroup type="boolean" name="isArticle" label="Item is article" />
+					<LabelInputGroup type="boolean" name="isArticle" label="Item is article" bind:value={isArticle} />
 					<LabelInputGroup type="textarea" name="description" label="Header Description" />
 				{/if}
 			</fieldset>

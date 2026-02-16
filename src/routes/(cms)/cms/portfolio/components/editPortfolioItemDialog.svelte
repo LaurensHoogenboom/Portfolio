@@ -18,6 +18,11 @@
 	}
 
 	let portfolioItemType = $state(portfolioItemToEdit.type);
+	let isArticle = $state(portfolioItemToEdit.isArticle);
+
+	$effect(() => {
+		isArticle = portfolioItemType == 'art' ? false : true;
+	});
 </script>
 
 <EditDialog {closeCallback} itemTitle={portfolioItemToEdit.title} itemTitleKey="portfolioItemTitle">
@@ -37,7 +42,7 @@
 				/>
 
 				{#if portfolioItemType != 'art'}
-					<LabelInputGroup type="boolean" name="isArticle" label="Item is article" value={portfolioItemToEdit.isArticle} />
+					<LabelInputGroup type="boolean" name="isArticle" label="Item is article" value={isArticle} />
 					<LabelInputGroup type="textarea" name="description" label="Header Description" value={portfolioItemToEdit.description} />
 				{/if}
 			</fieldset>

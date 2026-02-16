@@ -103,6 +103,7 @@
 
 			:global(.close-button) {
 				grid-row: 1 / 3;
+				grid-column: 3 / 4;
 
 				:global(svg) {
 					height: 18px;
