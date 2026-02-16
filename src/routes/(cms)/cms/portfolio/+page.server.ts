@@ -3,7 +3,6 @@ import { portfolioItems as portfolioItemTable } from '$lib/server/db/schema/port
 import { isPortfolioItemType, type PortfolioItemType } from '$lib/types/portfolio';
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import type { Upload } from '$lib/server/db/schema/uploads';
 import { uploadImage } from '$lib/utils/uploads/image/uploadImage';
 import { deleteFileAndUpload } from '$lib/utils/uploads/delete';
 import { and, eq } from 'drizzle-orm';
@@ -30,34 +29,28 @@ export const load = (async ({ url }) => {
 export const actions: Actions = {
     create: async ({ request }) => {
         const formData = await request.formData();
-        const formDataObject = Object.fromEntries(formData);
-        const { title, description, type, visiblePriority } = formDataObject as {
-            title: string,
-            description: string,
-            type: string,
-            visiblePriority: string
-        };
-
         const imageFile = formData.get('image') as File | null;
-        let image: Upload | undefined;
 
-        try {
-            image = imageFile && imageFile.size > 0 ? await uploadImage(imageFile, title) : undefined;
-        } catch (e) {
-            console.log(e);
-            return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
+        const data: typeof portfolioItemTable.$inferInsert = {
+            title: formData.get('title') as string,
+            description: formData.get('description') as string,
+            type: formData.get('type') as PortfolioItemType,
+            visiblePriority: parseInt(formData.get('visiblePriority') as string) || 0,
+            isArticle: formData.has('isArticle')
         }
 
-        const portfolioItem: typeof portfolioItemTable.$inferInsert = {
-            title: title,
-            description: description,
-            type: type as PortfolioItemType,
-            imageUploadId: image ? image.id : undefined,
-            visiblePriority: parseInt(visiblePriority)
+        if (imageFile && imageFile.size > 0 && data.title) {
+            try {
+                const image = imageFile && imageFile.size > 0 ? await uploadImage(imageFile, data.title) : undefined;
+                data.imageUploadId = image?.id;
+            } catch (e) {
+                console.log(e);
+                return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
+            }
         }
 
         try {
-            const newPortfolioItem = await createPortfolioItem(portfolioItem);
+            const newPortfolioItem = await createPortfolioItem(data);
 
             return {
                 portfolioItemId: newPortfolioItem?.id,
@@ -70,23 +63,24 @@ export const actions: Actions = {
     },
     update: async ({ request }) => {
         const formData = await request.formData();
-
         const id = formData.get('id') as string;
-        const title = formData.get('title') as string;
-        const description = formData.get('description') as string;
-        const type = formData.get('type') as PortfolioItemType;
-        const visiblePriority = parseInt(formData.get('visiblePriority') as string) || 0;
         const imageFile = formData.get('image') as File | null;
 
-        let imageUploadId: string | undefined;
+        const updateData: Partial<typeof portfolioItemTable.$inferInsert> = {
+            title: formData.get('title') as string,
+            description: formData.get('description') as string,
+            type: formData.get('type') as PortfolioItemType,
+            visiblePriority: parseInt(formData.get('visiblePriority') as string) || 0,
+            isArticle: formData.has('isArticle')
+        }
 
-        if (imageFile && imageFile.size > 0) {
+        if (imageFile && imageFile.size > 0 && updateData.title) {
             try {
                 const portfolioItem = await getPortfolioItemById(id);
                 if (portfolioItem && portfolioItem.upload) {
                     await deleteFileAndUpload(portfolioItem.upload);
                 };
-                imageUploadId = (await uploadImage(imageFile, title)).id;
+                updateData.imageUploadId = (await uploadImage(imageFile, updateData.title)).id;
             } catch (e) {
                 console.log(e);
                 return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
@@ -94,15 +88,6 @@ export const actions: Actions = {
         };
 
         try {
-            const updateData: Partial<typeof portfolioItemTable.$inferInsert> = {
-                title,
-                description,
-                type,
-                visiblePriority
-            };
-
-            if (imageUploadId) updateData.imageUploadId = imageUploadId;
-
             const updatedPortfolioItem = await updatePortfolioItem(id, updateData);
 
             return {

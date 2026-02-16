@@ -16,7 +16,8 @@ interface IPortfolioItem {
     description: string | null;
     image: IUploadedImage | null;
     articleContent: OutputData | null;
-    clicks: number
+    clicks: number,
+    isArticle: boolean
 }
 
 const isPortfolioItemType = (value: string): value is PortfolioItemType => {

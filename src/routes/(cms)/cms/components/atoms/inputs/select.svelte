@@ -2,7 +2,7 @@
 	import { Check } from '@lucide/svelte';
 
 	let {
-		type = "single",
+		type = 'single',
 		selectOptions = [],
 		name,
 		callback,
@@ -15,7 +15,7 @@
 		name: string;
 		callback?: (e: Event) => void;
 		required?: boolean;
-		value?: string | string[] | File | number | null;
+		value?: string | string[] | null | number;
 		style?: 'secondary' | 'primary';
 	} = $props();
 
@@ -50,63 +50,3 @@
 		{/if}
 	</select>
 {/if}
-
-<style>
-	.checkbox-group {
-		display: grid;
-		grid-template-columns: max-content 1fr;
-		grid-column-gap: var(--padding-4);
-		align-items: center;
-
-		&:not(:last-of-type) {
-			padding-bottom: var(--padding-4);
-		}
-
-		input[type='checkbox'] {
-			position: absolute;
-			left: -1000vw;
-
-			+ .inset .outset {
-				opacity: 0;
-				transition: opacity var(--default-animation-time), background-color var(--default-animation-time);
-			}
-
-			&:checked + .inset .outset {
-				opacity: 1;
-			}
-
-			&:focus-visible + .inset {
-				border: var(--primary-border);
-				box-shadow: var(--shadow-float-3);
-			}
-
-			+ .inset {
-				display: inline-block;
-				height: 25px;
-				aspect-ratio: 1 / 1;
-				padding: var(--padding-7);
-				transition:
-					border-color var(--default-animation-time),
-					background-color var(--default-animation-time);
-
-				@media (hover: hover) and (pointer: fine) {
-					&:hover {
-						background-color: var(--grey-background-2);
-					}
-				}
-
-				.outset {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-
-					@media (hover: hover) and (pointer: fine) {
-						&:hover {
-							background-color: var(--grey-background-1);
-						}
-					}
-				}
-			}
-		}
-	}
-</style>

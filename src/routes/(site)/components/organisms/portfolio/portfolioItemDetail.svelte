@@ -40,15 +40,13 @@
 </script>
 
 <PortfolioItemDetailWrapper closeCallback={closePortfolioItem}>
-	{#if portfolioItem.type == 'art'}
-		<PortfolioArtBody {portfolioItem} closeCallback={closePortfolioItem} />
-	{/if}
-
-	{#if portfolioItem.type == 'project' || portfolioItem.type == 'research'}
+	{#if portfolioItem.isArticle}
 		<PortfolioArticleHeader {portfolioItem} />
 		{#if navigationItems.length}
 			<PortfolioArticleQuickNavigation {navigationItems} />
 		{/if}
 		<PortfolioArticleBody {portfolioItem} />
+	{:else}
+		<PortfolioArtBody {portfolioItem} closeCallback={closePortfolioItem} />
 	{/if}
 </PortfolioItemDetailWrapper>

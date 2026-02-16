@@ -12,7 +12,7 @@
 		name: string;
 		required?: boolean;
 		acceptFile?: string;
-		value?: string | string[] | File | number | null;
+		value?: string | File | null;
 		setValidationWarning: (message?: string) => void;
 	} = $props();
 

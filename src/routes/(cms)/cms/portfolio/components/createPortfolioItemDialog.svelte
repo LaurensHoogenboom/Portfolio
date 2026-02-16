@@ -25,6 +25,7 @@
 				/>
 
 				{#if portfolioItemCategory != 'art'}
+					<LabelInputGroup type="boolean" name="isArticle" label="Item is article" />
 					<LabelInputGroup type="textarea" name="description" label="Header Description" />
 				{/if}
 			</fieldset>
@@ -43,7 +44,7 @@
 		</div>
 		<div>
 			<fieldset>
-				<LabelInputGroup type="file" name="image" label="Header Image" acceptFile="image/*" required />
+				<LabelInputGroup type="file" name="image" label="Image" acceptFile="image/*" required />
 			</fieldset>
 		</div>
 	</div>

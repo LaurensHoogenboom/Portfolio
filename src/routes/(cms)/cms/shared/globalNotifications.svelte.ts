@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+import { getRandomId } from "$lib/utils/generateRandomId";
+
 interface Notification {
+    id: string,
     title?: string,
     message: string,
     type?: "information" | "warning" | "succes",
@@ -35,6 +38,7 @@ const notifyFormActionSuccess = (action: FormActionType, itemName: string) => {
 
 const dispatchSuccesNotification = (message: string, title?: string, duration?: number) => {
     globalNotifications.notifications.push({
+        id: getRandomId(),
         title: title,
         message: message,
         duration: duration ?? 5000,
@@ -44,6 +48,7 @@ const dispatchSuccesNotification = (message: string, title?: string, duration?: 
 
 const dispatchWarningNotification = (message: string, title?: string, duration?: number) => {
     globalNotifications.notifications.push({
+        id: getRandomId(),
         title: title,
         message: message,
         duration: duration ?? 5000,
@@ -53,6 +58,7 @@ const dispatchWarningNotification = (message: string, title?: string, duration?:
 
 const dispatchInformationNotification = (message: string, title?: string, duration?: number) => {
     globalNotifications.notifications.push({
+        id: getRandomId(),
         title: title,
         message: message,
         duration: duration ?? 5000,
