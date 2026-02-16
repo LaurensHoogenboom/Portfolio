@@ -137,7 +137,12 @@
 		}
 
 		.content {
+			display: flex;
+			flex-direction: column;
 			padding: var(--spacing-5) var(--spacing-6);
+			min-height: 300px;
+			justify-content: center;
+			align-items: start;
 
 			@media (max-width: 1180px) {
 				position: relative;
