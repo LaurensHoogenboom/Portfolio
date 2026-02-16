@@ -1,8 +1,10 @@
 <script lang="ts">
+	import CheckboxGroup from '$cmsComponents/atoms/inputs/checkboxGroup.svelte';
 	import FileInput from '$cmsComponents/atoms/inputs/fileInput.svelte';
 	import Select from '$cmsComponents/atoms/inputs/select.svelte';
 	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 	import Instruction from '$cmsComponents/atoms/instruction.svelte';
+	import { Type } from '@lucide/svelte';
 
 	let {
 		name,
@@ -19,8 +21,8 @@
 		layout = 'vertical'
 	}: {
 		name: string;
-		type: 'text' | 'textarea' | 'password' | 'select' | 'select-multiple' | 'file' | 'number';
-		value?: string | string[] | File | number | null;
+		type: 'text' | 'textarea' | 'password' | 'select' | 'select-multiple' | 'file' | 'number' | 'boolean';
+		value?: string | string[] | File | number | null | boolean;
 		label: string;
 		min?: number;
 		max?: number;
@@ -36,16 +38,20 @@
 </script>
 
 <div class="label-input-group {layout}">
-	<label for={name}>{label}</label>
+	{#if type != 'boolean'}
+		<label for={name}>{label}</label>
+	{/if}
 
 	{#if type == 'text' || type == 'password' || type == 'number'}
 		<input id={name} class="inset" {type} {name} bind:value onchange={callback} {min} {max} {required} />
 	{:else if type == 'textarea'}
 		<textarea rows="5" class="inset" bind:value {name} onchange={callback} maxlength={max} {required}></textarea>
-	{:else if type == 'select' || type == 'select-multiple'}
+	{:else if (type == 'select' || type == 'select-multiple') && (typeof value == 'string' || value == undefined || Array.isArray(value) || typeof value == 'number')}
 		<Select {name} {required} type={type == 'select-multiple' ? 'multiple' : 'single'} {selectOptions} {callback} bind:value />
-	{:else if (type = 'file')}
+	{:else if type == 'file' && (typeof value == 'string' || value == undefined || value instanceof File)}
 		<FileInput {name} {required} {acceptFile} bind:value setValidationWarning={(message) => (validationWarning = message)} />
+	{:else if type == 'boolean' && (typeof value == 'boolean' || value == undefined)}
+		<CheckboxGroup {name} {label} bind:value />
 	{/if}
 
 	{#if instruction || validationWarning}

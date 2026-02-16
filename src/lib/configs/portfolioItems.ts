@@ -15,36 +15,49 @@ const portfolioTableUIConfig: TableConfig<PortfolioItem> = {
         priority: 2,
         visible: true,
         sortable: true,
-        format: startWithUpperCase
+        format: startWithUpperCase,
+        maxWidth: 120
+    },
+    isArticle: {
+        label: 'Article',
+        priority: 3,
+        visible: true,
+        sortable: true,
+        format: (val) => val ? 'Yes' : 'No',
+        maxWidth: 110
     },
     visiblePriority: {
         label: 'Visible priority',
-        priority: 3,
-        visible: true,
-        sortable: true
-    },
-    createdAt: {
-        label: 'Created At',
         priority: 4,
         visible: true,
         sortable: true,
-        format: toFullDataTimeString
+        maxWidth: 150
     },
-    updatedAt: {
-        label: 'Updated At',
+    createdAt: {
+        label: 'Created At',
         priority: 5,
         visible: true,
         sortable: true,
-        format: toFullDataTimeString
+        format: toFullDataTimeString,
+        maxWidth: 170
+    },
+    updatedAt: {
+        label: 'Updated At',
+        priority: 6,
+        visible: true,
+        sortable: true,
+        format: toFullDataTimeString,
+        maxWidth: 170
     },
     clicks: {
         label: 'Clicks',
-        priority: 6,
+        priority: 7,
         visible: true,
-        sortable: true
+        sortable: true,
+        maxWidth: 100
     },
     renderActions: (row) => ({
-        showWrite: row.type === 'research' || row.type === 'project'
+        showWrite: row.isArticle
     })
 }
 

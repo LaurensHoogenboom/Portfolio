@@ -28,3 +28,4 @@
 @import url("./components/button.css") layer(components);
 @import url("./components/dialog.css") layer(components);
 @import url("./components/inputs.css") layer(components);
+@import url("./components/checkbox.css") layer(components);

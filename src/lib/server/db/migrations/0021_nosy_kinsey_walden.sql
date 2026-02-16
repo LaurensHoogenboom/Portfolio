@@ -1,0 +1,1 @@
+ALTER TABLE `portfolioItems` ADD `isArticle` integer DEFAULT false NOT NULL;
