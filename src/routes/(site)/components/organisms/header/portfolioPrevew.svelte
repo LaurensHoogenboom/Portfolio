@@ -89,7 +89,7 @@
 
 <style>
 	.portfolio-preview {
-		--extra-width: calc((100vw - var(--page-width)) / 2 + var(--spacing-5));
+		--extra-width: calc((100vw - var(--page-width)) / 2 + var(--spacing-6));
 		display: flex;
 		width: calc(100% + (var(--extra-width)));
 		overflow: hidden;
