@@ -25,7 +25,7 @@
 			}
 		}
 
-		goto('/cms/portfolio');
+		history.back();
 	};
 
 	const save = () => {

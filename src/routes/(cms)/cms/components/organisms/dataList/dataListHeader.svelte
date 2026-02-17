@@ -48,7 +48,7 @@
 	.data-list-header {
 		display: grid;
 		position: sticky;
-		top: var(--padding-1);
+		top: calc(var(--padding-1) + var(--padding-2));
 		z-index: 3;
 		padding: var(--padding-4) var(--padding-3);
 		align-items: center;
