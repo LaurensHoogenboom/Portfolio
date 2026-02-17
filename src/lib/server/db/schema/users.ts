@@ -1,4 +1,4 @@
-import { sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { generateId, timestamp } from "../utils/utils";
 import type { UserType } from "$lib/types/users";
 import { workspaces, type Workspace } from "./workspaces";
@@ -19,6 +19,7 @@ const users = sqliteTable("users", {
         .notNull(),
     securityQuestionAnswer: text("securityQuestionAnswer")
         .notNull(),
+    lastLogin: integer("lastLogin", { mode: "timestamp" }),
     ...timestamp
 });
 
