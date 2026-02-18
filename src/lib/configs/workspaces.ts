@@ -7,7 +7,8 @@ const workspacesTableUIConfig: TableConfig<Workspace> = {
         label: 'Title',
         priority: 1,
         visible: true,
-        sortable: true
+        sortable: true,
+        maxWidth: 180
     },
     createdAt: {
         label: 'Created At',
@@ -31,7 +32,7 @@ const workspacesTableUIConfig: TableConfig<Workspace> = {
         visible: true,
         sortable: true,
         format: (val) => val ? 'Yes' : 'No',
-        maxWidth: 170
+        maxWidth: 160
     },
     navigationItems: {
         label: 'Pages',
@@ -39,6 +40,13 @@ const workspacesTableUIConfig: TableConfig<Workspace> = {
         visible: true,
         sortable: true,
         format: (val) => val && val.length > 0 ? val.map(v => v.title).join(', ') : '-'
+    },
+    dashboardPreviewDataType: {
+        label: "Dashboard Preview Data",
+        priority: 6,
+        visible: true,
+        sortable: true,
+        format: (val) => val == 'mostViewedPortfolioItems' ? 'Most viewed portfolio items' : 'Recent Logins'
     }
 };
 

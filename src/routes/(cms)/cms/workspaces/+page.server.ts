@@ -3,6 +3,8 @@ import { fail } from '@sveltejs/kit';
 import { getPagingAndSortingParams } from '../shared/getPaginationAndSortingParams';
 import { navigationItems, type INavigationItem } from '../shared/navigation';
 import type { Actions, PageServerLoad } from './$types';
+import type { workspaces } from '$lib/server/db/schema/workspaces';
+import type { DashboardPreviewDataType } from '$lib/types/workspaces';
 
 export const load = (async ({ url }) => {
     const { pageIndex, itemsPerPage, sortBy, sortDirection } = getPagingAndSortingParams(url);
@@ -18,17 +20,21 @@ export const load = (async ({ url }) => {
 export const actions: Actions = {
     create: async ({ request }) => {
         const formData = await request.formData();
-        const title = formData.get('title') as string;
-
         const selectedNavigationItemIds = formData.getAll('navigationItems') as string[];
-        const selectedNavigationItems: INavigationItem[] = selectedNavigationItemIds.map(id => {
+
+        const data: typeof workspaces.$inferInsert = {
+            title: formData.get('title') as string,
+            dashboardPreviewDataType: formData.get('dashboardPreviewDataType') as DashboardPreviewDataType
+        }
+
+        data.navigationItems = selectedNavigationItemIds.map(id => {
             return navigationItems.find(n => n.id == id);
         }).filter((item): item is INavigationItem => !!item);
 
-        const adminRequired = selectedNavigationItems.some(n => n.requiredUserType == 'admin');
+        data.adminRequired = data.navigationItems.some(n => n.requiredUserType == 'admin');
 
         try {
-            const newWorkspace = await createWorkspace({ title: title, navigationItems: selectedNavigationItems, adminRequired: adminRequired });
+            const newWorkspace = await createWorkspace(data);
             return { workspaceTitle: newWorkspace.title };
         } catch (e) {
             console.log(e);
@@ -39,17 +45,21 @@ export const actions: Actions = {
     update: async ({ request }) => {
         const formData = await request.formData();
         const id = formData.get('id') as string;
-        const title = formData.get('title') as string;
-
         const selectedNavigationItemIds = formData.getAll('navigationItems') as string[];
-        const selectedNavigationItems: INavigationItem[] = selectedNavigationItemIds.map(id => {
+
+        const update: typeof workspaces.$inferInsert = {
+            title: formData.get('title') as string,
+            dashboardPreviewDataType: formData.get('dashboardPreviewDataType') as DashboardPreviewDataType
+        }
+
+        update.navigationItems = selectedNavigationItemIds.map(id => {
             return navigationItems.find(n => n.id == id);
         }).filter((item): item is INavigationItem => !!item);
 
-        const adminRequired = selectedNavigationItems.some(n => n.requiredUserType == 'admin');
+        update.adminRequired = update.navigationItems.some(n => n.requiredUserType == 'admin');
 
         try {
-            const updatedWorkspace = await updateWorkspace(id, { title: title, navigationItems: selectedNavigationItems, adminRequired: adminRequired });
+            const updatedWorkspace = await updateWorkspace(id, update);
             return { workspaceTitle: updatedWorkspace.title };
         } catch (e) {
             console.log(e);

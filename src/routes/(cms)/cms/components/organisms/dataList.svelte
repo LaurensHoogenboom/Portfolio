@@ -15,14 +15,28 @@
 		writeAction?: (id: string) => void;
 		deleteAction?: string;
 		configContext?: IConfigContext;
+		showFooter?: Boolean;
+		numberOfColumnsVisible?: 'auto' | number;
 	}
 
-	const { data, config, itemNamePlural, totalItemCount, editAction, writeAction, deleteAction, configContext }: Props = $props();
+	const {
+		data,
+		config,
+		itemNamePlural,
+		totalItemCount,
+		editAction,
+		writeAction,
+		deleteAction,
+		configContext,
+		showFooter = true,
+		numberOfColumnsVisible = 'auto'
+	}: Props = $props();
 
 	const sortedKeys = $derived(
 		(Object.keys(config) as Array<keyof T>)
 			.filter((key) => config[key]?.visible)
 			.sort((a, b) => (config[a]?.priority ?? 0) - (config[b]?.priority ?? 0))
+			.splice(0, typeof numberOfColumnsVisible == 'number' ? numberOfColumnsVisible : Object.keys(config).length)
 	);
 
 	const gridStyle = $derived(
@@ -74,7 +88,7 @@
 
 	<DataListBody {data} {config} {sortedKeys} {gridStyle} {itemNamePlural} {editAction} {writeAction} {deleteAction} {configContext} />
 
-	{#if data.length}
+	{#if data.length && showFooter}
 		<DataListFooter {totalItemCount} />
 	{/if}
 </div>

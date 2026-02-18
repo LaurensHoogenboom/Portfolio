@@ -38,6 +38,7 @@
 						title="Logout"
 						onclick={() => (submitting = !submitting)}
 						icon={LogOut}
+						loading={submitting}
 					/>
 				</form>
 			</div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Check, InfoIcon, TriangleAlert, X } from '@lucide/svelte';
-	import { globalNotifications } from '../../shared/globalNotifications.svelte';
+	import { globalNotifications } from '../../shared/states/globalNotifications.svelte';
 	import { fly, slide } from 'svelte/transition';
 	import Button from '$cmsComponents/atoms/button.svelte';
 

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { ActionData } from './$types';
 	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
 	import Notice from '$cmsComponents/atoms/notice.svelte';
 	import Button from '$cmsComponents/atoms/button.svelte';
@@ -10,7 +9,7 @@
 	import AuthenticationHeader from './components/authenticationHeader.svelte';
 	import Instruction from '$cmsComponents/atoms/instruction.svelte';
 	import Avatar from '$cmsComponents/molecules/avatar.svelte';
-	import { dispatchSuccesNotification } from '../../(cms)/cms/shared/globalNotifications.svelte';
+	import { dispatchSuccesNotification } from '../../(cms)/cms/shared/states/globalNotifications.svelte';
 
 	let urlParameters: URLSearchParams | undefined = $state();
 	let username: string | undefined = $state();

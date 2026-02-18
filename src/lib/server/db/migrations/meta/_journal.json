@@ -162,6 +162,13 @@
       "when": 1771323873977,
       "tag": "0022_mixed_maverick",
       "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "6",
+      "when": 1771343331041,
+      "tag": "0023_public_pepper_potts",
+      "breakpoints": true
     }
   ]
 }

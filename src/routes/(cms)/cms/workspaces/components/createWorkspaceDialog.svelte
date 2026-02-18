@@ -1,6 +1,7 @@
 <script lang="ts">
 	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
 	import CreateDialog from '$cmsComponents/templates/createDialog.svelte';
+	import { dashboardPreviewDataTypeSelectOptions } from '../shared/dashboardPreviewDataSelectOptions';
 	import { navigationItemSelectOptions } from '../shared/navigationItemSelectOptions';
 
 	let { closeCallback }: { closeCallback: () => void } = $props();
@@ -13,11 +14,15 @@
 
 	<fieldset>
 		<LabelInputGroup
-			type="select-multiple"
-			name="navigationItems"
-			label="Pages"
-			selectOptions={navigationItemSelectOptions}
+			type="select"
+			name="dashboardPreviewDataType"
+			label="Dashboard Preview Data"
+			selectOptions={dashboardPreviewDataTypeSelectOptions}
 			required
 		/>
+	</fieldset>
+
+	<fieldset>
+		<LabelInputGroup type="select-multiple" name="navigationItems" label="Pages" selectOptions={navigationItemSelectOptions} required />
 	</fieldset>
 </CreateDialog>

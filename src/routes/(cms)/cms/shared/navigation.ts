@@ -8,7 +8,7 @@ export interface INavigationItem {
 }
 
 export const navigationItems: INavigationItem[] = [
-    { id: '1', title: 'Home', url: '/cms' },
+    { id: '1', title: 'Dashboard', url: '/cms' },
     { id: '2', title: 'Portfolio', url: '/cms/portfolio' },
     { id: '3', title: 'Uploads', url: '/cms/uploads' },
     { id: '4', title: 'Users', url: '/cms/users', requiredUserType: 'admin' },

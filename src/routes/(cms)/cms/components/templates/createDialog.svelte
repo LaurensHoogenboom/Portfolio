@@ -3,7 +3,7 @@
 	import Notice from '$cmsComponents/atoms/notice.svelte';
 	import Dialog from '$cmsComponents/organisms/dialog.svelte';
 	import type { Snippet } from 'svelte';
-	import { notifyFormActionSuccess } from '../../shared/globalNotifications.svelte';
+	import { notifyFormActionSuccess } from '../../shared/states/globalNotifications.svelte';
 	import Button from '$cmsComponents/atoms/button.svelte';
 
 	let {

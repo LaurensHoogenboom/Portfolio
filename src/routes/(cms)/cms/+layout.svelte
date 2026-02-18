@@ -8,11 +8,12 @@
 	import { navigationItems } from './shared/navigation';
 	import Select from '$cmsComponents/atoms/inputs/select.svelte';
 	import { goto } from '$app/navigation';
+	import { currentWorkspace } from './shared/states/workspaces.svelte';
 
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
 	let selectedWorkspaceId = $state(data.preferredWorkspaceId ?? data.userWorkspaces[0].id);
-	const selectedWorkspace = $derived(data.userWorkspaces.find(w => w.id == selectedWorkspaceId));
+	let selectedWorkspace = $derived(data.userWorkspaces.find(w => w.id == selectedWorkspaceId));
 	const accessibleNavItems = $derived.by(() => {
 		const items = selectedWorkspace?.navigationItems?.length ? selectedWorkspace.navigationItems : navigationItems;
 		return items.filter(n => n.requiredUserType !== 'admin' || data.userType == 'admin');
@@ -25,6 +26,8 @@
 			const currentInNav = selectedWorkspace.navigationItems.some(n => n.url === page.url.pathname);
 			if (!currentInNav) goto(selectedWorkspace.navigationItems[0].url);
 		}
+
+		currentWorkspace.workspace = selectedWorkspace;
 	});
 </script>
 
