@@ -48,6 +48,7 @@
 					itemNamePlural="Users"
 					showFooter={false}
 					numberOfColumnsVisible={4}
+					enableSorting={false}
 				/>
 			{:else}
 				<div class="header">
@@ -61,6 +62,7 @@
 					itemNamePlural="Portfolio Items"
 					showFooter={false}
 					numberOfColumnsVisible={4}
+					enableSorting={false}
 				/>
 			{/if}
 		</div>

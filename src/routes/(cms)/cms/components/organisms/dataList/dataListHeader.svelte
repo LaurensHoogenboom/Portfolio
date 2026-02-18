@@ -17,14 +17,14 @@
 		sortState: SortState<T>;
 		gridStyle: string;
 		hasActions: boolean;
-		sortCallback: (key: keyof T) => void;
-		isSorting?: boolean
+		sortCallback?: (key: keyof T) => void;
+		isSorting?: boolean;
 	} = $props();
 </script>
 
 <div class="box data-list-header" style={gridStyle}>
 	{#each sortedKeys as key}
-		{#if config[key]?.sortable}
+		{#if config[key]?.sortable && sortCallback}
 			<Button
 				type="button"
 				style="transparent"

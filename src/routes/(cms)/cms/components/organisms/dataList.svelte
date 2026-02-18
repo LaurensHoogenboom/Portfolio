@@ -17,6 +17,7 @@
 		configContext?: IConfigContext;
 		showFooter?: Boolean;
 		numberOfColumnsVisible?: 'auto' | number;
+		enableSorting?: Boolean;
 	}
 
 	const {
@@ -29,7 +30,8 @@
 		deleteAction,
 		configContext,
 		showFooter = true,
-		numberOfColumnsVisible = 'auto'
+		numberOfColumnsVisible = 'auto',
+		enableSorting = true
 	}: Props = $props();
 
 	const sortedKeys = $derived(
@@ -81,7 +83,7 @@
 			{sortState}
 			{gridStyle}
 			hasActions={editAction || writeAction || deleteAction ? true : false}
-			sortCallback={toggleSort}
+			sortCallback={enableSorting ? toggleSort : undefined}
 			{isSorting}
 		/>
 	{/if}
