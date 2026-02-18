@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import PageToolbar from '$cmsComponents/organisms/pageToolbar.svelte';
-	import { LogOut } from '@lucide/svelte';
+	import { ChevronRight, LogOut, Settings } from '@lucide/svelte';
 	import type { PageData } from './$types';
 	import DataList from '$cmsComponents/organisms/dataList.svelte';
 	import { usersTableUIConfig } from '$lib/configs/users';
@@ -14,26 +14,26 @@
 	let { data }: { data: PageData } = $props();
 
 	let previewDataType: DashboardPreviewDataType = $derived(
-		currentWorkspace.workspace ? currentWorkspace.workspace.dashboardPreviewDataType : 'mostViewedPortfolioItems'
+		currentWorkspace.currentWorkspace ? currentWorkspace.currentWorkspace.dashboardPreviewDataType : 'mostViewedPortfolioItems'
 	);
 
-	let dashboardUserTableUIConfig = usersTableUIConfig;
+	let dashboardUserTableUIConfig = { ...usersTableUIConfig };
 	dashboardUserTableUIConfig.lastLogin && (dashboardUserTableUIConfig.lastLogin.priority = 2);
 
-	let dashboardPortfolioTableUIConfig = portfolioTableUIConfig;
+	let dashboardPortfolioTableUIConfig = { ...portfolioTableUIConfig };
 	dashboardPortfolioTableUIConfig.clicks && (dashboardPortfolioTableUIConfig.clicks.priority = 1);
 </script>
 
-<PageToolbar>
-	<form method="post" action="/login?/logout" use:enhance style="flex-grow: initial;">
-		<Button style="secondary" type="submit" title="Logout" icon={LogOut} onclick={() => (loggingOut = true)} loading={loggingOut} />
-	</form>
-</PageToolbar>
+<PageToolbar />
 
 <main>
 	<div class="grid-container columns-3">
 		<div class="box span-3">
 			<h1>Welcome {data.username}</h1>
+			<form method="post" action="/login?/logout" use:enhance style="flex-grow: initial;">
+				<Button style="secondary" type="submit" title="Logout" icon={LogOut} onclick={() => (loggingOut = true)} loading={loggingOut} />
+			</form>
+			<Button style="secondary" type="button" title="settings" icon={Settings} />
 		</div>
 		<div class="box span-2 dashboard-box">
 			{#if previewDataType == 'recentLogins'}
@@ -68,8 +68,16 @@
 			<div class="header">
 				<h2>Get started</h2>
 			</div>
-			<Button title="Add User" type="button" style="primary" alignment="center" />
-			<Button title="Add Workspace" type="button" style="secondary" alignment="center" />
+
+			{#each currentWorkspace.quickActions as action, index}
+				<Button
+					title={action.title}
+					type="button"
+					onclick={action.callback}
+					style={index == 0 ? 'primary' : 'secondary'}
+					icon={ChevronRight}
+				/>
+			{/each}
 		</div>
 	</div>
 </main>
