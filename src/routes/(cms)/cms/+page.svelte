@@ -93,7 +93,7 @@
 		userToEdit={data.currentUser}
 		closeCallback={() => (editUserDialogVisible = false)}
 		workspaces={data.workspaces}
-		canEditType={data.currentUser.type == 'admin'}
+		canEditType={data.currentUser.type == 'admin' && data.adminCount > 1}
 		customTitle="Account Settings"
 	/>
 {/if}

@@ -50,7 +50,8 @@
 		closeCallback={() => (userToEdit = undefined)}
 		{userToEdit}
 		workspaces={data.workspaces}
-		canEditType={data.currentUser.type == 'admin'}
+		canEditType={(data.currentUser.type == 'admin' && data.adminCount > 1) ||
+			(data.currentUser.type == 'admin' && data.currentUser.id != userToEdit.id)}
 	/>
 {/if}
 

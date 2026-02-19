@@ -53,7 +53,7 @@
 			{/if}
 
 			{#if data.currentUser.username}
-				<UserActions user={data.currentUser} workspaces={data.userWorkspaces} />
+				<UserActions user={data.currentUser} workspaces={data.userWorkspaces} adminCount={data.adminCount} />
 			{/if}
 
 			<NotificationContainer />

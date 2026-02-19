@@ -6,7 +6,7 @@ import { getPagingAndSortingParams } from '../shared/getPaginationAndSortingPara
 import type { UserType } from '$lib/types/users';
 import { getWorkspaces } from '$lib/server/db/cruds/workspaces';
 
-export const load: PageServerLoad = (async ({ url, locals }) => {
+export const load: PageServerLoad = (async ({ url }) => {
     const { pageIndex, itemsPerPage, sortBy, sortDirection } = getPagingAndSortingParams(url);
 
     const [users, userCount, workspaces] = await Promise.all([
@@ -19,7 +19,6 @@ export const load: PageServerLoad = (async ({ url, locals }) => {
         users: users,
         userCount: userCount?.count ?? 0,
         workspaces: workspaces,
-        adminCount: locals.adminCount ?? 0
     };
 }) satisfies PageServerLoad;
 

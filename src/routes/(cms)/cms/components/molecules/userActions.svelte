@@ -8,7 +8,7 @@
 	import EditUserDialog from '../../users/components/editUserDialog.svelte';
 	import type { Workspace } from '$lib/server/db/schema/workspaces';
 
-	const { user, workspaces }: { user: User; workspaces: Workspace[] } = $props();
+	const { user, workspaces, adminCount }: { user: User; workspaces: Workspace[]; adminCount: number } = $props();
 
 	let userDropDownOpen = $state(false);
 	let submitting = $state(false);
@@ -58,7 +58,7 @@
 		userToEdit={user}
 		closeCallback={() => (editUserDialogVisible = false)}
 		{workspaces}
-		canEditType={user.type == 'admin'}
+		canEditType={user.type == 'admin' && adminCount > 1}
 		customTitle="Account Settings"
 	/>
 {/if}
