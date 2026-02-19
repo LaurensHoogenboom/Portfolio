@@ -6,7 +6,7 @@
 	import { updatePageParams } from '$lib/utils/updatePageParams';
 	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 
-	const { totalItemCount }: { totalItemCount: number } = $props();
+	const { totalItemCount, style }: { totalItemCount: number; style?: "default" | "transparent"; } = $props();
 
 	interface IPaginationStatus {
 		activePageIndex: number;
@@ -30,7 +30,7 @@
 	});
 </script>
 
-<div class="box data-list-footer">
+<div class="data-list-footer {style == 'default' ? 'box' : ''}">
 	<div class="inset page-controls">
 		{#if paginationStatus.activePageIndex > 0}
 			<div class="outset">

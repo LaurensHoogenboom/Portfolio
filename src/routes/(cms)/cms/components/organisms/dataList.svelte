@@ -18,6 +18,7 @@
 		showFooter?: Boolean;
 		numberOfColumnsVisible?: 'auto' | number;
 		enableSorting?: Boolean;
+		style?: 'default' | 'transparent';
 	}
 
 	const {
@@ -31,7 +32,8 @@
 		configContext,
 		showFooter = true,
 		numberOfColumnsVisible = 'auto',
-		enableSorting = true
+		enableSorting = true,
+		style = 'default'
 	}: Props = $props();
 
 	const sortedKeys = $derived(
@@ -75,7 +77,7 @@
 	});
 </script>
 
-<div class="data-list">
+<div class="data-list {style}">
 	{#if data.length}
 		<DataListHeader
 			{config}
@@ -85,13 +87,25 @@
 			hasActions={editAction || writeAction || deleteAction ? true : false}
 			sortCallback={enableSorting ? toggleSort : undefined}
 			{isSorting}
+			{style}
 		/>
 	{/if}
 
-	<DataListBody {data} {config} {sortedKeys} {gridStyle} {itemNamePlural} {editAction} {writeAction} {deleteAction} {configContext} />
+	<DataListBody
+		{data}
+		{config}
+		{sortedKeys}
+		{gridStyle}
+		{itemNamePlural}
+		{editAction}
+		{writeAction}
+		{deleteAction}
+		{configContext}
+		{style}
+	/>
 
 	{#if data.length && showFooter}
-		<DataListFooter {totalItemCount} />
+		<DataListFooter {totalItemCount} {style} />
 	{/if}
 </div>
 
@@ -99,5 +113,9 @@
 	.data-list {
 		display: grid;
 		grid-gap: var(--padding-1);
+
+		&.transparent {
+			grid-gap: 0;
+		}
 	}
 </style>

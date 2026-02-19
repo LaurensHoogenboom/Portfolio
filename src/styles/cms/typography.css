@@ -1,23 +1,47 @@
 * {
-	font-family: "Figtree", sans-serif;
+	font-family: 'Figtree', sans-serif;
 }
 
 h1 {
 	color: var(--primary-base);
 	padding-bottom: var(--padding-2);
 
-	&:has(+ article), &:has(+ p), &:has(+ a) {
+	&:has(+ article),
+	&:has(+ p),
+	&:has(+ a) {
 		padding-bottom: var(--padding-4);
 	}
 }
 
-a, p, button, label, input, textarea, select, option, li, td {
+h2 {
+	color: var(--primary-base);
+	font-size: 20px;
+}
+
+h3 {
+	font-size: 16px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: var(--grey-text-2);
+}
+
+a,
+p,
+button,
+label,
+input,
+textarea,
+select,
+option,
+li,
+td {
 	font-size: 16px;
 	transition: color var(--default-animation-time);
 	color: var(--grey-text-2);
 }
 
-p, label {
+p,
+label {
 	&:not(:last-child, .clickable-input) {
 		padding-bottom: var(--padding-2);
 	}
@@ -48,14 +72,22 @@ label {
 	color: var(--grey-text-1);
 
 	&:not(:last-child) {
-		&:has(+ input), &:has(+ textarea), &:has(+ select), &:has(+ .file-input) {
+		&:has(+ input),
+		&:has(+ textarea),
+		&:has(+ select),
+		&:has(+ .file-input) {
 			padding-bottom: var(--padding-4);
 		}
-	
+
 		&:has(+ :focus) {
 			color: var(--primary-base);
 		}
 	}
+}
+
+hr {
+	border-top: var(--default-border);
+	border-color: rgb(200,200,200);
 }
 
 form label {

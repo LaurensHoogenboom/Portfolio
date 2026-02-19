@@ -9,8 +9,9 @@
 	import { currentWorkspace } from './shared/states/workspaces.svelte';
 	import type { DashboardPreviewDataType } from '$lib/types/workspaces';
 	import { portfolioTableUIConfig } from '$lib/configs/portfolioItems';
-	import type { IUserToEdit } from './users/components/editUserDialog.svelte';
 	import EditUserDialog from './users/components/editUserDialog.svelte';
+	import DashboardBox from '$cmsComponents/molecules/dashboardBox.svelte';
+	import Avatar from '$cmsComponents/molecules/avatar.svelte';
 
 	let loggingOut = $state(false);
 	let { data }: { data: PageData } = $props();
@@ -32,19 +33,20 @@
 
 <main>
 	<div class="grid-container columns-3">
-		<div class="box span-3">
-			<h1>Welcome {data.currentUser.username}</h1>
-			<form method="post" action="/login?/logout" use:enhance style="flex-grow: initial;">
-				<Button style="secondary" type="submit" title="Logout" icon={LogOut} onclick={() => (loggingOut = true)} loading={loggingOut} />
-			</form>
-			<Button style="secondary" type="button" title="Account Settings" icon={Settings} onclick={() => (editUserDialogVisible = true)} />
+		<div class="box span-3 user-box">
+			<Avatar />
+			<h2>Welcome {data.currentUser.username}</h2>
+			<hr />
+			<div class="actions">
+				<Button style="secondary" type="button" title="Account Settings" icon={Settings} onclick={() => (editUserDialogVisible = true)} />
+				<form method="post" action="/login?/logout" use:enhance style="flex-grow: initial;">
+					<Button style="secondary" type="submit" title="Logout" icon={LogOut} onclick={() => (loggingOut = true)} loading={loggingOut} />
+				</form>
+			</div>
 		</div>
-		<div class="box span-2 dashboard-box">
-			{#if previewDataType == 'recentLogins'}
-				<div class="header">
-					<h2>Recent Logins</h2>
-				</div>
 
+		<DashboardBox title={previewDataType == 'recentLogins' ? 'Recent Logins' : 'Most viewed portfolio items'} columnCount={2}>
+			{#if previewDataType == 'recentLogins'}
 				<DataList
 					data={data.recentLogins}
 					config={dashboardUserTableUIConfig}
@@ -53,12 +55,9 @@
 					showFooter={false}
 					numberOfColumnsVisible={4}
 					enableSorting={false}
+					style="transparent"
 				/>
 			{:else}
-				<div class="header">
-					<h2>Most viewed Portfolio Items</h2>
-				</div>
-
 				<DataList
 					data={data.mostViewedPortfolioItems}
 					config={portfolioTableUIConfig}
@@ -67,24 +66,24 @@
 					showFooter={false}
 					numberOfColumnsVisible={4}
 					enableSorting={false}
+					style="transparent"
 				/>
 			{/if}
-		</div>
-		<div class="box dashboard-box">
-			<div class="header">
-				<h2>Get started</h2>
-			</div>
+		</DashboardBox>
 
-			{#each currentWorkspace.quickActions as action, index}
-				<Button
-					title={action.title}
-					type="button"
-					onclick={action.callback}
-					style={index == 0 ? 'primary' : 'secondary'}
-					icon={ChevronRight}
-				/>
-			{/each}
-		</div>
+		<DashboardBox title="Get Started">
+			<div class="quick-action-buttons">
+				{#each currentWorkspace.quickActions as action, index}
+					<Button
+						title={action.title}
+						type="button"
+						onclick={action.callback}
+						style={index == 0 ? 'primary' : 'secondary'}
+						icon={ChevronRight}
+					/>
+				{/each}
+			</div>
+		</DashboardBox>
 	</div>
 </main>
 
@@ -99,14 +98,21 @@
 {/if}
 
 <style>
-	.dashboard-box {
-		flex-direction: column;
-		align-self: flex-start;
+	.user-box {
+		display: grid;
+		grid-template-columns: max-content max-content 1fr max-content;
+		align-items: center;
+		grid-gap: var(--padding-2);
 
-		:global(.box) {
-			border: none;
-			box-shadow: none;
-			padding: 0;
+		.actions {
+			display: flex;
+			grid-gap: var(--padding-4);
 		}
+	}
+
+	.quick-action-buttons {
+		display: flex;
+		flex-direction: column;
+		grid-gap: var(--padding-4);
 	}
 </style>

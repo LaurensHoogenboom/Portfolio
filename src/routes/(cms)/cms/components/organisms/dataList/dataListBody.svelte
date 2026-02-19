@@ -3,7 +3,6 @@
 	import type { IConfigContext, TableConfig } from '$lib/types/dataList';
 	import { flip } from 'svelte/animate';
 	import { navigating } from '$app/state';
-	import { Circle } from 'svelte-loading-spinners';
 	import { fade } from 'svelte/transition';
 
 	interface Props {
@@ -16,12 +15,14 @@
 		writeAction?: (id: string) => void;
 		deleteAction?: string;
 		configContext?: IConfigContext;
+		style?: 'default' | 'transparent';
 	}
 
-	const { data, config, sortedKeys, gridStyle, itemNamePlural, editAction, writeAction, deleteAction, configContext }: Props = $props();
+	const { data, config, sortedKeys, gridStyle, itemNamePlural, editAction, writeAction, deleteAction, configContext, style }: Props =
+		$props();
 </script>
 
-<div class="box list-body" style="flex-direction: column;">
+<div class="list-body {style == 'default' ? 'box' : ''} {style}" style="flex-direction: column;">
 	{#if navigating.to}
 		<div class="loading-box" transition:fade></div>
 	{/if}
@@ -43,20 +44,38 @@
 		padding-bottom: var(--padding-3);
 		overflow: hidden;
 		position: relative;
-	}
 
-	.list-item-wrapper:not(:last-child) {
-		border-bottom: var(--default-border);
-		padding-bottom: var(--padding-4);
-	}
+		.loading-box {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: rgb(from var(--white-background) r g b / 0.8);
+			z-index: 2;
+		}
 
-	.loading-box {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		background-color: rgb(from var(--white-background) r g b / 0.8);
-		z-index: 2;
+		.list-item-wrapper:not(:last-child) {
+			border-bottom: var(--default-border);
+			padding-bottom: var(--padding-4);
+		}
+
+		&.transparent {
+			padding-top: var(--padding-4);
+			padding-bottom: 0;
+
+			.list-item-wrapper {
+				padding-left: var(--padding-5);
+
+				&:not(:first-child) {
+					padding-top: var(--padding-4);
+				}
+
+				&:last-child {
+					border-bottom: var(--default-border);
+					padding-bottom: var(--padding-4);
+				}
+			}
+		}
 	}
 </style>
