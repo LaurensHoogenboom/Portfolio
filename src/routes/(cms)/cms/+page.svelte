@@ -9,6 +9,8 @@
 	import { currentWorkspace } from './shared/states/workspaces.svelte';
 	import type { DashboardPreviewDataType } from '$lib/types/workspaces';
 	import { portfolioTableUIConfig } from '$lib/configs/portfolioItems';
+	import type { IUserToEdit } from './users/components/editUserDialog.svelte';
+	import EditUserDialog from './users/components/editUserDialog.svelte';
 
 	let loggingOut = $state(false);
 	let { data }: { data: PageData } = $props();
@@ -22,6 +24,8 @@
 
 	let dashboardPortfolioTableUIConfig = { ...portfolioTableUIConfig };
 	dashboardPortfolioTableUIConfig.clicks && (dashboardPortfolioTableUIConfig.clicks.priority = 1);
+
+	let editUserDialogVisible = $state(false);
 </script>
 
 <PageToolbar />
@@ -29,11 +33,11 @@
 <main>
 	<div class="grid-container columns-3">
 		<div class="box span-3">
-			<h1>Welcome {data.username}</h1>
+			<h1>Welcome {data.currentUser.username}</h1>
 			<form method="post" action="/login?/logout" use:enhance style="flex-grow: initial;">
 				<Button style="secondary" type="submit" title="Logout" icon={LogOut} onclick={() => (loggingOut = true)} loading={loggingOut} />
 			</form>
-			<Button style="secondary" type="button" title="settings" icon={Settings} />
+			<Button style="secondary" type="button" title="Account Settings" icon={Settings} onclick={() => (editUserDialogVisible = true)} />
 		</div>
 		<div class="box span-2 dashboard-box">
 			{#if previewDataType == 'recentLogins'}
@@ -83,6 +87,16 @@
 		</div>
 	</div>
 </main>
+
+{#if editUserDialogVisible}
+	<EditUserDialog
+		userToEdit={data.currentUser}
+		closeCallback={() => (editUserDialogVisible = false)}
+		workspaces={data.workspaces}
+		canEditType={data.currentUser.type == 'admin'}
+		customTitle="Account Settings"
+	/>
+{/if}
 
 <style>
 	.dashboard-box {

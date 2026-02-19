@@ -6,7 +6,7 @@ import { getPagingAndSortingParams } from '../shared/getPaginationAndSortingPara
 import type { UserType } from '$lib/types/users';
 import { getWorkspaces } from '$lib/server/db/cruds/workspaces';
 
-export const load: PageServerLoad = (async ({ url }) => {
+export const load: PageServerLoad = (async ({ url, locals }) => {
     const { pageIndex, itemsPerPage, sortBy, sortDirection } = getPagingAndSortingParams(url);
 
     const [users, userCount, workspaces] = await Promise.all([
@@ -18,7 +18,8 @@ export const load: PageServerLoad = (async ({ url }) => {
     return {
         users: users,
         userCount: userCount?.count ?? 0,
-        workspaces: workspaces
+        workspaces: workspaces,
+        adminCount: locals.adminCount ?? 0
     };
 }) satisfies PageServerLoad;
 
@@ -55,8 +56,8 @@ export const actions: Actions = {
             return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
     },
-    
-    update: async ({ request }) => {
+
+    update: async ({ request, locals }) => {
         const formData = Object.fromEntries(await request.formData());
         const { id, username, type, currentPassword, newPassword, securityQuestion, securityQuestionAnswer, preferredWorkspaceId } = formData as {
             id: string,
@@ -72,7 +73,7 @@ export const actions: Actions = {
         const update = {
             username: username,
             password: newPassword.length ? sha256(Buffer.from(newPassword)) : undefined,
-            type: type,
+            type: locals.currentUser.type == 'admin' ? type : undefined,
             securityQuestion: securityQuestion,
             securityQuestionAnswer: securityQuestionAnswer.length ? securityQuestionAnswer : undefined,
             preferredWorkspaceId: preferredWorkspaceId.length ? preferredWorkspaceId : null

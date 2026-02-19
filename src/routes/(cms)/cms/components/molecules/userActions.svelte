@@ -1,17 +1,19 @@
 <script lang="ts">
-	import { ChevronDown, LogOut } from '@lucide/svelte';
+	import { ChevronDown, LogOut, Settings } from '@lucide/svelte';
 	import CustomIcon from '$cmsComponents/atoms/customIcons/customIcon.svelte';
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import { enhance } from '$app/forms';
 	import Avatar from '$cmsComponents/molecules/avatar.svelte';
+	import type { User } from '$lib/server/db/schema/users';
+	import EditUserDialog from '../../users/components/editUserDialog.svelte';
+	import type { Workspace } from '$lib/server/db/schema/workspaces';
 
-	const { username, userImageUrl }: {
-		username: string;
-		userImageUrl?: string;
-	} = $props();
+	const { user, workspaces }: { user: User; workspaces: Workspace[] } = $props();
 
 	let userDropDownOpen = $state(false);
 	let submitting = $state(false);
+
+	let editUserDialogVisible = $state(false);
 </script>
 
 <div class="user-actions">
@@ -21,17 +23,14 @@
 
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div
-		class="dropdown {userDropDownOpen ? 'active' : ''}"
-		onclick={() => (userDropDownOpen = !userDropDownOpen)}
-	>
-		<p>{username}</p>
+	<div class="dropdown {userDropDownOpen ? 'active' : ''}" onclick={() => (userDropDownOpen = !userDropDownOpen)}>
+		<p>{user.username}</p>
 		<Avatar size={40} iconSize={15} />
 		<ChevronDown size={18} class="dropdown-chevron" />
 
 		{#if userDropDownOpen || submitting}
 			<div class="content">
-				<form method="post"	action="/login?/logout"	use:enhance>
+				<form method="post" action="/login?/logout" use:enhance>
 					<Button
 						type="submit"
 						style="transparent"
@@ -41,10 +40,28 @@
 						loading={submitting}
 					/>
 				</form>
+				<Button
+					type="submit"
+					style="transparent"
+					title="Settings"
+					onclick={() => (editUserDialogVisible = true)}
+					icon={Settings}
+					loading={submitting}
+				/>
 			</div>
 		{/if}
 	</div>
 </div>
+
+{#if editUserDialogVisible}
+	<EditUserDialog
+		userToEdit={user}
+		closeCallback={() => (editUserDialogVisible = false)}
+		{workspaces}
+		canEditType={user.type == 'admin'}
+		customTitle="Account Settings"
+	/>
+{/if}
 
 <style>
 	.user-actions {
@@ -101,6 +118,8 @@
 				border: var(--default-border);
 				border-bottom-left-radius: var(--border-radius-s);
 				border-bottom-right-radius: var(--border-radius-s);
+				display: grid;
+				grid-gap: var(--padding-5);
 			}
 
 			@media (hover: hover) and (pointer: fine) {

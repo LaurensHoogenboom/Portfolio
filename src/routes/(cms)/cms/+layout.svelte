@@ -13,9 +13,9 @@
 
 	$effect.pre(() => {
 		currentWorkspace.userWorkspaces = data.userWorkspaces;
-		currentWorkspace.userType = data.userType ?? 'default';
+		currentWorkspace.userType = data.currentUser.type ?? 'default';
 		if (!currentWorkspace.currentWorkspaceId) {
-			currentWorkspace.currentWorkspaceId = data.preferredWorkspaceId ?? data.userWorkspaces[0].id;
+			currentWorkspace.currentWorkspaceId = data.currentUser.preferredWorkspaceId ?? data.userWorkspaces[0].id;
 		}
 	});
 
@@ -52,8 +52,8 @@
 				/>
 			{/if}
 
-			{#if data.username}
-				<UserActions username={data.username} />
+			{#if data.currentUser.username}
+				<UserActions user={data.currentUser} workspaces={data.userWorkspaces} />
 			{/if}
 
 			<NotificationContainer />

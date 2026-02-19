@@ -14,7 +14,19 @@
 		preferredWorkspaceId: string | null;
 	}
 
-	let { closeCallback, userToEdit, workspaces }: { closeCallback: () => void; userToEdit: IUserToEdit; workspaces: Workspace[] } = $props();
+	let {
+		closeCallback,
+		userToEdit,
+		workspaces,
+		canEditType = false,
+		customTitle
+	}: {
+		closeCallback: () => void;
+		userToEdit: IUserToEdit;
+		workspaces: Workspace[];
+		canEditType?: boolean;
+		customTitle?: string;
+	} = $props();
 
 	let selectedUserType: UserType = $state(userToEdit.type);
 	let filteredWorkspaces = $derived(selectedUserType == 'default' ? workspaces.filter((n) => n.adminRequired == false) : workspaces);
@@ -29,7 +41,7 @@
 	]);
 </script>
 
-<EditDialog {closeCallback} itemTitle={userToEdit.username} itemTitleKey="username">
+<EditDialog {closeCallback} itemTitle={userToEdit.username} itemTitleKey="username" customRoute="/cms/users?/update" {customTitle}>
 	<input type="hidden" name="id" value={userToEdit.id} />
 
 	<div class="grid-container columns-2">
@@ -39,14 +51,16 @@
 			</fieldset>
 
 			<fieldset>
-				<LabelInputGroup
-					type="select"
-					name="type"
-					label="Type"
-					selectOptions={userTypeSelectOptions}
-					required={true}
-					bind:value={selectedUserType}
-				/>
+				{#if canEditType}
+					<LabelInputGroup
+						type="select"
+						name="type"
+						label="Type"
+						selectOptions={userTypeSelectOptions}
+						required={true}
+						bind:value={selectedUserType}
+					/>
+				{/if}
 
 				{#if workSpaceSelectOptions && workSpaceSelectOptions.length > 0}
 					<LabelInputGroup

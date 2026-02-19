@@ -23,8 +23,8 @@
 	};
 
 	let configContext: IConfigContext = {
-		userId: data.userId,
-		userType: data.userType,
+		userId: data.currentUser.id,
+		userType: data.currentUser.type,
 		adminCount: data.adminCount
 	};
 </script>
@@ -46,7 +46,12 @@
 </main>
 
 {#if editDialogVisible && userToEdit}
-	<EditUserDialog closeCallback={() => (userToEdit = undefined)} {userToEdit} workspaces={data.workspaces} />
+	<EditUserDialog
+		closeCallback={() => (userToEdit = undefined)}
+		{userToEdit}
+		workspaces={data.workspaces}
+		canEditType={data.currentUser.type == 'admin'}
+	/>
 {/if}
 
 {#if ui.createDialogVisible}

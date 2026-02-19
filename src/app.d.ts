@@ -1,19 +1,16 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
 
+import type { User } from "$lib/server/db/schema/users";
 import type { IPortfolioItem, PortfolioItemType } from "$lib/types/portfolio";
-import type { UserType } from "$lib/types/users";
 
 declare global {
 	namespace App {
 		// interface Error {}
 		
 		interface Locals {
-			username?: string;
-			userId?: string;
-			userType?: UserType;
+			currentUser: User;
 			adminCount?: number;
-			preferredWorkspaceId?: string;
 		}
 
 		// interface PageData {}
