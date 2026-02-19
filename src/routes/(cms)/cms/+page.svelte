@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import Button from '$cmsComponents/atoms/button.svelte';
 	import PageToolbar from '$cmsComponents/organisms/pageToolbar.svelte';
-	import { ChevronRight, LogOut, Settings } from '@lucide/svelte';
+	import { ChevronRight, ExternalLink, LogOut, Settings } from '@lucide/svelte';
 	import type { PageData } from './$types';
 	import DataList from '$cmsComponents/organisms/dataList.svelte';
 	import { usersTableUIConfig } from '$lib/configs/users';
@@ -57,6 +57,7 @@
 					enableSorting={false}
 					style="transparent"
 				/>
+				<Button type="goto" url="/cms/users" style="transparent" title="View All" icon={ExternalLink} CSSClass="more-data-button" />
 			{:else}
 				<DataList
 					data={data.mostViewedPortfolioItems}
@@ -68,6 +69,7 @@
 					enableSorting={false}
 					style="transparent"
 				/>
+				<Button type="goto" url="/cms/portfolio" style="transparent" title="View All" icon={ExternalLink} CSSClass="more-data-button" />
 			{/if}
 		</DashboardBox>
 
@@ -114,5 +116,14 @@
 		display: flex;
 		flex-direction: column;
 		grid-gap: var(--padding-4);
+	}
+
+	:global(.more-data-button) {
+		justify-self: flex-end;
+		color: var(--primary-base);
+
+		:global(svg) {
+			color: var(--primary-base);
+		}
 	}
 </style>
