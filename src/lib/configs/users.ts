@@ -10,23 +10,9 @@ const usersTableUIConfig: TableConfig<User> = {
         visible: true,
         sortable: true
     },
-    createdAt: {
-        label: 'Created At',
-        priority: 2,
-        visible: true,
-        sortable: true,
-        format: toFullDataTimeString
-    },
-    updatedAt: {
-        label: 'Updated At',
-        priority: 3,
-        visible: true,
-        sortable: true,
-        format: toFullDataTimeString
-    },
     type: {
         label: 'Type',
-        priority: 4,
+        priority: 2,
         visible: true,
         sortable: true,
         format: startWithUpperCase,
@@ -34,10 +20,31 @@ const usersTableUIConfig: TableConfig<User> = {
     },
     preferredWorkspace: {
         label: 'Preferred Workspace',
-        priority: 5,
+        priority: 3,
         visible: true,
         sortable: true,
         format: (v) => v ? v.title : 'None'
+    },
+    createdAt: {
+        label: 'Created At',
+        priority: 4,
+        visible: true,
+        sortable: true,
+        format: toFullDataTimeString
+    },
+    updatedAt: {
+        label: 'Updated At',
+        priority: 5,
+        visible: true,
+        sortable: true,
+        format: toFullDataTimeString
+    },
+    lastLogin: {
+        label: 'Last login',
+        priority: 6,
+        visible: true,
+        sortable: true,
+        format: (val) => val ? toFullDataTimeString(val) : 'None'
     },
     getLabel: (row) => row.username,
     renderActions: (row, context) => {

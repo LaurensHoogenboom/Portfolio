@@ -10,11 +10,11 @@
 	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
 	import { updatePageParams } from '$lib/utils/updatePageParams';
 	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
+	import { globalUIState } from '../shared/states/globalUIState.svelte';
 
 	let { data }: { data: PageData } = $props();
 
-	let createFormVisible = $state(false);
-
+	const ui = globalUIState;
 	const selectOptions: ISelectOption[] = [{ value: 'all', title: 'All' }, ...(uploadSelectOptions as ISelectOption[])];
 </script>
 
@@ -30,7 +30,7 @@
 			updatePageParams({ fileType: target.value }, true);
 		}}
 	/>
-	<Button type="button" style="primary" title="Add" icon={Plus} onclick={() => (createFormVisible = true)} />
+	<Button type="button" style="primary" title="Add" icon={Plus} onclick={() => (ui.createDialogVisible = true)} />
 </PageToolbar>
 
 <main>
@@ -43,6 +43,6 @@
 	/>
 </main>
 
-{#if createFormVisible}
-	<CreateUploadDialog closeCallback={() => (createFormVisible = false)} />
+{#if ui.createDialogVisible}
+	<CreateUploadDialog closeCallback={() => (ui.createDialogVisible = false)} />
 {/if}

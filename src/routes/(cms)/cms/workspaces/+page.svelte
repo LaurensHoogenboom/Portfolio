@@ -7,12 +7,13 @@
 	import type { PageData } from './$types';
 	import CreateWorkspaceDialog from './components/createWorkspaceDialog.svelte';
 	import EditWorkspaceDialog, { type IWorkspaceToEdit } from './components/editWorkspaceDialog.svelte';
+	import { globalUIState } from '../shared/states/globalUIState.svelte';
 
 	let { data }: { data: PageData } = $props();
 
-	let createFormVisible = $state(false);
 	let workspaceToEdit: IWorkspaceToEdit | undefined = $state();
-	let editFormVisible = $derived(!!workspaceToEdit);
+	let editDialogVisible = $derived(!!workspaceToEdit);
+	const ui = globalUIState;
 
 	const openEditDialog = (id: string) => {
 		let workspace = data.workspaces.find((w) => w.id == id);
@@ -21,7 +22,7 @@
 </script>
 
 <PageToolbar>
-    <Button type="button" title="Add" icon={Plus} onclick={() => createFormVisible = true} style="primary" />
+    <Button type="button" title="Add" icon={Plus} onclick={() => ui.createDialogVisible = true} style="primary" />
 </PageToolbar>
 
 <main>
@@ -35,10 +36,10 @@
 	/>
 </main>
 
-{#if createFormVisible}
-	<CreateWorkspaceDialog closeCallback={() => (createFormVisible = false)} />
+{#if ui.createDialogVisible}
+	<CreateWorkspaceDialog closeCallback={() => (ui.createDialogVisible = false)} />
 {/if}
 
-{#if editFormVisible && workspaceToEdit}
+{#if editDialogVisible && workspaceToEdit}
 	<EditWorkspaceDialog {workspaceToEdit} closeCallback={() => (workspaceToEdit = undefined)} />
 {/if}

@@ -4,15 +4,12 @@ import type { LayoutServerLoad } from '../cms/$types';
 import { workspaces } from '$lib/server/db/schema/workspaces';
 
 export const load: LayoutServerLoad = (async ({ locals }) => {
-    const adminWorkspaceFilter = locals.userType == 'default' ? [eq(workspaces.adminRequired, false)] : []
+    const adminWorkspaceFilter = locals.currentUser.type == 'default' ? [eq(workspaces.adminRequired, false)] : []
     const userWorkspaces = await getWorkspaces('all', undefined, ...adminWorkspaceFilter);
 
     return {
-        username: locals.username,
-        userId: locals.userId,
-        userType: locals.userType,
-        adminCount: locals.adminCount,
-        preferredWorkspaceId: locals.preferredWorkspaceId,
+        currentUser: locals.currentUser,
+        adminCount: locals.adminCount ?? 0,
         userWorkspaces: userWorkspaces
     }
 }) satisfies LayoutServerLoad;

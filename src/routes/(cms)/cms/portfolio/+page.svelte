@@ -12,12 +12,13 @@
 	import DataList from '$cmsComponents/organisms/dataList.svelte';
 	import { updatePageParams } from '$lib/utils/updatePageParams';
 	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
+	import { globalUIState } from '../shared/states/globalUIState.svelte';
 
 	let { data }: { data: PageData } = $props();
 
 	let portfolioItemToEdit: IPortfolioItemToEdit | undefined = $state();
-	let editFormVisible = $derived(!!portfolioItemToEdit);
-	let createFormVisible = $state(false);
+	let editDialogVisible = $derived(!!portfolioItemToEdit);
+	const ui = globalUIState;
 
 	const openEditDialog = (id: string) => {
 		const portfolioItem = data.portfolioItems.find((pItem) => pItem.id == id);
@@ -53,7 +54,7 @@
 			updatePageParams({ category: target.value }, true);
 		}}
 	/>
-	<Button title="Add" type="button" style="primary" onclick={() => (createFormVisible = true)} icon={Plus} />
+	<Button title="Add" type="button" style="primary" onclick={() => (ui.createDialogVisible = true)} icon={Plus} />
 </PageToolbar>
 
 <main>
@@ -68,10 +69,10 @@
 	/>
 </main>
 
-{#if editFormVisible && portfolioItemToEdit}
+{#if editDialogVisible && portfolioItemToEdit}
 	<EditPortfolioItemDialog {portfolioItemToEdit} closeCallback={() => (portfolioItemToEdit = undefined)} />
 {/if}
 
-{#if createFormVisible}
-	<CreatePortfolioItemDialog closeCallback={() => (createFormVisible = false)} />
+{#if ui.createDialogVisible}
+	<CreatePortfolioItemDialog closeCallback={() => (ui.createDialogVisible = false)} />
 {/if}

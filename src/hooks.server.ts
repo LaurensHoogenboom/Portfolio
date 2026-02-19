@@ -30,10 +30,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     const user = userId ? await getUserById(userId) : undefined;
 
     if (user) {
-        event.locals.username = user ? user.username : undefined;
-        event.locals.userId = user ? user.id : undefined;
-        event.locals.userType = user ? user.type : undefined;
-        event.locals.preferredWorkspaceId = user && user.preferredWorkspaceId ? user.preferredWorkspaceId : undefined;
+        event.locals.currentUser = user;
 
         if (url.pathname.startsWith('/cms')) {
             event.locals.adminCount = (await getUserCount(eq(users.type, 'admin')))?.count ?? undefined;

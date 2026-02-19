@@ -18,7 +18,7 @@ export const load: PageServerLoad = (async ({ url }) => {
     return {
         users: users,
         userCount: userCount?.count ?? 0,
-        workspaces: workspaces
+        workspaces: workspaces,
     };
 }) satisfies PageServerLoad;
 
@@ -55,8 +55,8 @@ export const actions: Actions = {
             return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
     },
-    
-    update: async ({ request }) => {
+
+    update: async ({ request, locals }) => {
         const formData = Object.fromEntries(await request.formData());
         const { id, username, type, currentPassword, newPassword, securityQuestion, securityQuestionAnswer, preferredWorkspaceId } = formData as {
             id: string,
@@ -72,7 +72,7 @@ export const actions: Actions = {
         const update = {
             username: username,
             password: newPassword.length ? sha256(Buffer.from(newPassword)) : undefined,
-            type: type,
+            type: locals.currentUser.type == 'admin' ? type : undefined,
             securityQuestion: securityQuestion,
             securityQuestionAnswer: securityQuestionAnswer.length ? securityQuestionAnswer : undefined,
             preferredWorkspaceId: preferredWorkspaceId.length ? preferredWorkspaceId : null

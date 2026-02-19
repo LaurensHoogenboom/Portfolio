@@ -10,21 +10,23 @@
 		gridStyle,
 		hasActions,
 		sortCallback,
-		isSorting = false
+		isSorting = false,
+		style
 	}: {
 		config: TableConfig<T>;
 		sortedKeys: (keyof T)[];
 		sortState: SortState<T>;
 		gridStyle: string;
 		hasActions: boolean;
-		sortCallback: (key: keyof T) => void;
-		isSorting?: boolean
+		sortCallback?: (key: keyof T) => void;
+		isSorting?: boolean;
+		style?: 'default' | 'transparent';
 	} = $props();
 </script>
 
-<div class="box data-list-header" style={gridStyle}>
+<div class="data-list-header {style == 'default' ? 'box' : ''} {style}" style={gridStyle}>
 	{#each sortedKeys as key}
-		{#if config[key]?.sortable}
+		{#if config[key]?.sortable && sortCallback}
 			<Button
 				type="button"
 				style="transparent"
@@ -50,9 +52,19 @@
 		position: sticky;
 		top: calc(var(--padding-1) + var(--padding-2));
 		z-index: 3;
-		padding: var(--padding-4) var(--padding-3);
 		align-items: center;
 		grid-gap: var(--padding-2);
+
+		&.box {
+			padding: var(--padding-4) var(--padding-3);
+		}
+
+		&.transparent {
+			border-top: var(--default-border);
+			border-bottom: var(--default-border);
+			padding: var(--padding-3) 0;
+			padding-left: var(--padding-5);
+		}
 
 		p {
 			padding-bottom: 0;

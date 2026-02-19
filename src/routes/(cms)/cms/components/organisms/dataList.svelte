@@ -15,14 +15,32 @@
 		writeAction?: (id: string) => void;
 		deleteAction?: string;
 		configContext?: IConfigContext;
+		showFooter?: Boolean;
+		numberOfColumnsVisible?: 'auto' | number;
+		enableSorting?: Boolean;
+		style?: 'default' | 'transparent';
 	}
 
-	const { data, config, itemNamePlural, totalItemCount, editAction, writeAction, deleteAction, configContext }: Props = $props();
+	const {
+		data,
+		config,
+		itemNamePlural,
+		totalItemCount,
+		editAction,
+		writeAction,
+		deleteAction,
+		configContext,
+		showFooter = true,
+		numberOfColumnsVisible = 'auto',
+		enableSorting = true,
+		style = 'default'
+	}: Props = $props();
 
 	const sortedKeys = $derived(
 		(Object.keys(config) as Array<keyof T>)
 			.filter((key) => config[key]?.visible)
 			.sort((a, b) => (config[a]?.priority ?? 0) - (config[b]?.priority ?? 0))
+			.splice(0, typeof numberOfColumnsVisible == 'number' ? numberOfColumnsVisible : Object.keys(config).length)
 	);
 
 	const gridStyle = $derived(
@@ -59,7 +77,7 @@
 	});
 </script>
 
-<div class="data-list">
+<div class="data-list {style}">
 	{#if data.length}
 		<DataListHeader
 			{config}
@@ -67,15 +85,27 @@
 			{sortState}
 			{gridStyle}
 			hasActions={editAction || writeAction || deleteAction ? true : false}
-			sortCallback={toggleSort}
+			sortCallback={enableSorting ? toggleSort : undefined}
 			{isSorting}
+			{style}
 		/>
 	{/if}
 
-	<DataListBody {data} {config} {sortedKeys} {gridStyle} {itemNamePlural} {editAction} {writeAction} {deleteAction} {configContext} />
+	<DataListBody
+		{data}
+		{config}
+		{sortedKeys}
+		{gridStyle}
+		{itemNamePlural}
+		{editAction}
+		{writeAction}
+		{deleteAction}
+		{configContext}
+		{style}
+	/>
 
-	{#if data.length}
-		<DataListFooter {totalItemCount} />
+	{#if data.length && showFooter}
+		<DataListFooter {totalItemCount} {style} />
 	{/if}
 </div>
 
@@ -83,5 +113,9 @@
 	.data-list {
 		display: grid;
 		grid-gap: var(--padding-1);
+
+		&.transparent {
+			grid-gap: 0;
+		}
 	}
 </style>

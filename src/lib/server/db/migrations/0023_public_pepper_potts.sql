@@ -1,0 +1,1 @@
+ALTER TABLE `workspaces` ADD `dashboardData` text DEFAULT 'mostViewedPortfolioItems' NOT NULL;

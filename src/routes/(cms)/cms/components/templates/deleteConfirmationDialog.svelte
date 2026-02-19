@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { CircleAlert } from '@lucide/svelte';
-	import { notifyFormActionSuccess } from '../../shared/globalNotifications.svelte';
+	import { notifyFormActionSuccess } from '../../shared/states/globalNotifications.svelte';
 	import Button from '../atoms/button.svelte';
 	import Notice from '../atoms/notice.svelte';
 	import Dialog from '../organisms/dialog.svelte';

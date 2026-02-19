@@ -6,4 +6,16 @@
     &.columns-2 {
         grid-template-columns: repeat(2, minmax(var(--column-min-width), 1fr));
     }
+
+    &.columns-3 {
+        grid-template-columns: repeat(3, minmax(var(--column-min-width), 1fr));
+    }
+
+    .span-2 {
+        grid-column: auto / span 2;
+    }
+
+    .span-3 {
+        grid-column: auto / span 3;
+    }
 }

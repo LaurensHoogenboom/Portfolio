@@ -1,0 +1,1 @@
+export type DashboardPreviewDataType = "recentLogins" | "mostViewedPortfolioItems";
