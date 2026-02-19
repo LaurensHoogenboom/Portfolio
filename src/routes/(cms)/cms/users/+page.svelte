@@ -9,12 +9,13 @@
 	import { usersTableUIConfig } from '$lib/configs/users';
 	import DataList from '$cmsComponents/organisms/dataList.svelte';
 	import type { IConfigContext } from '$lib/types/dataList';
+	import { globalUIState } from '../shared/states/globalUIState.svelte';
 
 	let { data }: { data: PageData } = $props();
 
-	let createFormVisible = $state(false);
 	let userToEdit: IUserToEdit | undefined = $state();
-	let editFormVisible = $derived(!!userToEdit);
+	let editDialogVisible = $derived(!!userToEdit);
+	const ui = globalUIState;
 
 	const openEditDialog = (id: string) => {
 		let user = data.users.find((u) => u.id == id);
@@ -29,7 +30,7 @@
 </script>
 
 <PageToolbar>
-	<Button title="Add" type="button" style="primary" onclick={() => (createFormVisible = true)} icon={Plus} />
+	<Button title="Add" type="button" style="primary" onclick={() => (ui.createDialogVisible = true)} icon={Plus} />
 </PageToolbar>
 
 <main>
@@ -44,10 +45,10 @@
 	/>
 </main>
 
-{#if editFormVisible && userToEdit}
+{#if editDialogVisible && userToEdit}
 	<EditUserDialog closeCallback={() => (userToEdit = undefined)} {userToEdit} workspaces={data.workspaces} />
 {/if}
 
-{#if createFormVisible}
-	<CreateUserDialog closeCallback={() => (createFormVisible = false)} workspaces={data.workspaces} />
+{#if ui.createDialogVisible}
+	<CreateUserDialog closeCallback={() => (ui.createDialogVisible = false)} workspaces={data.workspaces} />
 {/if}

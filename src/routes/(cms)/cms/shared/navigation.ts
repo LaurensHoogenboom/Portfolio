@@ -1,4 +1,6 @@
+import { goto } from "$app/navigation";
 import type { UserType } from "$lib/types/users";
+import { globalUIState } from "./states/globalUIState.svelte";
 
 export interface IPrimaryPageAction {
     title: string;
@@ -13,10 +15,21 @@ export interface INavigationItem {
     dashboardQuickAction?: IPrimaryPageAction;
 }
 
-const portfolioQuickAction = () => { };
-const uploadsQuickAction = () => { };
-const usersQuickAction = () => { };
-const workspacesQuickAction = () => { };
+const portfolioQuickAction = () => {
+    goto('/cms/portfolio').then(() => globalUIState.createDialogVisible = true);
+};
+
+const uploadsQuickAction = () => {
+    goto('/cms/uploads').then(() => globalUIState.createDialogVisible = true);
+};
+
+const usersQuickAction = () => {
+    goto('/cms/users').then(() => globalUIState.createDialogVisible = true);
+};
+
+const workspacesQuickAction = () => {
+    goto('/cms/workspaces').then(() => globalUIState.createDialogVisible = true);
+};
 
 export const navigationItems: INavigationItem[] = [
     { id: '1', title: 'Dashboard', url: '/cms' },
