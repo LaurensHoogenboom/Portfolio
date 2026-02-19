@@ -21,7 +21,7 @@
 	let isArticle = $state(portfolioItemToEdit.isArticle);
 
 	$effect(() => {
-		isArticle = portfolioItemType == 'art' ? false : true;
+		isArticle = portfolioItemType == 'art' ? false : isArticle;
 	});
 </script>
 

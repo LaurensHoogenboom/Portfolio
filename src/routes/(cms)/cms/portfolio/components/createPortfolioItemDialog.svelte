@@ -10,7 +10,7 @@
 	let isArticle = $state(true);
 
 	$effect(() => {
-		isArticle = portfolioItemCategory == 'art' ? false : true;
+		isArticle = portfolioItemCategory == 'art' ? false : isArticle;
 	});
 </script>
 

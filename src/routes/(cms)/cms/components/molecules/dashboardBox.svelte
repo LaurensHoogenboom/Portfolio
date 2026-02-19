@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	const { children, action, title, columnCount }: { children: Snippet; title: string; action?: () => void; columnCount?: number } = $props();
+	const { children, title, columnCount }: { children: Snippet; title: string; columnCount?: number } = $props();
 </script>
 
 <div class="box dashboard-box span-{columnCount}">

@@ -50,7 +50,7 @@
 				<DataList
 					data={data.recentLogins}
 					config={dashboardUserTableUIConfig}
-					totalItemCount={data.totalUserCount?.count ?? 0}
+					totalItemCount={data.totalLoginCount?.count ?? 0}
 					itemNamePlural="Users"
 					showFooter={false}
 					numberOfColumnsVisible={4}
@@ -62,7 +62,7 @@
 				<DataList
 					data={data.mostViewedPortfolioItems}
 					config={portfolioTableUIConfig}
-					totalItemCount={data.mostViewedPortfolioItems.length}
+					totalItemCount={data.totalPortfolioItemCount?.count ?? 0}
 					itemNamePlural="Portfolio Items"
 					showFooter={false}
 					numberOfColumnsVisible={4}
