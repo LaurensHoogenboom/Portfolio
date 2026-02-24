@@ -5,17 +5,25 @@ import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { uploadImage } from '$lib/utils/uploads/image/uploadImage';
 import { deleteFileAndUpload } from '$lib/utils/uploads/delete';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, like, or } from 'drizzle-orm';
 import { getPagingAndSortingParams } from '../shared/getPaginationAndSortingParams';
 
 export const load = (async ({ url }) => {
     const { pageIndex, itemsPerPage, sortBy, sortDirection } = getPagingAndSortingParams(url);
     const category = url.searchParams.get('category');
+    const searchString = url.searchParams.get('searchString');
 
-    const filters = [
-        category && isPortfolioItemType(category) ? eq(portfolioItemTable.type, category) : undefined
-    ].filter(Boolean);
+    const searchFilter = searchString
+        ? or(
+            like(portfolioItemTable.title, `%${searchString}%`),
+            like(portfolioItemTable.description, `%${searchString}%`)
+        ) : undefined;
 
+    const categoryFilter = category && isPortfolioItemType(category)
+        ? eq(portfolioItemTable.type, category)
+        : undefined;
+
+    const filters = [searchFilter, categoryFilter].filter(Boolean);
     const where = filters.length > 0 ? and(...filters) : undefined;
 
     const [portfolioItems, portfolioItemCount] = await Promise.all([

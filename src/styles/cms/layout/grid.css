@@ -2,13 +2,18 @@
     display: grid;
     grid-gap: var(--padding-1);
     --column-min-width: 200px;
+
+    &.auto-size-columns {
+        --column-max-width: max-content;
+        --column-min-width: min-content;
+    }
     
     &.columns-2 {
-        grid-template-columns: repeat(2, minmax(var(--column-min-width), 1fr));
+        grid-template-columns: repeat(2, minmax(var(--column-min-width), var(--column-max-width, 1fr)));
     }
 
     &.columns-3 {
-        grid-template-columns: repeat(3, minmax(var(--column-min-width), 1fr));
+        grid-template-columns: repeat(3, minmax(var(--column-min-width), var(--column-max-width, 1fr)));
     }
 
     .span-2 {

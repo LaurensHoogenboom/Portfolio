@@ -6,6 +6,10 @@ input, textarea, select {
         border-color: var(--primary-base);
         box-shadow: var(--shadow-float-3);
     }
+
+    &::placeholder {
+        color: var(--grey-text-1);
+    }
 }
 
 textarea {

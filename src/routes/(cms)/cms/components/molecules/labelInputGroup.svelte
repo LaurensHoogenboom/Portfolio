@@ -4,16 +4,19 @@
 	import Select from '$cmsComponents/atoms/inputs/select.svelte';
 	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 	import Instruction from '$cmsComponents/atoms/instruction.svelte';
-	import { Type } from '@lucide/svelte';
+	import type { Icon as IconType } from '@lucide/svelte';
 
 	let {
 		name,
 		type,
 		value = $bindable(),
 		label,
+		labelPosition = 'sibling',
+		icon,
 		min,
 		max,
 		callback,
+		callbackEvent = 'onchange',
 		required = false,
 		instruction,
 		selectOptions,
@@ -24,9 +27,12 @@
 		type: 'text' | 'textarea' | 'password' | 'select' | 'select-multiple' | 'file' | 'number' | 'boolean';
 		value?: string | string[] | File | number | null | boolean;
 		label: string;
+		labelPosition?: 'sibling' | 'placeholder';
+		icon?: typeof IconType;
 		min?: number;
 		max?: number;
 		callback?: (e: Event) => void;
+		callbackEvent?: 'onchange' | 'oninput';
 		required?: boolean;
 		instruction?: string;
 		selectOptions?: ISelectOption[];
@@ -37,15 +43,42 @@
 	let validationWarning: string | undefined = $state();
 </script>
 
-<div class="label-input-group {layout}">
-	{#if type != 'boolean'}
+<div class="label-input-group {layout} {icon ? 'has-icon' : undefined}">
+	{#if type != 'boolean' && labelPosition == 'sibling'}
 		<label for={name}>{label}</label>
 	{/if}
 
+	{#if icon}
+		{@const InputIcon = icon}
+		<InputIcon size={16} />
+	{/if}
+
 	{#if type == 'text' || type == 'password' || type == 'number'}
-		<input id={name} class="inset" {type} {name} bind:value onchange={callback} {min} {max} {required} />
+		<input
+			id={name}
+			class="inset"
+			{type}
+			{name}
+			bind:value
+			oninput={callbackEvent == 'oninput' ? callback : undefined}
+			onchange={callback}
+			{min}
+			{max}
+			{required}
+			placeholder={labelPosition == 'placeholder' ? label : undefined}
+		/>
 	{:else if type == 'textarea'}
-		<textarea rows="5" class="inset" bind:value {name} onchange={callback} maxlength={max} {required}></textarea>
+		<textarea
+			rows="5"
+			class="inset"
+			bind:value
+			{name}
+			oninput={callbackEvent == 'oninput' ? callback : undefined}
+			onchange={callback}
+			maxlength={max}
+			{required}
+			placeholder={labelPosition == 'placeholder' ? label : undefined}
+		></textarea>
 	{:else if (type == 'select' || type == 'select-multiple') && (typeof value == 'string' || value == undefined || Array.isArray(value) || typeof value == 'number')}
 		<Select {name} {required} type={type == 'select-multiple' ? 'multiple' : 'single'} {selectOptions} {callback} bind:value />
 	{:else if type == 'file' && (typeof value == 'string' || value == undefined || value instanceof File)}
@@ -86,6 +119,19 @@
 
 			label {
 				padding-bottom: 0;
+			}
+		}
+
+		&.has-icon {
+			position: relative;
+
+			input, textarea {
+				padding-left: 35px;
+			}
+
+			:global(svg) {
+				position: absolute;
+				left: 10px;
 			}
 		}
 	}

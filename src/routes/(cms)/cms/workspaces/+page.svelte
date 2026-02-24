@@ -22,7 +22,8 @@
 </script>
 
 <PageToolbar>
-    <Button type="button" title="Add" icon={Plus} onclick={() => ui.createDialogVisible = true} style="primary" />
+	<div></div>
+	<Button type="button" title="Add" icon={Plus} onclick={() => (ui.createDialogVisible = true)} style="primary" />
 </PageToolbar>
 
 <main>

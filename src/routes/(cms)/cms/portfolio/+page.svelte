@@ -13,6 +13,7 @@
 	import { updatePageParams } from '$lib/utils/updatePageParams';
 	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 	import { globalUIState } from '../shared/states/globalUIState.svelte';
+	import SearchBox from '$cmsComponents/atoms/inputs/searchBox.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -43,17 +44,21 @@
 </script>
 
 <PageToolbar>
-	<LabelInputGroup
-		type="select"
-		label="Category"
-		name="category"
-		layout="horizontal"
-		{selectOptions}
-		callback={(e) => {
-			const target = e.target as HTMLSelectElement;
-			updatePageParams({ category: target.value }, true);
-		}}
-	/>
+	<div class="grid-container columns-2 auto-size-columns">
+		<LabelInputGroup
+			type="select"
+			label="Category"
+			name="category"
+			layout="horizontal"
+			{selectOptions}
+			callback={(e) => {
+				const target = e.target as HTMLSelectElement;
+				updatePageParams({ category: target.value }, true);
+			}}
+		/>
+		<SearchBox />
+	</div>
+
 	<Button title="Add" type="button" style="primary" onclick={() => (ui.createDialogVisible = true)} icon={Plus} />
 </PageToolbar>
 

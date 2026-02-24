@@ -25,7 +25,8 @@
 
 		.page-width-container {
 			display: flex;
-			justify-content: flex-end;
+			justify-content: space-between;
+			padding: 0 var(--padding-3);
 		}
 	}
 </style>
