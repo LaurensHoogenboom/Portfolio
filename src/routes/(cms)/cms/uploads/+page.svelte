@@ -11,6 +11,7 @@
 	import { updatePageParams } from '$lib/utils/updatePageParams';
 	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 	import { globalUIState } from '../shared/states/globalUIState.svelte';
+	import SearchBox from '$cmsComponents/atoms/inputs/searchBox.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -19,17 +20,21 @@
 </script>
 
 <PageToolbar>
-	<LabelInputGroup
-		{selectOptions}
-		type="select"
-		label="File Type"
-		name="fileType"
-		layout="horizontal"
-		callback={(e) => {
-			const target = e.target as HTMLSelectElement;
-			updatePageParams({ fileType: target.value }, true);
-		}}
-	/>
+	<div class="grid-container columns-2 auto-size-columns">
+		<LabelInputGroup
+			{selectOptions}
+			type="select"
+			label="File Type"
+			name="fileType"
+			layout="horizontal"
+			callback={(e) => {
+				const target = e.target as HTMLSelectElement;
+				updatePageParams({ fileType: target.value }, true);
+			}}
+		/>
+		<SearchBox />
+	</div>
+
 	<Button type="button" style="primary" title="Add" icon={Plus} onclick={() => (ui.createDialogVisible = true)} />
 </PageToolbar>
 

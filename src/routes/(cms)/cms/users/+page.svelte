@@ -30,6 +30,7 @@
 </script>
 
 <PageToolbar>
+	<div></div>
 	<Button title="Add" type="button" style="primary" onclick={() => (ui.createDialogVisible = true)} icon={Plus} />
 </PageToolbar>
 

@@ -12,15 +12,24 @@ import { uploadDocument } from '$lib/utils/uploads/document/uploadDocument';
 import { and, eq } from 'drizzle-orm';
 import { uploads as uploadsTable } from '$lib/server/db/schema/uploads';
 import { getPagingAndSortingParams } from '../shared/getPaginationAndSortingParams';
+import { or, like } from 'drizzle-orm';
 
-export const load = (async ({url}) => {
+export const load = (async ({ url }) => {
     const { pageIndex, itemsPerPage, sortBy, sortDirection } = getPagingAndSortingParams(url);
     const fileType = url.searchParams.get('fileType');
+    const searchString = url.searchParams.get('searchString');
 
-    const filters = [
-        fileType && isUploadFileType(fileType) ? eq(uploadsTable.fileType, fileType) : undefined
-    ].filter(Boolean);
+    const searchFilter = searchString
+        ? or(
+            like(uploadsTable.title, `%${searchString}%`),
+            like(uploadsTable.description, `%${searchString}%`)
+        ) : undefined;
 
+    const fileTypeFilter = fileType && isUploadFileType(fileType)
+        ? eq(uploadsTable.fileType, fileType)
+        : undefined;
+
+    const filters = [searchFilter, fileTypeFilter].filter(Boolean);
     const where = filters.length > 0 ? and(...filters) : undefined;
 
     const [uploads, rawPortfolioItems, uploadCount] = await Promise.all([
@@ -39,9 +48,9 @@ export const load = (async ({url}) => {
     const uploadsWithMeta: UploadWithMeta[] = uploads.map(uItem => ({
         ...uItem,
         isUsed: isUploadInUse(uItem, portfolioItems),
-        url: uItem.fileType == 'document' && uItem.document 
-            ? uItem.document.url 
-            : uItem.fileType == 'image' && uItem.image 
+        url: uItem.fileType == 'document' && uItem.document
+            ? uItem.document.url
+            : uItem.fileType == 'image' && uItem.image
                 ? uItem.image.url
                 : undefined
     }));
@@ -63,7 +72,7 @@ export const load = (async ({url}) => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-    create: async ({request}) => {
+    create: async ({ request }) => {
         const formData = await request.formData();
         const formDataObject = Object.fromEntries(formData);
         const { title, description, type } = formDataObject as {
@@ -81,7 +90,7 @@ export const actions: Actions = {
             } else if (type == 'image') {
                 upload = file && file.size > 0 ? await uploadImage(file, title, description) : undefined;
             }
-            
+
             return {
                 uploadId: upload?.id,
                 uploadTitle: upload?.title
@@ -91,7 +100,7 @@ export const actions: Actions = {
             return fail(422, { error: e instanceof Error ? e.message : 'Unknown error occured.' });
         }
     },
-    delete: async ({request}) => {
+    delete: async ({ request }) => {
         const data = await request.formData();
         const id = data.get('id') as string;
 
