@@ -40,11 +40,9 @@ For the uploads folder the following folder structure is expected:
 docker build -t portfolio .
 ```
 
-While using Docker, an .env file is generated. You don't have to add variables manually.
-
 ## Docker run
 
-If running Docker locally, make sure to set the `ORIGIN` in the Docker file to `http://localhost:3000/`. Otherwise form actions won't work due to CSRF protection.
+If running Docker locally, make sure to set the `ORIGIN` Environment Variable to `http://localhost:3000/`. Otherwise form actions won't work due to CSRF protection.
 
 ### On MacOs/Linux:
 
@@ -68,7 +66,7 @@ docker run -d -p 3000:3000 `
     portfolio
 ```
 
-### On Deployment
+### Database and Content Files
 
 Make sure you bind mount volumes to target `/app/database/` and `/app/uploads/`, and provide the required environment variables.
 
