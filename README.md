@@ -50,6 +50,7 @@ If running Docker locally, make sure to set the `ORIGIN` in the Docker file to `
 
 ```console
 docker run -d -p 3000:3000 \
+    --env-file .env \
     --mount type=bind,source="$(pwd)"/database/,target=/app/database/ \
     --mount type=bind,source="$(pwd)"/uploads/,target=/app/uploads/ \
     --rm --name portfolio \
@@ -60,6 +61,7 @@ docker run -d -p 3000:3000 \
 
 ```console
 docker run -d -p 3000:3000 `
+    --env-file .env `
     --mount type=bind,source="${PWD}/database/",target=/app/database/ `
     --mount type=bind,source="${PWD}/uploads/",target=/app/uploads/ `
     --rm --name portfolio `

@@ -1,5 +1,5 @@
 # configure builder
-FROM node:24-alpine AS builder
+FROM node:22-alpine AS builder
 
 RUN mkdir /app && mkdir /app/database && mkdir /app/uploads
 
@@ -11,7 +11,7 @@ RUN apk add --no-cache python3 make g++
 RUN cd /app && npm install && npm run build
 
 # build actual image
-FROM node:24-alpine 
+FROM node:22-alpine 
 
 RUN mkdir /app
 

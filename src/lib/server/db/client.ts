@@ -1,4 +1,4 @@
-import { building } from '$app/environment';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { BetterSQLite3Database, drizzle } from "drizzle-orm/better-sqlite3";
 import Database from "better-sqlite3";
 import * as portfolioItems from "./schema/portfolioItems";
@@ -16,10 +16,18 @@ const schema = {
 }
 
 type DbClient = BetterSQLite3Database<typeof schema>;
-
 let db: DbClient;
 
-if (!building) {
+let isBuilding = false;
+
+try {
+    const { building } = await import('$app/environment');
+    isBuilding = building;
+} catch (e) {
+    isBuilding = false;
+}
+
+if (!isBuilding) {
     let dbUrl: string | undefined;
 
     try {
