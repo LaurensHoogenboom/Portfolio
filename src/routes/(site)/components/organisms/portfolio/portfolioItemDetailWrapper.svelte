@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Save, X } from '@lucide/svelte';
+	import { Eye, EyeOff, Save, X } from '@lucide/svelte';
 	import Button, { type ButtonActionStatus } from '$siteComponents/atoms/button.svelte';
 	import { slide } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
@@ -11,14 +11,20 @@
 		closeCallback,
 		children,
 		saveCallback,
+		togglePublishedCallback,
 		savingStatus,
-		closingStatus
+		closingStatus,
+		togglePublishStatus,
+		isPublished
 	}: {
 		closeCallback: () => void;
 		children: Snippet;
 		saveCallback?: () => void;
+		togglePublishedCallback?: () => void;
 		savingStatus?: ButtonActionStatus;
 		closingStatus?: ButtonActionStatus;
+		togglePublishStatus?: ButtonActionStatus;
+		isPublished?: boolean;
 	} = $props();
 </script>
 
@@ -33,10 +39,21 @@
 		</div>
 
 		<div class="toolbar">
-			<Button type="submit" style="secondary" icon={X} onclick={closeCallback} actionStatus={closingStatus} />
+			<Button type="submit" style="secondary" icon={X} onclick={closeCallback} actionStatus={closingStatus} hiddenTitle="Close" />
 
 			{#if saveCallback}
-				<Button type="submit" style="secondary" icon={Save} onclick={saveCallback} actionStatus={savingStatus} />
+				<Button type="submit" style="secondary" icon={Save} onclick={saveCallback} actionStatus={savingStatus} hiddenTitle="Save" />
+			{/if}
+
+			{#if togglePublishedCallback}
+				<Button
+					type="submit"
+					style="secondary"
+					icon={isPublished ? EyeOff : Eye}
+					onclick={togglePublishedCallback}
+					actionStatus={togglePublishStatus}
+					hiddenTitle={isPublished ? 'Unpublish' : 'Publish'}
+				/>
 			{/if}
 		</div>
 	</div>

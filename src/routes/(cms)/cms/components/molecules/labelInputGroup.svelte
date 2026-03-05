@@ -5,6 +5,7 @@
 	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 	import Instruction from '$cmsComponents/atoms/instruction.svelte';
 	import type { Icon as IconType } from '@lucide/svelte';
+	import type { Snippet } from 'svelte';
 
 	let {
 		name,
@@ -21,10 +22,11 @@
 		instruction,
 		selectOptions,
 		acceptFile,
-		layout = 'vertical'
+		layout = 'vertical',
+		children
 	}: {
 		name: string;
-		type: 'text' | 'textarea' | 'password' | 'select' | 'select-multiple' | 'file' | 'number' | 'boolean';
+		type?: 'text' | 'textarea' | 'password' | 'select' | 'select-multiple' | 'file' | 'number' | 'boolean';
 		value?: string | string[] | File | number | null | boolean;
 		label: string;
 		labelPosition?: 'sibling' | 'placeholder';
@@ -38,6 +40,7 @@
 		selectOptions?: ISelectOption[];
 		acceptFile?: string;
 		layout?: 'horizontal' | 'vertical';
+		children?: Snippet;
 	} = $props();
 
 	let validationWarning: string | undefined = $state();
@@ -48,50 +51,54 @@
 		<label for={name}>{label}</label>
 	{/if}
 
-	{#if icon}
-		{@const InputIcon = icon}
-		<InputIcon size={16} />
-	{/if}
+	{#if children}
+		{@render children()}
+	{:else}
+		{#if icon}
+			{@const InputIcon = icon}
+			<InputIcon size={16} />
+		{/if}
 
-	{#if type == 'text' || type == 'password' || type == 'number'}
-		<input
-			id={name}
-			class="inset"
-			{type}
-			{name}
-			bind:value
-			oninput={callbackEvent == 'oninput' ? callback : undefined}
-			onchange={callback}
-			{min}
-			{max}
-			{required}
-			placeholder={labelPosition == 'placeholder' ? label : undefined}
-		/>
-	{:else if type == 'textarea'}
-		<textarea
-			rows="5"
-			class="inset"
-			bind:value
-			{name}
-			oninput={callbackEvent == 'oninput' ? callback : undefined}
-			onchange={callback}
-			maxlength={max}
-			{required}
-			placeholder={labelPosition == 'placeholder' ? label : undefined}
-		></textarea>
-	{:else if (type == 'select' || type == 'select-multiple') && (typeof value == 'string' || value == undefined || Array.isArray(value) || typeof value == 'number')}
-		<Select {name} {required} type={type == 'select-multiple' ? 'multiple' : 'single'} {selectOptions} {callback} bind:value />
-	{:else if type == 'file' && (typeof value == 'string' || value == undefined || value instanceof File)}
-		<FileInput {name} {required} {acceptFile} bind:value setValidationWarning={(message) => (validationWarning = message)} />
-	{:else if type == 'boolean' && (typeof value == 'boolean' || value == undefined)}
-		<CheckboxGroup {name} {label} bind:value />
-	{/if}
+		{#if type == 'text' || type == 'password' || type == 'number'}
+			<input
+				id={name}
+				class="inset"
+				{type}
+				{name}
+				bind:value
+				oninput={callbackEvent == 'oninput' ? callback : undefined}
+				onchange={callback}
+				{min}
+				{max}
+				{required}
+				placeholder={labelPosition == 'placeholder' ? label : undefined}
+			/>
+		{:else if type == 'textarea'}
+			<textarea
+				rows="5"
+				class="inset"
+				bind:value
+				{name}
+				oninput={callbackEvent == 'oninput' ? callback : undefined}
+				onchange={callback}
+				maxlength={max}
+				{required}
+				placeholder={labelPosition == 'placeholder' ? label : undefined}
+			></textarea>
+		{:else if (type == 'select' || type == 'select-multiple') && (typeof value == 'string' || value == undefined || Array.isArray(value) || typeof value == 'number')}
+			<Select {name} {required} type={type == 'select-multiple' ? 'multiple' : 'single'} {selectOptions} {callback} bind:value />
+		{:else if type == 'file' && (typeof value == 'string' || value == undefined || value instanceof File)}
+			<FileInput {name} {required} {acceptFile} bind:value setValidationWarning={(message) => (validationWarning = message)} />
+		{:else if type == 'boolean' && (typeof value == 'boolean' || value == undefined)}
+			<CheckboxGroup {name} {label} bind:value />
+		{/if}
 
-	{#if instruction || validationWarning}
-		<Instruction
-			message={validationWarning ? validationWarning : instruction ? instruction : ''}
-			type={validationWarning ? 'warning' : 'neutral'}
-		/>
+		{#if instruction || validationWarning}
+			<Instruction
+				message={validationWarning ? validationWarning : instruction ? instruction : ''}
+				type={validationWarning ? 'warning' : 'neutral'}
+			/>
+		{/if}
 	{/if}
 </div>
 
@@ -125,7 +132,8 @@
 		&.has-icon {
 			position: relative;
 
-			input, textarea {
+			input,
+			textarea {
 				padding-left: 35px;
 			}
 
@@ -133,6 +141,10 @@
 				position: absolute;
 				left: 10px;
 			}
+		}
+
+		:global(.label-input-group) {
+			margin-bottom: 0;
 		}
 	}
 </style>

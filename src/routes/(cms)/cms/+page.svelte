@@ -12,19 +12,26 @@
 	import EditUserDialog from './users/components/editUserDialog.svelte';
 	import DashboardBox from '$cmsComponents/molecules/dashboardBox.svelte';
 	import Avatar from '$cmsComponents/molecules/avatar.svelte';
+	import cloneDeep from 'lodash/cloneDeep';
 
 	let loggingOut = $state(false);
 	let { data }: { data: PageData } = $props();
 
-	let previewDataType: DashboardPreviewDataType = $derived(
+	const previewDataType: DashboardPreviewDataType = $derived(
 		currentWorkspace.currentWorkspace ? currentWorkspace.currentWorkspace.dashboardPreviewDataType : 'mostViewedPortfolioItems'
 	);
 
-	let dashboardUserTableUIConfig = { ...usersTableUIConfig };
-	dashboardUserTableUIConfig.lastLogin && (dashboardUserTableUIConfig.lastLogin.priority = 2);
+	const dashboardUserTableUIConfig = $derived.by(() => {
+		const config = cloneDeep(usersTableUIConfig);
+		if (config.lastLogin) config.lastLogin.priority = 2;
+		return config;
+	});
 
-	let dashboardPortfolioTableUIConfig = { ...portfolioTableUIConfig };
-	dashboardPortfolioTableUIConfig.clicks && (dashboardPortfolioTableUIConfig.clicks.priority = 1);
+	const dashboardPortfolioTableUIConfig = $derived.by(() => { 
+		const config = cloneDeep(portfolioTableUIConfig);
+		if (config.clicks) config.clicks.priority = 1;
+		return config;
+	});
 
 	let editUserDialogVisible = $state(false);
 </script>
@@ -61,7 +68,7 @@
 			{:else}
 				<DataList
 					data={data.mostViewedPortfolioItems}
-					config={portfolioTableUIConfig}
+					config={dashboardPortfolioTableUIConfig}
 					totalItemCount={data.totalPortfolioItemCount?.count ?? 0}
 					itemNamePlural="Portfolio Items"
 					showFooter={false}

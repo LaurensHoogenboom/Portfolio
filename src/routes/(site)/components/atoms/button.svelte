@@ -39,8 +39,10 @@
 		hiddenTitle?: string;
 	} = $props();
 
-	const classString = `button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''} ${size} ${stretched ? 'stretched' : ''}`;
-	const iconSize = size == 'normal' ? 22 : 17;
+	const classString = $derived(
+		`button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''} ${size} ${stretched ? 'stretched' : ''}`
+	);
+	const iconSize = $derived(size == 'normal' ? 22 : 17);
 
 	const gotoOnClick = (e: MouseEvent) => {
 		if (type == 'goto-external') return;
@@ -64,13 +66,21 @@
 </script>
 
 {#if type == 'submit'}
-	<button {onclick} class={classString} {id} aria-label={hiddenTitle}>
+	<button {onclick} class={classString} {id} aria-label={hiddenTitle} title={!title ? hiddenTitle : undefined}>
 		{@render buttonContent()}
 	</button>
 {/if}
 
 {#if type == 'goto' || type == 'goto-external'}
-	<a {href} class={classString} target={type == 'goto-external' ? '_blank' : '_self'} {id} onclick={gotoOnClick} aria-label={hiddenTitle}>
+	<a
+		{href}
+		class={classString}
+		target={type == 'goto-external' ? '_blank' : '_self'}
+		{id}
+		onclick={gotoOnClick}
+		aria-label={hiddenTitle}
+		title={!title ? hiddenTitle : undefined}
+	>
 		{@render buttonContent()}
 	</a>
 {/if}

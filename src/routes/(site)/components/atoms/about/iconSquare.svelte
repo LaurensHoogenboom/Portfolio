@@ -10,7 +10,7 @@
 {/snippet}
 
 <div class="icon-square {CSSClass}">
-    <IconComponent />
+    {@render IconComponent()}
 </div>
 
 <style>

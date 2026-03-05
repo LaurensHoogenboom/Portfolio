@@ -11,7 +11,7 @@
 		fixedSize = false
 	}: { portfolioItem: IPortfolioItem; showTitleBelow?: boolean; fixedSize?: boolean } = $props();
 
-	const horizontal = !fixedSize && portfolioItem.image && portfolioItem.image.thumbnail.aspectRatio > 4 / 3 ? true : false;
+	const horizontal = $derived(!fixedSize && portfolioItem.image && portfolioItem.image.thumbnail.aspectRatio > 4 / 3 ? true : false);
 	let preloadStatus: ButtonActionStatus | undefined = $state();
 
 	const handleClick = async () => {

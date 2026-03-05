@@ -22,7 +22,7 @@
         primaryColor?: 'default' | 'red'
     } = $props();
 
-    const classString = `${style == "inset-outset" ? "inset round" : `clickable-input ${style} ${CSSClass} ${primaryColor}`}`;
+    const classString = $derived(`${style == "inset-outset" ? "inset round" : `clickable-input ${style} ${CSSClass} ${primaryColor}`}`);
 </script>
 
 {#if type == "goto" && url}

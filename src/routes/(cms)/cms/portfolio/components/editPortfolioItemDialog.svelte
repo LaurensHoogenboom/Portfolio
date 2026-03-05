@@ -15,9 +15,12 @@
 		image: IUploadedImage | null;
 		visiblePriority: number;
 		isArticle: boolean;
+		published: boolean;
 	}
 
+	// svelte-ignore state_referenced_locally
 	let portfolioItemType = $state(portfolioItemToEdit.type);
+	// svelte-ignore state_referenced_locally
 	let isArticle = $state(portfolioItemToEdit.isArticle);
 
 	$effect(() => {
@@ -32,6 +35,7 @@
 		<div>
 			<fieldset>
 				<LabelInputGroup type="text" name="title" label="Title" max={120} required={true} value={portfolioItemToEdit.title} />
+
 				<LabelInputGroup
 					type="select"
 					name="type"
@@ -48,6 +52,10 @@
 			</fieldset>
 
 			<fieldset>
+				<LabelInputGroup name="status" label="Status">
+					<LabelInputGroup type="boolean" name="published" label="Published" required value={portfolioItemToEdit.published} />
+				</LabelInputGroup>
+
 				<LabelInputGroup
 					type="number"
 					name="visiblePriority"

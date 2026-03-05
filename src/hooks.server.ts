@@ -7,7 +7,8 @@ import { navigationItems } from "./routes/(cms)/cms/shared/navigation";
 const protectedApiRoutes = [
     '/deleteUpload',
     '/updatePortfolioItemArticle',
-    '/uploadImage'
+    '/uploadImage',
+    '/updatePortfolioItemPublished'
 ];
 
 const protectedPageRoutes = [

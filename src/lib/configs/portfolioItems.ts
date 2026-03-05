@@ -2,6 +2,7 @@ import type { TableConfig } from "$lib/types/dataList";
 import type { PortfolioItem } from "$lib/server/db/schema/portfolioItems";
 import { toFullDataTimeString } from "$lib/utils/format/date";
 import { startWithUpperCase } from "$lib/utils/format/text";
+import { booleanToYesNo } from "$lib/utils/format/boolean";
 
 const portfolioTableUIConfig: TableConfig<PortfolioItem> = {
     title: {
@@ -16,15 +17,15 @@ const portfolioTableUIConfig: TableConfig<PortfolioItem> = {
         visible: true,
         sortable: true,
         format: startWithUpperCase,
-        maxWidth: 120
+        maxWidth: 110
     },
     isArticle: {
         label: 'Article',
         priority: 3,
         visible: true,
         sortable: true,
-        format: (val) => val ? 'Yes' : 'No',
-        maxWidth: 110
+        format: booleanToYesNo,
+        maxWidth: 90
     },
     visiblePriority: {
         label: 'Visible priority',
@@ -54,7 +55,15 @@ const portfolioTableUIConfig: TableConfig<PortfolioItem> = {
         priority: 7,
         visible: true,
         sortable: true,
-        maxWidth: 100
+        maxWidth: 90
+    },
+    published: {
+        label: "Published",
+        priority: 8,
+        visible: true,
+        sortable: true,
+        maxWidth: 100,
+        format: booleanToYesNo
     },
     renderActions: (row) => ({
         showWrite: row.isArticle

@@ -44,7 +44,8 @@ export const actions: Actions = {
             description: formData.get('description') as string,
             type: formData.get('type') as PortfolioItemType,
             visiblePriority: parseInt(formData.get('visiblePriority') as string) || 0,
-            isArticle: formData.has('isArticle')
+            isArticle: formData.has('isArticle'),
+            published: formData.has('published')
         }
 
         if (data.type == 'art') data.isArticle = false;
@@ -81,7 +82,8 @@ export const actions: Actions = {
             description: formData.get('description') as string,
             type: formData.get('type') as PortfolioItemType,
             visiblePriority: parseInt(formData.get('visiblePriority') as string) || 0,
-            isArticle: formData.has('isArticle')
+            isArticle: formData.has('isArticle'),
+            published: formData.has('published')
         }
 
         if (updateData.type == 'art') updateData.isArticle = false;

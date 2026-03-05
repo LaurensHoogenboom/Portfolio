@@ -1,5 +1,6 @@
 import type { UploadWithMeta } from "$lib/server/db/schema/uploads"
 import type { TableConfig } from "$lib/types/dataList"
+import { booleanToYesNo } from "$lib/utils/format/boolean";
 import { toFullDataTimeString } from "$lib/utils/format/date";
 import { startWithUpperCase } from "$lib/utils/format/text";
 
@@ -40,7 +41,7 @@ const uploadsTableUIConfig: TableConfig<UploadWithMeta> = {
         visible: true,
         sortable: true,
         maxWidth: 80,
-        format: (val) => val ? 'Yes' : 'No'
+        format: booleanToYesNo
     },
     url: {
         label: 'Url',

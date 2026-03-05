@@ -75,7 +75,8 @@ label {
 		&:has(+ input),
 		&:has(+ textarea),
 		&:has(+ select),
-		&:has(+ .file-input) {
+		&:has(+ .file-input),
+		&:has(+ .label-input-group) {
 			padding-bottom: var(--padding-4);
 		}
 

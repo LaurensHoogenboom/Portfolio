@@ -4,9 +4,12 @@ import type { Actions, PageServerLoad } from './$types';
 import nodemailer from 'nodemailer';
 import { fail } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
+import { eq, getTableColumns } from 'drizzle-orm';
+import { portfolioItems as portfolioItemTable } from '$lib/server/db/schema/portfolioItems'; 
 
 export const load = (async () => {
-    const rawPortfolioItems = await getPortfolioItems('all');
+    const portfolioItemColumns = getTableColumns(portfolioItemTable);
+    const rawPortfolioItems = await getPortfolioItems('all', 0, eq(portfolioItemColumns.published, true));
     const portfolioItems = rawPortfolioItems.map(pItem => {
         return { ...pItem, image: pItem.upload?.image } as IPortfolioItem
     });

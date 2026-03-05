@@ -14,19 +14,22 @@
 	let { data }: { data: PageData } = $props();
 
 	let userToEdit: IUserToEdit | undefined = $state();
-	let editDialogVisible = $derived(!!userToEdit);
+	let editDialogVisible = $state(false);
 	const ui = globalUIState;
 
 	const openEditDialog = (id: string) => {
 		let user = data.users.find((u) => u.id == id);
-		if (user) userToEdit = { ...user };
+		if (user) {
+			userToEdit = { ...user };
+			editDialogVisible = true;
+		}
 	};
 
-	let configContext: IConfigContext = {
+	let configContext: IConfigContext = $derived({
 		userId: data.currentUser.id,
 		userType: data.currentUser.type,
 		adminCount: data.adminCount
-	};
+	});
 </script>
 
 <PageToolbar>
@@ -48,7 +51,7 @@
 
 {#if editDialogVisible && userToEdit}
 	<EditUserDialog
-		closeCallback={() => (userToEdit = undefined)}
+		closeCallback={() => (editDialogVisible = false)}
 		{userToEdit}
 		workspaces={data.workspaces}
 		canEditType={(data.currentUser.type == 'admin' && data.adminCount > 1) ||

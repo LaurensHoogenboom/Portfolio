@@ -20,6 +20,7 @@ const portfolioItems = sqliteTable("portfolioItems", {
     isArticle: integer({ mode: "boolean" }).default(false).notNull(),
     articleContent: text("articleContent", {mode: "json"}).$type<OutputData>(),
     clicks: integer({ mode: "number" }).default(0).notNull(),
+    published: integer({ mode: "boolean"}).default(true).notNull(),
     ...timestamp
 });
 

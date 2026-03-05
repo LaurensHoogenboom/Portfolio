@@ -63,7 +63,7 @@
 			sanitize: sanitize
 		},
 		image: {
-			class: CustomImage as any,
+			class: CustomImage as never,
 			config: {
 				uploader: {
 					uploadByFile: uploadImage

@@ -15,11 +15,13 @@
 
 	let { closeCallback, workspaceToEdit }: { closeCallback: () => void; workspaceToEdit: IWorkspaceToEdit } = $props();
 
-	const selectedNavigationItems = workspaceToEdit.navigationItems
-		? workspaceToEdit.navigationItems.map((nItem) => {
-				return nItem.id;
-			})
-		: [];
+	const selectedNavigationItems = $derived(
+		workspaceToEdit.navigationItems
+			? workspaceToEdit.navigationItems.map((nItem) => {
+					return nItem.id;
+				})
+			: []
+	);
 </script>
 
 <EditDialog {closeCallback} itemTitle={workspaceToEdit.title} itemTitleKey="workspaceTitle">
