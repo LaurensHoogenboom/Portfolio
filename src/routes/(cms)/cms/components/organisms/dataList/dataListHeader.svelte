@@ -64,6 +64,8 @@
 			border-bottom: var(--default-border);
 			padding: var(--padding-3) 0;
 			padding-left: var(--padding-5);
+			background-color: var(--white-background);
+			top: 0;
 		}
 
 		p {
