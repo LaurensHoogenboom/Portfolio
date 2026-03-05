@@ -49,11 +49,11 @@
 					out:fade={{ duration: 100 }}
 				>
 					{#if selectedType == 'art'}
-						{#each visibleItems as vItem}
+						{#each visibleItems as vItem (vItem.id)}
 							<PortfolioItemPreviewBox portfolioItem={vItem} showTitleBelow={true} />
 						{/each}
 					{:else}
-						{#each visibleItems as vItem}
+						{#each visibleItems as vItem (vItem.id)}
 							<PortfolioPreviewBanner portfolioItem={vItem} />
 						{/each}
 					{/if}
