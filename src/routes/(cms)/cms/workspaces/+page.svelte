@@ -12,12 +12,15 @@
 	let { data }: { data: PageData } = $props();
 
 	let workspaceToEdit: IWorkspaceToEdit | undefined = $state();
-	let editDialogVisible = $derived(!!workspaceToEdit);
+	let editDialogVisible = $state(false);
 	const ui = globalUIState;
 
 	const openEditDialog = (id: string) => {
 		let workspace = data.workspaces.find((w) => w.id == id);
-		if (workspace) workspaceToEdit = { ...workspace };
+		if (workspace) {
+			workspaceToEdit = { ...workspace };
+			editDialogVisible = true;
+		}
 	};
 </script>
 
@@ -42,5 +45,5 @@
 {/if}
 
 {#if editDialogVisible && workspaceToEdit}
-	<EditWorkspaceDialog {workspaceToEdit} closeCallback={() => (workspaceToEdit = undefined)} />
+	<EditWorkspaceDialog {workspaceToEdit} closeCallback={() => (editDialogVisible = false)} />
 {/if}

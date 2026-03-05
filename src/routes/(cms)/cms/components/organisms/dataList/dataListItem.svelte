@@ -13,7 +13,7 @@
 		deleteAction?: string;
 		editAction?: (id: string) => void;
 		writeAction?: (id: string) => void;
-		configContext?: IConfigContext
+		configContext?: IConfigContext;
 	}
 
 	let { row, config, sortedKeys, gridStyle, deleteAction, editAction, writeAction, configContext }: Props = $props();
@@ -23,10 +23,10 @@
 
 <div class="list-item" style={gridStyle} in:fly|local={{ y: 20, duration: 200, delay: 100 }} out:fade|local={{ duration: 200 }}>
 	{#each sortedKeys as key}
-		{@const column = config[key] as UIColumn<any> | undefined}
+		{@const column = config[key] as UIColumn<T[keyof T]> | undefined}
 		{@const value = column?.format ? column.format(row[key]) : row[key]}
 
-		<p>{@html value}</p>
+		<p title={typeof value == 'string' && value.length > 20 ? value : undefined}>{@html value}</p>
 	{/each}
 
 	{#if writeAction || editAction || deleteAction}
@@ -47,7 +47,7 @@
 </div>
 
 {#if deleteConfirmationDialogVisible && deleteAction}
-	{@const label = config.getLabel ? config.getLabel(row) : (row as any).title as string || undefined}
+	{@const label = config.getLabel ? config.getLabel(row) : ((row as Record<string, unknown>).title as string) || undefined}
 
 	<DeleteConfirmationDialog
 		action={deleteAction}

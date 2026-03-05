@@ -17,7 +17,7 @@ const portfolioTableUIConfig: TableConfig<PortfolioItem> = {
         visible: true,
         sortable: true,
         format: startWithUpperCase,
-        maxWidth: 120
+        maxWidth: 110
     },
     isArticle: {
         label: 'Article',
@@ -25,7 +25,7 @@ const portfolioTableUIConfig: TableConfig<PortfolioItem> = {
         visible: true,
         sortable: true,
         format: booleanToYesNo,
-        maxWidth: 110
+        maxWidth: 90
     },
     visiblePriority: {
         label: 'Visible priority',
@@ -55,7 +55,7 @@ const portfolioTableUIConfig: TableConfig<PortfolioItem> = {
         priority: 7,
         visible: true,
         sortable: true,
-        maxWidth: 100
+        maxWidth: 90
     },
     published: {
         label: "Published",

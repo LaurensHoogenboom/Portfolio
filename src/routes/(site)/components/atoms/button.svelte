@@ -66,13 +66,21 @@
 </script>
 
 {#if type == 'submit'}
-	<button {onclick} class={classString} {id} aria-label={hiddenTitle}>
+	<button {onclick} class={classString} {id} aria-label={hiddenTitle} title={!title ? hiddenTitle : undefined}>
 		{@render buttonContent()}
 	</button>
 {/if}
 
 {#if type == 'goto' || type == 'goto-external'}
-	<a {href} class={classString} target={type == 'goto-external' ? '_blank' : '_self'} {id} onclick={gotoOnClick} aria-label={hiddenTitle}>
+	<a
+		{href}
+		class={classString}
+		target={type == 'goto-external' ? '_blank' : '_self'}
+		{id}
+		onclick={gotoOnClick}
+		aria-label={hiddenTitle}
+		title={!title ? hiddenTitle : undefined}
+	>
 		{@render buttonContent()}
 	</a>
 {/if}

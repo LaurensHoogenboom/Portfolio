@@ -33,10 +33,10 @@
 		</div>
 
 		<div class="toolbar">
-			<Button type="submit" style="secondary" icon={X} onclick={closeCallback} actionStatus={closingStatus} />
+			<Button type="submit" style="secondary" icon={X} onclick={closeCallback} actionStatus={closingStatus} hiddenTitle="Close"/>
 
 			{#if saveCallback}
-				<Button type="submit" style="secondary" icon={Save} onclick={saveCallback} actionStatus={savingStatus} />
+				<Button type="submit" style="secondary" icon={Save} onclick={saveCallback} actionStatus={savingStatus} hiddenTitle="Save" />
 			{/if}
 		</div>
 	</div>

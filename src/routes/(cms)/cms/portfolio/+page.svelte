@@ -18,7 +18,7 @@
 	let { data }: { data: PageData } = $props();
 
 	let portfolioItemToEdit: IPortfolioItemToEdit | undefined = $state();
-	let editDialogVisible = $derived(!!portfolioItemToEdit);
+	let editDialogVisible = $state(false);
 	const ui = globalUIState;
 
 	const openEditDialog = (id: string) => {
@@ -29,6 +29,8 @@
 				...portfolioItem,
 				image: portfolioItem.upload?.image ?? null
 			};
+
+			editDialogVisible = true;
 		}
 	};
 
@@ -75,7 +77,7 @@
 </main>
 
 {#if editDialogVisible && portfolioItemToEdit}
-	<EditPortfolioItemDialog {portfolioItemToEdit} closeCallback={() => (portfolioItemToEdit = undefined)} />
+	<EditPortfolioItemDialog {portfolioItemToEdit} closeCallback={() => (editDialogVisible = false)} />
 {/if}
 
 {#if ui.createDialogVisible}
