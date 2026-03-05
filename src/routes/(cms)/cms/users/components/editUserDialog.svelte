@@ -28,7 +28,7 @@
 		customTitle?: string;
 	} = $props();
 
-	let selectedUserType: UserType = $state(userToEdit.type);
+	let selectedUserType: UserType = $derived(userToEdit.type);
 	let filteredWorkspaces = $derived(selectedUserType == 'default' ? workspaces.filter((n) => n.adminRequired == false) : workspaces);
 	let workSpaceSelectOptions = $derived([
 		...filteredWorkspaces.map((w) => {

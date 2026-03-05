@@ -1,5 +1,6 @@
 import type { Workspace } from "$lib/server/db/schema/workspaces";
 import type { TableConfig } from "$lib/types/dataList";
+import { booleanToYesNo } from "$lib/utils/format/boolean";
 import { toFullDataTimeString } from "$lib/utils/format/date";
 
 const workspacesTableUIConfig: TableConfig<Workspace> = {
@@ -31,7 +32,7 @@ const workspacesTableUIConfig: TableConfig<Workspace> = {
         priority: 4,
         visible: true,
         sortable: true,
-        format: (val) => val ? 'Yes' : 'No',
+        format: booleanToYesNo,
         maxWidth: 160
     },
     navigationItems: {

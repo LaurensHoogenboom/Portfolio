@@ -39,8 +39,10 @@
 		hiddenTitle?: string;
 	} = $props();
 
-	const classString = `button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''} ${size} ${stretched ? 'stretched' : ''}`;
-	const iconSize = size == 'normal' ? 22 : 17;
+	const classString = $derived(
+		`button ${style} ${title ?? 'round'} ${CSSClass} ${disabled ? 'disabled' : ''} ${size} ${stretched ? 'stretched' : ''}`
+	);
+	const iconSize = $derived(size == 'normal' ? 22 : 17);
 
 	const gotoOnClick = (e: MouseEvent) => {
 		if (type == 'goto-external') return;

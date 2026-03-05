@@ -169,6 +169,13 @@
       "when": 1771343331041,
       "tag": "0023_public_pepper_potts",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "6",
+      "when": 1772700881922,
+      "tag": "0024_lyrical_beast",
+      "breakpoints": true
     }
   ]
 }

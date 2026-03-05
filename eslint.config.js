@@ -27,7 +27,9 @@ export default ts.config(
 				{
 					"ignoreRestSiblings": true
 				}
-			]
+			],
+			"svelte/require-each-key": "off",
+			"svelte/no-at-html-tags": "off" 
 		}
 	},
 	{

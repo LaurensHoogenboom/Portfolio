@@ -6,25 +6,27 @@
 		id,
 		fullHeight = false,
 		theme = 'light',
-        CSSClass="",
-		width = "contained"
+		CSSClass = '',
+		width = 'contained'
 	}: {
 		children?: Snippet;
 		id?: string;
 		fullHeight?: boolean;
 		theme?: 'dark' | 'dark-gradient' | 'transparent' | 'light';
-        CSSClass?: string;
-		width?: "contained" | "wide";
+		CSSClass?: string;
+		width?: 'contained' | 'wide';
 	} = $props();
 
 	let contentContainer: HTMLDivElement;
-	let themeClass = theme == 'dark' 
-        ? 'section-dark' 
-        : theme == 'dark-gradient' 
-            ? 'section-dark gradient' 
-            : theme == 'transparent' 
-				? 'transparent'
-				: 'section-light';
+	let themeClass = $derived(
+		theme == 'dark'
+			? 'section-dark'
+			: theme == 'dark-gradient'
+				? 'section-dark gradient'
+				: theme == 'transparent'
+					? 'transparent'
+					: 'section-light'
+	);
 
 	$effect(() => {
 		if (fullHeight) {
@@ -33,11 +35,7 @@
 	});
 </script>
 
-<div
-    {id}
-	bind:this={contentContainer}
-	class="content-container-wrapper {themeClass} {CSSClass}"
->
+<div {id} bind:this={contentContainer} class="content-container-wrapper {themeClass} {CSSClass}">
 	<div class="content-container {width}">
 		{#if children}
 			{@render children()}

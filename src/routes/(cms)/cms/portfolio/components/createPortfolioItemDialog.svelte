@@ -36,6 +36,8 @@
 			</fieldset>
 
 			<fieldset>
+				<LabelInputGroup type="text" name="published" label="Published" required />
+
 				<LabelInputGroup
 					type="number"
 					name="visiblePriority"

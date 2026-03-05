@@ -22,11 +22,11 @@
 		if (user) userToEdit = { ...user };
 	};
 
-	let configContext: IConfigContext = {
+	let configContext: IConfigContext = $derived({
 		userId: data.currentUser.id,
 		userType: data.currentUser.type,
 		adminCount: data.adminCount
-	};
+	});
 </script>
 
 <PageToolbar>
