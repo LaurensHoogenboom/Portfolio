@@ -36,7 +36,9 @@
 			</fieldset>
 
 			<fieldset>
-				<LabelInputGroup type="text" name="published" label="Published" required />
+				<LabelInputGroup name="status" label="Status">
+					<LabelInputGroup type="boolean" name="published" label="Published" required />
+				</LabelInputGroup>
 
 				<LabelInputGroup
 					type="number"
