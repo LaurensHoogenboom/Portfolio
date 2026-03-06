@@ -34,25 +34,6 @@
 	let isPublished = $state(data.portfolioItem.published);
 	let editorMode: ArticleEditorMode = $state('edit');
 
-	const toggleEditorMode = async () => {
-		toggleEditModeStatus = 'processing';
-
-		try {
-			await save();
-
-			if (editorMode == 'edit') {
-				editorMode = 'preview';
-			} else {
-				editorMode = 'edit';
-			}
-
-			toggleEditModeStatus = 'success';
-		} catch (error) {
-			toggleEditModeStatus = 'fail';
-			console.log(error);
-		}
-	};
-
 	const close = async () => {
 		closingStatus = 'processing';
 
@@ -111,6 +92,25 @@
 		togglePublishStatus = 'success';
 	};
 
+	const toggleEditorMode = async () => {
+		toggleEditModeStatus = 'processing';
+
+		try {
+			await save();
+
+			if (editorMode == 'edit') {
+				editorMode = 'preview';
+			} else {
+				editorMode = 'edit';
+			}
+
+			toggleEditModeStatus = undefined;
+		} catch (error) {
+			toggleEditModeStatus = 'fail';
+			console.log(error);
+		}
+	};
+
 	$effect(() => {
 		if (savingStatus == 'fail' || savingStatus == 'success') {
 			setTimeout(() => {
@@ -121,6 +121,12 @@
 		if (togglePublishStatus == 'fail' || togglePublishStatus == 'success') {
 			setTimeout(() => {
 				togglePublishStatus = undefined;
+			}, 2000);
+		}
+
+		if (toggleEditModeStatus == 'fail') {
+			setTimeout(() => {
+				toggleEditModeStatus = undefined;
 			}, 2000);
 		}
 	});
