@@ -23,23 +23,20 @@
 		pushState(getPortfolioUrlWithParams(state), state);
 	};
 
-	onMount(() => {
-		if (!portfolioItem || !portfolioItem.articleContent || portfolioItem.type == 'art') return;
-
-		portfolioItem.articleContent.blocks.forEach((b) => {
-			if (b.type == 'header' && b.id) {
-				navigationItems.push({
-					id: b.id,
-					title: b.data.text
-				});
-			}
-		});
-	});
+	onMount(() => {});
 
 	$effect(() => {
 		if (portfolioItem) {
 			updatePortfolioItemStats(portfolioItem);
 			displayedItem = portfolioItem;
+		}
+	});
+
+	$effect(() => {
+		if (portfolioItem && portfolioItem.articleContent && portfolioItem.isArticle) {
+			navigationItems = portfolioItem.articleContent.blocks
+				.filter((b) => b.type == 'header' && typeof b.id == 'string')
+				.map((b) => ({ id: b.id ?? '', title: b.data.text }));
 		}
 	});
 </script>
