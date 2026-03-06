@@ -37,6 +37,7 @@
 				onclick={closeCallback}
 				actionStatus={editorContext?.closingStatus}
 				hiddenTitle="Close"
+				CSSClass="close-button"
 			/>
 
 			{#if editorContext}
@@ -127,6 +128,10 @@
 
 				:global(button) {
 					margin-right: 0;
+				}
+
+				:global(.close-button) {
+					margin-bottom: var(--spacing-3);
 				}
 
 				@media (max-width: 1600px) {
