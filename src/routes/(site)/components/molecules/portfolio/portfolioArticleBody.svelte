@@ -84,7 +84,6 @@
 	{/if}
 </div>
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 {#snippet contentBlock(b: OutputBlockData<string, any>)}
 	{#if b.type == 'header'}
 		<h2 id={b.id}>{@html b.data.text}</h2>
