@@ -7,6 +7,20 @@
 	import EditorJS, { type OutputData } from '@editorjs/editorjs';
 	import type { Upload } from '$lib/server/db/schema/uploads';
 	import type { IPortfolioItem } from '$lib/types/portfolio';
+	import PortfolioArticleBody from '$siteComponents/molecules/portfolio/portfolioArticleBody.svelte';
+
+	type ArticleEditorMode = 'edit' | 'preview';
+
+	export interface IArticleEditorContext {
+		saveCallback: () => void;
+		togglePublishedCallback: () => void;
+		savingStatus?: ButtonActionStatus;
+		closingStatus?: ButtonActionStatus;
+		togglePublishStatus?: ButtonActionStatus;
+		isPublished: boolean;
+		toggleEditorModeCallback: () => void;
+		editorMode: ArticleEditorMode;
+	}
 
 	let { data }: { data: PageData } = $props();
 	let savingStatus: ButtonActionStatus | undefined = $state();
@@ -16,6 +30,15 @@
 	let unSavedUploadedImages: Upload[] = $state([]);
 	// svelte-ignore state_referenced_locally
 	let isPublished = $state(data.portfolioItem.published);
+	let editorMode: ArticleEditorMode = $state('edit');
+
+	const toggleEditorMode = () => {
+		if (editorMode == 'edit') {
+			editorMode = 'preview'
+		} else {
+			editorMode = 'edit';
+		};
+	}
 
 	const close = async () => {
 		closingStatus = 'processing';
@@ -88,17 +111,25 @@
 			}, 2000);
 		}
 	});
+
+	let editorContext: IArticleEditorContext = $derived({
+		saveCallback: save,
+		togglePublishedCallback: togglePublished,
+		togglePublishStatus: togglePublishStatus,
+		isPublished: isPublished,
+		savingStatus: savingStatus,
+		closingStatus: closingStatus,
+		toggleEditorModeCallback: toggleEditorMode,
+		editorMode: editorMode
+	});
 </script>
 
-<PortfolioItemDetailWrapper
-	closeCallback={close}
-	saveCallback={save}
-	togglePublishedCallback={togglePublished}
-	{togglePublishStatus}
-	{savingStatus}
-	{closingStatus}
-	{isPublished}
->
+<PortfolioItemDetailWrapper closeCallback={close} {editorContext}>
 	<PortfolioArticleHeader portfolioItem={data.portfolioItem} />
-	<PortfolioItemEdit portfolioItem={data.portfolioItem} bind:editor bind:unSavedUploadedImages />
+
+	{#if editorMode == 'edit'}
+		<PortfolioItemEdit portfolioItem={data.portfolioItem} bind:editor bind:unSavedUploadedImages />
+	{:else}
+		<PortfolioArticleBody portfolioItem={data.portfolioItem} />
+	{/if}
 </PortfolioItemDetailWrapper>

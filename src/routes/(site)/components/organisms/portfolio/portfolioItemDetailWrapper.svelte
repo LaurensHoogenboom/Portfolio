@@ -1,30 +1,21 @@
 <script lang="ts">
-	import { Eye, EyeOff, Save, X } from '@lucide/svelte';
-	import Button, { type ButtonActionStatus } from '$siteComponents/atoms/button.svelte';
+	import { BookCheck, BookDashed, Pencil, Save, ScanEye, X } from '@lucide/svelte';
+	import Button from '$siteComponents/atoms/button.svelte';
 	import { slide } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
 	import ScrollToTopButton from '$siteComponents/atoms/scrollToTopButton.svelte';
+	import type { IArticleEditorContext } from '../../../../(editPortfolioItemArticle)/editPortfolioItemArticle/[slug]/+page.svelte';
 
 	let overflowContainer: HTMLElement | undefined = $state();
 
 	const {
 		closeCallback,
 		children,
-		saveCallback,
-		togglePublishedCallback,
-		savingStatus,
-		closingStatus,
-		togglePublishStatus,
-		isPublished
+		editorContext
 	}: {
 		closeCallback: () => void;
 		children: Snippet;
-		saveCallback?: () => void;
-		togglePublishedCallback?: () => void;
-		savingStatus?: ButtonActionStatus;
-		closingStatus?: ButtonActionStatus;
-		togglePublishStatus?: ButtonActionStatus;
-		isPublished?: boolean;
+		editorContext?: IArticleEditorContext;
 	} = $props();
 </script>
 
@@ -39,20 +30,40 @@
 		</div>
 
 		<div class="toolbar">
-			<Button type="submit" style="secondary" icon={X} onclick={closeCallback} actionStatus={closingStatus} hiddenTitle="Close" />
+			<Button
+				type="submit"
+				style="secondary"
+				icon={X}
+				onclick={closeCallback}
+				actionStatus={editorContext?.closingStatus}
+				hiddenTitle="Close"
+			/>
 
-			{#if saveCallback}
-				<Button type="submit" style="secondary" icon={Save} onclick={saveCallback} actionStatus={savingStatus} hiddenTitle="Save" />
-			{/if}
-
-			{#if togglePublishedCallback}
+			{#if editorContext}
 				<Button
 					type="submit"
 					style="secondary"
-					icon={isPublished ? EyeOff : Eye}
-					onclick={togglePublishedCallback}
-					actionStatus={togglePublishStatus}
-					hiddenTitle={isPublished ? 'Unpublish' : 'Publish'}
+					icon={Save}
+					onclick={editorContext.saveCallback}
+					actionStatus={editorContext.savingStatus}
+					hiddenTitle="Save"
+				/>
+
+				<Button
+					type="submit"
+					style="secondary"
+					icon={editorContext.isPublished ? BookDashed : BookCheck}
+					onclick={editorContext.togglePublishedCallback}
+					actionStatus={editorContext.togglePublishStatus}
+					hiddenTitle={editorContext.isPublished ? 'Unpublish' : 'Publish'}
+				/>
+
+				<Button
+					type="submit"
+					style="secondary"
+					icon={editorContext.editorMode == 'edit' ? ScanEye : Pencil}
+					onclick={editorContext.toggleEditorModeCallback}
+					hiddenTitle={editorContext.editorMode == 'edit' ? 'Preview' : 'Edit'}
 				/>
 			{/if}
 		</div>
