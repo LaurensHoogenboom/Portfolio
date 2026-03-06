@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import LabelInputGroup from '$cmsComponents/molecules/labelInputGroup.svelte';
 	import { updatePageParams } from '$lib/utils/updatePageParams';
 	import { Search } from '@lucide/svelte';
 
 	let searchTimer: NodeJS.Timeout;
+	let value = page.url.searchParams.get('searchString');
 
 	const search = (e: Event) => {
 		const target = e.target as HTMLInputElement;
@@ -25,4 +27,5 @@
 	callback={search}
 	callbackEvent="oninput"
 	icon={Search}
+	{value}
 />

@@ -12,11 +12,13 @@
 	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 	import { globalUIState } from '../shared/states/globalUIState.svelte';
 	import SearchBox from '$cmsComponents/atoms/inputs/searchBox.svelte';
+	import { getPresetSelectOption } from '../shared/getPresetSelectOption';
 
 	let { data }: { data: PageData } = $props();
 
 	const ui = globalUIState;
 	const selectOptions: ISelectOption[] = [{ value: 'all', title: 'All' }, ...(uploadSelectOptions as ISelectOption[])];
+	const selectedFileType = getPresetSelectOption(selectOptions, 'fileType');
 </script>
 
 <PageToolbar>
@@ -31,6 +33,7 @@
 				const target = e.target as HTMLSelectElement;
 				updatePageParams({ fileType: target.value }, true);
 			}}
+			value={selectedFileType}
 		/>
 		<SearchBox />
 	</div>
