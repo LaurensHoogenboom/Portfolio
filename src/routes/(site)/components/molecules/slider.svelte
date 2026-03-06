@@ -44,7 +44,7 @@
 		setLayout();
 
 		return () => {
-			sliderSwipe.dispose();
+			if (sliderSwipe) sliderSwipe.dispose();
 			mounted = false;
 		};
 	});
