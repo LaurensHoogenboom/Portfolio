@@ -48,9 +48,7 @@
 
 <Portfolio portfolioItems={data.portfolioItems} />
 
-{#if page.state.activePortfolioItemId && page.state.activePortfolioItem}
-	<PortfolioItemDetail portfolioItem={page.state.activePortfolioItem} />
-{/if}
+<PortfolioItemDetail portfolioItem={page.state.activePortfolioItem} />
 
 <Contact />
 

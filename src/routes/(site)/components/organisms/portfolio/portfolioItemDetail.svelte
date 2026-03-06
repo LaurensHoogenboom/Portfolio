@@ -10,18 +10,21 @@
 	import { onMount } from 'svelte';
 	import PortfolioArtBody from '$siteComponents/molecules/portfolio/portfolioArtBody.svelte';
 
-	const { portfolioItem }: { portfolioItem: IPortfolioItem } = $props();
+	const { portfolioItem }: { portfolioItem?: IPortfolioItem } = $props();
 
 	let navigationItems: IQuickNavigatioItem[] = $state([]);
+	// svelte-ignore state_referenced_locally
+	let displayedItem = $state(portfolioItem);
 
 	const closePortfolioItem = () => {
 		const state = getPortfolioState();
 		state.activePortfolioItemId = '';
+		state.activePortfolioItem = undefined;
 		pushState(getPortfolioUrlWithParams(state), state);
 	};
 
 	onMount(() => {
-		if (!portfolioItem.articleContent || portfolioItem.type == 'art') return;
+		if (!portfolioItem || !portfolioItem.articleContent || portfolioItem.type == 'art') return;
 
 		portfolioItem.articleContent.blocks.forEach((b) => {
 			if (b.type == 'header' && b.id) {
@@ -34,18 +37,23 @@
 	});
 
 	$effect(() => {
-		updatePortfolioItemStats(portfolioItem);
+		if (portfolioItem) {
+			updatePortfolioItemStats(portfolioItem);
+			displayedItem = portfolioItem;
+		}
 	});
 </script>
 
-<PortfolioItemDetailWrapper closeCallback={closePortfolioItem}>
-	{#if portfolioItem.isArticle}
-		<PortfolioArticleHeader {portfolioItem} />
-		{#if navigationItems.length}
-			<PortfolioArticleQuickNavigation {navigationItems} />
+{#if portfolioItem && displayedItem}
+	<PortfolioItemDetailWrapper closeCallback={closePortfolioItem}>
+		{#if displayedItem.isArticle}
+			<PortfolioArticleHeader portfolioItem={displayedItem} />
+			{#if navigationItems.length}
+				<PortfolioArticleQuickNavigation {navigationItems} />
+			{/if}
+			<PortfolioArticleBody portfolioItem={displayedItem} />
+		{:else}
+			<PortfolioArtBody portfolioItem={displayedItem} closeCallback={closePortfolioItem} />
 		{/if}
-		<PortfolioArticleBody {portfolioItem} />
-	{:else}
-		<PortfolioArtBody {portfolioItem} closeCallback={closePortfolioItem} />
-	{/if}
-</PortfolioItemDetailWrapper>
+	</PortfolioItemDetailWrapper>
+{/if}
