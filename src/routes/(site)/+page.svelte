@@ -14,7 +14,7 @@
 	import ScrollToTopButton from '$siteComponents/atoms/scrollToTopButton.svelte';
 	import FullscreenImage from '$siteComponents/atoms/fullscreenImage.svelte';
 
-	let { data }: { data: PageData; } = $props();
+	let { data }: { data: PageData } = $props();
 
 	onMount(async () => {
 		const [hash, query] = window.location.href.split('#')[1] ? window.location.href.split('#')[1].split('?') : [undefined, undefined];
@@ -48,7 +48,7 @@
 
 <Portfolio portfolioItems={data.portfolioItems} />
 
-{#if page.state.activePortfolioItem}
+{#if page.state.activePortfolioItemId && page.state.activePortfolioItem}
 	<PortfolioItemDetail portfolioItem={page.state.activePortfolioItem} />
 {/if}
 
