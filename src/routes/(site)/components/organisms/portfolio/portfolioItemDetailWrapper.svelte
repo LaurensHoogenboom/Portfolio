@@ -64,6 +64,7 @@
 					icon={editorContext.editorMode == 'edit' ? ScanEye : Pencil}
 					onclick={editorContext.toggleEditorModeCallback}
 					hiddenTitle={editorContext.editorMode == 'edit' ? 'Preview' : 'Edit'}
+					actionStatus={editorContext.toggleEditModeStatus}
 				/>
 			{/if}
 		</div>
