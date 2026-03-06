@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { IPortfolioItem } from '$lib/types/portfolio';
-	import { getPortfolioState, getPortfolioUrlWithParams, updatePortfolioItemStats } from '../../../utils/portfolioUtils';
-	import { pushState } from '$app/navigation';
+	import { updatePortfolioItemStats } from '../../../utils/portfolioUtils';
 	import PortfolioItemDetailWrapper from './portfolioItemDetailWrapper.svelte';
 	import PortfolioArticleHeader from '$siteComponents/molecules/portfolio/portfolioArticleHeader.svelte';
 	import PortfolioArticleBody from '$siteComponents/molecules/portfolio/portfolioArticleBody.svelte';
@@ -9,46 +8,31 @@
 	import PortfolioArticleQuickNavigation from '$siteComponents/molecules/portfolio/portfolioArticleQuickNavigation.svelte';
 	import PortfolioArtBody from '$siteComponents/molecules/portfolio/portfolioArtBody.svelte';
 
-	const { portfolioItem }: { portfolioItem?: IPortfolioItem } = $props();
+	const { portfolioItem, closeCallback }: { portfolioItem: IPortfolioItem; closeCallback: () => void } = $props();
 
 	let navigationItems: IQuickNavigatioItem[] = $state([]);
-	// svelte-ignore state_referenced_locally
-	let displayedItem = $state(portfolioItem);
-	let isVisible = $derived(!!portfolioItem);
-
-	const closePortfolioItem = () => {
-		const state = getPortfolioState();
-		state.activePortfolioItemId = '';
-		state.activePortfolioItem = undefined;
-		pushState(getPortfolioUrlWithParams(state), state);
-	};
 
 	$effect(() => {
-		if (portfolioItem) {
-			updatePortfolioItemStats(portfolioItem);
-			displayedItem = portfolioItem;
-		}
+		if (portfolioItem) updatePortfolioItemStats(portfolioItem);
 	});
 
 	$effect(() => {
-		if (displayedItem && displayedItem.articleContent && displayedItem.isArticle) {
-			navigationItems = displayedItem.articleContent.blocks
+		if (portfolioItem && portfolioItem.articleContent && portfolioItem.isArticle) {
+			navigationItems = portfolioItem.articleContent.blocks
 				.filter((b) => b.type == 'header' && typeof b.id == 'string')
 				.map((b) => ({ id: b.id ?? '', title: b.data.text }));
 		}
 	});
 </script>
 
-{#if isVisible && displayedItem}
-	<PortfolioItemDetailWrapper closeCallback={closePortfolioItem}>
-		{#if displayedItem.isArticle}
-			<PortfolioArticleHeader portfolioItem={displayedItem} />
-			{#if navigationItems.length}
-				<PortfolioArticleQuickNavigation {navigationItems} />
-			{/if}
-			<PortfolioArticleBody portfolioItem={displayedItem} />
-		{:else}
-			<PortfolioArtBody portfolioItem={displayedItem} closeCallback={closePortfolioItem} />
+<PortfolioItemDetailWrapper {closeCallback}>
+	{#if portfolioItem.isArticle}
+		<PortfolioArticleHeader {portfolioItem} />
+		{#if navigationItems.length}
+			<PortfolioArticleQuickNavigation {navigationItems} />
 		{/if}
-	</PortfolioItemDetailWrapper>
-{/if}
+		<PortfolioArticleBody {portfolioItem} />
+	{:else}
+		<PortfolioArtBody {portfolioItem} closeCallback={closeCallback} />
+	{/if}
+</PortfolioItemDetailWrapper>
