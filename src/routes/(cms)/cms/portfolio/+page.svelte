@@ -14,6 +14,7 @@
 	import type { ISelectOption } from '$cmsComponents/atoms/inputs/select.svelte';
 	import { globalUIState } from '../shared/states/globalUIState.svelte';
 	import SearchBox from '$cmsComponents/atoms/inputs/searchBox.svelte';
+	import { getPresetSelectOption } from '../shared/getPresetSelectOption';
 
 	let { data }: { data: PageData } = $props();
 
@@ -43,6 +44,7 @@
 	};
 
 	const selectOptions: ISelectOption[] = [{ value: 'all', title: 'All' }, ...(portfolioSelectOptions as ISelectOption[])];
+	const selectedCategory = getPresetSelectOption(selectOptions, 'category');
 </script>
 
 <PageToolbar>
@@ -57,6 +59,7 @@
 				const target = e.target as HTMLSelectElement;
 				updatePageParams({ category: target.value }, true);
 			}}
+			value={selectedCategory}
 		/>
 		<SearchBox />
 	</div>
