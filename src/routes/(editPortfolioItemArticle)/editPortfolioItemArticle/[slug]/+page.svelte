@@ -9,6 +9,19 @@
 	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import PortfolioArticleBody from '$siteComponents/molecules/portfolio/portfolioArticleBody.svelte';
 
+	type ArticleEditorMode = 'edit' | 'preview';
+
+	export interface IArticleEditorContext {
+		saveCallback: () => void;
+		togglePublishedCallback: () => void;
+		savingStatus?: ButtonActionStatus;
+		closingStatus?: ButtonActionStatus;
+		togglePublishStatus?: ButtonActionStatus;
+		isPublished: boolean;
+		toggleEditorModeCallback: () => void;
+		editorMode: ArticleEditorMode;
+	}
+
 	let { data }: { data: PageData } = $props();
 	let savingStatus: ButtonActionStatus | undefined = $state();
 	let closingStatus: ButtonActionStatus | undefined = $state();
@@ -17,7 +30,7 @@
 	let unSavedUploadedImages: Upload[] = $state([]);
 	// svelte-ignore state_referenced_locally
 	let isPublished = $state(data.portfolioItem.published);
-	let editorMode: 'edit' | 'preview' = $state('edit');
+	let editorMode: ArticleEditorMode = $state('edit');
 
 	const toggleEditorMode = () => {
 		if (editorMode == 'edit') {
@@ -98,19 +111,6 @@
 			}, 2000);
 		}
 	});
-
-	type ArticleEditorMode = 'edit' | 'preview';
-
-	export interface IArticleEditorContext {
-		saveCallback: () => void;
-		togglePublishedCallback: () => void;
-		savingStatus?: ButtonActionStatus;
-		closingStatus?: ButtonActionStatus;
-		togglePublishStatus?: ButtonActionStatus;
-		isPublished: boolean;
-		toggleEditorModeCallback: () => void;
-		editorMode: ArticleEditorMode;
-	}
 
 	let editorContext: IArticleEditorContext = $derived({
 		saveCallback: save,
