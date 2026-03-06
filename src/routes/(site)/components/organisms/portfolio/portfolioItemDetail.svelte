@@ -7,7 +7,6 @@
 	import PortfolioArticleBody from '$siteComponents/molecules/portfolio/portfolioArticleBody.svelte';
 	import type { IQuickNavigatioItem } from '$siteComponents/molecules/portfolio/portfolioArticleQuickNavigation.svelte';
 	import PortfolioArticleQuickNavigation from '$siteComponents/molecules/portfolio/portfolioArticleQuickNavigation.svelte';
-	import { onMount } from 'svelte';
 	import PortfolioArtBody from '$siteComponents/molecules/portfolio/portfolioArtBody.svelte';
 
 	const { portfolioItem }: { portfolioItem?: IPortfolioItem } = $props();
@@ -22,8 +21,6 @@
 		state.activePortfolioItem = undefined;
 		pushState(getPortfolioUrlWithParams(state), state);
 	};
-
-	onMount(() => {});
 
 	$effect(() => {
 		if (portfolioItem) {
