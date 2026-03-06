@@ -37,14 +37,16 @@
 
 			if (acceptFile == 'image/*') {
 				const reader = new FileReader();
-
-				reader.addEventListener('load', () => {
+				const handleLoad = () => {
 					if (typeof reader.result == 'string') {
 						imagePreviewSrc = reader.result;
 					}
-				});
+				}
 
+				reader.addEventListener('load', handleLoad);
 				reader.readAsDataURL(value);
+
+				return () => reader.removeEventListener('load', handleLoad);
 			}
 		}
 	});

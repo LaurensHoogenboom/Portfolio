@@ -8,17 +8,19 @@
 
 	onMount(() => {
 		const containerToBind = scrollContainer ? scrollContainer : window;
-
-		containerToBind.addEventListener('scroll', () => {
+		const handleScroll = () => {
 			const scrollTop = containerToBind instanceof Window ? document.documentElement.scrollTop : containerToBind.scrollTop;
 			visible = scrollTop > window.innerHeight / 2 ? true : false;
-		});
+		};
+
+		containerToBind.addEventListener('scroll', handleScroll);
+		return () => containerToBind.removeEventListener('scroll', handleScroll);
 	});
 
-    const scrollToTop = () => {
-        const containerToBind = scrollContainer ? scrollContainer : window;
-        containerToBind.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-    }
+	const scrollToTop = () => {
+		const containerToBind = scrollContainer ? scrollContainer : window;
+		containerToBind.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+	};
 </script>
 
 <button class="scroll-to-top-button {visible ? 'visible' : ''}" onclick={scrollToTop} aria-label="Ga naar begin van pagina">
@@ -28,9 +30,9 @@
 <style>
 	.scroll-to-top-button {
 		position: fixed;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		right: 0;
 		bottom: var(--spacing-7);
 		height: 45px;
@@ -40,20 +42,22 @@
 		border-bottom-left-radius: var(--border-radius-2);
 		color: var(--white);
 		border: none;
-        transition: transform var(--default-animation-duration), opacity var(--default-animation-duration);
-        opacity: 0.9;
+		transition:
+			transform var(--default-animation-duration),
+			opacity var(--default-animation-duration);
+		opacity: 0.9;
 		z-index: 10;
 
 		&:not(.visible) {
 			transform: translateX(100%);
 		}
 
-        @media (hover: hover) and (pointer: fine) {
-            &:hover {
-                cursor: pointer;
-                opacity: 1.0;
-            }
-        }
+		@media (hover: hover) and (pointer: fine) {
+			&:hover {
+				cursor: pointer;
+				opacity: 1;
+			}
+		}
 
 		@media (max-width: 680px) {
 			bottom: var(--spacing-8);

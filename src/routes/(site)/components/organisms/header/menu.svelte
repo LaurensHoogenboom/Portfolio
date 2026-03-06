@@ -26,9 +26,9 @@
 	});
 
 	onMount(() => {
-		window.addEventListener('resize', () => {
-			navigateFromResponsiveNav = window.innerWidth < 1180;
-		});
+		const handleResize = () => (navigateFromResponsiveNav = window.innerWidth < 1180);
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
 	});
 </script>
 
