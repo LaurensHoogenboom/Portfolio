@@ -9,6 +9,9 @@
 	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import PortfolioArticleBody from '$siteComponents/molecules/portfolio/portfolioArticleBody.svelte';
 	import { invalidateAll } from '$app/navigation';
+	import type { IQuickNavigatioItem } from '$siteComponents/molecules/portfolio/portfolioArticleQuickNavigation.svelte';
+	import { onMount } from 'svelte';
+	import PortfolioArticleQuickNavigation from '$siteComponents/molecules/portfolio/portfolioArticleQuickNavigation.svelte';
 
 	type ArticleEditorMode = 'edit' | 'preview';
 
@@ -35,6 +38,7 @@
 	// svelte-ignore state_referenced_locally
 	let isPublished = $state(data.portfolioItem.published);
 	let editorMode: ArticleEditorMode = $state('edit');
+	let navigationItems: IQuickNavigatioItem[] = $state([]);
 
 	const close = async () => {
 		closingStatus = 'processing';
@@ -115,6 +119,19 @@
 		}
 	};
 
+	onMount(() => {
+		if (!data.portfolioItem.articleContent) return;
+
+		data.portfolioItem.articleContent.blocks.forEach((b) => {
+			if (b.type == 'header' && b.id) {
+				navigationItems.push({
+					id: b.id,
+					title: b.data.text
+				});
+			}
+		});
+	});
+
 	$effect(() => {
 		if (savingStatus == 'fail' || savingStatus == 'success') {
 			setTimeout(() => {
@@ -154,6 +171,7 @@
 	{#if editorMode == 'edit'}
 		<PortfolioItemEdit portfolioItem={data.portfolioItem} bind:editor bind:unSavedUploadedImages />
 	{:else}
+		<PortfolioArticleQuickNavigation {navigationItems} />
 		<PortfolioArticleBody portfolioItem={data.portfolioItem} />
 	{/if}
 </PortfolioItemDetailWrapper>
