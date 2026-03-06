@@ -8,6 +8,7 @@
 	import type { Upload } from '$lib/server/db/schema/uploads';
 	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import PortfolioArticleBody from '$siteComponents/molecules/portfolio/portfolioArticleBody.svelte';
+	import { invalidateAll } from '$app/navigation';
 
 	type ArticleEditorMode = 'edit' | 'preview';
 
@@ -24,6 +25,7 @@
 	}
 
 	let { data }: { data: PageData } = $props();
+
 	let savingStatus: ButtonActionStatus | undefined = $state();
 	let closingStatus: ButtonActionStatus | undefined = $state();
 	let togglePublishStatus: ButtonActionStatus | undefined = $state();
@@ -103,6 +105,8 @@
 			} else {
 				editorMode = 'edit';
 			}
+
+			invalidateAll();
 
 			toggleEditModeStatus = undefined;
 		} catch (error) {
