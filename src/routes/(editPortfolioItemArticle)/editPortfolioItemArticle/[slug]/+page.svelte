@@ -17,6 +17,7 @@
 		savingStatus?: ButtonActionStatus;
 		closingStatus?: ButtonActionStatus;
 		togglePublishStatus?: ButtonActionStatus;
+		toggleEditModeStatus?: ButtonActionStatus;
 		isPublished: boolean;
 		toggleEditorModeCallback: () => void;
 		editorMode: ArticleEditorMode;
@@ -26,19 +27,31 @@
 	let savingStatus: ButtonActionStatus | undefined = $state();
 	let closingStatus: ButtonActionStatus | undefined = $state();
 	let togglePublishStatus: ButtonActionStatus | undefined = $state();
+	let toggleEditModeStatus: ButtonActionStatus | undefined = $state();
 	let editor: EditorJS | undefined = $state();
 	let unSavedUploadedImages: Upload[] = $state([]);
 	// svelte-ignore state_referenced_locally
 	let isPublished = $state(data.portfolioItem.published);
 	let editorMode: ArticleEditorMode = $state('edit');
 
-	const toggleEditorMode = () => {
-		if (editorMode == 'edit') {
-			editorMode = 'preview'
-		} else {
-			editorMode = 'edit';
-		};
-	}
+	const toggleEditorMode = async () => {
+		toggleEditModeStatus = 'processing';
+
+		try {
+			await save();
+
+			if (editorMode == 'edit') {
+				editorMode = 'preview';
+			} else {
+				editorMode = 'edit';
+			}
+
+			toggleEditModeStatus = 'success';
+		} catch (error) {
+			toggleEditModeStatus = 'fail';
+			console.log(error);
+		}
+	};
 
 	const close = async () => {
 		closingStatus = 'processing';
@@ -120,7 +133,8 @@
 		savingStatus: savingStatus,
 		closingStatus: closingStatus,
 		toggleEditorModeCallback: toggleEditorMode,
-		editorMode: editorMode
+		editorMode: editorMode,
+		toggleEditModeStatus: toggleEditModeStatus
 	});
 </script>
 
