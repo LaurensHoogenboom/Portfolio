@@ -19,12 +19,14 @@ export class SliderSwipe {
 	}
 
 	public run = () => {
+		if (!this.scrollContainer) return;
 		this.scrollContainer.addEventListener('touchstart', this.touchStart, { passive: true });
 		this.scrollContainer.addEventListener('touchmove', this.touchMove, { passive: false });
 		this.scrollContainer.addEventListener('touchend', this.touchEnd, { passive: true });
 	}
 
 	public dispose = () => {
+		if (!this.scrollContainer) return;
 		this.scrollContainer.removeEventListener('touchstart', this.touchStart);
 		this.scrollContainer.removeEventListener('touchmove', this.touchMove);
 		this.scrollContainer.removeEventListener('touchend', this.touchEnd);

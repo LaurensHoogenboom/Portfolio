@@ -20,6 +20,8 @@
 	let sliderSwipe: SliderSwipe;
 
 	onMount(() => {
+		let mounted = true;
+
 		const setLayout = async () => {
 			const image = new Image();
 			image.src = slides[0].imgUrl;
@@ -28,16 +30,23 @@
 				image.onload = resolve;
 			});
 
+			if (!mounted) return;
+
 			const aspectRatio = image.width / image.height;
 			layout = aspectRatio < 10 / 16 ? 'horizontal' : 'vertical';
+
+			if (slideContainer) {
+				sliderSwipe = new SliderSwipe(slideContainer, (index: number) => (currentIndex = index), slides.length - 1);
+				sliderSwipe.run();
+			}
 		};
 
-		setLayout().then(() => {
-			sliderSwipe = new SliderSwipe(slideContainer, (index: number) => (currentIndex = index), slides.length - 1);
-			sliderSwipe.run();
-		});
+		setLayout();
 
-		return () => sliderSwipe.dispose();
+		return () => {
+			sliderSwipe.dispose();
+			mounted = false;
+		};
 	});
 
 	$effect(() => {
