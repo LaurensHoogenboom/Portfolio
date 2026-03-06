@@ -14,6 +14,7 @@
 	let navigationItems: IQuickNavigatioItem[] = $state([]);
 	// svelte-ignore state_referenced_locally
 	let displayedItem = $state(portfolioItem);
+	let isVisible = $derived(!!portfolioItem);
 
 	const closePortfolioItem = () => {
 		const state = getPortfolioState();
@@ -30,15 +31,15 @@
 	});
 
 	$effect(() => {
-		if (portfolioItem && portfolioItem.articleContent && portfolioItem.isArticle) {
-			navigationItems = portfolioItem.articleContent.blocks
+		if (displayedItem && displayedItem.articleContent && displayedItem.isArticle) {
+			navigationItems = displayedItem.articleContent.blocks
 				.filter((b) => b.type == 'header' && typeof b.id == 'string')
 				.map((b) => ({ id: b.id ?? '', title: b.data.text }));
 		}
 	});
 </script>
 
-{#if portfolioItem && displayedItem}
+{#if isVisible && displayedItem}
 	<PortfolioItemDetailWrapper closeCallback={closePortfolioItem}>
 		{#if displayedItem.isArticle}
 			<PortfolioArticleHeader portfolioItem={displayedItem} />
