@@ -15,8 +15,9 @@
 	let {
 		portfolioItem,
 		editor = $bindable(),
-		unSavedUploadedImages = $bindable()
-	}: { portfolioItem: IPortfolioItem; editor?: EditorJS; unSavedUploadedImages: Upload[] } = $props();
+		unSavedUploadedImages = $bindable(),
+		hasChanges = $bindable(false)
+	}: { portfolioItem: IPortfolioItem; editor?: EditorJS; unSavedUploadedImages: Upload[]; hasChanges: boolean } = $props();
 
 	const uploadImage = async (file: File) => {
 		const formData = new FormData();
@@ -97,7 +98,15 @@
 			holder: 'editor',
 			tools: { ...contentTools, ...layoutTools },
 			defaultBlock: 'paragraph',
-			data: portfolioItem.articleContent ?? undefined
+			data: portfolioItem.articleContent ?? undefined,
+			onChange: async () => {
+				hasChanges = true;
+			},
+			onReady: () => {
+				setTimeout(() => {
+					hasChanges = false;
+				}, 500);
+			}
 		});
 	});
 </script>
@@ -154,7 +163,7 @@
 			}
 		}
 
-		:global(input[type="checkbox"]) {
+		:global(input[type='checkbox']) {
 			appearance: auto;
 		}
 	}
