@@ -8,7 +8,7 @@
 	import type { Upload } from '$lib/server/db/schema/uploads';
 	import type { IPortfolioItem } from '$lib/types/portfolio';
 	import PortfolioArticleBody from '$siteComponents/molecules/portfolio/portfolioArticleBody.svelte';
-	import { invalidateAll } from '$app/navigation';
+	import { beforeNavigate, invalidateAll } from '$app/navigation';
 	import type { IQuickNavigatioItem } from '$siteComponents/molecules/portfolio/portfolioArticleQuickNavigation.svelte';
 	import { onMount } from 'svelte';
 	import PortfolioArticleQuickNavigation from '$siteComponents/molecules/portfolio/portfolioArticleQuickNavigation.svelte';
@@ -35,6 +35,7 @@
 	let toggleEditModeStatus: ButtonActionStatus | undefined = $state();
 	let editor: EditorJS | undefined = $state();
 	let unSavedUploadedImages: Upload[] = $state([]);
+	let hasChanges: boolean = $state(false);
 	// svelte-ignore state_referenced_locally
 	let isPublished = $state(data.portfolioItem.published);
 	let editorMode: ArticleEditorMode = $state('edit');
@@ -42,15 +43,6 @@
 
 	const close = async () => {
 		closingStatus = 'processing';
-
-		if (unSavedUploadedImages.length) {
-			for (const upload of unSavedUploadedImages) {
-				await fetch(`/deleteUpload/${upload.title}`, {
-					method: 'POST'
-				});
-			}
-		}
-
 		history.back();
 	};
 
@@ -70,6 +62,7 @@
 			});
 
 			unSavedUploadedImages = [];
+			hasChanges = false;
 			savingStatus = 'success';
 		} catch (error) {
 			savingStatus = 'fail';
@@ -132,6 +125,25 @@
 		});
 	});
 
+	beforeNavigate(({ cancel }) => {
+		if (hasChanges) {
+			if (!confirm('You have unsaved changes. Are you sure you want to leave?')) {
+				cancel();
+				closingStatus = undefined;
+				return;
+			}
+
+			if (unSavedUploadedImages.length) {
+				unSavedUploadedImages.forEach((upload) => {
+					fetch(`/deleteUpload/${upload.title}`, {
+						method: 'POST',
+						keepalive: true
+					});
+				});
+			}
+		}
+	});
+
 	$effect(() => {
 		if (savingStatus == 'fail' || savingStatus == 'success') {
 			setTimeout(() => {
@@ -169,7 +181,7 @@
 	<PortfolioArticleHeader portfolioItem={data.portfolioItem} />
 
 	{#if editorMode == 'edit'}
-		<PortfolioItemEdit portfolioItem={data.portfolioItem} bind:editor bind:unSavedUploadedImages />
+		<PortfolioItemEdit portfolioItem={data.portfolioItem} bind:editor bind:unSavedUploadedImages bind:hasChanges />
 	{:else}
 		<PortfolioArticleQuickNavigation {navigationItems} />
 		<PortfolioArticleBody portfolioItem={data.portfolioItem} />
