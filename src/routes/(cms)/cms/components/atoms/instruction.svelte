@@ -1,11 +1,17 @@
 <script lang="ts">
-	import { InfoIcon } from '@lucide/svelte';
+	import { InfoIcon, TriangleAlert } from '@lucide/svelte';
+	import { fly, slide } from 'svelte/transition';
 
 	const { message, type = 'neutral' }: { message: string; type?: 'neutral' | 'warning' } = $props();
 </script>
 
-<p class="instruction {type}" style="">
-	<InfoIcon size={20} />
+<p class="instruction {type}" style="" in:fly={{ y: -20 }} out:slide>
+	{#if type == 'warning'}
+		<TriangleAlert size={20} />
+	{:else}
+		<InfoIcon size={20} />
+	{/if}
+
 	<span>{message}</span>
 </p>
 

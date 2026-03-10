@@ -16,6 +16,8 @@
 		setValidationWarning: (message?: string) => void;
 	} = $props();
 
+	let inputElement: HTMLInputElement | undefined = $state();
+
 	let files: FileList | undefined = $state();
 	let fileName: string | undefined = $state(typeof value == 'string' ? value.split(/[\\/]/).pop() : '');
 
@@ -41,7 +43,7 @@
 					if (typeof reader.result == 'string') {
 						imagePreviewSrc = reader.result;
 					}
-				}
+				};
 
 				reader.addEventListener('load', handleLoad);
 				reader.readAsDataURL(value);
@@ -50,10 +52,18 @@
 			}
 		}
 	});
+
+	const inValidHandler = () => {
+		if (!inputElement) return;
+
+		if (inputElement.validity.valueMissing) {
+			setValidationWarning('A portfolio item should have an image.');
+		}
+	};
 </script>
 
 <div class="file-input">
-	<input id={name} type="file" {name} bind:files {required} accept={acceptFile} />
+	<input id={name} type="file" {name} bind:files {required} accept={acceptFile} bind:this={inputElement} oninvalid={inValidHandler} />
 	<Button type="label" labelFor={name} style="secondary" title={value ? 'Change File' : 'Select File'} alignment="center" />
 
 	{#if fileName}
