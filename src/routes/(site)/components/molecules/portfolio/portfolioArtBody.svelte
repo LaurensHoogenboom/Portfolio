@@ -41,8 +41,14 @@
 
 		@media (max-width: 1180px) {
 			grid-template-columns: minmax(0, 1fr);
-			grid-template-rows: minmax(350px, 1fr) minmax(min-content, 0.3fr);
+			grid-template-rows: minmax(250px, max-content) minmax(min-content, 0.3fr);
 			align-items: center;
+			grid-gap: var(--spacing-6);
+			align-content: center;
+		}
+
+		@media (max-width: 680px) {
+			grid-template-rows: minmax(250px, max-content) minmax(min-content, 0.2fr);
 		}
 
 		:global(.art-image-container:not(.fullscreen)) {
@@ -63,10 +69,6 @@
 					max-height: 100%;
 					object-fit: contain;
 					border-radius: 0;
-
-					@media (max-width: 1180px) {
-						padding-bottom: var(--spacing-6);
-					}
 				}
 			}
 		}

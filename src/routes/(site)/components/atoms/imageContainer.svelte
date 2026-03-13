@@ -56,7 +56,7 @@
 
 		:global(.enlarge-button, .shrink-button) {
 			position: absolute;
-			top: var(--spacing-2);
+			bottom: var(--spacing-2);
 			right: var(--spacing-2);
 			border: 1px solid var(--grey-borders);
 			background-color: var(--black-transparent);
