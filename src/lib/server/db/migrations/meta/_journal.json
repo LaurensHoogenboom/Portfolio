@@ -176,6 +176,13 @@
       "when": 1772700881922,
       "tag": "0024_lyrical_beast",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "6",
+      "when": 1773493255233,
+      "tag": "0025_complex_mephisto",
+      "breakpoints": true
     }
   ]
 }
